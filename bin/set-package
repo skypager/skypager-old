@@ -1,0 +1,71 @@
+#!/usr/bin/env node
+
+const skypager = require("skypager-framework/current")
+const argv = skypager.argv
+const set = require("lodash/set")
+const get = require("lodash/get")
+const defaults = require("lodash/defaultsDeep")
+const omit = require("lodash/omit")
+const packages = skypager.model("Package", {
+  routes: ["package.json", "src/*/package.json"],
+  instanceMethods(options = {}, context = {}) {
+    const { project } = context
+
+    return {
+      remove(key) {
+        const pkg = this.readPackage()
+        key = typeof key === "string" ? key.split(".") : key
+        const objKey = key.slice(0, key.length - 1)
+        const obj = get(pkg, objKey, {})
+        set(pkg, objKey, omit(obj, key.pop()))
+        this.updatePackage(pkg)
+        return this
+      },
+      setVal(key, value) {
+        const pkg = this.readPackage()
+        set(pkg, key, value)
+        this.updatePackage(pkg)
+        return this
+      },
+      // prettier-ignore
+      updatePackage(data = {}) {
+        const pkg = this.readPackage()
+        return project.fsx.writeFileSync(
+          project.resolve(this.baseRelativePath),
+          JSON.stringify(defaults(data, pkg), null, 2),
+          "utf8"
+        )
+      },
+      readPackage() {
+        return project.fsx.readJsonSync(project.resolve(this.baseRelativePath))
+      },
+    }
+  },
+})
+
+const [key, value] = argv._.slice(2)
+const { print, clear, colors } = skypager.cli
+
+clear()
+
+if (!key) {
+  print(colors.red("Must provide a key and value"))
+  process.exit(1)
+}
+
+if (!value && !argv.remove) {
+  print(colors.red("Must provide a key and value. If removing a value, pass the --remove flag"))
+  process.exit(1)
+}
+
+packages.instanceChain
+  .mapValues(pkg => {
+    if (value && !argv.remove) {
+      print(`Setting ${key} to ${value} on ${pkg.name}`)
+      pkg.setVal(key, value)
+    } else if (argv.remove) {
+      print(`Removing ${key} on ${pkg.name}`)
+      pkg.remove(key)
+    }
+  })
+  .value()

@@ -1,0 +1,139 @@
+#!/usr/bin/env node
+
+const project = require('skypager-framework/current')
+let { scope = '.*' } = project.argv
+const args = project.argv._.slice(2)
+const { colors, print, clear, icon, randomBanner, prompt } = project.cli
+
+let packages = project.model('package/public').instanceChain.values().value()
+
+if (project.argv.exact) { scope = `^${scope}$`}
+
+if (args[0] === 'runtime') {
+  packages = packages.filter(
+    pkg => pkg.name.match(/runtime/) || pkg.id.match(/runtime/)
+  )
+}
+
+if (args[0] === 'helper') {
+  packages = packages.filter(
+    pkg => pkg.name.match(/helper/) || pkg.id.match(/helper/)
+  )
+}
+
+if (args[0] === 'package') {
+  packages = project.model('package/built').instanceChain.values().value()
+}
+
+if (args[0] === 'helper' || args[0] === 'runtime' || args[0] === 'package') {
+  args.shift()
+}
+
+if (args.length === 0) {
+  print(colors.red('Must specify a command to run'))
+  process.exit(1)
+}
+
+let exclude
+
+if (project.argv.exclude) {
+  exclude = new RegExp(`${project.argv.exclude}`, 'i')
+}
+
+async function main () {
+
+  packages = packages.filter(pkg => {
+    const pattern = new RegExp(scope, 'i')
+
+    if (pkg.private && !project.argv.includePrivate) return false;
+    
+    if ((pattern.test(pkg.name) || pattern.test(pkg.id))) {
+      return true
+    }
+
+    if (project.argv.outdated) {
+      return !!pkg.checkPublishedVersions().outdated
+    }
+
+
+    if (exclude) return !!!(exclude.test(pkg.name) || exclude.test(pkg.id));
+
+    return false
+  })
+
+  if (args[0] === 'changed') {
+    args.shift()
+
+    const runtime = require('skypager-runtimes-node')
+    await runtime.fileManager.startAsync()
+    let changed = await runtime.select('package/changed')
+
+    changed = changed.map(path => path.replace('.json', ''))
+
+    if (args[0] === 'package') {
+      args.shift()
+      const packageNames = project.model('package/public').instanceChain
+        .pickBy((pkg, key) => changed.indexOf(key) >= 0)
+        .values()
+        .map('name')
+        .value()
+      packages = project.model('package/built').instanceChain
+        .pickBy((pkg, key) => packageNames.indexOf(pkg.name) >= 0)
+        .values()
+        .value()
+    } else {
+      packages = project.model('package/public').instanceChain
+        .pickBy((pkg, key) => changed.indexOf(key) >= 0)
+        .values()
+        .value()
+    }
+  }
+
+  if (project.argv.dryRun) {
+    packages.forEach(pkg => {
+      print(
+        `In ${pkg.name} running handleCLI\nwith args: \n${JSON.stringify(
+          args,
+          null,
+          2
+        )}`,
+        4
+      )
+    })
+
+    process.exit(0)
+    return
+  }
+
+  if (packages.length === 0) {
+    print('No packages match the arguments passed to this command')
+    process.exit(0)
+    return
+  }
+
+  try {
+    await Promise.all(
+      packages.map(pkg => {
+        try {
+          const cwd = project.resolve(pkg.relativeDirname)
+          return pkg.handleCli.call(pkg, args, cwd, project.cli)
+        } catch (error) {
+          console.log('Error handling console args for ', pkg.name)
+          error && console.log(error.message)
+          return pkg
+        }
+
+        return pkg
+      })
+    )
+  } catch (error) {
+    console.log(error.message)
+    console.log(error.stack)
+  }
+
+  return true
+}
+
+main().then((results) => {
+  console.log('results', results)
+})

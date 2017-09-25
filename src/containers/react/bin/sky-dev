@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+process.env.NODE_ENV = process.env.SKYPAGER_ENV = 'development'
+const skypager = require('skypager-runtimes-development')
+
+(skypager.matchingCommand || skypager.cliHandler).run()
+.then(() => skypager.fileManager.startAsync())

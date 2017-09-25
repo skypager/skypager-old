@@ -1,0 +1,2217 @@
+{
+  "stats": {
+    "suites": 44,
+    "tests": 132,
+    "passes": 99,
+    "pending": 0,
+    "failures": 35,
+    "start": "2017-06-10T06:06:57.117Z",
+    "end": "2017-06-10T06:06:58.181Z",
+    "duration": 1064
+  },
+  "tests": [
+    {
+      "title": "is a runtime",
+      "fullTitle": "Skypager Core is a runtime",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes the server helper",
+      "fullTitle": "Client Helper Package exposes the server helper",
+      "duration": 3,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "builds simple settings object",
+      "fullTitle": "The Service Config Builder builds simple settings object",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "is a standard skypager helper",
+      "fullTitle": "Skypager Client Helper is a standard skypager helper",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can be created with options and context",
+      "fullTitle": "Skypager Client Helper can be created with options and context",
+      "duration": 33,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13754:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "supports a standard helpers registry interface",
+      "fullTitle": "Skypager Client Helper supports a standard helpers registry interface",
+      "duration": 21,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13765:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "has some default clients available",
+      "fullTitle": "Skypager Client Helper has some default clients available",
+      "duration": 48,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13773:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "should auto enable the feature",
+      "fullTitle": "The Command Helper should auto enable the feature",
+      "duration": 4,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected { Object (client-helper, vm, ...) } to have a property 'command-helper'",
+        "showDiff": false,
+        "actual": {
+          "client-helper": {
+            "isConfigured": false,
+            "options": {
+              "cli": true,
+              "name": "client-helper",
+              "id": "client-helper",
+              "cacheHelper": true,
+              "cacheKey": "features:5001fcab1ca8c92239f3d725bf716aca:client-helper",
+              "cacheable": true
+            },
+            "name": "client-helper"
+          },
+          "vm": {
+            "isConfigured": false,
+            "options": {
+              "cli": true,
+              "name": "vm",
+              "id": "vm",
+              "cacheHelper": true,
+              "cacheKey": "features:97bb02d83c8d7763345b61fe396c83a6:vm",
+              "cacheable": true
+            },
+            "name": "vm"
+          },
+          "node/repl-helper": {
+            "isConfigured": false,
+            "options": {
+              "cli": true,
+              "name": "node/repl-helper",
+              "id": "node/repl-helper",
+              "cacheHelper": true,
+              "cacheKey": "features:bf5cc60f98f9fdc48bbed66f4fd6fd98:node/repl-helper",
+              "cacheable": true
+            },
+            "name": "node/repl-helper"
+          },
+          "node/command-helper": {
+            "isConfigured": false,
+            "options": {
+              "cli": true,
+              "name": "node/command-helper",
+              "id": "node/command-helper",
+              "cacheHelper": true,
+              "cacheKey": "features:c07b1393cef2a57a06e0d2866b20fe70:node/command-helper",
+              "cacheable": true
+            },
+            "name": "node/command-helper"
+          }
+        },
+        "stack": "AssertionError: expected { Object (client-helper, vm, ...) } to have a property 'command-helper'\n    at Context.<anonymous> (packages/skypager-specs/index.js:13803:41)"
+      }
+    },
+    {
+      "title": "should extend the runtime with some command helpers",
+      "fullTitle": "The Command Helper should extend the runtime with some command helpers",
+      "duration": 196,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "tracks options",
+      "fullTitle": "The Command Helper Command Config Builder tracks options",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has a name",
+      "fullTitle": "The Command Helper Command Config Builder has a name",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has a description",
+      "fullTitle": "The Command Helper Command Config Builder has a description",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "builds simple settings object",
+      "fullTitle": "The Service Config Builder builds simple settings object",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "is a standard skypager helper",
+      "fullTitle": "Skypager DocumentType Helper is a standard skypager helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can be created with options and context",
+      "fullTitle": "Skypager DocumentType Helper can be created with options and context",
+      "duration": 20,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13872:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "supports a standard helpers registry interface",
+      "fullTitle": "Skypager DocumentType Helper supports a standard helpers registry interface",
+      "duration": 20,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13883:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "has some default documentTypes available",
+      "fullTitle": "Skypager DocumentType Helper has some default documentTypes available",
+      "duration": 15,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13891:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "exposes the document type helper",
+      "fullTitle": "Document Type Helper Package exposes the document type helper",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "builds simple settings object",
+      "fullTitle": "The Service Config Builder builds simple settings object",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "is a standard skypager helper",
+      "fullTitle": "Skypager Page Helper is a standard skypager helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can be created with options and context",
+      "fullTitle": "Skypager Page Helper can be created with options and context",
+      "duration": 16,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13957:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "supports a standard helpers registry interface",
+      "fullTitle": "Skypager Page Helper supports a standard helpers registry interface",
+      "duration": 14,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13968:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "has some default pages available",
+      "fullTitle": "Skypager Page Helper has some default pages available",
+      "duration": 23,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13976:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "exposes the page helper",
+      "fullTitle": "Page Helper Package exposes the page helper",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "builds simple settings object",
+      "fullTitle": "The Service Config Builder builds simple settings object",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "is a standard skypager helper",
+      "fullTitle": "Skypager ProjectType Helper is a standard skypager helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can be created with options and context",
+      "fullTitle": "Skypager ProjectType Helper can be created with options and context",
+      "duration": 14,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:14042:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "supports a standard helpers registry interface",
+      "fullTitle": "Skypager ProjectType Helper supports a standard helpers registry interface",
+      "duration": 13,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:14053:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "has some default projectTypes available",
+      "fullTitle": "Skypager ProjectType Helper has some default projectTypes available",
+      "duration": 13,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:14061:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "exposes the document type helper",
+      "fullTitle": "Document Type Helper Package exposes the document type helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "auto registers",
+      "fullTitle": "The Repl Helper auto registers",
+      "duration": 21,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:14105:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "toggles development mode",
+      "fullTitle": "The Server Config Builder toggles development mode",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "toggles hot mode",
+      "fullTitle": "The Server Config Builder toggles hot mode",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "accepts options",
+      "fullTitle": "The Server Config Builder accepts options",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "is a standard skypager helper",
+      "fullTitle": "Skypager Server Helper is a standard skypager helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can be created with options and context",
+      "fullTitle": "Skypager Server Helper can be created with options and context",
+      "duration": 17,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "supports a standard helpers registry interface",
+      "fullTitle": "Skypager Server Helper supports a standard helpers registry interface",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has some default servers available",
+      "fullTitle": "Skypager Server Helper has some default servers available",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected [] to include 'static-files'",
+        "showDiff": false,
+        "actual": [],
+        "stack": "AssertionError: expected [] to include 'static-files'\n    at Context.<anonymous> (packages/skypager-specs/index.js:14164:101)"
+      }
+    },
+    {
+      "title": "exposes the server helper",
+      "fullTitle": "Server Helper Package exposes the server helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes the service helper",
+      "fullTitle": "Server Helper Package exposes the service helper",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected { Object (Server, attach, ...) } to have a property 'Service'",
+        "showDiff": false,
+        "actual": {
+          "feature": {}
+        },
+        "stack": "AssertionError: expected { Object (Server, attach, ...) } to have a property 'Service'\n    at Context.<anonymous> (packages/skypager-specs/index.js:14188:30)"
+      }
+    },
+    {
+      "title": "builds simple settings object",
+      "fullTitle": "The Service Config Builder builds simple settings object",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "is a standard skypager helper",
+      "fullTitle": "Skypager Service Helper is a standard skypager helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected [Function: Service] to have a property 'createRegistry'",
+        "showDiff": false,
+        "stack": "AssertionError: expected [Function: Service] to have a property 'createRegistry'\n    at Context.<anonymous> (packages/skypager-specs/index.js:14227:34)"
+      }
+    },
+    {
+      "title": "can be created with options and context",
+      "fullTitle": "Skypager Service Helper can be created with options and context",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected {} to have a property 'options'",
+        "showDiff": false,
+        "actual": {},
+        "stack": "AssertionError: expected {} to have a property 'options'\n    at Context.<anonymous> (packages/skypager-specs/index.js:14237:25)"
+      }
+    },
+    {
+      "title": "supports a standard helpers registry interface",
+      "fullTitle": "Skypager Service Helper supports a standard helpers registry interface",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has some default services available",
+      "fullTitle": "Skypager Service Helper has some default services available",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected [] to include 'server-status'",
+        "showDiff": false,
+        "actual": [],
+        "stack": "AssertionError: expected [] to include 'server-status'\n    at Context.<anonymous> (packages/skypager-specs/index.js:14251:120)"
+      }
+    },
+    {
+      "title": "exposes the server helper",
+      "fullTitle": "Server Helper Package exposes the server helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes the service helper",
+      "fullTitle": "Server Helper Package exposes the service helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "should have config reducers",
+      "fullTitle": "Configurable Runtimes should have config reducers",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "should have config features",
+      "fullTitle": "Configurable Runtimes should have config features",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "should expose config presets for each of the available features",
+      "fullTitle": "Configurable Runtimes should expose config presets for each of the available features",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "allows me to enable features with an object",
+      "fullTitle": "Toggling Features allows me to enable features with an object",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:14442:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "allows me to enable features with a single string",
+      "fullTitle": "Toggling Features allows me to enable features with a single string",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:14478:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "allows me to enable features with an array of strings",
+      "fullTitle": "Toggling Features allows me to enable features with an array of strings",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:14497:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "uses presets to support multiple history entries with one command",
+      "fullTitle": "Config Interface uses presets to support multiple history entries with one command",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has methods to reset, stash, or serialize the current history",
+      "fullTitle": "Config Interface has methods to reset, stash, or serialize the current history",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "lets me stash the history",
+      "fullTitle": "Config Interface lets me stash the history",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "lets me restore history from the stash",
+      "fullTitle": "Config Interface lets me restore history from the stash",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "lets me serialize the history",
+      "fullTitle": "Config Interface lets me serialize the history",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "applies the feature lookup method",
+      "fullTitle": "The Feature Helper applies the feature lookup method",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "attaches the features registry",
+      "fullTitle": "The Feature Helper attaches the features registry",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "applies feature methods to the feature helper",
+      "fullTitle": "The Feature Helper applies feature methods to the feature helper",
+      "duration": 4,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "it applies host methods to the host only on demand",
+      "fullTitle": "The Feature Helper it applies host methods to the host only on demand",
+      "duration": 27,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "caches the feature objects",
+      "fullTitle": "The Feature Helper caches the feature objects",
+      "duration": 95,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "converts lazy and getter properties",
+      "fullTitle": "The Feature Helper converts lazy and getter properties",
+      "duration": 5,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has a registry from which to find specific helpers",
+      "fullTitle": "Helpers has a registry from which to find specific helpers",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has a registry which we can register helpers",
+      "fullTitle": "Helpers has a registry which we can register helpers",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has a feature helper by default",
+      "fullTitle": "Helpers has a feature helper by default",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "attaches registries to a host",
+      "fullTitle": "Helpers attaches registries to a host",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "applies the property utils to the helper instances",
+      "fullTitle": "Helpers applies the property utils to the helper instances",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "creates a lodash chain",
+      "fullTitle": "Helpers creates a lodash chain",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "creates instances of a helper",
+      "fullTitle": "Helpers creates instances of a helper",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "should accept option types from the helper service",
+      "fullTitle": "Helpers Option Types should accept option types from the helper service",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "lets helpers provide their own config interface",
+      "fullTitle": "Helpers Config Interface lets helpers provide their own config interface",
+      "duration": 6,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "supplies base config and a config tap",
+      "fullTitle": "Helpers Config Interface supplies base config and a config tap",
+      "duration": 5,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "maintains a registry of initializer functions to run early on",
+      "fullTitle": "Runtime Initializers maintains a registry of initializer functions to run early on",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: Super expression must either be null or a function, not object\n    at exports.default (node_modules/babel-runtime/helpers/inherits.js:21:11)\n    at packages/skypager-specs/index.js:14817:30\n    at Context.<anonymous> (packages/skypager-specs/index.js:14825:6)",
+        "message": "Super expression must either be null or a function, not object"
+      }
+    },
+    {
+      "title": "creates a registry from a require context",
+      "fullTitle": "Require Context Registries creates a registry from a require context",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected [] not to be empty",
+        "showDiff": false,
+        "actual": [],
+        "stack": "AssertionError: expected [] not to be empty\n    at Context.<anonymous> (packages/skypager-specs/index.js:14860:39)"
+      }
+    },
+    {
+      "title": "can disable the auto register modules behavior",
+      "fullTitle": "Require Context Registries can disable the auto register modules behavior",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can automatically return the default export for es6 modules",
+      "fullTitle": "Require Context Registries can automatically return the default export for es6 modules",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: Component Lookup Failed: context.\n\nDid you mean one of the following?\n\n    at ContextRegistry.componentLookupFailed (packages/skypager-specs/index.js:9012:15)\n    at ContextRegistry.performFallbackLookup (packages/skypager-specs/index.js:8996:21)\n    at ContextRegistry.lookup (packages/skypager-specs/index.js:8881:84)\n    at Context.<anonymous> (packages/skypager-specs/index.js:14882:16)",
+        "message": "Component Lookup Failed: context.\n\nDid you mean one of the following?\n"
+      }
+    },
+    {
+      "title": "can add additional require contexts to an existing registry",
+      "fullTitle": "Require Context Registries can add additional require contexts to an existing registry",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected [] not to be empty",
+        "showDiff": false,
+        "actual": [],
+        "stack": "AssertionError: expected [] not to be empty\n    at Context.<anonymous> (packages/skypager-specs/index.js:14902:39)"
+      }
+    },
+    {
+      "title": "has a registry of metadata",
+      "fullTitle": "Directory Registries has a registry of metadata",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "uses an api",
+      "fullTitle": "Directory Registries uses an api",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can retrieve metadata",
+      "fullTitle": "Directory Registries can retrieve metadata",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can search metadata",
+      "fullTitle": "Directory Registries can search metadata",
+      "duration": 3,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can use a route pattern to create metadata",
+      "fullTitle": "Directory Registries can use a route pattern to create metadata",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes a create interface",
+      "fullTitle": "Skypager Registry exposes a create interface",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes the registry types",
+      "fullTitle": "Skypager Registry exposes the registry types",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "allows me to create a registry on an object",
+      "fullTitle": "Registries allows me to create a registry on an object",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "attaches a router interface to an object",
+      "fullTitle": "Path Router attaches a router interface to an object",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "matches route patterns",
+      "fullTitle": "Path Router matches route patterns",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes a function to create a path matching function",
+      "fullTitle": "Path Router exposes a function to create a path matching function",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can apply a route pattern to an array of paths",
+      "fullTitle": "Path Router can apply a route pattern to an array of paths",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can be created",
+      "fullTitle": "SimpleRegistry can be created",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "should be able to convert into a require context",
+      "fullTitle": "SimpleRegistry should be able to convert into a require context",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can attached multiple registries",
+      "fullTitle": "SimpleRegistry can attached multiple registries",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has child registries",
+      "fullTitle": "SimpleRegistry has child registries",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can register functions with an alias",
+      "fullTitle": "SimpleRegistry can register functions with an alias",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can format ids before storing them",
+      "fullTitle": "SimpleRegistry can format ids before storing them",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can register functions",
+      "fullTitle": "SimpleRegistry can register functions",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can list what is available",
+      "fullTitle": "SimpleRegistry can list what is available",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can lookup objects",
+      "fullTitle": "SimpleRegistry can lookup objects",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has a fallback option",
+      "fullTitle": "SimpleRegistry has a fallback option",
+      "duration": 3,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: should.exist is not a function\n    at Context.<anonymous> (packages/skypager-specs/index.js:15249:12)",
+        "message": "should.exist is not a function"
+      }
+    },
+    {
+      "title": "can wrap the returned result",
+      "fullTitle": "SimpleRegistry can wrap the returned result",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "emits global events when runtimes are initialized",
+      "fullTitle": "The Runtime emits global events when runtimes are initialized",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:15303:21)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "shares a global event bus with the constructor",
+      "fullTitle": "The Runtime shares a global event bus with the constructor",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:15308:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "has a registry of available features",
+      "fullTitle": "The Runtime has a registry of available features",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:15314:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "provides access to the Helper class",
+      "fullTitle": "The Runtime provides access to the Helper class",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:15319:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "has the lodash interface",
+      "fullTitle": "The Runtime has the lodash interface",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:15324:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "has a cache",
+      "fullTitle": "The Runtime has a cache",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:15330:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "tests paths against rules",
+      "fullTitle": "The Path Matcher tests paths against rules",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "hides a plain property",
+      "fullTitle": "Skypager Util hides a plain property",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "hides a getter",
+      "fullTitle": "Skypager Util hides a getter",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "provides shortcuts for the property methods",
+      "fullTitle": "Skypager Util provides shortcuts for the property methods",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can apply lazy interface methods",
+      "fullTitle": "Skypager Util can apply lazy interface methods",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can apply interface methods",
+      "fullTitle": "Skypager Util can apply interface methods",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "helps create lazy loading properties",
+      "fullTitle": "Skypager Util helps create lazy loading properties",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "performs number equality checks",
+      "fullTitle": "Array Query Util performs number equality checks",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "performs string equality checks",
+      "fullTitle": "Array Query Util performs string equality checks",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "performs partial object equality checks",
+      "fullTitle": "Array Query Util performs partial object equality checks",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "performs regex checks",
+      "fullTitle": "Array Query Util performs regex checks",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "accepts an array to test against any matches",
+      "fullTitle": "Array Query Util accepts an array to test against any matches",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "accepts a complex parameter that specifies the operator",
+      "fullTitle": "Array Query Util accepts a complex parameter that specifies the operator",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "accepts a complex parameter that specifies the operator",
+      "fullTitle": "Array Query Util accepts a complex parameter that specifies the operator",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "accepts a complex parameter that specifies the operator",
+      "fullTitle": "Array Query Util accepts a complex parameter that specifies the operator",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "accepts a complex parameter that specifies the operator",
+      "fullTitle": "Array Query Util accepts a complex parameter that specifies the operator",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can work in negate mode instead",
+      "fullTitle": "Array Query Util can work in negate mode instead",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "allows me to create a registry on an object",
+      "fullTitle": "Registries allows me to create a registry on an object",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "attaches a router interface to an object",
+      "fullTitle": "Path Router attaches a router interface to an object",
+      "duration": 7,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "filters lists of strings based on express style patterns",
+      "fullTitle": "Path Router filters lists of strings based on express style patterns",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "filters complex objects based on express style patterns",
+      "fullTitle": "Path Router filters complex objects based on express style patterns",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "provides a utility for matching route patterns",
+      "fullTitle": "Path Router provides a utility for matching route patterns",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes a function to create a path matching function",
+      "fullTitle": "Path Router exposes a function to create a path matching function",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can apply a route pattern to an array of paths",
+      "fullTitle": "Path Router can apply a route pattern to an array of paths",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "can be created with options and context",
+      "fullTitle": "Skypager Client Helper can be created with options and context",
+      "duration": 33,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13754:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "supports a standard helpers registry interface",
+      "fullTitle": "Skypager Client Helper supports a standard helpers registry interface",
+      "duration": 21,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13765:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "has some default clients available",
+      "fullTitle": "Skypager Client Helper has some default clients available",
+      "duration": 48,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13773:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "should auto enable the feature",
+      "fullTitle": "The Command Helper should auto enable the feature",
+      "duration": 4,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected { Object (client-helper, vm, ...) } to have a property 'command-helper'",
+        "showDiff": false,
+        "actual": {
+          "client-helper": {
+            "isConfigured": false,
+            "options": {
+              "cli": true,
+              "name": "client-helper",
+              "id": "client-helper",
+              "cacheHelper": true,
+              "cacheKey": "features:5001fcab1ca8c92239f3d725bf716aca:client-helper",
+              "cacheable": true
+            },
+            "name": "client-helper"
+          },
+          "vm": {
+            "isConfigured": false,
+            "options": {
+              "cli": true,
+              "name": "vm",
+              "id": "vm",
+              "cacheHelper": true,
+              "cacheKey": "features:97bb02d83c8d7763345b61fe396c83a6:vm",
+              "cacheable": true
+            },
+            "name": "vm"
+          },
+          "node/repl-helper": {
+            "isConfigured": false,
+            "options": {
+              "cli": true,
+              "name": "node/repl-helper",
+              "id": "node/repl-helper",
+              "cacheHelper": true,
+              "cacheKey": "features:bf5cc60f98f9fdc48bbed66f4fd6fd98:node/repl-helper",
+              "cacheable": true
+            },
+            "name": "node/repl-helper"
+          },
+          "node/command-helper": {
+            "isConfigured": false,
+            "options": {
+              "cli": true,
+              "name": "node/command-helper",
+              "id": "node/command-helper",
+              "cacheHelper": true,
+              "cacheKey": "features:c07b1393cef2a57a06e0d2866b20fe70:node/command-helper",
+              "cacheable": true
+            },
+            "name": "node/command-helper"
+          }
+        },
+        "stack": "AssertionError: expected { Object (client-helper, vm, ...) } to have a property 'command-helper'\n    at Context.<anonymous> (packages/skypager-specs/index.js:13803:41)"
+      }
+    },
+    {
+      "title": "can be created with options and context",
+      "fullTitle": "Skypager DocumentType Helper can be created with options and context",
+      "duration": 20,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13872:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "supports a standard helpers registry interface",
+      "fullTitle": "Skypager DocumentType Helper supports a standard helpers registry interface",
+      "duration": 20,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13883:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "has some default documentTypes available",
+      "fullTitle": "Skypager DocumentType Helper has some default documentTypes available",
+      "duration": 15,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13891:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "can be created with options and context",
+      "fullTitle": "Skypager Page Helper can be created with options and context",
+      "duration": 16,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13957:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "supports a standard helpers registry interface",
+      "fullTitle": "Skypager Page Helper supports a standard helpers registry interface",
+      "duration": 14,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13968:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "has some default pages available",
+      "fullTitle": "Skypager Page Helper has some default pages available",
+      "duration": 23,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:13976:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "can be created with options and context",
+      "fullTitle": "Skypager ProjectType Helper can be created with options and context",
+      "duration": 14,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:14042:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "supports a standard helpers registry interface",
+      "fullTitle": "Skypager ProjectType Helper supports a standard helpers registry interface",
+      "duration": 13,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:14053:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "has some default projectTypes available",
+      "fullTitle": "Skypager ProjectType Helper has some default projectTypes available",
+      "duration": 13,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:14061:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "auto registers",
+      "fullTitle": "The Repl Helper auto registers",
+      "duration": 21,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: helperType.isHostSupported is not a function\n    at packages/skypager-runtime/index.js:2049:24\n    at Array.forEach (native)\n    at Function.attachAll (packages/skypager-runtime/index.js:2048:29)\n    at Runtime.applyRuntimeInitializers (packages/skypager-runtime/index.js:5068:14)\n    at new Runtime (packages/skypager-runtime/index.js:5021:10)\n    at Context.<anonymous> (packages/skypager-specs/index.js:14105:19)",
+        "message": "helperType.isHostSupported is not a function"
+      }
+    },
+    {
+      "title": "has some default servers available",
+      "fullTitle": "Skypager Server Helper has some default servers available",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected [] to include 'static-files'",
+        "showDiff": false,
+        "actual": [],
+        "stack": "AssertionError: expected [] to include 'static-files'\n    at Context.<anonymous> (packages/skypager-specs/index.js:14164:101)"
+      }
+    },
+    {
+      "title": "exposes the service helper",
+      "fullTitle": "Server Helper Package exposes the service helper",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected { Object (Server, attach, ...) } to have a property 'Service'",
+        "showDiff": false,
+        "actual": {
+          "feature": {}
+        },
+        "stack": "AssertionError: expected { Object (Server, attach, ...) } to have a property 'Service'\n    at Context.<anonymous> (packages/skypager-specs/index.js:14188:30)"
+      }
+    },
+    {
+      "title": "is a standard skypager helper",
+      "fullTitle": "Skypager Service Helper is a standard skypager helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected [Function: Service] to have a property 'createRegistry'",
+        "showDiff": false,
+        "stack": "AssertionError: expected [Function: Service] to have a property 'createRegistry'\n    at Context.<anonymous> (packages/skypager-specs/index.js:14227:34)"
+      }
+    },
+    {
+      "title": "can be created with options and context",
+      "fullTitle": "Skypager Service Helper can be created with options and context",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected {} to have a property 'options'",
+        "showDiff": false,
+        "actual": {},
+        "stack": "AssertionError: expected {} to have a property 'options'\n    at Context.<anonymous> (packages/skypager-specs/index.js:14237:25)"
+      }
+    },
+    {
+      "title": "has some default services available",
+      "fullTitle": "Skypager Service Helper has some default services available",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected [] to include 'server-status'",
+        "showDiff": false,
+        "actual": [],
+        "stack": "AssertionError: expected [] to include 'server-status'\n    at Context.<anonymous> (packages/skypager-specs/index.js:14251:120)"
+      }
+    },
+    {
+      "title": "allows me to enable features with an object",
+      "fullTitle": "Toggling Features allows me to enable features with an object",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:14442:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "allows me to enable features with a single string",
+      "fullTitle": "Toggling Features allows me to enable features with a single string",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:14478:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "allows me to enable features with an array of strings",
+      "fullTitle": "Toggling Features allows me to enable features with an array of strings",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:14497:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "maintains a registry of initializer functions to run early on",
+      "fullTitle": "Runtime Initializers maintains a registry of initializer functions to run early on",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: Super expression must either be null or a function, not object\n    at exports.default (node_modules/babel-runtime/helpers/inherits.js:21:11)\n    at packages/skypager-specs/index.js:14817:30\n    at Context.<anonymous> (packages/skypager-specs/index.js:14825:6)",
+        "message": "Super expression must either be null or a function, not object"
+      }
+    },
+    {
+      "title": "creates a registry from a require context",
+      "fullTitle": "Require Context Registries creates a registry from a require context",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected [] not to be empty",
+        "showDiff": false,
+        "actual": [],
+        "stack": "AssertionError: expected [] not to be empty\n    at Context.<anonymous> (packages/skypager-specs/index.js:14860:39)"
+      }
+    },
+    {
+      "title": "can automatically return the default export for es6 modules",
+      "fullTitle": "Require Context Registries can automatically return the default export for es6 modules",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {
+        "stack": "Error: Component Lookup Failed: context.\n\nDid you mean one of the following?\n\n    at ContextRegistry.componentLookupFailed (packages/skypager-specs/index.js:9012:15)\n    at ContextRegistry.performFallbackLookup (packages/skypager-specs/index.js:8996:21)\n    at ContextRegistry.lookup (packages/skypager-specs/index.js:8881:84)\n    at Context.<anonymous> (packages/skypager-specs/index.js:14882:16)",
+        "message": "Component Lookup Failed: context.\n\nDid you mean one of the following?\n"
+      }
+    },
+    {
+      "title": "can add additional require contexts to an existing registry",
+      "fullTitle": "Require Context Registries can add additional require contexts to an existing registry",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {
+        "message": "expected [] not to be empty",
+        "showDiff": false,
+        "actual": [],
+        "stack": "AssertionError: expected [] not to be empty\n    at Context.<anonymous> (packages/skypager-specs/index.js:14902:39)"
+      }
+    },
+    {
+      "title": "has a fallback option",
+      "fullTitle": "SimpleRegistry has a fallback option",
+      "duration": 3,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: should.exist is not a function\n    at Context.<anonymous> (packages/skypager-specs/index.js:15249:12)",
+        "message": "should.exist is not a function"
+      }
+    },
+    {
+      "title": "emits global events when runtimes are initialized",
+      "fullTitle": "The Runtime emits global events when runtimes are initialized",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:15303:21)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "shares a global event bus with the constructor",
+      "fullTitle": "The Runtime shares a global event bus with the constructor",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:15308:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "has a registry of available features",
+      "fullTitle": "The Runtime has a registry of available features",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:15314:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "provides access to the Helper class",
+      "fullTitle": "The Runtime provides access to the Helper class",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:15319:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "has the lodash interface",
+      "fullTitle": "The Runtime has the lodash interface",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:15324:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "has a cache",
+      "fullTitle": "The Runtime has a cache",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:15330:19)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    },
+    {
+      "title": "\"before all\" hook",
+      "fullTitle": "Runtime Startup Sequence \"before all\" hook",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: Super expression must either be null or a function, not object\n    at exports.default (node_modules/babel-runtime/helpers/inherits.js:21:11)\n    at packages/skypager-specs/index.js:15401:30\n    at Context.<anonymous> (packages/skypager-specs/index.js:15474:6)",
+        "message": "Super expression must either be null or a function, not object"
+      }
+    },
+    {
+      "title": "\"before all\" hook",
+      "fullTitle": "Staged Starting Process \"before all\" hook",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {
+        "stack": "TypeError: _runtime2.default is not a constructor\n    at Context.<anonymous> (packages/skypager-specs/index.js:15536:34)",
+        "message": "_runtime2.default is not a constructor"
+      }
+    }
+  ],
+  "passes": [
+    {
+      "title": "is a runtime",
+      "fullTitle": "Skypager Core is a runtime",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes the server helper",
+      "fullTitle": "Client Helper Package exposes the server helper",
+      "duration": 3,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "builds simple settings object",
+      "fullTitle": "The Service Config Builder builds simple settings object",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "is a standard skypager helper",
+      "fullTitle": "Skypager Client Helper is a standard skypager helper",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "should extend the runtime with some command helpers",
+      "fullTitle": "The Command Helper should extend the runtime with some command helpers",
+      "duration": 196,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "tracks options",
+      "fullTitle": "The Command Helper Command Config Builder tracks options",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has a name",
+      "fullTitle": "The Command Helper Command Config Builder has a name",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has a description",
+      "fullTitle": "The Command Helper Command Config Builder has a description",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "builds simple settings object",
+      "fullTitle": "The Service Config Builder builds simple settings object",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "is a standard skypager helper",
+      "fullTitle": "Skypager DocumentType Helper is a standard skypager helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes the document type helper",
+      "fullTitle": "Document Type Helper Package exposes the document type helper",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "builds simple settings object",
+      "fullTitle": "The Service Config Builder builds simple settings object",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "is a standard skypager helper",
+      "fullTitle": "Skypager Page Helper is a standard skypager helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes the page helper",
+      "fullTitle": "Page Helper Package exposes the page helper",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "builds simple settings object",
+      "fullTitle": "The Service Config Builder builds simple settings object",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "is a standard skypager helper",
+      "fullTitle": "Skypager ProjectType Helper is a standard skypager helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes the document type helper",
+      "fullTitle": "Document Type Helper Package exposes the document type helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "toggles development mode",
+      "fullTitle": "The Server Config Builder toggles development mode",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "toggles hot mode",
+      "fullTitle": "The Server Config Builder toggles hot mode",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "accepts options",
+      "fullTitle": "The Server Config Builder accepts options",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "is a standard skypager helper",
+      "fullTitle": "Skypager Server Helper is a standard skypager helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can be created with options and context",
+      "fullTitle": "Skypager Server Helper can be created with options and context",
+      "duration": 17,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "supports a standard helpers registry interface",
+      "fullTitle": "Skypager Server Helper supports a standard helpers registry interface",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes the server helper",
+      "fullTitle": "Server Helper Package exposes the server helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "builds simple settings object",
+      "fullTitle": "The Service Config Builder builds simple settings object",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "supports a standard helpers registry interface",
+      "fullTitle": "Skypager Service Helper supports a standard helpers registry interface",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes the server helper",
+      "fullTitle": "Server Helper Package exposes the server helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes the service helper",
+      "fullTitle": "Server Helper Package exposes the service helper",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "should have config reducers",
+      "fullTitle": "Configurable Runtimes should have config reducers",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "should have config features",
+      "fullTitle": "Configurable Runtimes should have config features",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "should expose config presets for each of the available features",
+      "fullTitle": "Configurable Runtimes should expose config presets for each of the available features",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "uses presets to support multiple history entries with one command",
+      "fullTitle": "Config Interface uses presets to support multiple history entries with one command",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has methods to reset, stash, or serialize the current history",
+      "fullTitle": "Config Interface has methods to reset, stash, or serialize the current history",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "lets me stash the history",
+      "fullTitle": "Config Interface lets me stash the history",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "lets me restore history from the stash",
+      "fullTitle": "Config Interface lets me restore history from the stash",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "lets me serialize the history",
+      "fullTitle": "Config Interface lets me serialize the history",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "applies the feature lookup method",
+      "fullTitle": "The Feature Helper applies the feature lookup method",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "attaches the features registry",
+      "fullTitle": "The Feature Helper attaches the features registry",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "applies feature methods to the feature helper",
+      "fullTitle": "The Feature Helper applies feature methods to the feature helper",
+      "duration": 4,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "it applies host methods to the host only on demand",
+      "fullTitle": "The Feature Helper it applies host methods to the host only on demand",
+      "duration": 27,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "caches the feature objects",
+      "fullTitle": "The Feature Helper caches the feature objects",
+      "duration": 95,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "converts lazy and getter properties",
+      "fullTitle": "The Feature Helper converts lazy and getter properties",
+      "duration": 5,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has a registry from which to find specific helpers",
+      "fullTitle": "Helpers has a registry from which to find specific helpers",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has a registry which we can register helpers",
+      "fullTitle": "Helpers has a registry which we can register helpers",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has a feature helper by default",
+      "fullTitle": "Helpers has a feature helper by default",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "attaches registries to a host",
+      "fullTitle": "Helpers attaches registries to a host",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "applies the property utils to the helper instances",
+      "fullTitle": "Helpers applies the property utils to the helper instances",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "creates a lodash chain",
+      "fullTitle": "Helpers creates a lodash chain",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "creates instances of a helper",
+      "fullTitle": "Helpers creates instances of a helper",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "should accept option types from the helper service",
+      "fullTitle": "Helpers Option Types should accept option types from the helper service",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "lets helpers provide their own config interface",
+      "fullTitle": "Helpers Config Interface lets helpers provide their own config interface",
+      "duration": 6,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "supplies base config and a config tap",
+      "fullTitle": "Helpers Config Interface supplies base config and a config tap",
+      "duration": 5,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can disable the auto register modules behavior",
+      "fullTitle": "Require Context Registries can disable the auto register modules behavior",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has a registry of metadata",
+      "fullTitle": "Directory Registries has a registry of metadata",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "uses an api",
+      "fullTitle": "Directory Registries uses an api",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can retrieve metadata",
+      "fullTitle": "Directory Registries can retrieve metadata",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can search metadata",
+      "fullTitle": "Directory Registries can search metadata",
+      "duration": 3,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can use a route pattern to create metadata",
+      "fullTitle": "Directory Registries can use a route pattern to create metadata",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes a create interface",
+      "fullTitle": "Skypager Registry exposes a create interface",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes the registry types",
+      "fullTitle": "Skypager Registry exposes the registry types",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "allows me to create a registry on an object",
+      "fullTitle": "Registries allows me to create a registry on an object",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "attaches a router interface to an object",
+      "fullTitle": "Path Router attaches a router interface to an object",
+      "duration": 2,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "matches route patterns",
+      "fullTitle": "Path Router matches route patterns",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes a function to create a path matching function",
+      "fullTitle": "Path Router exposes a function to create a path matching function",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can apply a route pattern to an array of paths",
+      "fullTitle": "Path Router can apply a route pattern to an array of paths",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can be created",
+      "fullTitle": "SimpleRegistry can be created",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "should be able to convert into a require context",
+      "fullTitle": "SimpleRegistry should be able to convert into a require context",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can attached multiple registries",
+      "fullTitle": "SimpleRegistry can attached multiple registries",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "has child registries",
+      "fullTitle": "SimpleRegistry has child registries",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can register functions with an alias",
+      "fullTitle": "SimpleRegistry can register functions with an alias",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can format ids before storing them",
+      "fullTitle": "SimpleRegistry can format ids before storing them",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can register functions",
+      "fullTitle": "SimpleRegistry can register functions",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can list what is available",
+      "fullTitle": "SimpleRegistry can list what is available",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can lookup objects",
+      "fullTitle": "SimpleRegistry can lookup objects",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can wrap the returned result",
+      "fullTitle": "SimpleRegistry can wrap the returned result",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "tests paths against rules",
+      "fullTitle": "The Path Matcher tests paths against rules",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "hides a plain property",
+      "fullTitle": "Skypager Util hides a plain property",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "hides a getter",
+      "fullTitle": "Skypager Util hides a getter",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "provides shortcuts for the property methods",
+      "fullTitle": "Skypager Util provides shortcuts for the property methods",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can apply lazy interface methods",
+      "fullTitle": "Skypager Util can apply lazy interface methods",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can apply interface methods",
+      "fullTitle": "Skypager Util can apply interface methods",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "helps create lazy loading properties",
+      "fullTitle": "Skypager Util helps create lazy loading properties",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "performs number equality checks",
+      "fullTitle": "Array Query Util performs number equality checks",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "performs string equality checks",
+      "fullTitle": "Array Query Util performs string equality checks",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "performs partial object equality checks",
+      "fullTitle": "Array Query Util performs partial object equality checks",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "performs regex checks",
+      "fullTitle": "Array Query Util performs regex checks",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "accepts an array to test against any matches",
+      "fullTitle": "Array Query Util accepts an array to test against any matches",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "accepts a complex parameter that specifies the operator",
+      "fullTitle": "Array Query Util accepts a complex parameter that specifies the operator",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "accepts a complex parameter that specifies the operator",
+      "fullTitle": "Array Query Util accepts a complex parameter that specifies the operator",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "accepts a complex parameter that specifies the operator",
+      "fullTitle": "Array Query Util accepts a complex parameter that specifies the operator",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "accepts a complex parameter that specifies the operator",
+      "fullTitle": "Array Query Util accepts a complex parameter that specifies the operator",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can work in negate mode instead",
+      "fullTitle": "Array Query Util can work in negate mode instead",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "allows me to create a registry on an object",
+      "fullTitle": "Registries allows me to create a registry on an object",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "attaches a router interface to an object",
+      "fullTitle": "Path Router attaches a router interface to an object",
+      "duration": 7,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "filters lists of strings based on express style patterns",
+      "fullTitle": "Path Router filters lists of strings based on express style patterns",
+      "duration": 1,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "filters complex objects based on express style patterns",
+      "fullTitle": "Path Router filters complex objects based on express style patterns",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "provides a utility for matching route patterns",
+      "fullTitle": "Path Router provides a utility for matching route patterns",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "exposes a function to create a path matching function",
+      "fullTitle": "Path Router exposes a function to create a path matching function",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "can apply a route pattern to an array of paths",
+      "fullTitle": "Path Router can apply a route pattern to an array of paths",
+      "duration": 0,
+      "currentRetry": 0,
+      "err": {}
+    }
+  ]
+}

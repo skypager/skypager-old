@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+const skypager = require('skypager-framework/current')
+const packages = skypager.model('package/public')
+const isEmpty = require('lodash/isEmpty')
+
+packages.instanceChain.keyBy('name').mapValues((pkg, name) => {
+  const results = packages.updateDependentVersions(name, pkg.version)
+
+  console.log('Updating dependents of ' + name)
+
+  if (!isEmpty(results)) {
+    Object.keys(results).forEach(pkgName => {
+      const bump = packages.findByName(pkgName)
+      console.log(bump.version)
+    })
+  }
+
+
+  const dependencies = skypager.get('manifest.dependencies', {})
+
+  Object.keys(dependencies).forEach(depName => {
+    if (packages.findByName(depName)) {
+      dependencies[depName] = packages.findByName(depName).version
+    }
+  })
+
+  const manifest = skypager.get('manifest', {})
+
+  manifest.dependencies = Object.assign(manifest.dependencies, dependencies)
+
+  skypager.fsx.writeFileSync(
+    skypager.join('package.json'),
+    JSON.stringify(manifest, null, 2)
+  )
+}).value()

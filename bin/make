@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+const skypager = require("skypager-framework/current")
+const arg = skypager.get("argv._[2]", "all")
+const single = skypager.get("argv._[3]")
+const { print, clear, icon, colors } = skypager.cli
+
+const runtimes = skypager.select("runtimePackages").instances
+const helpers = skypager.select("helperPackages").instances
+const runtime = single && (runtimes[single] || runtimes[`skypager-runtimes-${single}`])
+const helper = single && (helpers[single] || helpers[`skypager-helpers-${single}`])
+
+if (arg === "all") {
+  print("building all")
+} else if (arg === "runtimes") {
+  Object.keys(runtimes).forEach(id => {
+    print(`Building ${id}`)
+    compile(runtimes[id]).then(result => {
+      result.printStats()
+    })
+  })
+} else if (arg === "runtime" && runtime) {
+  compile(runtime).then(result => {
+    result.printStats({ verbose: true })
+  })
+} else if (arg === "helpers") {
+  print("building helpers")
+} else if (arg === "helper" && helper) {
+  print("building helper")
+} else {
+}
+
+async function compile(pkg, type = "runtime") {
+  const compiler = skypager.compiler(type, Object.assign({}, skypager.argv, { pkg }))
+  return compiler.run()
+}

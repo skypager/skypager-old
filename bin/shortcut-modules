@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+const skypager = require("skypager-framework/current")
+const argv = skypager.argv
+const project = skypager
+
+const runtimeVersions = skypager.model('package/runtime').instanceChain.keyBy('name').mapValues('version').value()
+const runtimes = skypager.model('package/runtime').chain.invoke('shortcuts').reduce((memo, [name, pkg] = []) => { memo[name] = pkg; return memo}, {}).value()
+const helperVersions = skypager.model('package/helper').instanceChain.keyBy('name').mapValues('version').value()
+const helpers = skypager.model('package/helper').chain.invoke('shortcuts').reduce((memo, [name, pkg] = []) => { memo[name] = pkg; return memo}, {}).value()
+
+const helperShortcut = project.resolve('src', 'helpers', 'package.json')
+const runtimeShortcut = project.resolve('src', 'runtimes', 'package.json')
+
+const helperJson = project.readJsonSync(helperShortcut)
+const runtimeJson = project.readJsonSync(runtimeShortcut)
+
+runtimeJson.entryPoints = runtimes
+helperJson.entryPoints = helpers
+
+runtimeJson.dependencies = runtimeVersions
+helperJson.dependencies = helperVersions
+helperJson.dependencies['skypager-runtime'] = runtimeVersions['skypager-runtime']
+
+project.writeFileSync( helperShortcut, JSON.stringify(helperJson, null, 2) )
+project.writeFileSync( runtimeShortcut, JSON.stringify(runtimeJson, null, 2) )

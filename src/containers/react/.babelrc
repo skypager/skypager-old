@@ -1,0 +1,11 @@
+{
+    "presets": ["skypager"],
+    "env": {
+      "development": {
+        "presets": [
+          "skypager",
+          "babel-preset-react-hmre"
+        ]
+      }
+    }
+}

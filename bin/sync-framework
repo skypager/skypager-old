@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+
+const skypager = require('skypager-framework/current')
+
+packages = skypager.model('package/public', { cacheHelper: false })
+
+const dependencies = skypager.get('manifest.dependencies', {})
+
+Object.keys(dependencies).forEach(depName => {
+    if (packages.findByName(depName)) {
+      dependencies[depName] = packages.findByName(depName).version
+    }
+})
+
+const manifest = skypager.get('manifest', {})
+
+manifest.dependencies = Object.assign(manifest.dependencies, dependencies)
+
+skypager.fsx.writeFileSync(skypager.join('package.json'), JSON.stringify(manifest, null, 2))

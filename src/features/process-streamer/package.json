@@ -1,0 +1,11 @@
+{
+  "name": "skypager-features-process-streamer",
+  "version": "37.0.0",
+  "description": "stream node process as colorized html",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "ansi-html-stream": "^0.0.3",
+    "pty.js": "^0.3.1"
+  }
+}

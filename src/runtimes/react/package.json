@@ -1,0 +1,46 @@
+{
+  "name": "skypager-runtimes-react",
+  "version": "37.4.0",
+  "main": "index.js",
+  "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
+  "license": "MIT",
+  "dependencies": {
+    "mobx-react": "^4.2.1",
+    "prop-types": "15.5.10",
+    "react": "15.5.4",
+    "react-dom": "15.5.4",
+    "skypager-runtimes-web": "^37.0.0"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/skypager/skypager"
+  },
+  "homepage": "https://skypager.io",
+  "latestHash": "29370e66697dbb5b62a5",
+  "compilers": {
+    "package": {
+      "entryPoints": {
+        "index": "index.js"
+      }
+    },
+    "minifiedBundle": {
+      "target": "web",
+      "baseCompiler": "node",
+      "minify": true,
+      "entryPoints": {
+        "skypager-react": [
+          "index.web.js"
+        ]
+      }
+    },
+    "bundle": {
+      "target": "web",
+      "baseCompiler": "node",
+      "entryPoints": {
+        "skypager-react": [
+          "index.web.js"
+        ]
+      }
+    }
+  }
+}

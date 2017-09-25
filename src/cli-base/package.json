@@ -1,0 +1,15 @@
+{
+  "name": "skypager-cli-base",
+  "version": "37.4.0",
+  "description": "a lightweight cli for working inside of skypager portfolios",
+  "main": "index.js",
+  "repository": "https://github.com/skypager/skypager",
+  "license": "MIT",
+  "bin": {
+    "skypager-cli": "./skypager-cli",
+    "sky": "./skypager-cli"
+  },
+  "copy": [
+    "src/cli-base/skypager-cli"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "name": "skypager-helpers-bundler",
+  "version": "37.0.0",
+  "description": "an awesome bundler",
+  "main": "index.js",
+  "scripts": {
+    "test": "../skypager-cli/skypager test",
+    "test:watch": "../skypager-cli/skypager test --watch",
+    "build": "../skypager-cli/skypager build library",
+    "build:watch": "../skypager-cli/skypager build library --watch"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "src"
+  ],
+  "keywords": [
+    "REPL",
+    "ES6"
+  ],
+  "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
+  "license": "MIT",
+  "dependencies": {
+    "babel-loader": "^6.4.1",
+    "file-loader": "^0.9.0",
+    "json-loader": "^0.5.4",
+    "skypager-repl": "^21.0.0",
+    "skypager-runtime": "^37.0.0",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.4.1"
+  },
+  "skypager": {
+    "helper": true,
+    "targets": [
+      "node",
+      "electron"
+    ],
+    "paths": {
+      "output": "lib"
+    }
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/skypager/skypager"
+  },
+  "homepage": "https://skypager.io",
+  "latestHash": "9a71b47bdfdbde61fd55"
+}

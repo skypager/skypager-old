@@ -1,0 +1,34 @@
+{
+  "name": "skypager-helpers-server",
+  "version": "37.0.0",
+  "description": "skypager document loader",
+  "main": "index.js",
+  "files": [
+    "lib",
+    "index.js",
+    "src"
+  ],
+  "scripts": {
+    "test": "../skypager-cli/skypager test",
+    "test:watch": "../skypager-cli/skypager test --watch",
+    "build": "../skypager-cli/skypager build library",
+    "build:watch": "../skypager-cli/skypager build library --watch"
+  },
+  "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.2",
+    "skypager-runtime": "^37.0.0"
+  },
+  "skypager": {
+    "paths": {
+      "output": "lib"
+    }
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/skypager/skypager"
+  },
+  "homepage": "https://skypager.io",
+  "latestHash": "ee64f35375285e1fc9e4"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "skypager-features-lerna-adapter",
+  "version": "37.0.0",
+  "description": "use lerna to manage monorepos",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/skypager/skypager.git"
+  },
+  "keywords": [
+    "skypager"
+  ],
+  "author": "Jon Soeder <jon@chicago.com> (https://twitter.com/soederpop)",
+  "license": "MIT",
+  "dependencies": {
+    "lerna": "^2.0.0"
+  }
+}

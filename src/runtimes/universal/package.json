@@ -1,0 +1,31 @@
+{
+  "name": "skypager-runtimes-universal",
+  "version": "37.0.0",
+  "description": "provides registries of domain specific module loaders",
+  "main": "index.js",
+  "browser": "dist/skypager-runtime.js",
+  "engines": {
+    "npm": ">=3"
+  },
+  "scripts": {
+    "build": "yarn build:library && yarn build:bundle",
+    "build:library": "../skypager-cli/skypager build library",
+    "build:bundle": "../skypager-cli/skypager build bundle --minify",
+    "postbuild:bundle": "../skypager-cli/skypager build bundle --minify=false",
+    "build:watch": "../skypager-cli/skypager build library --watch",
+    "build:bundle:watch": "../skypager-cli/skypager build bundle --watch",
+    "test": "../skypager-cli/skypager test",
+    "test:watch": "../skypager-cli/skypager test --watch --growl"
+  },
+  "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
+  "license": "MIT",
+  "dependencies": {
+    "skypager-runtime": "^37.0.0"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/skypager/skypager"
+  },
+  "homepage": "https://skypager.io",
+  "latestHash": "9e14b94cca848eac422c"
+}

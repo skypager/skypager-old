@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+const skypager = require('skypager-runtimes-development')
+const bump = skypager.argv.minor
+  ? 'minor'
+  : skypager.argv.major ? 'major' : 'patch'
+
+const cmd = __dirname + `/each changed npm version ${bump} --skip-git`
+
+skypager.proc.execSync(
+  cmd, { stdio: 'inherit' }
+)
+
+skypager.proc.execSync(
+  __dirname + '/sync-versions', {
+    cwd: __dirname + '/../',
+    stdio: 'inherit'
+  }
+)
+
+skypager.proc.execSync(
+  __dirname + '/sync-framework', {
+    cwd: __dirname + '/../',
+    stdio: 'inherit'
+  }
+)

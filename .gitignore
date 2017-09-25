@@ -1,0 +1,16 @@
+node_modules
+.DS_Store
+**/npm-debug.*
+.env
+.tmp
+*.log
+**/npm-debug*
+secrets
+packages/
+**/lib/
+**/dist/
+**/public/
+tmp/
+websites/cdn.skypager.io/public/*
+websites/cdn.skypager.io/static/*
+export/

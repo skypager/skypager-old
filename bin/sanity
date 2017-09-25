@@ -1,0 +1,29 @@
+#!/usr/bin/env node
+
+const project = require("skypager-framework/current")
+let { scope = ".*" } = project.argv
+const args = project.argv._.slice(2)
+const { colors, print, clear, icon, randomBanner, prompt } = project.cli
+const { green, red, bold } = colors
+
+let packages = project.model("package/built").instanceChain.values().value()
+
+packages = packages.filter(pkg => {
+  const pattern = new RegExp(scope, "i")
+
+  if (pattern.test(pkg.name) || pattern.test(pkg.id)) {
+    return true
+  }
+
+  return false
+})
+
+packages.forEach(pkg => {
+  try {
+    require(`${process.cwd()}/packages/${pkg.name}`)
+    console.log(`${bold(pkg.name)} is ${green('OK')}`)
+  } catch(error) {
+    console.log(`${bold(pkg.name)} require ${red('failed')}: ${error.message}`)
+    console.log(error.stack)
+  }
+})

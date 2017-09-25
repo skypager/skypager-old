@@ -1,0 +1,52 @@
+{
+  "name": "skypager-runtimes-web",
+  "version": "37.0.0",
+  "main": "index.js",
+  "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
+  "license": "MIT",
+  "dependencies": {
+    "history": "^4.6.1",
+    "skypager-helpers-client": "^37.0.0",
+    "skypager-helpers-page": "^37.0.0"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/skypager/skypager"
+  },
+  "compilers": {
+    "package": {
+      "entryPoints": "index.js"
+    },
+    "minifiedBundle": {
+      "target": "web",
+      "minify": true,
+      "externals": {
+        "lodash": "global lodash",
+        "skypager-runtime": "global skypager",
+        "mobx": "global mobx"
+      },
+      "entryPoints": {
+        "skypager-web": [
+          "expose?skypager!skypager-runtime/skypager-runtime.js",
+          "index.web.js"
+        ]
+      }
+    },
+    "bundle": {
+      "target": "web",
+      "externals": {
+        "lodash": "global lodash",
+        "skypager-runtime": "global skypager",
+        "mobx": "global mobx"
+      },
+      "entryPoints": {
+        "skypager-web": [
+          "expose?skypager!skypager-runtime/skypager-runtime.js",
+          "index.web.js"
+        ]
+      }
+    }
+  },
+  "homepage": "https://skypager.io",
+  "latestHash": "29370e66697dbb5b62a5"
+}

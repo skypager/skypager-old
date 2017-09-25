@@ -1,0 +1,7 @@
+#!/bin/sh
+
+cd "$PWD/node_modules"
+ln -sF ../packages/skypager* .
+ln -sF ../legacy/skypager-framework .
+cd "$PWD/.bin"
+ln -sF ../../legacy/skypager-cli/skypager .

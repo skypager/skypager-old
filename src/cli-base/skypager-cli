@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+
+const { join } = require("path")
+
+let instance
+
+process.env.skypager_silence_console_logs = true
+
+const loadSkypager = () => Promise.resolve(require(join(__dirname, "index.js")).main())
+
+const runMatchingCommand = runtime => {
+  instance = instance || runtime
+  const cliHandler = runtime.matchingCommand || runtime.cliHandler
+  return cliHandler.run().then(() => cliHandler)
+}
+
+const handleExit = command => {
+  if (command.shouldExit !== false) {
+    process.exitCode = command.exitCode || 0
+  } else {
+    process.on("SIGINT", () => {
+      process.exit(command.exitCode || 0)
+    })
+    setInterval(() => {}, 100)
+  }
+}
+
+const handleCommandError = error => {
+  console.error(`Error while running command`, {
+    message: error.message,
+    stack: error.stack,
+  })
+
+  process.exitCode = 1
+}
+
+loadSkypager().then(runMatchingCommand).then(handleExit).catch(handleCommandError)

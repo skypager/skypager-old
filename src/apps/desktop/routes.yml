@@ -1,0 +1,5 @@
+---
+  - pattern: '/'
+    page: 'Home'
+  - pattern: '*'
+    page: NotFound

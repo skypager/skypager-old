@@ -1,0 +1,7 @@
+#!/bin/sh
+
+mkdir -p packages/skypager
+
+skypager build library
+skypager build bundle
+skypager build bundle --minify

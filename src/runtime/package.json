@@ -1,0 +1,55 @@
+{
+  "name": "skypager-runtime",
+  "version": "37.0.0",
+  "description": "provides registries of domain specific module loaders",
+  "main": "index.js",
+  "engines": {
+    "npm": ">=3"
+  },
+  "compilers": {
+    "package": {
+      "entryPoints": {
+        "index": "index.js",
+        "helper": "helpers/helper.js",
+        "config-builder": "config-builder/index.js",
+        "utils": "utils/index.js",
+        "registries": "registries/index.js",
+        "context-registry": "registries/context.js"
+      }
+    },
+    "minifiedBundle": {
+      "minify": true,
+      "target": "web",
+      "entryPoints": {
+        "skypager-runtime": [
+          "expose?lodash!lodash/lodash.js",
+          "expose?mobx!mobx/lib/mobx.umd.js",
+          "expose?skypager!index.web.js"
+        ]
+      }
+    },
+    "bundle": {
+      "target": "web",
+      "entryPoints": {
+        "skypager-runtime": [
+          "expose?lodash!lodash/lodash.min.js",
+          "expose?mobx!mobx/lib/mobx.umd.min.js",
+          "expose?skypager!index.web.js"
+        ]
+      }
+    }
+  },
+  "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
+  "license": "MIT",
+  "dependencies": {
+    "babel-runtime": "^6.23.0",
+    "isomorphic-vm": "0.0.1",
+    "lodash": "^4.17.4",
+    "mobx": "3.1.11",
+    "uuid": "^3.0.1"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/skypager/skypager"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "skypager-runtimes-electron",
+  "version": "37.4.0",
+  "main": "index.js",
+  "browser": "skypager.js",
+  "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
+  "license": "MIT",
+  "dependencies": {
+    "skypager-runtimes-react": "^37.4.0",
+    "electron-json-storage": "^3.0.5",
+    "node-uuid": "^1.4.8",
+    "buffer-json": "^1.0.0",
+    "opn": "^5.1.0",
+    "skypager-runtimes-node": "^37.4.0",
+    "skypager-runtimes-development": "^37.4.0"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/skypager/skypager"
+  },
+  "compilers": {
+    "electronMain": {
+      "target": "electron-main",
+      "entryPoints": {
+        "main": "main.js",
+        "index": "index.js"
+      }
+    },
+    "electronRenderer": {
+      "target": "electron-renderer",
+      "entryPoints": {
+        "renderer": "renderer.js"
+      }
+    }
+  },
+  "homepage": "https://skypager.io",
+  "latestHash": "29370e66697dbb5b62a5"
+}

@@ -1,0 +1,15 @@
+{
+  "name": "skypager-features-file-manager",
+  "version": "37.2.0",
+  "description": "an observable state machine for a projects files",
+  "main": "index.js",
+  "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
+  "license": "MIT",
+  "dependencies": {
+    "chokidar": "^1.6.1",
+    "fs-extra-promise": "^0.4.1",
+    "md5-file": "3.1.1",
+    "memory-fs": "^0.4.1",
+    "skywalker": "^0.3.2"
+  }
+}

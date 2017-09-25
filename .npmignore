@@ -1,0 +1,15 @@
+packages/
+legacy/
+hold/
+log/
+tmp/
+websites/
+dist/
+.env
+data/
+notes/
+project/
+test/fixture/
+test/fixture-v2
+log/
+src/

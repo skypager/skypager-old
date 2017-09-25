@@ -1,0 +1,2 @@
+- runMainScript() should handle errors
+- investigate if commands registered during mainScript() phase are available to the CLI

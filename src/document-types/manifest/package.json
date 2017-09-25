@@ -1,0 +1,12 @@
+{
+  "name": "skypager-document-types-manifest",
+  "version": "37.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/skypager/skypager"
+  },
+  "homepage": "https://skypager.io",
+  "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "skypager-apps-desktop",
+  "version": "30.5.1",
+  "description": "skypager.io desktop app",
+  "main": "index.js",
+  "repository": "https://github.com/skypager/website",
+  "author": "Jon Soeder <jon@chicago.com> (https://twitter.com/soederpop)",
+  "license": "MIT"
+}

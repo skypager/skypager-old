@@ -1,0 +1,13 @@
+{
+  "name": "skypager-containers-react",
+  "version": "30.0.3",
+  "description": "a container for serving a skypager node runtime",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "docker build -t datapimp/skypager-react .",
+    "push": "docker push datapimp/skypager-react",
+    "start:dev": "docker run -e NODE_ENV=development --restart=always --name skypager-react-dev --net='host' datapimp/skypager-react sky-dev serve",
+    "start": "docker run -e NODE_ENV=production --restart=always --name skypager-react --net='host' datapimp/skypager-react sky-prod serve"
+  }
+}

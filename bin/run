@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+const project = require('skypager-framework/current')
+let { scope = '.*' } = project.argv
+const args = project.argv._.slice(2)
+const { colors, print, clear, icon, randomBanner, prompt } = project.cli
+
+let packages = project.model('package/public').instanceChain.values().value()
+const pkg = typeof args[0] === 'string' && packages.find(pkg => pkg.name.endsWith(args[0]) )
+
+if (pkg) {
+  args.shift()
+
+  const cwd = project.resolve(pkg.relativeDirname)
+
+  try {
+    pkg.handleCli.call(pkg, args, cwd, project.cli)
+  } catch(error) {
+    print('Error running command')
+    print(error.message)
+  }
+} else if (args[0] && args[0].length > 0) {
+  print(`Could not find package with ${args[0]}`)
+  process.exit(1)
+} else if (!args[0]) {
+  print('Must specify a package name')
+  process.exit(1)
+}

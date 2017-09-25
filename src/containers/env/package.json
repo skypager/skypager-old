@@ -1,0 +1,11 @@
+{
+  "name": "skypager-containers-env",
+  "version": "30.0.3",
+  "description": "a container for serving a skypager node runtime",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "docker build -t datapimp/skypager-env .",
+    "push": "docker push datapimp/skypager-env"
+  }
+}
