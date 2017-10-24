@@ -18,8 +18,8 @@ export function featureWasEnabled() {
     (runtime.isRunningCli && runtime.get("matchingCommand.shouldSilenceConsole")) ||
     runtime.get("commandBase", "").startsWith("console")
 
-  if (requestedSilentMode) {
-    runtime.loggers.remove("console")
+  if (requestedSilentMode && !runtime.argv.verbose) {
+    runtime.loggers.remove('console')
   }
 
   runtime.hide("debug", (...args) => runtime.logger.debug(...args))

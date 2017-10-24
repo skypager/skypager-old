@@ -3,10 +3,31 @@ export const featureMethods = [
   "runPackageScript",
   "runCode",
   "findScriptById",
-  "runScriptById"
+  "runScriptById",
+  "lazyCurrentModule"
 ]
 
 export const createGetter = "scriptRunner"
+
+export function lazyCurrentModule() {
+  const { runtime } = this
+  const { existsSync: exists } = runtime.fsx
+  const { currentPackagePath = runtime.pathUtils.resolve(process.cwd(), 'package.json') } = runtime.currentState
+
+  if (exists(currentPackagePath)) {
+    try {
+      __non_webpack_require__(currentPackagePath)
+      const cache = __non_webpack_require__.cache || {}
+      const currentModule = cache[currentPackagePath]
+
+      return currentModule
+    } catch(error) {
+      return error
+    }
+  } else {
+    return false
+  }
+}
 
 export async function runScriptById(options = {}) {
   const script = await this.findScriptById(options)
@@ -117,7 +138,7 @@ function createRunner(options = {}) {
 
     colors: skypager.cli.colors,
 
-    require: process.mainModule.require,
+    require: this.get('currentModule.require', process.mainModule.require),
 
     process,
 

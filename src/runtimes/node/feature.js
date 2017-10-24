@@ -24,6 +24,14 @@ export function featureWasEnabled(options = {}) {
   runtime.feature("logging").enable()
   runtime.feature("skywalker").enable()
   runtime.feature("package-finder").enable()
+
+  runtime.packageFinder.findNearest().then(currentPackagePath => {
+    runtime.state.set('currentPackagePath', currentPackagePath)
+  }).catch((error) => {
+    runtime.state.set('packageFinderError', error)
+    // swallow the erro
+  })
+
   runtime.feature("git").enable()
   runtime.feature("package-cache").enable()
   runtime.feature("file-downloader").enable()

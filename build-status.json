@@ -1,10 +1,10 @@
 {
   "gitInfo": {
-    "sha": "674d1bd210e8c97216e6a08cb56d8e8bb65e26a4",
-    "abbreviatedSha": "674d1bd210",
-    "branch": "master",
-    "tag": "v37.4.0",
-    "root": "/Users/jonathan/Portfolio/src/github.com/skypager/skypager"
+    "sha": "fd5a70ed170cc21993378c4173f376f186e9cc7a",
+    "abbreviatedSha": "fd5a70ed17",
+    "branch": "feature/monorepo-organization",
+    "tag": null,
+    "root": "/Users/jon/Projects/skypager"
   },
   "packages": {
     "skypager-document-types-manifest": {
@@ -609,11 +609,10 @@
       "version": "37.2.0",
       "name": "skypager-servers-graphql",
       "package": {
-        "success": true,
-        "assets": {
-          "index": "index.js"
-        }
-      }
+        "warnings": 0,
+        "errors": 3
+      },
+      "success": false
     },
     "skypager-servers-portfolio": {
       "version": "37.2.0",
@@ -680,6 +679,12 @@
       "package": {
         "warnings": 0,
         "errors": 1
+      }
+    },
+    "skypager-servers-graphql": {
+      "package": {
+        "warnings": 0,
+        "errors": 3
       }
     }
   }
