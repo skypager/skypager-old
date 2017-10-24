@@ -1,18 +1,21 @@
 export const featureMethods = [
-  "runScriptAtPath",
-  "runPackageScript",
-  "runCode",
-  "findScriptById",
-  "runScriptById",
-  "lazyCurrentModule"
+  'runScriptAtPath',
+  'runPackageScript',
+  'runCode',
+  'findScriptById',
+  'findMatchingScripts',
+  'runScriptById',
+  'lazyCurrentModule',
 ]
 
-export const createGetter = "scriptRunner"
+export const createGetter = 'scriptRunner'
 
 export function lazyCurrentModule() {
   const { runtime } = this
   const { existsSync: exists } = runtime.fsx
-  const { currentPackagePath = runtime.pathUtils.resolve(process.cwd(), 'package.json') } = runtime.currentState
+  const {
+    currentPackagePath = runtime.pathUtils.resolve(process.cwd(), 'package.json'),
+  } = runtime.currentState
 
   if (exists(currentPackagePath)) {
     try {
@@ -21,7 +24,7 @@ export function lazyCurrentModule() {
       const currentModule = cache[currentPackagePath]
 
       return currentModule
-    } catch(error) {
+    } catch (error) {
       return error
     }
   } else {
@@ -33,7 +36,7 @@ export async function runScriptById(options = {}) {
   const script = await this.findScriptById(options)
 
   if (!script) {
-    throw new Error("Can not find a script with this id")
+    throw new Error('Can not find a script with this id')
   }
 
   const scriptPath = this.runtime.resolve(script)
@@ -41,24 +44,54 @@ export async function runScriptById(options = {}) {
   return this.runScriptAtPath({ scriptPath, script: script })
 }
 
+export async function findMatchingScripts(options = {}) {
+  if (this.lodash.isString(options)) {
+    options = { script: options }
+  }
+
+  const { scriptsExtension = '.js', scriptsPrefix = 'scripts' } = options
+  let { script } = options
+
+  if (!script) {
+    throw new Error('Must pass a valid script id')
+  }
+
+  const normalize = val =>
+    unescape(val)
+      .split(/\\|\//g)
+      .join('::')
+
+  const scriptTag = normalize(script)
+
+  const scriptMatcher = val => {
+    const res = normalize(val).indexOf(scriptTag) >= 0
+    //console.log('testing ' + normalize(val) + ' against ' + scriptTag, res)
+    return res
+  }
+
+  const possibleMatches = this.runtime.fileManager.fileIds
+    .filter(fileId => fileId.match(scriptsPrefix) && fileId.endsWith(scriptsExtension))
+    .filter(scriptMatcher)
+
+  return possibleMatches
+}
+
 export async function findScriptById(options = {}) {
   if (this.lodash.isString(options)) {
     options = { script: options }
   }
 
-  const { script } = options
+  const { scriptsExtension = '.js', scriptsPrefix = 'scripts', script } = options
 
   if (!script) {
-    throw new Error("Must pass a valid script id")
+    throw new Error('Must pass a valid script id')
   }
 
-  const possibleMatches = this.runtime.fileManager.matchPaths(
-    new RegExp(`scripts.*${script}.js$`, "i")
-  )
-
-  if (!possibleMatches.length) {
-    possibleMatches.push(...this.runtime.fileManager.matchPaths(new RegExp(`^${script}.js$`)))
-  }
+  const possibleMatches = this.runtime.fileManager.fileIds
+    .filter(fileId => fileId.match(scriptsPrefix) && fileId.endsWith(scriptsExtension))
+    .filter(fileId =>
+      fileId.replace(/\/|\\/g, '.').match(new RegExp(script.replace(/\/|\\/g, '.')))
+    )
 
   if (possibleMatches.length > 1) {
     return possibleMatches.sort(m => m.length)[0]
@@ -75,7 +108,7 @@ export async function runCode(options = {}) {
     options = { code: options }
   }
 
-  const { scriptPath = "code.js", code = "" } = options
+  const { scriptPath = 'code.js', code = '' } = options
 
   return await doRun.call(this, createRunner.call(this, { code, scriptPath }))
 }
@@ -101,15 +134,15 @@ export async function runPackageScript(options = {}) {
     options = { script: options }
   }
 
-  const { args = [], yarn = false, script = "start" } = options
+  const { args = [], yarn = false, script = 'start' } = options
 
-  const extraArgs = args.length ? `-- ${args.join(" ")}` : ""
+  const extraArgs = args.length ? `-- ${args.join(' ')}` : ''
 
-  const scripts = runtime.get("currentPackage.scripts", {})
+  const scripts = runtime.get('currentPackage.scripts', {})
 
   if (scripts[script]) {
-    const results = await runtime.select("process/result", {
-      command: yarn ? `yarn ${script}` : `npm run ${script}${extraArgs}`
+    const results = await runtime.select('process/result', {
+      command: yarn ? `yarn ${script}` : `npm run ${script}${extraArgs}`,
     })
 
     return options.results ? results : results.exitCode !== null && parseInt(results.exitCode) === 0
@@ -119,7 +152,7 @@ export async function runPackageScript(options = {}) {
     } else {
       throw new Error(
         `Package does not have the script ${script}. Valid scripts are: ${Object.keys(scripts).join(
-          ", "
+          ', '
         )}`
       )
     }
@@ -185,34 +218,34 @@ function createRunner(options = {}) {
       return skypager.fsm
     },
     ...runtime.slice(
-      "bundlers",
-      "clients",
-      "commands",
-      "documents",
-      "documentType",
-      "features",
-      "pages",
-      "projects",
-      "projectTypes",
-      "servers",
-      "services",
-      "webpacks",
-      "selectors"
+      'bundlers',
+      'clients',
+      'commands',
+      'documents',
+      'documentType',
+      'features',
+      'pages',
+      'projects',
+      'projectTypes',
+      'servers',
+      'services',
+      'webpacks',
+      'selectors'
     ),
     ...runtime.slice(
-      "pathUtils",
-      "lodash",
-      "stringUtils",
-      "urlUtils",
-      "proc",
-      "mobx",
-      "packageFinder",
-      "fileManager",
-      "Helper",
-      "Runtime",
-      "selectors"
+      'pathUtils',
+      'lodash',
+      'stringUtils',
+      'urlUtils',
+      'proc',
+      'mobx',
+      'packageFinder',
+      'fileManager',
+      'Helper',
+      'Runtime',
+      'selectors'
     ),
-    console
+    console,
   })
 }
 
@@ -224,8 +257,8 @@ async function doRun(codeRunner) {
     results.error = {
       message: results.error.message,
       stack: results.error.stack
-        .split("\n")
-        .filter(line => line && !line.match(/regenerator|core-js|babel-runtime/i))
+        .split('\n')
+        .filter(line => line && !line.match(/regenerator|core-js|babel-runtime/i)),
     }
   }
 
