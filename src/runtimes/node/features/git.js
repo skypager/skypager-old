@@ -1,30 +1,30 @@
-import zlib from "zlib"
-import pathMatcher from "runtime/utils/path-matcher"
-import createSkywalker from "skywalker"
+import zlib from 'zlib'
+import pathMatcher from 'runtime/utils/path-matcher'
+import createSkywalker from 'skywalker'
 
-export const createGetter = "git"
+export const createGetter = 'git'
 
 export const featureMethods = [
-  "findRepo",
-  "getMeta",
-  "getModifiedFiles",
-  "getIsDirty",
-  "lsFiles",
-  "walker",
-  "watcher",
-  "walk",
-  "exists",
-  "filesStatus",
-  "toFileId",
-  "updateStatus",
-  "toJSON",
-  "run",
-  "clearState",
-  "poll",
-  "stopPolling"
+  'findRepo',
+  'getMeta',
+  'getModifiedFiles',
+  'getIsDirty',
+  'lsFiles',
+  'walker',
+  'watcher',
+  'walk',
+  'exists',
+  'filesStatus',
+  'toFileId',
+  'updateStatus',
+  'toJSON',
+  'run',
+  'clearState',
+  'poll',
+  'stopPolling',
 ]
 
-export const hostMethods = ["getGitInfo"]
+export const hostMethods = ['getGitInfo']
 
 const pollers = new WeakMap()
 
@@ -49,11 +49,11 @@ export async function poll(options = {}) {
     pollers.set(
       runtime,
       setInterval(() => {
-        runtime.debug("git is polling")
+        runtime.debug('git is polling')
 
         this.run()
           .then(() => {
-            runtime.debug("git finished polling")
+            runtime.debug('git finished polling')
           })
           .catch(error => {})
       }, interval)
@@ -95,27 +95,27 @@ export function toJSON() {
     files: this.files.toJS(),
     directories: this.directories.toJS(),
     statusMap: this.statusMap.toJS(),
-    ...this.runtime.gitInfo
+    ...this.runtime.gitInfo,
   })
 }
 
 export function observables() {
   return {
-    files: ["map", {}],
-    directories: ["map", {}],
-    statusMap: ["map", {}],
+    files: ['map', {}],
+    directories: ['map', {}],
+    statusMap: ['map', {}],
     fileIds: [
-      "computed",
+      'computed',
       function() {
         return this.files.keys()
-      }
+      },
     ],
     directoryIds: [
-      "computed",
+      'computed',
       function() {
         return this.directories.keys()
-      }
-    ]
+      },
+    ],
   }
 }
 
@@ -157,11 +157,11 @@ export async function walker(options = {}) {
     .ignoreDotFiles(true)
     .fileFilter(/.*/, onlyGitFiles.bind(this))
     .directoryFilter(/.*/, onlyGitFiles.bind(this))
-    .on("file", function(file) {
-      i.emit("receivedFile", rel(file._.path), file)
+    .on('file', function(file) {
+      i.emit('receivedFile', rel(file._.path), file)
     })
-    .on("directory", function(file) {
-      i.emit("receivedDirectory", rel(file._.path), file)
+    .on('directory', function(file) {
+      i.emit('receivedDirectory', rel(file._.path), file)
     })
 }
 
@@ -178,6 +178,7 @@ export async function updateStatus(options = {}) {
 export async function walk(options = {}) {
   const { runtime } = this
   const { dirname, parse } = runtime.pathUtils
+  const { pick } = runtime.lodash
 
   const { files, directories } = this
 
@@ -203,15 +204,15 @@ export async function walk(options = {}) {
           ...parsed,
           path: dir,
           relative: relativeDirname,
-          stats: result
+          stats: result,
         })
-        runtime.emit("gitDidReceiveDirectory", relativeDirname, directories.get(relativeDirname))
+        runtime.emit('gitDidReceiveDirectory', relativeDirname, directories.get(relativeDirname))
       } catch (error) {}
     } else if (isDirectory && !directories.has(relativeFile)) {
       try {
         const result = await runtime.fsx.statAsync(path)
         directories.set(relativeFile, { ...parsed, path, relative: relativeFile, stats: result })
-        runtime.emit("gitDidReceiveDirectory", relativeFile, directories.get(relativeFile))
+        runtime.emit('gitDidReceiveDirectory', relativeFile, directories.get(relativeFile))
       } catch (error) {}
     }
 
@@ -222,9 +223,9 @@ export async function walk(options = {}) {
         relative: relativeFile,
         stats,
         extension: parsed.ext,
-        mime: { mimeType: this.runtime.fsx.mimeType(parsed.ext) }
+        mime: { mimeType: this.runtime.fsx.mimeType(parsed.ext) },
       })
-      runtime.emit("gitDidReceiveFile", relativeFile, files.get(relativeFile))
+      runtime.emit('gitDidReceiveFile', relativeFile, files.get(relativeFile))
     }
 
     return this
@@ -232,11 +233,26 @@ export async function walk(options = {}) {
 
   let filePaths = await this.lsFiles({
     others: false,
-    gitignore: true
+    gitignore: true,
+    ...pick(
+      options,
+      'others',
+      'gitignore',
+      'cached',
+      'skypagerignore',
+      'pattern',
+      'exclude',
+      'cwd',
+      'fullName',
+      'flags'
+    ),
   })
 
   await Promise.all(
-    runtime.lodash.uniq(filePaths).filter(p => p.length).map(p => statFile(runtime.resolve(p)))
+    runtime.lodash
+      .uniq(filePaths)
+      .filter(p => p.length)
+      .map(p => statFile(runtime.resolve(p)))
   )
 
   return this
@@ -244,20 +260,27 @@ export async function walk(options = {}) {
 
 export async function filesStatus(options = {}) {
   return this.runtime
-    .select("process/output", {
+    .select('process/output', {
       cwd: this.runtime.cwd,
       env: this.runtime.environment,
-      command: "git status --porcelain",
-      format: "lines",
-      outputOnly: false
+      command: 'git status --porcelain',
+      format: 'lines',
+      outputOnly: false,
     })
-    .then(({ stdout = "", stderr = "" } = {}) => stdout.map(l => l.trim().split(" ").reverse()))
+    .then(({ stdout = '', stderr = '' } = {}) =>
+      stdout.map(l =>
+        l
+          .trim()
+          .split(' ')
+          .reverse()
+      )
+    )
     .catch(e => [])
     .then(p => (options.object ? this.runtime.lodash.fromPairs(p) : p))
 }
 
 export async function lsFiles(options = {}) {
-  if (typeof options === "string") {
+  if (typeof options === 'string') {
     options = { pattern: options }
   }
 
@@ -267,11 +290,12 @@ export async function lsFiles(options = {}) {
     fullName = false,
     exclude = [],
     status = false,
-    flags = "",
+    flags = '',
     gitignore = true,
     skypagerignore = false,
     others = true,
-    debug = false
+    debug = false,
+    cached = true,
   } = options
 
   let pattern = options.pattern || null
@@ -280,30 +304,32 @@ export async function lsFiles(options = {}) {
   const command = [
     `git ls-files`,
     pattern,
-    fullName ? "--full-name" : null,
-    debug ? "--debug" : null,
-    status ? "-t" : null,
-    gitignore ? "--exclude-from .gitignore" : null,
-    skypagerignore ? "--exclude-from .skypagerignore" : null,
-    others && !debug ? "--others" : null,
+    fullName ? '--full-name' : null,
+    debug ? '--debug' : null,
+    status ? '-t' : null,
+    gitignore ? '--exclude-from .gitignore' : null,
+    skypagerignore ? '--exclude-from .skypagerignore' : null,
+    others && !debug ? '--others' : null,
+    // only need to include cached if others is set to true otherwise others only returns untracked
+    others && cached ? '--cached' : null,
     flags,
-    ...excludeArgs
+    ...excludeArgs,
   ]
     .filter(v => v && v.length > 0)
-    .join(" ")
+    .join(' ')
 
   return this.runtime
-    .select("process/output", { command, cwd, env, format: "lines", outputOnly: true })
-    .catch(error => "")
+    .select('process/output', { command, cwd, env, format: 'lines', outputOnly: true })
+    .catch(error => '')
 }
 
 export function getGitInfo() {
-  return this.feature("git").meta
+  return this.feature('git').meta
 }
 
 export function findRepo() {
   const { runtime } = this
-  return runtime.fsx.findUpSync(".git")
+  return runtime.fsx.findUpSync('.git')
 }
 
 export function getIsDirty() {
@@ -313,11 +339,11 @@ export function getIsDirty() {
 export function getModifiedFiles() {
   const { execSync: exec } = this.runtime.proc
 
-  return exec("git status")
+  return exec('git status')
     .toString()
-    .split("\n")
+    .split('\n')
     .filter(s => s.match(/modified/))
-    .map(t => t.replace(/modified\:\s+/, "").trim())
+    .map(t => t.replace(/modified\:\s+/, '').trim())
 }
 
 export function getMeta() {
@@ -331,29 +357,29 @@ export function getMeta() {
     abbreviatedSha: null,
     branch: null,
     tag: null,
-    root: path.resolve(gitPath, "..")
+    root: path.resolve(gitPath, '..'),
   }
 
   function findPackedTag(sha) {
-    const packedRefsFilePath = path.join(gitPath, "packed-refs")
+    const packedRefsFilePath = path.join(gitPath, 'packed-refs')
     if (fs.existsSync(packedRefsFilePath)) {
-      const packedRefsFile = fs.readFileSync(packedRefsFilePath, { encoding: "utf8" })
-      const tagLine = packedRefsFile.split("\n").filter(function(line) {
-        return line.indexOf("refs/tags") > -1 && line.indexOf(sha) > -1
+      const packedRefsFile = fs.readFileSync(packedRefsFilePath, { encoding: 'utf8' })
+      const tagLine = packedRefsFile.split('\n').filter(function(line) {
+        return line.indexOf('refs/tags') > -1 && line.indexOf(sha) > -1
       })[0]
 
       if (tagLine) {
-        return tagLine.split("tags/")[1]
+        return tagLine.split('tags/')[1]
       }
     }
   }
 
   function commitForTag(tag) {
-    const tagPath = path.join(gitPath, "refs", "tags", tag)
-    const taggedObject = fs.readFileSync(tagPath, { encoding: "utf8" }).trim()
+    const tagPath = path.join(gitPath, 'refs', 'tags', tag)
+    const taggedObject = fs.readFileSync(tagPath, { encoding: 'utf8' }).trim()
     const objectPath = path.join(
       gitPath,
-      "objects",
+      'objects',
       taggedObject.slice(0, 2),
       taggedObject.slice(2)
     )
@@ -367,7 +393,7 @@ export function getMeta() {
     const objectContents = zlib.inflateSync(fs.readFileSync(objectPath)).toString()
 
     // 'tag 172\u0000object c1ee41c325d54f410b133e0018c7a6b1316f6cda\ntype commit\ntag awesome-tag\ntagger Robert Jackson <robert.w.jackson@me.com> 1429100021 -0400\n\nI am making an annotated tag.\n'
-    if (objectContents.slice(0, 3) === "tag") {
+    if (objectContents.slice(0, 3) === 'tag') {
       const sections = objectContents.split(/\0|\n/)
       const sha = sections[1].slice(7)
 
@@ -384,7 +410,7 @@ export function getMeta() {
       return tag
     }
 
-    const tagsPath = path.join(gitPath, "refs", "tags")
+    const tagsPath = path.join(gitPath, 'refs', 'tags')
     if (!fs.existsSync(tagsPath)) {
       return false
     }
@@ -402,22 +428,29 @@ export function getMeta() {
   }
 
   try {
-    const headFilePath = path.join(gitPath, "HEAD")
+    const headFilePath = path.join(gitPath, 'HEAD')
 
     if (fs.existsSync(headFilePath)) {
-      const headFile = fs.readFileSync(headFilePath, { encoding: "utf8" })
-      let branchName = headFile.split("/").slice(2).join("/").trim()
+      const headFile = fs.readFileSync(headFilePath, { encoding: 'utf8' })
+      let branchName = headFile
+        .split('/')
+        .slice(2)
+        .join('/')
+        .trim()
       if (!branchName) {
-        branchName = headFile.split("/").slice(-1)[0].trim()
+        branchName = headFile
+          .split('/')
+          .slice(-1)[0]
+          .trim()
       }
-      const refPath = headFile.split(" ")[1]
+      const refPath = headFile.split(' ')[1]
 
       // Find branch and SHA
       if (refPath) {
         const branchPath = path.join(gitPath, refPath.trim())
 
         result.branch = branchName
-        result.sha = fs.readFileSync(branchPath, { encoding: "utf8" }).trim()
+        result.sha = fs.readFileSync(branchPath, { encoding: 'utf8' }).trim()
       } else {
         result.sha = branchName
       }

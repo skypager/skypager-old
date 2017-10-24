@@ -1,36 +1,36 @@
-export const createGetter = "fileManager"
-import pathMatcher from "runtime/utils/path-matcher"
-import md5File from "md5-file"
-import * as computedProperties from "./file-manager/computed"
-import * as actions from "./file-manager/actions"
-import Promise from "bluebird"
-import Memory from "memory-fs"
-export { walkUp, walkUpSync } from "./package-manager"
+export const createGetter = 'fileManager'
+import pathMatcher from 'runtime/utils/path-matcher'
+import md5File from 'md5-file'
+import * as computedProperties from './file-manager/computed'
+import * as actions from './file-manager/actions'
+import Promise from 'bluebird'
+import Memory from 'memory-fs'
+export { walkUp, walkUpSync } from './package-manager'
 
-export const CREATED = "CREATED"
-export const STARTING = "STARTING"
-export const FAILED = "FAILED"
-export const READY = "READY"
+export const CREATED = 'CREATED'
+export const STARTING = 'STARTING'
+export const FAILED = 'FAILED'
+export const READY = 'READY'
 
 export const STATUSES = {
   CREATED,
   READY,
   FAILED,
-  STARTING
+  STARTING,
 }
 
-export const RECEIVED_FILE_CONTENT = "willReceiveContent"
-export const RECEIVED_FILE_UPDATE = "didReceiveFileUpdate"
-export const RECEIVED_FILE_ADD = "didReceiveFile"
-export const RECEIVED_FILE_REMOVE = "didRemoveFile"
-export const RECEIVED_FILE_NOTIFICATION = "didReceiveNotification"
+export const RECEIVED_FILE_CONTENT = 'willReceiveContent'
+export const RECEIVED_FILE_UPDATE = 'didReceiveFileUpdate'
+export const RECEIVED_FILE_ADD = 'didReceiveFile'
+export const RECEIVED_FILE_REMOVE = 'didRemoveFile'
+export const RECEIVED_FILE_NOTIFICATION = 'didReceiveNotification'
 
-export const RECEIVED_DIRECTORY_UPDATE = "didReceiveDirectoryUpdate"
-export const RECEIVED_STATUS_UPDATE = "didReceiveStatusUpdate"
-export const WILL_READ_FILES = "willReadFiles"
-export const DID_FAIL = "didFail"
-export const WAS_ACTIVATED = "wasActivated"
-export const WILL_START = "willStart"
+export const RECEIVED_DIRECTORY_UPDATE = 'didReceiveDirectoryUpdate'
+export const RECEIVED_STATUS_UPDATE = 'didReceiveStatusUpdate'
+export const WILL_READ_FILES = 'willReadFiles'
+export const DID_FAIL = 'didFail'
+export const WAS_ACTIVATED = 'wasActivated'
+export const WILL_START = 'willStart'
 
 export const LIFECYCLE_HOOKS = {
   RECEIVED_FILE_CONTENT,
@@ -43,12 +43,12 @@ export const LIFECYCLE_HOOKS = {
   WILL_READ_FILES,
   DID_FAIL,
   WAS_ACTIVATED,
-  WILL_START
+  WILL_START,
 }
 
 export function observables(options = {}) {
   return {
-    status: CREATED
+    status: CREATED,
   }
 }
 
@@ -57,89 +57,89 @@ export const getLifeCycleHooks = () => LIFECYCLE_HOOKS
 
 export const featureMethods = [
   // A Mobx Observable Map of file metadata
-  "getFiles",
+  'getFiles',
 
-  "getLifeCycleHooks",
+  'getLifeCycleHooks',
 
-  "getStatuses",
+  'getStatuses',
 
   // A Mobx Observable Map of directory metadata
-  "getDirectories",
+  'getDirectories',
 
   // A Mobx Observable Map of Git Tree Status
-  "getStatusMap",
+  'getStatusMap',
 
   // Loads all of the files
-  "start",
+  'start',
 
   // Loads all of the files
-  "startAsync",
+  'startAsync',
 
   // Get access to the git wrapper
-  "getGit",
+  'getGit',
 
   // A Utility for testing a path with a rule or set of rules
-  "getPathMatcher",
+  'getPathMatcher',
 
-  "matchPaths",
+  'matchPaths',
 
-  "selectMatches",
+  'selectMatches',
 
   // Read an md5 hash of a file
-  "hashFile",
+  'hashFile',
 
   // Read the md5 hash of all files within a given tree
-  "hashFiles",
+  'hashFiles',
 
   // Read the content of all files within a given subtree
-  "readContent",
+  'readContent',
 
   // Access to all of the observable file paths
-  "getFileIds",
+  'getFileIds',
 
   // Access to all of the observable directory paths
-  "getDirectoryIds",
+  'getDirectoryIds',
 
   // Access to all of the observable directory objects
-  "getDirectoryObjects",
+  'getDirectoryObjects',
 
   // Access to all of the observable file objects
-  "getFileObjects",
+  'getFileObjects',
 
   // Access to all of the observable file paths with a modified git status
-  "getModifiedFiles",
+  'getModifiedFiles',
 
   // Access to all of the observable directory paths with modified files in them
-  "getModifiedDirectories",
+  'getModifiedDirectories',
 
   // Access to chained wrappers of our observables
-  "getChains",
+  'getChains',
 
   // A Promise which will resolve immediately, or whenever the filemanager is active.
   // Will attempt to activate the file manager if it wasn't already done
-  "whenActivated",
+  'whenActivated',
 
   // A Promise which will resolve immediately, or whenever the filemanager is active
-  "activationEventWasFired",
+  'activationEventWasFired',
 
   // Sync the memory file system
-  "syncMemoryFileSystem",
+  'syncMemoryFileSystem',
 
-  "wrapMemoryFileSystem",
+  'wrapMemoryFileSystem',
 
-  "file",
+  'file',
 
-  "getPackages",
+  'getPackages',
 
-  "getPackageManager",
+  'getPackageManager',
 
-  "walkUp",
+  'walkUp',
 
-  "walkUpSync"
+  'walkUpSync',
 ]
 
 export function file(options = {}) {
-  if (typeof options === "string") {
+  if (typeof options === 'string') {
     options = { id: options }
   }
   const { id } = options
@@ -149,18 +149,18 @@ export function file(options = {}) {
   @param {Boolean} autoStart
 */
 export function featureWasEnabled(options = {}) {
-  this.hide("memoryFileSystem", new Memory(), false)
-  this.hideGetter("fs", () => this.memoryFileSystem)
+  this.hide('memoryFileSystem', new Memory(), false)
+  this.hideGetter('fs', () => this.memoryFileSystem)
 
-  this.hide("actions", actions)
-  this.hide("computedProperties", computedProperties)
+  this.hide('actions', actions)
+  this.hide('computedProperties', computedProperties)
 
   actions.attach.call(this)
   computedProperties.attach.call(this)
 
   const { autoStart = false } = {
     ...this.options,
-    ...options
+    ...options,
   }
 
   if (autoStart || this.runtime.argv.fileManager) {
@@ -204,9 +204,9 @@ export async function syncMemoryFileSystem(options = {}) {
 
       if (!fs.existsSync(f.path)) {
         try {
-          fs.writeFileSync(f.path, (f.content || "").toString())
+          fs.writeFileSync(f.path, (f.content || '').toString())
         } catch (error) {
-          runtime.error("Error syncing file", { path: f.path, message: error.message })
+          runtime.error('Error syncing file', { path: f.path, message: error.message })
         }
       }
 
@@ -224,11 +224,11 @@ export function getChains() {
 
   return {
     get files() {
-      return fileManager.chain.invoke("files.toJS").value()
+      return fileManager.chain.invoke('files.toJS').value()
     },
     get directories() {
-      return fileManager.chain.invoke("directories.toJS").value()
-    }
+      return fileManager.chain.invoke('directories.toJS').value()
+    },
   }
 }
 
@@ -271,11 +271,11 @@ export async function hashFiles(options = {}) {
 }
 
 export function getPackages() {
-  return this.get("packageManager.manifests")
+  return this.get('packageManager.manifests')
 }
 
 export function getPackageManager() {
-  return this.runtime.feature("package-manager")
+  return this.runtime.feature('package-manager')
 }
 
 export async function readContent(options = {}) {
@@ -285,7 +285,7 @@ export async function readContent(options = {}) {
 
   const results = await Promise.all(
     this.chain
-      .get("fileObjects")
+      .get('fileObjects')
       .map(p => p.path)
       .filter(path => pathMatcher(include, path))
       .filter(path => exclude.length === 0 || !pathMatcher(exclude, path))
@@ -315,52 +315,52 @@ export function getGit() {
 }
 
 export function getFiles() {
-  return this.result("runtime.git.files", () => {
+  return this.result('runtime.git.files', () => {
     throw new Error(`the file manager depends on the fit feature`)
   })
 }
 
 export function getDirectories() {
-  return this.result("runtime.git.directories", () => {
+  return this.result('runtime.git.directories', () => {
     throw new Error(`the file manager depends on the fit feature`)
   })
 }
 
 export function getStatusMap() {
-  return this.result("runtime.git.statusMap", () => {
+  return this.result('runtime.git.statusMap', () => {
     throw new Error(`the file manager depends on the fit feature`)
   })
 }
 
 export function getFileIds() {
-  return this.result("runtime.git.files.keys", () => {
+  return this.result('runtime.git.files.keys', () => {
     throw new Error(`the file manager depends on the fit feature`)
   })
 }
 
 export function getDirectoryIds() {
-  return this.result("runtime.git.directories.keys", () => {
+  return this.result('runtime.git.directories.keys', () => {
     throw new Error(`the file manager depends on the fit feature`)
   })
 }
 
 export function getDirectoryObjects(options = {}) {
-  return this.result("runtime.git.directories.values", () => {
+  return this.result('runtime.git.directories.values', () => {
     throw new Error(`the file manager depends on the fit feature`)
   })
 }
 
 export function getFileObjects(options = {}) {
-  return this.result("runtime.git.files.values", () => {
+  return this.result('runtime.git.files.values', () => {
     throw new Error(`the file manager depends on the fit feature`)
   })
 }
 
 export function getModifiedFiles(options = {}) {
-  const { markers = ["M", "??", "D"] } = options
+  const { markers = ['M', '??', 'D'] } = options
 
   return this.chain
-    .get("statusMap", {})
+    .get('statusMap', {})
     .omitBy(marker => markers.indexOf(marker) === -1)
     .keys()
     .value()
@@ -369,7 +369,11 @@ export function getModifiedFiles(options = {}) {
 export function getModifiedDirectories(options = {}) {
   const { dirname } = this.runtime.pathUtils
 
-  return this.chain.get("modifiedFiles").map(path => dirname(path)).uniq().value()
+  return this.chain
+    .get('modifiedFiles')
+    .map(path => dirname(path))
+    .uniq()
+    .value()
 }
 
 export function lazyMemoryFileSystem(options = {}) {
@@ -387,7 +391,7 @@ export function start(options = {}, cb = function() {}) {
 }
 
 export async function startAsync(options = {}) {
-  if (this.has("git") && this.get("git.files")) {
+  if (this.has('git') && this.get('git.files')) {
     return await startGitMode.call(this, options)
   } else {
     const error = new Error(`FileManager depends on git`)
@@ -407,7 +411,7 @@ export async function startGitMode(options = {}) {
     return this
   } else if (this.status === READY) {
     if (!options.wait) {
-      await this.git.run({ ...options, clear: !!options.clear })
+      await this.git.run({ others: true, cached: true, ...options, clear: !!options.clear })
     }
 
     return this
@@ -416,7 +420,7 @@ export async function startGitMode(options = {}) {
     this.status = STARTING
 
     try {
-      await this.git.run({ ...options, clear: !!options.clear })
+      await this.git.run({ others: true, cached: true, ...options, clear: !!options.clear })
     } catch (error) {
       this.fireHook(DID_FAIL, error)
       this.status = FAILED
@@ -428,11 +432,11 @@ export async function startGitMode(options = {}) {
     const filesObserver = gitFiles.observe(update => {
       //this.runtime.debug("received file update", update.type, update.name)
 
-      if (update.type === "add") {
+      if (update.type === 'add') {
         this.fireHook(RECEIVED_FILE_ADD, update.name, update, this)
-      } else if (update.type === "remove") {
+      } else if (update.type === 'remove') {
         this.fireHook(RECEIVED_FILE_REMOVE, update.name, update, this)
-      } else if (update.type === "update" || update.type === "change") {
+      } else if (update.type === 'update' || update.type === 'change') {
         this.fireHook(RECEIVED_FILE_UPDATE, update.name, update, this)
       } else {
         this.fireHook(RECEIVED_FILE_NOTIFICATION, update.type, update, this)
@@ -447,9 +451,9 @@ export async function startGitMode(options = {}) {
       this.fireHook(RECEIVED_STATUS_UPDATE, update.type, update, this)
     })
 
-    this.hide("filesObserver", filesObserver, true)
-    this.hide("statusObserver", statusObserver, true)
-    this.hide("directoriesObserver", directoriesObserver, true)
+    this.hide('filesObserver', filesObserver, true)
+    this.hide('statusObserver', statusObserver, true)
+    this.hide('directoriesObserver', directoriesObserver, true)
   } catch (error) {
     this.fireHook(DID_FAIL, error)
     this.status = FAILED
@@ -461,12 +465,12 @@ export async function startGitMode(options = {}) {
   this.fireHook(
     WAS_ACTIVATED,
     this.pick(
-      "filesObserver",
-      "statusObserver",
-      "directoriesObserver",
-      "files",
-      "directories",
-      "statusMap"
+      'filesObserver',
+      'statusObserver',
+      'directoriesObserver',
+      'files',
+      'directories',
+      'statusMap'
     )
   )
 
@@ -514,11 +518,11 @@ export async function whenActivated(options = {}) {
 }
 
 export function wrapMemoryFileSystem() {
-  const { promisify } = require("bluebird")
+  const { promisify } = require('bluebird')
   const { runtime, memoryFileSystem: memfs } = this
 
   runtime.hide(
-    "fsm",
+    'fsm',
     {
       exists: memfs.exists.bind(memfs),
       mkdir: memfs.mkdir.bind(memfs),
@@ -567,7 +571,7 @@ export function wrapMemoryFileSystem() {
         } catch (error) {
           cb(error)
         }
-      }
+      },
     },
     true
   )
