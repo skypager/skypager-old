@@ -32,6 +32,7 @@ export class PageWrapper extends Component {
       containerWidth = '90%',
       containerMaxWidth = '1400px',
       containerMargins = '0px auto',
+      showToggle = true,
     } = this.props
 
     return (
@@ -42,7 +43,7 @@ export class PageWrapper extends Component {
           </Header>
         </Dimmer>
 
-        <SidebarToggle alwaysVisible />
+        {showToggle && <SidebarToggle alwaysVisible />}
 
         <Container
           fluid

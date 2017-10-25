@@ -1,5 +1,7 @@
 import { React, Component, baseContextTypes } from '../../globals'
 import PageWrapper from 'layouts/PageWrapper'
+import SkypagerLogo from 'components/SkypagerLogo'
+import MarkdownDocument from 'components/MarkdownDocument'
 
 export class Home extends Component {
   static contextTypes = baseContextTypes
@@ -7,9 +9,13 @@ export class Home extends Component {
   handleNavigationClick = () => this.context.runtime.navigate('/', 'replace')
 
   render() {
+    const { runtime } = this.context
+    const doc = runtime.docFiles.lookup('index')
+
     return (
-      <PageWrapper headerContent="Skypager" headerIcon="home">
-        <div>HOME</div>
+      <PageWrapper headerContent="Skypager" headerIcon="home" showToggle={false}>
+        {this.props.location.pathname}
+        <MarkdownDocument doc={doc} />
       </PageWrapper>
     )
   }

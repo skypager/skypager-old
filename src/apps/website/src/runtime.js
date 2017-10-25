@@ -15,12 +15,16 @@ runtime.state.set('menuItems', [
   },
 ])
 
+// Placeholder.  Navigate is overridden by react-router-dom when rendered with react
 runtime.navigate = link => (window.location = link)
 
 runtime.startApp = () =>
-  runtime.start().then(() => {
-    return runtime
-  })
+  runtime
+    .use(require('./docs').bind(runtime))
+    .start()
+    .then(() => {
+      return runtime
+    })
 
 runtime.navTo = link => {
   runtime.state.set('sidebarIsVisible', false)

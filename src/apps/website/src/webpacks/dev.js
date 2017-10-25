@@ -26,7 +26,7 @@ export function outputPath() {
 }
 
 export function moduleLocations() {
-  return [this.runtime.join('src'), 'node_modules']
+  return [this.runtime.join('src'), 'node_modules', this.runtime.resolve('../../../node_modules')]
 }
 
 export function rules() {
@@ -40,11 +40,7 @@ export function rules() {
       exclude: [
         /node_modules/,
         this.runtime.join('node_modules'),
-        dirname(this.runtime.packageFinder.attemptResolve('skypager')),
         this.runtime.join('src/templates'),
-        dirname(
-          dirname(this.runtime.resolve(this.runtime.packageFinder.attemptResolve('skypager')))
-        ),
       ],
       use: compact([
         !this.runtime.isProduction && { loader: 'react-hot-loader/webpack' },
@@ -56,6 +52,40 @@ export function rules() {
           },
         },
       ]).filter(v => v),
+    },
+    {
+      test: /\.md/,
+      use: [
+        {
+          loader: 'skeleton-loader',
+          options: {
+            procedure: function skeletonMarkdownLoader(source) {
+              let ast
+              let meta = {}
+
+              try {
+                ast = runtime
+                  .documentType('markdown')
+                  .provider.parser()
+                  .parse(source)
+
+                if (ast && ast.children && ast.children[0] && ast.children[0].type === 'yaml') {
+                  Object.assign(meta, require('js-yaml').safeLoad(ast.children[0].value))
+                }
+              } catch (error) {
+                ast = { error: error.message }
+              }
+
+              return `module.exports = {
+                meta: ${JSON.stringify(meta)},
+                content: ${JSON.stringify(source)},
+                ast: ${JSON.stringify(ast)},
+                id: ${JSON.stringify(runtime.relative(this.resourcePath))}
+              }`
+            },
+          },
+        },
+      ],
     },
     {
       test: /\.(eot|svg|ttf|woff|woff2)(\?v=[a-z0-9]\.[a-z0-9]\.[a-z0-9])?$/,
@@ -114,8 +144,12 @@ export function webpackPlugins() {
     },
 
     'copy-webpack-plugin': [
-      { from: res('skypager-runtimes-web/skypager-web.js') },
-      { from: res('skypager-runtimes-web/skypager-web.min.js') },
+      { from: this.runtime.resolve('../../../node_modules/skypager-runtimes-web/skypager-web.js') },
+      {
+        from: this.runtime.resolve(
+          '../../../node_modules/skypager-runtimes-web/skypager-web.min.js'
+        ),
+      },
       { from: res('moment/min/moment.min.js') },
       { from: res('axios/dist/axios.js') },
       { from: res('axios/dist/axios.min.js') },
@@ -154,7 +188,7 @@ export function babelConfig() {
         packageFinder.attemptResolve('babel-preset-env'),
         {
           targets: {
-            browsers: ['>5%'],
+            browsers: ['>10%'],
           },
         },
       ],

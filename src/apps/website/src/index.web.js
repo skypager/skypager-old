@@ -1,8 +1,10 @@
 import { runtime } from './globals'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { Link, BrowserRouter as Router } from 'react-router-dom'
+import SidebarLayout from 'layouts/SidebarLayout'
 import App from './app'
+import MenuItems from './menu-items'
 
 let renderVersion = (global.renderVersion = 0)
 
@@ -12,7 +14,18 @@ const renderApp = (Component, props = {}) =>
   render(
     <AppContainer key={Math.random() + renderVersion}>
       <Router>
-        <Component runtime={runtime} />
+        <Component
+          menuItems={<MenuItems runtime={runtime} Link={Link} />}
+          sidebarProps={{
+            fixed: 'left',
+            inverted: true,
+            vertical: true,
+            width: 'thin',
+            visible: true,
+          }}
+          showSidebar
+          runtime={runtime}
+        />
       </Router>
     </AppContainer>,
     document.getElementById('app')

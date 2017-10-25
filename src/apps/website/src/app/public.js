@@ -2,6 +2,8 @@ import { types, React, Component } from '../globals.js'
 import { Route } from 'react-router-dom'
 import SidebarLayout from 'layouts/SidebarLayout'
 import Home from 'pages/Home'
+import ViewDocument from 'pages/ViewDocument'
+import SkypagerLogo from 'components/SkypagerLogo'
 
 export class App extends Component {
   static contextTypes = {
@@ -59,13 +61,16 @@ export class App extends Component {
   }
 
   render() {
-    const menuItems = runtime
-      .get('currentState.menuItems', [])
-      .map((item, key) => <SidebarLayout.MenuItem key={key} {...item} />)
+    const { menuItems } = this.props
 
     return (
-      <SidebarLayout menuItems={menuItems} visible={this.state.sidebarIsVisible}>
+      <SidebarLayout
+        menuItems={menuItems}
+        sidebarProps={{ ...this.props.sidebarProps, visible: true }}
+        visible={this.props.showSidebar || this.state.sidebarIsVisible}
+      >
         <Route exact path="/" component={Home} />
+        <Route path="/docs/:pageId*" component={ViewDocument} />
       </SidebarLayout>
     )
   }
