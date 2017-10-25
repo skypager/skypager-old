@@ -10,9 +10,12 @@
   },
   "scripts": {
     "build:docker": "docker build -t datapimp/skypager-portfolio .",
-    "run:docker": "docker run -v \"packages:/myapp/public/packages\" -p 4001:4000 datapimp/skypager-portfolio",
+    "run:docker":
+      "docker run -v \"packages:/myapp/public/packages\" -p 4001:4000 datapimp/skypager-portfolio",
     "build": "bin/each buildPackage && bin/run skypager-repl yarn build && bin/export",
-    "setup-dev": "yarn add skypager-framework@^26.1.1 skypager-cli@^25.1.0"
+    "setup-dev": "yarn add skypager-framework@^26.1.1 skypager-cli@^25.1.0",
+    "publish-packages": "sky run publish",
+    "postpublish-packages": "./publish-packages.sh"
   },
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",

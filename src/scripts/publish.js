@@ -1,21 +1,37 @@
 async function eachOutput() {
-  skypager.use(skypager.join("packages", "skypager-features-lerna-adapter"))
+  skypager.use(skypager.join('packages', 'skypager-features-lerna-adapter'))
 
   let packageNames = await skypager.lerna.updatedPackageNames()
-
-  console.log("#!/bin/sh")
-  console.log("\n\n\n")
-  console.log("lerna publish --skip-npm --yes --repo-version=37.4.0")
-  console.log("sky run each buildPackage > build-packages.sh")
-  console.log("chmod +x build-packages.sh")
-  console.log("./build-packages.sh")
-  console.log("\n\n\n")
-  console.log("bin/export")
-  console.log(
-    packageNames.map(name => `cd ${skypager.cwd}/packages/${name} && npm publish`).join("\n").trim()
+  const repoVersion = skypager.get(
+    'argv.repoVersion',
+    skypager.get(
+      'currentPackage.version',
+      skypager.fsx.readJsonSync(skypager.join('lerna.json')).version
+    )
   )
-  console.log("\n\n\n")
-  console.log("\n\n\n")
+
+  const lines = [
+    `lerna publish --skip-npm --yes --repo-version=${repoVersion}`,
+    `sky run each-changed-package buildPackage`,
+    `./each-changed-package.sh`,
+    `bin/export`,
+  ].concat(packageNames.map(name => `cd ${skypager.cwd}/packages/${name} && npm publish`))
+
+  const scriptContent = `
+  main() {
+    ${lines.map(line => `  ${line}`).join('\n')}
+  }
+
+  main
+  `
+
+  skypager.fsx.writeFileSync(
+    skypager.join('publish-packages.sh'),
+    scriptContent.trim() + '\n',
+    'utf-8'
+  )
+
+  skypager.proc.execSync(`chmod +x publish-packages.sh`)
 }
 
 eachOutput().then(() => process.exit(0))

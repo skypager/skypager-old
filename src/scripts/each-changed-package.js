@@ -9,11 +9,20 @@ async function eachOutput() {
   packageNames = packageNames.filter(f => f !== 'skypager').reverse()
 
   const lines = packageNames
-    .map(name => `${skypager.cwd}/bin/run ${name} ${cmd}`)
+    .map(name => `  ${skypager.cwd}/bin/run ${name} ${cmd}`)
     .join('\n')
     .trim()
 
-  console.log(lines)
+  const scriptContent = `
+  main() {
+  ${lines}
+  }
+
+  main
+  `.trim()
+
+  skypager.fsx.writeFileSync(skypager.join('each-changed-package.sh'), scriptContent, 'utf-8')
+  skypager.proc.execSync('chmod +x each-changed-package.sh')
 }
 
 eachOutput().then(() => process.exit(0))
