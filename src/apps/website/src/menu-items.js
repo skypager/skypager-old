@@ -1,7 +1,8 @@
 export const MenuItems = ({ runtime, Link }, { router }) => {
   const nav = link => () => runtime.navigate(link)
 
-  console.log('Router', router)
+  const { history: { location } } = router
+  const { pathname: current } = location
 
   return [
     <Menu.Item as={Link} to="/" key="topItem">

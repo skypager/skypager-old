@@ -69,6 +69,10 @@ export class DocumentWrapper {
     Object.defineProperty(this, 'utils', { get: () => DocumentWrapper.utils })
   }
 
+  get chain() {
+    return this.runtime.lodash.chain(this)
+  }
+
   get docId() {
     return this.id.replace(/docs\//, '').replace(/\.md$/, '')
   }
