@@ -1,6 +1,6 @@
 {
   "name": "skypager-features-process-streamer",
-  "version": "37.0.0",
+  "version": "37.5.0",
   "description": "stream node process as colorized html",
   "main": "index.js",
   "license": "MIT",

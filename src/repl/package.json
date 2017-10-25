@@ -1,6 +1,6 @@
 {
   "name": "skypager-repl",
-  "version": "37.4.0",
+  "version": "37.5.0",
   "description": "an awesome repl",
   "main": "dist/index.js",
   "scripts": {
@@ -14,12 +14,21 @@
   "bin": {
     "skypager-repl": "./skypager-repl"
   },
-  "files": ["dist", "src", "index.js", "skypager-repl"],
+  "files": [
+    "dist",
+    "src",
+    "index.js",
+    "skypager-repl"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/skypager/skypager.git"
   },
-  "keywords": ["REPL", "ES6", "Webpack"],
+  "keywords": [
+    "REPL",
+    "ES6",
+    "Webpack"
+  ],
   "author": "Jon Soeder <jon@chicago.com> (https://twitter.com/soederpop)",
   "license": "MIT",
   "bugs": {

@@ -1,6 +1,6 @@
 {
   "name": "skypager-features-lerna-adapter",
-  "version": "37.0.0",
+  "version": "37.5.0",
   "description": "use lerna to manage monorepos",
   "main": "index.js",
   "scripts": {

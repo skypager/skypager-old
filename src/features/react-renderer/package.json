@@ -1,14 +1,14 @@
 {
   "name": "skypager-features-react-renderer",
-  "version": "37.0.0",
+  "version": "37.5.0",
   "main": "index.js",
   "browser": "skypager-react-renderer.js",
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
     "prop-types": "15.5.10",
-    "react-dom": "15.5.4",
-    "react": "15.5.4"
+    "react": "15.5.4",
+    "react-dom": "15.5.4"
   },
   "repository": {
     "type": "github",

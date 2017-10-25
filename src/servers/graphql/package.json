@@ -1,7 +1,7 @@
 {
   "name": "skypager-servers-graphql",
   "description": "an apollo graphql server for skypager",
-  "version": "37.2.0",
+  "version": "37.5.0",
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.17.2",
