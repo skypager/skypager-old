@@ -1,6 +1,6 @@
 {
   "name": "skypager-runtimes-development",
-  "version": "37.5.0",
+  "version": "37.5.1",
   "description": "skypager development",
   "main": "index.js",
   "license": "MIT",
@@ -19,6 +19,6 @@
     "skypager-helpers-document-type": "^37.5.0",
     "skypager-helpers-project": "^37.5.0",
     "skypager-helpers-webpack": "^37.5.0",
-    "skypager-runtimes-node": "^37.5.0"
+    "skypager-runtimes-node": "^37.5.1"
   }
 }

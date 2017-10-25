@@ -1,6 +1,6 @@
 {
   "name": "skypager-runtimes-node",
-  "version": "37.5.0",
+  "version": "37.5.1",
   "description": "the skypager node runtime",
   "main": "index.js",
   "scripts": {
@@ -32,7 +32,7 @@
     "semver": "^5.3.0",
     "skypager-features-file-manager": "^37.5.0",
     "skypager-helpers-client": "^37.5.0",
-    "skypager-helpers-command": "^37.5.0",
+    "skypager-helpers-command": "^37.5.1",
     "skypager-helpers-page": "^37.5.0",
     "skypager-helpers-repl": "^37.5.0",
     "skypager-helpers-server": "^37.5.0",
