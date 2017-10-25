@@ -1,15 +1,16 @@
-const React = skypager.React
-const { Component } = React
-
-import Logo from "../../assets/skypager-logo-1024.png"
+import { React, Component, baseContextTypes } from '../../globals'
+import PageWrapper from 'layouts/PageWrapper'
 
 export class Home extends Component {
+  static contextTypes = baseContextTypes
+
+  handleNavigationClick = () => this.context.runtime.navigate('/', 'replace')
+
   render() {
     return (
-      <div className="page container">
-        <h1>Alright where is this API</h1>
-        <img src={Logo} height={512} width={512} />
-      </div>
+      <PageWrapper headerContent="Skypager" headerIcon="home">
+        <div>HOME</div>
+      </PageWrapper>
     )
   }
 }

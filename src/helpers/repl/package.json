@@ -3,33 +3,22 @@
   "version": "37.0.0",
   "description": "an awesome repl",
   "main": "index.js",
-  "files": [
-    "lib",
-    "dist",
-    "src",
-    "index.js"
-  ],
+  "files": ["lib", "dist", "src", "index.js"],
   "scripts": {
     "build": "../skypager-cli/skypager build library",
     "test": "../skypager-cli/skypager test --growl"
   },
-  "keywords": [
-    "REPL",
-    "ES6"
-  ],
+  "keywords": ["REPL", "ES6"],
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.5.0",
-    "skypager-repl": "^21.0.0",
+    "skypager-repl": "^37.4.0",
     "skypager-runtime": "^37.0.0"
   },
   "skypager": {
     "helper": true,
-    "targets": [
-      "node",
-      "electron"
-    ],
+    "targets": ["node", "electron"],
     "paths": {
       "output": "lib"
     }

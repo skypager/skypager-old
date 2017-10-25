@@ -1,0 +1,11 @@
+#!/usr/bin/env node --trace-warnings --trace-deprecation
+
+const argv = require('minimist')(process.argv.slice(2))
+const {create, cli} = require('./dist/index')
+
+if (argv.help || process.argv.indexOf('help') >= 0) {
+
+} else {
+  create(argv, {argv})
+}
+

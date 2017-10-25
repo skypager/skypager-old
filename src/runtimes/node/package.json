@@ -29,7 +29,7 @@
     "fs-extra-promise": "^0.4.1",
     "minimatch": "^3.0.3",
     "semver": "^5.3.0",
-    "skypager-repl": "^24.1.1",
+    "skypager-repl": "^37.4.0",
     "skypager-runtime": "^37.0.0",
     "skypager-helpers-command": "^37.0.0",
     "skypager-helpers-server": "^37.0.0",

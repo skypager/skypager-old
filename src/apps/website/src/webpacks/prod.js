@@ -1,103 +1,81 @@
-const { dirname } = require("path")
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const { dirname } = require('path')
+const { rules, copy, babelConfig } = require('./shared')
+
+export { babelConfig, rules }
 
 export function entry() {
+  const { runtime } = this
+
   return {
-    app: [this.runtime.join("src/index.web.js")]
+    app: [runtime.join('src', 'index.web.js')],
   }
 }
 
+export const buildTarget = 'browser'
+
+export const outputFilename = '[name].[hash].js'
+
 export function outputPath() {
-  return this.runtime.join("public")
+  return this.runtime.join('public')
 }
 
-export function rules() {
-  const { compact } = this.lodash
-
-  return [
-    {
-      name: "babel",
-      test: /.js$/,
-      include: [this.runtime.join("src")],
-      exclude: [
-        this.runtime.join("node_modules"),
-        dirname(this.runtime.packageFinder.attemptResolve("skypager")),
-        this.runtime.join("src", "templates"),
-        dirname(
-          dirname(this.runtime.resolve(this.runtime.packageFinder.attemptResolve("skypager")))
-        )
-      ],
-      use: compact([
-        {
-          loader: "babel-loader",
-          options: {
-            babelrc: false,
-            ...babelConfig.call(this)
-          }
-        }
-      ]).filter(v => v)
-    },
-    {
-      name: "assets",
-      test: /.(png|jpg|gif)$/,
-      include: [this.runtime.join("src")],
-      exclude: [
-        this.runtime.join("node_modules"),
-        dirname(this.runtime.packageFinder.attemptResolve("skypager"))
-      ],
-      use: [{ loader: "url-loader" }]
-    }
-  ]
+export function moduleLocations() {
+  return [this.runtime.join('src'), 'node_modules']
 }
 
 export function webpackPlugins() {
+  const res = m => this.runtime.packageFinder.attemptResolve(m)
+
   return this.runtime.convertToJS({
-    "html-webpack-plugin": {
-      template: "src/templates/html.js",
+    'html-webpack-plugin': {
+      template: 'src/templates/html.js',
       skypager: this.runtime,
       runtime: this.runtime,
       inject: true,
-      filename: "index.html"
+      filename: 'index.html',
     },
-    "copy-webpack-plugin": [
-      {
-        from: this.runtime.packageFinder.attemptResolve("skypager-runtimes-react/skypager-react.js")
+
+    ExternalsPlugin: {
+      react: 'global React',
+      'semantic-ui-react': 'global semanticUIReact',
+      skypager: 'global skypager',
+      'react-dom': 'global ReactDOM',
+      'prop-types': 'global PropTypes',
+      axios: 'global axios',
+      moment: 'global moment',
+    },
+
+    'uglifyjs-webpack-plugin': {
+      warnings: false,
+      compress: {
+        warnings: false,
       },
+    },
+
+    'extract-text-webpack-plugin': 'styles.css',
+
+    'copy-webpack-plugin': [
+      { from: res('skypager-runtimes-web/skypager-web.js') },
+      { from: res('skypager-runtimes-web/skypager-web.min.js') },
+      { from: res('moment/min/moment.min.js') },
+      { from: res('axios/dist/axios.js') },
+      { from: res('axios/dist/axios.min.js') },
+      { from: res('react/dist/react.js') },
+      { from: res('react/dist/react.min.js') },
+      { from: res('prop-types/prop-types.js') },
+      { from: res('prop-types/prop-types.min.js') },
+      { from: res('react-dom/dist/react-dom.js') },
+      { from: res('react-dom/dist/react-dom.min.js') },
+      { from: res('semantic-ui-react/dist/umd/semantic-ui-react.min.js') },
+
+      { from: this.runtime.join('src', 'vendor'), flatten: false },
+
       {
-        from: this.runtime.packageFinder.attemptResolve(
-          "skypager-runtimes-react/skypager-react.min.js"
-        )
-      }
-    ]
+        from: dirname(res('semantic-ui-css/semantic.min.css')),
+        to: this.runtime.join('public'),
+        flatten: false,
+      },
+    ],
   })
-}
-
-export function babelConfig() {
-  const { runtime } = this
-  const { packageFinder } = runtime
-  const { isString, isArray } = this.lodash
-
-  const validate = items =>
-    items
-      .filter(item => (isArray(item) && isString(item[0])) || isString(item))
-      .filter(i => i && i.length)
-
-  return {
-    presets: validate([
-      [
-        packageFinder.attemptResolve("babel-preset-env"),
-        {
-          targets: {
-            node: ["7.0.0"],
-            browsers: [">5%"]
-          }
-        }
-      ],
-      packageFinder.attemptResolve("babel-preset-stage-0"),
-      packageFinder.attemptResolve("babel-preset-react")
-    ]),
-    plugins: validate([
-      packageFinder.attemptResolve("babel-plugin-transform-decorators-legacy"),
-      packageFinder.attemptResolve("babel-plugin-transform-object-rest-spread")
-    ])
-  }
 }

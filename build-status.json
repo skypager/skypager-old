@@ -1,7 +1,7 @@
 {
   "gitInfo": {
-    "sha": "13ac8c80484aac5294887f3b5b3500c08a20fb54",
-    "abbreviatedSha": "13ac8c8048",
+    "sha": "0d53906095de16ece7a815af8c7fb6dc71b4af4d",
+    "abbreviatedSha": "0d53906095",
     "branch": "feature/monorepo-organization",
     "tag": null,
     "root": "/Users/jon/Projects/skypager"
@@ -654,6 +654,15 @@
           "index": "index.js"
         }
       }
+    },
+    "skypager-repl": {
+      "version": "37.4.0",
+      "name": "skypager-repl",
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      },
+      "success": false
     }
   },
   "failed": {
@@ -685,6 +694,12 @@
       "package": {
         "warnings": 0,
         "errors": 3
+      }
+    },
+    "skypager-repl": {
+      "package": {
+        "warnings": 0,
+        "errors": 1
       }
     }
   }

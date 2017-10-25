@@ -1,18 +1,16 @@
 {
   "presets": [
-    ["env", {
-      "targets": {
-        "node": ["7.0.0"],
-        "browsers": [">5%"]
+    [
+      "env",
+      {
+        "targets": {
+          "node": ["6.11.1"],
+          "browsers": [">20%"]
+        }
       }
-    }],
+    ],
     "stage-0",
     "react"
   ],
-  "ignore": [
-    "src/deps/**"
-  ],
-  "plugins": [
-    "transform-decorators-legacy"
-  ]
+  "plugins": ["transform-decorators-legacy"]
 }

@@ -36,6 +36,7 @@
     "express-history-api-fallback": "^2.2.1",
     "fb-watchman": "^2.0.0",
     "gaze": "^1.1.2",
+    "lerna": "^2.4.0",
     "md5-file": "^3.1.1",
     "mocha": "^3.4.1",
     "node-uuid": "^1.4.8",

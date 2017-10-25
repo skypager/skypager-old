@@ -1,0 +1,46 @@
+{
+  "name": "skypager-repl",
+  "version": "37.4.0",
+  "description": "an awesome repl",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "exit 0",
+    "test:watch": "exit 0",
+    "build": "babel -s -d ../../packages/skypager-repl/dist src",
+    "postbuild": "cp -r src package.json skypager-repl ../../packages/skypager-repl",
+    "build:watch": "babel -w -s -d ../../packages/skypager-repl/dist src",
+    "dev": "npm run build && ./skypager-repl"
+  },
+  "bin": {
+    "skypager-repl": "./skypager-repl"
+  },
+  "files": ["dist", "src", "index.js", "skypager-repl"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skypager/skypager.git"
+  },
+  "keywords": ["REPL", "ES6", "Webpack"],
+  "author": "Jon Soeder <jon@chicago.com> (https://twitter.com/soederpop)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skypager/skypager/issues"
+  },
+  "homepage": "https://github.com/skypager/skypager#readme",
+  "dependencies": {
+    "babel-polyfill": "^6.20.0",
+    "babel-register": "^6.24.1",
+    "babel-runtime": "^6.23.0",
+    "cli-spinner": "^0.2.5",
+    "cli-table": "^0.3.1",
+    "colors": "^1.1.2",
+    "editor": "^1.0.0",
+    "figlet": "^1.1.2",
+    "minimist": "^1.2.0",
+    "node-emoji": "^1.4.1",
+    "pretty-cli": "0.0.14",
+    "prompt": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
+}
