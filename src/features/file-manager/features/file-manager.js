@@ -233,8 +233,11 @@ export function getChains() {
 }
 
 export function matchPaths(options = {}) {
-  const { rules = options.rules || options } = options
-  return this.fileIds.filter(fileId => pathMatcher(rules, fileId))
+  const { rules = options.rules || options || [] } = options
+
+  return options.fullPath
+    ? this.fileObjects.filter(file => pathMatcher(rules, file.path)).map(result => result.relative)
+    : this.fileIds.filter(fileId => pathMatcher(rules, fileId))
 }
 
 export function selectMatches(options = {}) {

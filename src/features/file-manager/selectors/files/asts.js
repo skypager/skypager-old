@@ -1,54 +1,116 @@
-const babel = require("skypager-document-types-babel")
-const markdown = require("skypager-document-types-markdown")
+const babelTransformer = require('skypager-document-types-babel')
+const markdownTransformer = require('skypager-document-types-markdown')
+
+const defaultBabelConfig = {
+  presets: ['stage-0', 'react'],
+  plugins: ['transform-decorators-legacy', 'transform-object-rest-spread'],
+}
 
 export default async function readFileAsts(chain, options = {}) {
-  await this.fileManager.startAsync()
+  const runtime = this
 
-  await this.fileManager.readContent({
-    include: this.lodash.compact([
-      options.babel !== false && /.js$/,
-      options.markdown !== false && /.md$/
-    ]),
-    ...options
-  })
+  const {
+    babelConfig = defaultBabelConfig,
+    babel = true,
+    markdown = true,
+    include = [],
+    exclude = [/.log$/, /logs/, /.lock/, /node_modules/, /secrets/, /\.env/],
+    extensions = [],
+    rootNode,
+    props = [],
+  } = options
 
-  const results = await this.fileManager.selectMatches(/\.(js|md)$/i)
+  const transforms = {
+    js: (content, o = {}) =>
+      babelTransformer.toAST(content, {
+        ...this.lodash.defaultsDeep(
+          {},
+          this.lodash.pick(options, 'presets', 'plugins'),
+          babelConfig
+        ),
+        ...o,
+      }),
+    md: (content, o = {}) =>
+      markdownTransformer.toAST(content, {
+        ...this.lodash.pick(options, 'profile', 'method', 'parser'),
+        ...o,
+      }),
+    ...options.transforms,
+  }
+
+  const { javascript = babel } = options
+
+  await this.fileManager.whenActivated()
+
+  if (!include.length) {
+    if (javascript || babel) {
+      extensions.push('js', 'es6', 'jsx')
+    }
+
+    if (markdown) {
+      extensions.push('md', 'mkd', 'markdown')
+    }
+
+    include.push(new RegExp(`\.(${extensions.join('|')})$`))
+  }
+
+  if (rootNode) {
+    include.push(this.resolve(rootNode))
+  }
+
+  await this.fileManager.readContent({ ...options, include, exclude })
+
+  const results = await this.fileManager.selectMatches({ rules: include, fullPath: true })
+
+  const transform = (content, transformId, fileId) => {
+    const fn = transforms[transformId]
+
+    if (typeof fn !== 'function') {
+      throw new Error(`Invalid transform for ${transformId}`)
+    }
+
+    try {
+      return fn(content, options[`${transformId}Options`] || {})
+    } catch (error) {
+      if (options.debug) {
+        runtime.error(`Error generating ast for ${fileId}`, {
+          message: error.message,
+          fileId,
+          transformId,
+          options,
+        })
+      }
+
+      return { error: true, fileId, transformId, message: error.message }
+    }
+  }
 
   return chain
     .plant(results)
-    .map(result => {
-      if (result.extension === ".js") {
-        this.lodash.attempt(
-          () =>
-            (result.ast = babel.toAST(result.content, {
-              presets: ["stage-0", "react"],
-              plugins: ["transform-decorators-legacy", "transform-object-rest-spread"]
-            }))
-        )
+    .keyBy('relative')
+    .mapValues((file, id) => {
+      // TODO: Check the hash and dont generate the ast if it exists already
+      const { content, extension } = file
 
-        if (result.ast) {
-          this.fileManager.files.set(result.relative, {
-            ...(this.fileManager.files.get(result.relative) || {}),
-            ast: result.ast
-          })
-        }
-        return result
-      } else if (result.extension === ".md") {
-        this.lodash.attempt(() => (result.ast = markdown.toAST(result.content)))
+      file.ast = transform(content, extension.replace('.', ''), file.relative)
 
-        if (result.ast) {
-          this.fileManager.files.set(result.relative, {
-            ...(this.fileManager.files.get(result.relative) || {}),
-            ast: result.ast
-          })
-        }
+      this.fileManager.files.set(file.relative, file)
 
-        return result
-      }
+      const response = props.length ? runtime.lodash.pick(file, props) : file
 
-      return
+      return options.map ? options.map(response) : response
     })
-    .compact()
-    .keyBy(val => val.relative)
-    .pickBy(val => val.ast)
+    .thru(astMap => {
+      return options.debug
+        ? {
+            getResults: () => results,
+            count: results.length,
+            astMap,
+            fileIds: results.map(r => r.relative),
+            include,
+            exclude,
+            rootNode,
+          }
+        : astMap
+    })
 }
