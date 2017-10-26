@@ -1,6 +1,7 @@
 import { React, Component, baseContextTypes } from '../../globals'
 import PageWrapper from 'layouts/PageWrapper'
 import MarkdownDocument from 'components/MarkdownDocument'
+import Editor from 'components/Editor'
 
 export class ViewDocument extends Component {
   static contextTypes = baseContextTypes
@@ -16,6 +17,23 @@ export class ViewDocument extends Component {
     this.state = { pageId }
   }
 
+  componentDidMount() {
+    const { match } = this.props
+    const { params = {} } = match
+    const { pageId } = params
+
+    if (!pageId) {
+      this.setState({ doc: undefined, error: `Must supply a pageId parameter` })
+      return
+    }
+
+    try {
+      this.setState({ pageId, doc: runtime.docFiles.lookup(pageId), error: undefined })
+    } catch (error) {
+      this.setState({ pageId, error: `Error: ${error.message}`, doc: undefined })
+    }
+  }
+
   componentWillReceiveProps({ match } = {}) {
     const { params = {} } = match
     const { pageId } = params
@@ -23,7 +41,7 @@ export class ViewDocument extends Component {
 
     if (current.pageId !== pageId) {
       try {
-        this.setState({ pageId, doc: runtime.docFiles.lookup(pageId) })
+        this.setState({ pageId, doc: runtime.docFiles.lookup(pageId), error: undefined })
       } catch (error) {
         this.setState({ pageId, error: `Error: ${error.message}`, doc: undefined })
       }
@@ -36,10 +54,10 @@ export class ViewDocument extends Component {
 
     return (
       <PageWrapper headerContent="Skypager" headerIcon="home" showToggle={false}>
-        <div>
+        <Segment piled style={{ width: '80%' }}>
           {doc && !error && <MarkdownDocument doc={doc} />}
           {!doc && error && <Message style={{ width: '50%' }} content={error} />}
-        </div>
+        </Segment>
       </PageWrapper>
     )
   }

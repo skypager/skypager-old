@@ -31,7 +31,7 @@ export class PageWrapper extends Component {
       showHeader = true,
       containerWidth = '90%',
       containerMaxWidth = '1400px',
-      containerMargins = '0px auto',
+      containerMargins = '24px auto',
       showToggle = true,
     } = this.props
 

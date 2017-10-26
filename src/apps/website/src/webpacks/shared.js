@@ -57,6 +57,40 @@ export function rules() {
         },
       ],
     },
+    {
+      test: /\.md/,
+      use: [
+        {
+          loader: 'skeleton-loader',
+          options: {
+            procedure: function skeletonMarkdownLoader(source) {
+              let ast
+              let meta = {}
+
+              try {
+                ast = runtime
+                  .documentType('markdown')
+                  .provider.parser()
+                  .parse(source)
+
+                if (ast && ast.children && ast.children[0] && ast.children[0].type === 'yaml') {
+                  Object.assign(meta, require('js-yaml').safeLoad(ast.children[0].value))
+                }
+              } catch (error) {
+                ast = { error: error.message }
+              }
+
+              return `module.exports = {
+                meta: ${JSON.stringify(meta)},
+                content: ${JSON.stringify(source)},
+                ast: ${JSON.stringify(ast)},
+                id: ${JSON.stringify(runtime.relative(this.resourcePath))}
+              }`
+            },
+          },
+        },
+      ],
+    },
   ]
 }
 

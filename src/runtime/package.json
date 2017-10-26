@@ -1,20 +1,30 @@
 {
   "name": "skypager-runtime",
   "version": "37.5.0",
-  "description": "provides registries of domain specific module loaders",
+  "description": "universal javascript application runtime",
   "main": "index.js",
-  "engines": {
-    "npm": ">=3"
-  },
   "compilers": {
     "package": {
       "entryPoints": {
         "index": "index.js",
         "helper": "helpers/helper.js",
+        "feature": "helpers/feature.js",
         "config-builder": "config-builder/index.js",
         "utils": "utils/index.js",
         "registries": "registries/index.js",
-        "context-registry": "registries/context.js"
+        "context-registry": "registries/context.js",
+        "utils/emitter": "utils/emitter.js",
+        "utils/entity": "utils/entity.js",
+        "utils/inflect": "utils/inflect.js",
+        "utils/mware": "utils/mware.js",
+        "utils/object-hash": "utils/object-hash.js",
+        "utils/path-matcher": "utils/path-matcher.js",
+        "utils/path-to-regexp": "utils/path-to-regexp.js",
+        "utils/properties": "utils/properties.js",
+        "utils/query": "utils/query.js",
+        "utils/registry": "utils/registry.js",
+        "utils/router": "utils/router.js",
+        "utils/string": "utils/string.js"
       }
     },
     "minifiedBundle": {
