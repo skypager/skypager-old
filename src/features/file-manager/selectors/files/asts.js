@@ -59,6 +59,7 @@ export default async function readFileAsts(chain, options = {}) {
   }
 
   await this.fileManager.readContent({ ...options, include, exclude })
+  await this.fileManager.hashFiles({ ...options, include, exclude })
 
   const results = await this.fileManager.selectMatches({ rules: include, fullPath: true })
 
@@ -90,9 +91,14 @@ export default async function readFileAsts(chain, options = {}) {
     .keyBy('relative')
     .mapValues((file, id) => {
       // TODO: Check the hash and dont generate the ast if it exists already
-      const { content, extension } = file
+      const { ast, hash, astHash, content, extension } = file
 
-      file.ast = transform(content, extension.replace('.', ''), file.relative)
+      if (ast && hash && astHash && hash === astHash) {
+        file.ast = ast
+      } else {
+        file.ast = transform(content, extension.replace('.', ''), file.relative)
+        file.astHash = hash
+      }
 
       this.fileManager.files.set(file.relative, file)
 

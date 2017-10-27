@@ -305,7 +305,8 @@ export async function readContent(options = {}) {
             const [fileId, content] = entry
             this.fireHook(RECEIVED_FILE_CONTENT, fileId, content, this.files.get(fileId))
             this.updateFileContent(fileId, content)
-            return entry
+
+            return options.hash ? this.hashFile(fileId).then(() => entry) : entry
           })
       )
   )

@@ -1,5 +1,78 @@
 {
-  "name": "skypager-document-types-skypage",
-  "version": "37.5.0",
-  "license": "MIT"
+  "name": "skypage",
+  "version": "1.0.0",
+  "private": "true",
+  "description": "reactive markdown documents",
+  "main": "index.js",
+  "browser": "skypage.js",
+  "repository": "git@github.com:skypager/skypager.git",
+  "author": "Jon Soeder <jon@chicago.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "js-yaml": "^3.10.0",
+    "mdast-util-heading-range": "^2.1.0",
+    "mdast-util-inject": "^1.1.0",
+    "mdast-util-to-string": "^1.0.4",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "remark": "^8.0.0",
+    "remark-frontmatter": "^1.1.0",
+    "remark-html": "^6.0.1",
+    "remark-normalize-headings": "^1.0.0",
+    "remark-parse": "^4.0.0",
+    "remark-react": "^4.0.0",
+    "remark-slug": "^4.2.3",
+    "remark-squeeze-paragraphs": "^3.0.1",
+    "remark-stringify": "^4.0.0",
+    "unist-util-filter": "^0.2.1",
+    "unist-util-find-after": "^2.0.1",
+    "unist-util-find-all-after": "^1.0.1",
+    "unist-util-find-all-before": "^2.0.1",
+    "unist-util-index": "^1.0.0",
+    "unist-util-map": "^1.0.3",
+    "unist-util-parents": "^1.0.0",
+    "unist-util-position": "^3.0.0",
+    "unist-util-remove-position": "^1.1.1",
+    "unist-util-select": "^1.5.0",
+    "unist-util-source": "^1.0.2",
+    "unist-util-visit": "^1.1.3"
+  },
+  "compilers": {
+    "package": {
+      "entryPoints": "index.js"
+    },
+    "minifiedBundle": {
+      "target": "web",
+      "minify": true,
+      "externals": {
+        "lodash": "global lodash",
+        "skypager-runtime": "global skypager",
+        "mobx": "global mobx",
+        "react": "global React",
+        "react-dom": "global ReactDOM"
+      },
+      "entryPoints": {
+        "skypage": [
+          "index.web.js"
+        ]
+      }
+    },
+    "bundle": {
+      "target": "web",
+      "externals": {
+        "lodash": "global lodash",
+        "skypager-runtime": "global skypager",
+        "mobx": "global mobx",
+        "react": "global React",
+        "react-dom": "global ReactDOM"
+      },
+      "entryPoints": {
+        "skypage": [
+          "expose?skypager!skypager-runtime/skypager-runtime.js",
+          "index.web.js"
+        ]
+      }
+    }
+  }
 }

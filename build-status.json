@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "b5b7f0c5bcaa57c934dafc4e3d66ccc583cfee52",
-    "abbreviatedSha": "b5b7f0c5bc",
-    "branch": "feature/monorepo-organization",
-    "tag": "v37.5.1",
+    "sha": "9383cb6f7333cff4c7985421f2a147ca48ed7ab7",
+    "abbreviatedSha": "9383cb6f73",
+    "branch": "feature/documentation-website",
+    "tag": null,
     "root": "/Users/jon/Projects/skypager"
   },
   "packages": {
@@ -275,11 +275,24 @@
         "success": true,
         "assets": {
           "index": "index.js",
+          "feature": "feature.js",
           "helper": "helper.js",
           "registries": "registries.js",
           "context-registry": "context-registry.js",
           "utils": "utils.js",
-          "config-builder": "config-builder.js"
+          "config-builder": "config-builder.js",
+          "utils/properties": "utils/properties.js",
+          "utils/registry": "utils/registry.js",
+          "utils/router": "utils/router.js",
+          "utils/emitter": "utils/emitter.js",
+          "utils/string": "utils/string.js",
+          "utils/path-to-regexp": "utils/path-to-regexp.js",
+          "utils/query": "utils/query.js",
+          "utils/object-hash": "utils/object-hash.js",
+          "utils/mware": "utils/mware.js",
+          "utils/path-matcher": "utils/path-matcher.js",
+          "utils/inflect": "utils/inflect.js",
+          "utils/entity": "utils/entity.js"
         }
       }
     },
@@ -663,6 +676,23 @@
         "errors": 1
       },
       "success": false
+    },
+    "skypage": {
+      "version": "1.0.0",
+      "name": "skypage",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      },
+      "success": false,
+      "bundle": {
+        "success": true,
+        "assets": {
+          "skypage": "skypage.min.js"
+        }
+      }
     }
   },
   "failed": {

@@ -1,6 +1,5 @@
-const isFunction = o => typeof o === "function"
-import { Helper } from "skypager-runtime"
-import DocumentType from "skypager-helpers-document-type"
+import { Helper } from 'skypager-runtime'
+import DocumentType from 'skypager-helpers-document-type'
 
 export class Document extends Helper {
   static isCacheable = true
@@ -8,85 +7,75 @@ export class Document extends Helper {
   static isObservable = true
 
   static attach(runtime, options = {}) {
-    if (!runtime.has("documentType")) {
+    if (!runtime.has('documentType')) {
       DocumentType.attach(runtime)
     }
 
     const result = Helper.attach(runtime, Document, {
-      registryProp: "documents",
-      lookupProp: "document",
+      registryProp: 'documents',
+      lookupProp: 'document',
       cacheHelper: true,
       isCacheable: true,
       registry:
         options.registry ||
-          Helper.createContextRegistry("documents", {
-            context: Helper.createMockContext()
-          }),
-      ...options
+        Helper.createContextRegistry('documents', {
+          context: Helper.createMockContext(),
+        }),
+      ...options,
     })
-
-    runtime.activateDocumentWatcher = function(fm) {
-      Document.listenToFileManager(fm)
-      return runtime
-    }
 
     return result
   }
 
-  static listenToFileManager(fileManager) {
-    const { runtime } = fileManager
+  get documentAttributes() {
+    return this.tryResult('documentAttributes', [
+      'id',
+      'relative',
+      'path',
+      'extension',
+      'base',
+      'content',
+      'ast',
+      'hash',
+      'stats',
+      'mime',
+    ])
+  }
 
-    fileManager.on("receivedFile", (id, file) => {
-      runtime.documents.register(id, () => ({
-        fileManagerId: id,
-        file,
-        getFile() {
-          return runtime.fileManager.file(id)
-        },
-        async lookupFile() {
-          const file = runtime.fileManager.file(id)
+  formatPath(path) {
+    const formatter = this.tryGet('formatPath', this.lodash.identity)
+    return formatter(path)
+  }
 
-          if (!file.hash) {
-            await file.calculateHash()
-          }
-          if (!file.content) {
-            await file.readContent()
-          }
+  get doc() {
+    const { provider = {}, options = {} } = this
+    const pick = obj => this.lodash.pick(obj, this.documentAttributes)
+    const base = this.lodash.defaultsDeep({}, pick(options), pick(provider))
 
-          return file
-        }
-      }))
-    })
+    return {
+      ...base,
+      path: this.formatPath(base.path),
+    }
+  }
 
-    fileManager.files.entries().forEach(entry => {
-      const [id, file] = entry
+  get docType() {
+    if (this.docTypeId) {
+      return this.runtime.documentType(this.docTypeId, this.options, this.context)
+    }
+  }
 
-      runtime.documents.register(id, () => ({
-        fileManagerId: id,
-        file,
-        getFile() {
-          return runtime.fileManager.file(id)
-        },
-        async lookupFile() {
-          const file = runtime.fileManager.file(id)
-
-          if (!file.hash) {
-            await file.calculateHash()
-          }
-          if (!file.content) {
-            await file.readContent()
-          }
-
-          return file
-        }
-      }))
-    })
-
-    return fileManager
+  get docTypeId() {
+    return this.tryGet('docTypeId', this.matchingDocumentTypes[0])
   }
 
   get matchingDocumentTypes() {
-    return []
+    return this.runtime.chain
+      .get('documentTypes.available', [])
+      .filter(docTypeId => {
+        const docType = this.runtime.documentType(docTypeId)
+        return docType.testDoc(this.doc)
+      })
+      .value()
   }
 
   get documentTypes() {
@@ -102,12 +91,12 @@ export class Document extends Helper {
   }
 
   get collectionMixinOptions() {
-    const opts = this.tryResult("collectionMixinOptions") || this.tryResult("mixinOptions") || {}
+    const opts = this.tryResult('collectionMixinOptions') || this.tryResult('mixinOptions') || {}
     return defaults({}, opts, this.defaultMixinOptions)
   }
 
   get instanceMixinOptions() {
-    const opts = this.tryResult("instanceMixinOptions") || this.tryResult("mixinOptions") || {}
+    const opts = this.tryResult('instanceMixinOptions') || this.tryResult('mixinOptions') || {}
     return defaults({}, opts, this.defaultMixinOptions)
   }
 
@@ -118,7 +107,7 @@ export class Document extends Helper {
       partial: [this.context],
       insertOptions: true,
       right: true,
-      hidden: false
+      hidden: false,
     }
   }
 }
@@ -130,7 +119,7 @@ export const isCacheable = true
 export const attach = Document.attach
 
 export const registerHelper = () => {
-  if (Helper.registry.available.indexOf("document") === -1) {
-    Helper.registerHelper("document", () => Document)
+  if (Helper.registry.available.indexOf('document') === -1) {
+    Helper.registerHelper('document', () => Document)
   }
 }
