@@ -40,7 +40,7 @@ export default async function readFileAsts(chain, options = {}) {
 
   const { javascript = babel } = options
 
-  await this.fileManager.whenActivated()
+  await this.fileManager.startAsync()
 
   if (!include.length) {
     if (javascript || babel) {

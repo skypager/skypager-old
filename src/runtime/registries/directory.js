@@ -1,5 +1,5 @@
-import query from "../utils/query"
-import SimpleDirectory from "./simple"
+import query from '../utils/query'
+import SimpleDirectory from './simple'
 
 /**
  * The Directory is a searchable registry
@@ -17,7 +17,7 @@ export class Directory extends SimpleDirectory {
    */
   constructor(name, options = {}) {
     if (!options.route) {
-      options.route = ":id(.*)"
+      options.route = ':id(.*)'
     }
 
     super(name, options)
@@ -33,7 +33,7 @@ export class Directory extends SimpleDirectory {
       Object.assign(this, { [options.lookupMethod]: me.lookup.bind(me) })
     }
 
-    this.attach("metadata", {
+    this.attach('metadata', {
       fallback: function(id) {
         return {
           notFound: true,
@@ -61,13 +61,22 @@ export class Directory extends SimpleDirectory {
     })
   }
 
-  testRoute(path) {
-    return this.router.test(this.options.route)(path)
+  applyRoute(route, options = {}) {
+    return this.router.get(route || this.options.route)
+  }
+
+  testRoute(path, route) {
+    route = route || this.options.route
+    return this.router.test(route)(path)
   }
 
   register(id, fn, metadata = {}) {
     this._register(id, fn)
-    this.metadata.register(id, () => ({ ...metadata, registryId: id, ...(this.testRoute(id) || {}) }))
+    this.metadata.register(id, () => ({
+      ...metadata,
+      registryId: id,
+      ...(this.testRoute(id) || {}),
+    }))
     return this
   }
 }

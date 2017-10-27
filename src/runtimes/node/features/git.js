@@ -101,7 +101,7 @@ export function toJSON() {
 
 export function observables() {
   return {
-    files: ['map', {}],
+    files: ['shallowMap', {}],
     directories: ['map', {}],
     statusMap: ['map', {}],
     fileIds: [

@@ -27,6 +27,14 @@ export class Document extends Helper {
     return result
   }
 
+  static observables(options = {}, context = {}) {
+    const doc = this
+
+    return {
+      state: ['shallowMap', this.lodash.toPairs(doc.attributes)],
+    }
+  }
+
   get documentAttributes() {
     return this.tryResult('documentAttributes', [
       'id',
@@ -42,15 +50,27 @@ export class Document extends Helper {
     ])
   }
 
+  initialize() {
+    this.applyInterface(this.instanceMixin, this.instanceMixinOptions)
+  }
+
   formatPath(path) {
     const formatter = this.tryGet('formatPath', this.lodash.identity)
     return formatter(path)
   }
 
-  get doc() {
+  get blankAST() {
+    return this.tryGet('blankAST', {})
+  }
+
+  get attributes() {
     const { provider = {}, options = {} } = this
     const pick = obj => this.lodash.pick(obj, this.documentAttributes)
-    const base = this.lodash.defaultsDeep({}, pick(options), pick(provider))
+    const base = this.lodash.defaultsDeep({}, pick(options), pick(provider), {
+      ast: this.blankAST,
+      content: '',
+      meta: {},
+    })
 
     return {
       ...base,
@@ -60,7 +80,9 @@ export class Document extends Helper {
 
   get docType() {
     if (this.docTypeId) {
-      return this.runtime.documentType(this.docTypeId, this.options, this.context)
+      try {
+        return this.runtime.documentType(this.docTypeId, this.options, this.context)
+      } catch (e) {}
     }
   }
 
@@ -73,7 +95,7 @@ export class Document extends Helper {
       .get('documentTypes.available', [])
       .filter(docTypeId => {
         const docType = this.runtime.documentType(docTypeId)
-        return docType.testDoc(this.doc)
+        return docType.testDoc(this.attributes)
       })
       .value()
   }
@@ -87,17 +109,17 @@ export class Document extends Helper {
   }
 
   get instanceMixin() {
-    return {}
+    return this.get('docType.interfaceMixin', {})
   }
 
   get collectionMixinOptions() {
     const opts = this.tryResult('collectionMixinOptions') || this.tryResult('mixinOptions') || {}
-    return defaults({}, opts, this.defaultMixinOptions)
+    return this.lodash.defaults({}, opts, this.defaultMixinOptions)
   }
 
   get instanceMixinOptions() {
     const opts = this.tryResult('instanceMixinOptions') || this.tryResult('mixinOptions') || {}
-    return defaults({}, opts, this.defaultMixinOptions)
+    return this.lodash.defaults({}, opts, this.defaultMixinOptions)
   }
 
   get defaultMixinOptions() {

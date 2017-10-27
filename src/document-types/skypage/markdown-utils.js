@@ -77,22 +77,6 @@ export class DocumentWrapper {
     return this.id.replace(/docs\//, '').replace(/\.md$/, '')
   }
 
-  get assetsAvailable() {
-    return this.runtime.assets.available.indexOf(`${this.docId}/index`) >= 0
-  }
-
-  get assets() {
-    return this.assetsAvailable && this.runtime.assets.lookup(`${this.docId}/index`)
-  }
-
-  hasAsset(assetId) {
-    return this.assetsAvailable && this.assets.available.indexOf(assetId) >= 0
-  }
-
-  assetURL(assetId) {
-    return this.hasAsset(assetId) && this.assets.lookup(assetId)
-  }
-
   get runtime() {
     return this.context && this.context.runtime
   }
@@ -187,6 +171,6 @@ export class DocumentWrapper {
   }
 }
 
-export function wrapDocument({ id, ast, content, meta } = {}) {
-  return new DocumentWrapper({ id, ast, content, meta }, { runtime: global.runtime })
+export function wrapDocument({ id, ast, content, meta } = {}, context = {}) {
+  return new DocumentWrapper({ id, ast, content, meta }, { runtime: context.runtime })
 }
