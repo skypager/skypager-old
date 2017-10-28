@@ -1,6 +1,6 @@
 {
   "name": "skypage",
-  "version": "37.5.0",
+  "version": "37.6.0",
   "description": "document type handler for react markdown",
   "main": "index.js",
   "browser": "skypage.js",

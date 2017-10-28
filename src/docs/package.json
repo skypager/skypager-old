@@ -1,6 +1,6 @@
 {
   "name": "skypager-docs",
-  "version": "1.0.0",
+  "version": "37.6.0",
   "private": "true",
   "description": "Skypager Framework Documentation Bundle",
   "main": "index.js",
@@ -86,7 +86,7 @@
     "prettier": "^1.7.4",
     "rimraf": "^2.6.2",
     "sinon": "^4.0.0",
-    "skypager": "^37.5.1",
+    "skypager": "^37.6.0",
     "skypager-cli-base": "^37.5.0",
     "uglifyjs-webpack-plugin": "^0.4.6"
   }

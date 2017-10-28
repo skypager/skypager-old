@@ -1,6 +1,6 @@
 {
   "name": "skypager-helpers-client",
-  "version": "37.5.0",
+  "version": "37.6.0",
   "description": "skypager client helper",
   "main": "index.js",
   "files": [
@@ -18,7 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.16.1",
-    "skypager-runtime": "^37.5.0"
+    "skypager-runtime": "^37.6.0"
   },
   "skypager": {
     "paths": {

@@ -10,8 +10,7 @@
   },
   "scripts": {
     "build:docker": "docker build -t datapimp/skypager-portfolio .",
-    "run:docker":
-      "docker run -v \"packages:/myapp/public/packages\" -p 4001:4000 datapimp/skypager-portfolio",
+    "run:docker": "docker run -v \"packages:/myapp/public/packages\" -p 4001:4000 datapimp/skypager-portfolio",
     "build": "bin/each buildPackage && bin/run skypager-repl yarn build && bin/export",
     "setup-dev": "yarn add skypager-framework@^26.1.1 skypager-cli@^25.1.0",
     "publish-packages": "sky run publish",
@@ -67,10 +66,10 @@
     "lodash": "^4.17.0",
     "mobx": "3.1.11",
     "skypager-cli-base": "^37.5.0",
-    "skypager-core": "^37.5.1",
-    "skypager-runtimes-development": "^37.5.1",
-    "skypager-runtimes-node": "^37.5.1",
-    "skypager-runtimes-react": "^37.5.0"
+    "skypager-core": "^37.6.0",
+    "skypager-runtimes-development": "^37.6.0",
+    "skypager-runtimes-node": "^37.6.0",
+    "skypager-runtimes-react": "^37.6.0"
   },
   "entryPoints": {
     "index": "./src/index.js"
