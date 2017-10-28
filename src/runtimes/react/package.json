@@ -1,6 +1,6 @@
 {
   "name": "skypager-runtimes-react",
-  "version": "37.5.0",
+  "version": "37.6.1",
   "main": "index.js",
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "prop-types": "15.5.10",
     "react": "15.5.4",
     "react-dom": "15.5.4",
-    "skypager-runtimes-web": "^37.5.0"
+    "skypager-runtimes-web": "^37.6.1"
   },
   "repository": {
     "type": "github",
