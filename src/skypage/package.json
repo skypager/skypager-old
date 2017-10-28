@@ -1,8 +1,7 @@
 {
   "name": "skypage",
-  "version": "1.0.0",
-  "private": "true",
-  "description": "reactive markdown documents",
+  "version": "37.5.0",
+  "description": "document type handler for react markdown",
   "main": "index.js",
   "browser": "skypage.js",
   "repository": "git@github.com:skypager/skypager.git",
