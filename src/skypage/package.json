@@ -1,7 +1,6 @@
 {
   "name": "skypage",
-  "version": "1.0.0",
-  "private": "true",
+  "version": "37.5.0",
   "description": "reactive markdown documents",
   "main": "index.js",
   "browser": "skypage.js",
@@ -53,9 +52,7 @@
         "react-dom": "global ReactDOM"
       },
       "entryPoints": {
-        "skypage": [
-          "index.web.js"
-        ]
+        "skypage": ["index.web.js"]
       }
     },
     "bundle": {
@@ -68,10 +65,7 @@
         "react-dom": "global ReactDOM"
       },
       "entryPoints": {
-        "skypage": [
-          "expose?skypager!skypager-runtime/skypager-runtime.js",
-          "index.web.js"
-        ]
+        "skypage": ["expose?skypager!skypager-runtime/skypager-runtime.js", "index.web.js"]
       }
     }
   }
