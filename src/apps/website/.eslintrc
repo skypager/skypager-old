@@ -1,0 +1,13 @@
+{
+    "parser": "babel-eslint",
+    "globals": {
+      "skypager": true
+    },
+    "extends": ["prettier-standard", "standard-jsx"],
+    "plugins": [
+      "class-property"
+    ],
+    "rules": {
+      "jsx-quotes": 0
+    }
+}
