@@ -8,21 +8,21 @@ import SkypagerLogo from 'components/SkypagerLogo'
 export class App extends Component {
   static contextTypes = {
     router: types.shape({
-      history: types.object,
-    }),
+      history: types.object
+    })
   }
 
   static propTypes = {
-    runtime: types.object.isRequired,
+    runtime: types.object.isRequired
   }
 
   static childContextTypes = {
-    runtime: types.object,
+    runtime: types.object
   }
 
   getChildContext() {
     return {
-      runtime: this.props.runtime,
+      runtime: this.props.runtime
     }
   }
 
@@ -33,7 +33,7 @@ export class App extends Component {
 
     this.state = {
       loading: !runtime.currentState.loaded,
-      sidebarIsVisible: !!runtime.currentState.sidebarIsVisible,
+      sidebarIsVisible: !!runtime.currentState.sidebarIsVisible
     }
   }
 
@@ -67,8 +67,7 @@ export class App extends Component {
       <SidebarLayout
         menuItems={menuItems}
         sidebarProps={{ ...this.props.sidebarProps, visible: true }}
-        visible={this.props.showSidebar || this.state.sidebarIsVisible}
-      >
+        visible={this.props.showSidebar || this.state.sidebarIsVisible}>
         <Route exact path="/" component={Home} />
         <Route path="/docs/:pageId*" component={ViewDocument} />
       </SidebarLayout>

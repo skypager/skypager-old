@@ -1,7 +1,6 @@
 import { React, Component, baseContextTypes } from '../../globals'
 import PageWrapper from 'layouts/PageWrapper'
 import MarkdownDocument from 'components/MarkdownDocument'
-import Editor from 'components/Editor'
 
 export class ViewDocument extends Component {
   static contextTypes = baseContextTypes
@@ -28,9 +27,17 @@ export class ViewDocument extends Component {
     }
 
     try {
-      this.setState({ pageId, doc: runtime.docFiles.lookup(pageId), error: undefined })
+      this.setState({
+        pageId,
+        doc: runtime.docFiles.lookup(pageId),
+        error: undefined
+      })
     } catch (error) {
-      this.setState({ pageId, error: `Error: ${error.message}`, doc: undefined })
+      this.setState({
+        pageId,
+        error: `Error: ${error.message}`,
+        doc: undefined
+      })
     }
   }
 
@@ -41,9 +48,17 @@ export class ViewDocument extends Component {
 
     if (current.pageId !== pageId) {
       try {
-        this.setState({ pageId, doc: runtime.docFiles.lookup(pageId), error: undefined })
+        this.setState({
+          pageId,
+          doc: runtime.docFiles.lookup(pageId),
+          error: undefined
+        })
       } catch (error) {
-        this.setState({ pageId, error: `Error: ${error.message}`, doc: undefined })
+        this.setState({
+          pageId,
+          error: `Error: ${error.message}`,
+          doc: undefined
+        })
       }
     }
   }
@@ -53,10 +68,14 @@ export class ViewDocument extends Component {
     const { pageId, doc, error } = this.state
 
     return (
-      <PageWrapper headerContent="Skypager" headerIcon="home" showToggle={false}>
+      <PageWrapper
+        headerContent="Skypager"
+        headerIcon="home"
+        showToggle={false}>
         <Segment piled style={{ width: '80%' }}>
           {doc && !error && <MarkdownDocument doc={doc} />}
-          {!doc && error && <Message style={{ width: '50%' }} content={error} />}
+          {!doc &&
+            error && <Message style={{ width: '50%' }} content={error} />}
         </Segment>
       </PageWrapper>
     )

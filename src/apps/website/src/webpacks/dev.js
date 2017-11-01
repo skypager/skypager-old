@@ -1,7 +1,5 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-
 const { dirname } = require('path')
-const loaderUtils = require('loader-utils')
 
 // i forget which one gets used
 export const target = 'web'
@@ -9,15 +7,30 @@ export const buildTarget = 'web'
 
 export function entry() {
   const { runtime } = this
-  const { host = 'localhost', port = 3000 } = runtime.argv
+  const { host = 'localhost', port = 3000, hot = true } = this.options
 
+  let app = hot
+    ? [
+        'react-hot-loader/patch',
+        `webpack-dev-server/client?http://${host}:${port}`,
+        'webpack/hot/only-dev-server',
+        runtime.join('src', 'index.web.js')
+      ]
+    : [runtime.join('src', 'index.web.js')]
+
+  return { app }
+}
+
+export function externals() {
   return {
-    app: [
-      'react-hot-loader/patch',
-      `webpack-dev-server/client?http://${host}:${port}`,
-      'webpack/hot/only-dev-server',
-      runtime.join('src', 'index.web.js'),
-    ],
+    react: 'global React',
+    'semantic-ui-react': 'global semanticUIReact',
+    skypager: 'global skypager',
+    'react-dom': 'global ReactDOM',
+    'prop-types': 'global PropTypes',
+    'react-router-dom': 'global ReactRouterDOM',
+    axios: 'global axios',
+    moment: 'global moment'
   }
 }
 
@@ -26,7 +39,10 @@ export function outputPath() {
 }
 
 export function moduleLocations() {
-  return [this.runtime.join('src'), 'node_modules', this.runtime.resolve('../../../node_modules')]
+  return [
+    this.runtime.join('src'),
+    this.runtime.join('node_modules')
+  ]
 }
 
 export function rules() {
@@ -40,7 +56,7 @@ export function rules() {
       exclude: [
         /node_modules/,
         this.runtime.join('node_modules'),
-        this.runtime.join('src/templates'),
+        this.runtime.join('src/templates')
       ],
       use: compact([
         !this.runtime.isProduction && { loader: 'react-hot-loader/webpack' },
@@ -48,10 +64,10 @@ export function rules() {
           loader: 'babel-loader',
           options: {
             babelrc: false,
-            ...babelConfig.call(this),
-          },
-        },
-      ]).filter(v => v),
+            ...babelConfig.call(this)
+          }
+        }
+      ]).filter(v => v)
     },
     {
       test: /\.md/,
@@ -69,8 +85,16 @@ export function rules() {
                   .provider.parser()
                   .parse(source)
 
-                if (ast && ast.children && ast.children[0] && ast.children[0].type === 'yaml') {
-                  Object.assign(meta, require('js-yaml').safeLoad(ast.children[0].value))
+                if (
+                  ast &&
+                  ast.children &&
+                  ast.children[0] &&
+                  ast.children[0].type === 'yaml'
+                ) {
+                  Object.assign(
+                    meta,
+                    require('js-yaml').safeLoad(ast.children[0].value)
+                  )
                 }
               } catch (error) {
                 ast = { error: error.message }
@@ -82,40 +106,40 @@ export function rules() {
                 ast: ${JSON.stringify(ast)},
                 id: ${JSON.stringify(runtime.relative(this.resourcePath))}
               }`
-            },
-          },
-        },
-      ],
+            }
+          }
+        }
+      ]
     },
     {
       test: /\.(eot|svg|ttf|woff|woff2)(\?v=[a-z0-9]\.[a-z0-9]\.[a-z0-9])?$/,
       use: [
         {
           loader: 'url-loader',
-          options: { limit: 65000 },
-        },
-      ],
+          options: { limit: 65000 }
+        }
+      ]
     },
     {
       test: /\.(jpe?g|png|gif)$/,
       use: [
         {
           loader: 'url-loader',
-          options: { limit: 65000 },
+          options: { limit: 65000 }
         },
         {
           loader: 'image-webpack-loader',
-          options: {},
-        },
-      ],
+          options: {}
+        }
+      ]
     },
     {
       test: /.css$/,
       use: ExtractTextPlugin.extract({
         fallback: 'style-loader',
-        use: ['css-loader'],
-      }),
-    },
+        use: ['css-loader']
+      })
+    }
   ]
 }
 
@@ -128,37 +152,31 @@ export function webpackPlugins() {
       skypager: this.runtime,
       runtime: this.runtime,
       inject: true,
-      filename: 'index.html',
+      filename: 'index.html'
     },
 
     'extract-text-webpack-plugin': 'styles.css',
-
+    /*
     ExternalsPlugin: {
-      react: 'global React',
-      'semantic-ui-react': 'global semanticUIReact',
-      skypager: 'global skypager',
-      'react-dom': 'global ReactDOM',
-      'prop-types': 'global PropTypes',
-      axios: 'global axios',
-      moment: 'global moment',
     },
+    */
 
     'copy-webpack-plugin': [
-      { from: this.runtime.resolve('../../../node_modules/skypager-runtimes-web/skypager-web.js') },
+      { from: res('skypager-runtimes-web/skypager-web.js') },
       {
-        from: this.runtime.resolve(
-          '../../../node_modules/skypager-runtimes-web/skypager-web.min.js'
-        ),
+        from: res('skypager-runtimes-web/skypager-web.min.js')
       },
       { from: res('moment/min/moment.min.js') },
       { from: res('axios/dist/axios.js') },
       { from: res('axios/dist/axios.min.js') },
-      { from: res('react/dist/react.js') },
-      { from: res('react/dist/react.min.js') },
+      { from: res('react/umd/react.development.js') },
+      { from: res('react/umd/react.production.min.js') },
       { from: res('prop-types/prop-types.js') },
       { from: res('prop-types/prop-types.min.js') },
-      { from: res('react-dom/dist/react-dom.js') },
-      { from: res('react-dom/dist/react-dom.min.js') },
+      { from: res('react-dom/umd/react-dom.development.js') },
+      { from: res('react-dom/umd/react-dom.production.min.js') },
+      { from: res('react-router-dom/umd/react-router-dom.min.js') },
+      { from: res('react-router-dom/umd/react-router-dom.js') },
       { from: res('semantic-ui-react/dist/umd/semantic-ui-react.min.js') },
 
       { from: this.runtime.join('src', 'vendor'), flatten: false },
@@ -166,9 +184,16 @@ export function webpackPlugins() {
       {
         from: dirname(res('semantic-ui-css/semantic.css')),
         to: this.runtime.join('public'),
-        flatten: false,
-      },
-    ],
+        ignore: [
+          'components/**',
+          '**/components/**',
+          'LICENSE',
+          'package.js',
+          'package.json'
+        ],
+        flatten: false
+      }
+    ]
   })
 }
 
@@ -188,17 +213,18 @@ export function babelConfig() {
         packageFinder.attemptResolve('babel-preset-env'),
         {
           targets: {
-            browsers: ['>10%'],
-          },
-        },
+            browsers: ['>10%']
+          }
+        }
       ],
       packageFinder.attemptResolve('babel-preset-stage-0'),
-      packageFinder.attemptResolve('babel-preset-react'),
+      packageFinder.attemptResolve('babel-preset-react')
     ]),
     plugins: validate([
       packageFinder.attemptResolve('babel-plugin-transform-decorators-legacy'),
       packageFinder.attemptResolve('babel-plugin-transform-object-rest-spread'),
-      !runtime.isProduction && packageFinder.attemptResolve('webpack-hot-loader/babel'),
-    ]),
+      !runtime.isProduction &&
+        packageFinder.attemptResolve('webpack-hot-loader/babel')
+    ])
   }
 }

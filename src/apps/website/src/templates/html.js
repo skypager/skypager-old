@@ -1,5 +1,10 @@
 export default async function compile(params = {}) {
-  const { compilation, webpack, webpackConfig, htmlWebpackPlugin: { files, options } } = params
+  const {
+    compilation,
+    webpack,
+    webpackConfig,
+    htmlWebpackPlugin: { files, options }
+  } = params
   const { skypager } = options
 
   const page = skypager.page('html')
@@ -12,13 +17,14 @@ export default async function compile(params = {}) {
   page.stylesheets = ['semantic.min.css']
 
   page.dllScripts = [
-    'react.min.js',
-    'react-dom.min.js',
+    'react.production.min.js',
+    'react-dom.production.min.js',
     'prop-types.min.js',
     'semantic-ui-react.min.js',
     'skypager-web.min.js',
     'axios.min.js',
     'moment.min.js',
+    'react-router-dom.min.js'
   ]
 
   page.headTop = `

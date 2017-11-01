@@ -12,10 +12,13 @@ export class Home extends Component {
     const { runtime } = this.context
     const doc = runtime.docFiles.lookup('index')
 
+    console.log('Doc', doc)
     return (
-      <PageWrapper headerContent="Skypager" headerIcon="home" showToggle={false}>
-        {this.props.location.pathname}
-        <MarkdownDocument doc={doc} />
+      <PageWrapper
+        headerContent="Skypager"
+        headerIcon="home"
+        showToggle={false}>
+        <div>Home</div>
       </PageWrapper>
     )
   }
