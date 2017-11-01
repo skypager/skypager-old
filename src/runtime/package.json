@@ -1,6 +1,6 @@
 {
   "name": "skypager-runtime",
-  "version": "37.6.2",
+  "version": "37.6.3",
   "description": "universal javascript application runtime",
   "main": "index.js",
   "compilers": {
@@ -54,10 +54,11 @@
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.23.0",
     "isomorphic-vm": "0.0.1",
     "lodash": "^4.17.4",
-    "mobx": "3.1.11",
+    "mobx": "3.3.1",
     "uuid": "^3.0.1"
   },
   "repository": {
