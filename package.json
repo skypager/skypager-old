@@ -1,6 +1,6 @@
 {
   "name": "skypager",
-  "version": "37.6.3",
+  "version": "37.6.4",
   "description": "a javscript launch platform",
   "main": "index.js",
   "browser": "skypager.min.js",
@@ -13,8 +13,7 @@
     "run:docker": "docker run -v \"packages:/myapp/public/packages\" -p 4001:4000 datapimp/skypager-portfolio",
     "build": "bin/each buildPackage && bin/run skypager-repl yarn build && bin/export",
     "setup-dev": "yarn add skypager-framework@^26.1.1 skypager-cli@^25.1.0",
-    "publish-packages": "sky run publish",
-    "postpublish-packages": "./publish-packages.sh"
+    "publish-packages": "sky run prepare-release --release"
   },
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
@@ -67,10 +66,10 @@
     "lodash": "^4.17.4",
     "mobx": "3.3.1",
     "skypager-cli-base": "^37.5.0",
-    "skypager-core": "^37.6.3",
-    "skypager-runtimes-development": "^37.6.3",
-    "skypager-runtimes-node": "^37.6.3",
-    "skypager-runtimes-web": "^37.6.3"
+    "skypager-core": "^37.6.4",
+    "skypager-runtimes-development": "^37.6.4",
+    "skypager-runtimes-node": "^37.6.4",
+    "skypager-runtimes-web": "^37.6.4"
   },
   "entryPoints": {
     "index": "./src/index.js"

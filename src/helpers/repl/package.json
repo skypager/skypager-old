@@ -1,6 +1,6 @@
 {
   "name": "skypager-helpers-repl",
-  "version": "37.6.3",
+  "version": "37.6.4",
   "description": "an awesome repl",
   "main": "index.js",
   "files": [
@@ -22,7 +22,7 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "skypager-repl": "^37.5.0",
-    "skypager-runtime": "^37.6.3"
+    "skypager-runtime": "^37.6.4"
   },
   "skypager": {
     "helper": true,

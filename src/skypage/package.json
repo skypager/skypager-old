@@ -1,6 +1,6 @@
 {
   "name": "skypage",
-  "version": "37.6.3",
+  "version": "37.6.4",
   "description": "reactive markdown documents",
   "main": "index.js",
   "browser": "skypage.js",
