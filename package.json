@@ -1,6 +1,6 @@
 {
   "name": "skypager",
-  "version": "37.6.1",
+  "version": "37.6.2",
   "description": "a javscript launch platform",
   "main": "index.js",
   "browser": "skypager.min.js",
@@ -66,10 +66,10 @@
     "lodash": "^4.17.0",
     "mobx": "3.1.11",
     "skypager-cli-base": "^37.5.0",
-    "skypager-core": "^37.6.0",
-    "skypager-runtimes-development": "^37.6.0",
-    "skypager-runtimes-node": "^37.6.0",
-    "skypager-runtimes-react": "^37.6.0"
+    "skypager-core": "^37.6.2",
+    "skypager-runtimes-development": "^37.6.2",
+    "skypager-runtimes-node": "^37.6.2",
+    "skypager-runtimes-react": "^37.6.2"
   },
   "entryPoints": {
     "index": "./src/index.js"
