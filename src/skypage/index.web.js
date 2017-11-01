@@ -14,3 +14,5 @@ export default function skypage(...args) {
 
   return runtime
 }
+
+window.SkypageDocumentType = skypage

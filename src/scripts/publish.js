@@ -12,14 +12,14 @@ async function eachOutput() {
 
   const lines = [
     `lerna publish --skip-npm --yes --repo-version=${repoVersion}`,
-    `sky run each-changed-package buildPackage`,
-    `./each-changed-package.sh`,
+    ...packageNames.map(name => `  ${skypager.cwd}/bin/run ${name} buildPackage`),
     `bin/export`,
-  ].concat(packageNames.map(name => `cd ${skypager.cwd}/packages/${name} && npm publish`))
+    ...packageNames.map(name => `cd ${skypager.cwd}/packages/${name} && npm publish`),
+  ]
 
   const scriptContent = `
   main() {
-    ${lines.map(line => `  ${line}`).join('\n')}
+  ${lines.map(line => `  ${line}`).join('\n')}
   }
 
   main
@@ -32,6 +32,12 @@ async function eachOutput() {
   )
 
   skypager.proc.execSync(`chmod +x publish-packages.sh`)
+
+  if (skypager.argv.confirm) {
+    skypager.proc.spawnSync(skypager.join('publish-packages.sh'), {
+      stdio: 'inherit',
+    })
+  }
 }
 
 eachOutput().then(() => process.exit(0))
