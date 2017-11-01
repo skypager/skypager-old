@@ -30,6 +30,10 @@
     "minifiedBundle": {
       "minify": true,
       "target": "web",
+      "externals": {
+        "mobx": "global mobx",
+        "lodash": "global lodash"
+      },
       "entryPoints": {
         "skypager-runtime": [
           "babel-polyfill",
@@ -41,6 +45,10 @@
     },
     "bundle": {
       "target": "web",
+      "externals": {
+        "mobx": "global mobx",
+        "lodash": "global lodash"
+      },
       "entryPoints": {
         "skypager-runtime": [
           "babel-polyfill",
