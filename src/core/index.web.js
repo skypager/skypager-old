@@ -1,3 +1,3 @@
-import skypager from "expose?skypager!skypager-runtime/skypager-runtime.js"
+import skypager from 'skypager-runtime'
 const { version } = __PACKAGE__
-runtime.set("framework.version", version)
+runtime.set('framework.version', version)

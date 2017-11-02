@@ -1,6 +1,6 @@
 {
   "name": "skypage",
-  "version": "37.6.1",
+  "version": "37.6.4",
   "description": "reactive markdown documents",
   "main": "index.js",
   "browser": "skypage.js",
@@ -68,7 +68,6 @@
       },
       "entryPoints": {
         "skypage": [
-          "expose?skypager!skypager-runtime/skypager-runtime.js",
           "index.web.js"
         ]
       }

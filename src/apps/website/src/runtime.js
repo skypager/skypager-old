@@ -5,14 +5,14 @@ runtime.state.set('menuItems', [
     icon: 'home',
     name: 'home',
     content: 'Home',
-    onClick: () => runtime.navTo('/'),
+    onClick: () => runtime.navTo('/')
   },
   {
     icon: 'cloud',
     name: 'runtimes',
     content: 'Runtimes',
-    onClick: () => runtime.navTo('/runtimes'),
-  },
+    onClick: () => runtime.navTo('/runtimes')
+  }
 ])
 
 // Placeholder.  Navigate is overridden by react-router-dom when rendered with react
@@ -20,7 +20,11 @@ runtime.navigate = link => (window.location = link)
 
 runtime.startApp = () =>
   runtime
-    .use(require('./docs').bind(runtime))
+    .use(function(next) {
+      System.import('./docs').then(docsModule => {
+        docsModule.call(runtime, next)
+      })
+    })
     .start()
     .then(() => {
       return runtime

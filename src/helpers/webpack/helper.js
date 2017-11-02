@@ -1,6 +1,6 @@
-import webpack from "webpack"
-import Promise from "bluebird"
-import runtime, { Helper } from "skypager-runtime"
+import webpack from 'webpack'
+import Promise from 'bluebird'
+import runtime, { Helper } from 'skypager-runtime'
 const { mobx, lodash } = runtime
 const { action, computed, observable } = mobx
 const {
@@ -14,40 +14,40 @@ const {
   mapValues,
   isFunction,
   isObject,
-  uniq
+  uniq,
 } = lodash
 
 const privateData = new WeakMap()
 
-const WEBPACK_PLUGIN_NAMES = keys(webpack).filter(key => key.endsWith("Plugin"))
+const WEBPACK_PLUGIN_NAMES = keys(webpack).filter(key => key.endsWith('Plugin'))
 
-const WEBPACK_OPTIMIZE_PLUGIN_NAMES = keys(webpack.optimize).filter(key => key.endsWith("Plugin"))
+const WEBPACK_OPTIMIZE_PLUGIN_NAMES = keys(webpack.optimize).filter(key => key.endsWith('Plugin'))
 
-const CREATED = "CREATED"
-const PREPARING = "PREPARING"
-const FAILED = "FAILED"
-const PREPARED = "PREPARED"
-const READY = "READY"
-const WARNINGS = "WARNINGS"
-const ERRORS = "ERRORS"
+const CREATED = 'CREATED'
+const PREPARING = 'PREPARING'
+const FAILED = 'FAILED'
+const PREPARED = 'PREPARED'
+const READY = 'READY'
+const WARNINGS = 'WARNINGS'
+const ERRORS = 'ERRORS'
 
 export const STATUSES = {
   CREATED,
   PREPARED,
   PREPARING,
-  FAILED
+  FAILED,
 }
 
-export const DID_FAIL = "didFail"
-export const WAS_PREPARED = "wasPrepared"
-export const WILL_PREPARE = "willPrepare"
-export const WILL_RUN = "willRun"
-export const WILL_INITIALIZE = "willInitialize"
+export const DID_FAIL = 'didFail'
+export const WAS_PREPARED = 'wasPrepared'
+export const WILL_PREPARE = 'willPrepare'
+export const WILL_RUN = 'willRun'
+export const WILL_INITIALIZE = 'willInitialize'
 
 export const LIFECYCLE_HOOKS = {
   DID_FAIL,
   WAS_PREPARED,
-  WILL_RUN
+  WILL_RUN,
 }
 
 export class Webpack extends Helper {
@@ -65,29 +65,29 @@ export class Webpack extends Helper {
 
       configVersion: 0,
 
-      moduleRulesMap: ["shallowMap", {}],
+      moduleRulesMap: ['shallowMap', {}],
 
-      automaticModuleRulesMap: ["shallowMap", {}],
+      automaticModuleRulesMap: ['shallowMap', {}],
 
-      externalsMap: ["shallowMap", {}],
+      externalsMap: ['shallowMap', {}],
 
-      moduleAliasMap: ["shallowMap", {}],
+      moduleAliasMap: ['shallowMap', {}],
 
-      moduleLocationsMap: ["shallowMap", {}],
+      moduleLocationsMap: ['shallowMap', {}],
 
-      providedModulesMap: ["shallowMap", {}],
+      providedModulesMap: ['shallowMap', {}],
 
-      definitionsMap: ["shallowMap", {}],
+      definitionsMap: ['shallowMap', {}],
 
-      pluginsMap: ["shallowMap", {}],
+      pluginsMap: ['shallowMap', {}],
 
       progress: {
         percentComplete: 0,
 
-        stage: "Waiting",
+        stage: 'Waiting',
 
-        details: []
-      }
+        details: [],
+      },
     }
   }
 
@@ -98,16 +98,16 @@ export class Webpack extends Helper {
 
   static get optionTypes() {
     return {
-      cwd: "string",
-      entry: "object",
-      outputPath: "string",
-      libraryTarget: "string",
-      publicPath: "string",
-      outputFilename: "string",
-      externalModules: "object",
-      buildTarget: "string",
-      moduleAliases: "object",
-      moduleLocations: "object"
+      cwd: 'string',
+      entry: 'object',
+      outputPath: 'string',
+      libraryTarget: 'string',
+      publicPath: 'string',
+      outputFilename: 'string',
+      externalModules: 'object',
+      buildTarget: 'string',
+      moduleAliases: 'object',
+      moduleLocations: 'object',
     }
   }
 
@@ -121,28 +121,28 @@ export class Webpack extends Helper {
   initialize() {
     Promise.resolve(this.attemptMethodAsync(WILL_INITIALIZE))
 
-    this.cfg("buildTarget", this.buildTarget)
-    this.cfg("cwd", this.cwd)
-    this.cfg("entry", this.entry)
-    this.cfg("outputPath", this.outputPath)
-    this.cfg("publicPath", this.publicPath)
-    this.cfg("libraryTarget", this.libraryTarget)
-    this.cfg("outputFilename", this.outputFilename)
-    this.cfg("externalModules", this.externalModules)
-    this.cfg("moduleFolders", this.moduleFolders)
-    this.cfg("aliases", this.aliases)
-    this.cfg("rules", this.rules)
+    this.cfg('buildTarget', this.buildTarget)
+    this.cfg('cwd', this.cwd)
+    this.cfg('entry', this.entry)
+    this.cfg('outputPath', this.outputPath)
+    this.cfg('publicPath', this.publicPath)
+    this.cfg('libraryTarget', this.libraryTarget)
+    this.cfg('outputFilename', this.outputFilename)
+    this.cfg('externalModules', this.externalModules)
+    this.cfg('moduleFolders', this.moduleFolders)
+    this.cfg('aliases', this.aliases)
+    this.cfg('rules', this.rules)
 
     // TODO Add support for multiple configs; just need to
     // figure out clean defaults inheritance from provided args used in single config
     const configs = observable.map([])
-    this.priv("configs", configs)
+    this.priv('configs', configs)
 
     // When a webpack compilation finishes. These objects can be pretty big
     // and we extract a lot of data from them but want to clear them from memory
     // when we're no longer using the compiler
     const stats = observable.shallowMap([])
-    this.privateData.set("stats", stats)
+    this.privateData.set('stats', stats)
 
     this.status = PREPARING
 
@@ -162,26 +162,26 @@ export class Webpack extends Helper {
       return
     }
 
-    this.runtime.debug("discovering module locations")
-    await this.discoverModuleLocations().catch(c("moduleLocations"))
+    this.runtime.debug('discovering module locations')
+    await this.discoverModuleLocations().catch(c('moduleLocations'))
 
-    this.runtime.debug("discovering module aliases")
-    await this.discoverModuleAliases().catch(c("moduleAliases"))
+    this.runtime.debug('discovering module aliases')
+    await this.discoverModuleAliases().catch(c('moduleAliases'))
 
-    this.runtime.debug("discovering externals")
-    await this.discoverExternals().catch(c("externals"))
+    this.runtime.debug('discovering externals')
+    await this.discoverExternals().catch(c('externals'))
 
-    this.runtime.debug("discovering module rules")
-    await this.discoverModuleRules().catch(c("moduleRules"))
+    this.runtime.debug('discovering module rules')
+    await this.discoverModuleRules().catch(c('moduleRules'))
 
-    this.runtime.debug("discovering module provide")
-    await this.discoverProvidedModules().catch(c("providedModules"))
+    this.runtime.debug('discovering module provide')
+    await this.discoverProvidedModules().catch(c('providedModules'))
 
-    this.runtime.debug("discovering definitions")
-    await this.discoverDefinitions().catch(c("definitions"))
+    this.runtime.debug('discovering definitions')
+    await this.discoverDefinitions().catch(c('definitions'))
 
-    this.runtime.debug("discovering other plugins")
-    await this.discoverPlugins().catch(c("plugins"))
+    this.runtime.debug('discovering other plugins')
+    await this.discoverPlugins().catch(c('plugins'))
 
     //this.runtime.debug("discovering entry points")
     //await this.discoverEntryPoints()
@@ -212,11 +212,11 @@ export class Webpack extends Helper {
   }
 
   get fileManager() {
-    return this.get("runtime.fileManager", {})
+    return this.get('runtime.fileManager', {})
   }
 
   get packageFinder() {
-    return this.get("runtime.packageFinder", {})
+    return this.get('runtime.packageFinder', {})
   }
 
   async prepare() {
@@ -246,19 +246,19 @@ export class Webpack extends Helper {
           .then(() => this.runtime.debug(`refreshed config in response to change in ${mapName}`))
           .catch(error =>
             this.runtime.error(`Error while refreshing config ${mapName}`, {
-              message: error.message
+              message: error.message,
             })
           )
       })
 
-    const moduleAliasMap = observe("moduleAliasMap")
-    const moduleRulesMap = observe("moduleRulesMap")
-    const moduleLocationsMap = observe("moduleLocationsMap")
-    const providedModulesMap = observe("providedModulesMap")
-    const definitionsMap = observe("definitionsMap")
-    const configOptions = observe("configOptions")
-    const externalsMap = observe("externalsMap")
-    const pluginsMap = observe("pluginsMap")
+    const moduleAliasMap = observe('moduleAliasMap')
+    const moduleRulesMap = observe('moduleRulesMap')
+    const moduleLocationsMap = observe('moduleLocationsMap')
+    const providedModulesMap = observe('providedModulesMap')
+    const definitionsMap = observe('definitionsMap')
+    const configOptions = observe('configOptions')
+    const externalsMap = observe('externalsMap')
+    const pluginsMap = observe('pluginsMap')
 
     this.stopObserving = () => {
       moduleLocationsMap()
@@ -328,7 +328,7 @@ export class Webpack extends Helper {
 
   @action
   externalize(...args) {
-    if (args.length === 2 && (typeof args[0] === "string" && typeof args[1] === "string")) {
+    if (args.length === 2 && (typeof args[0] === 'string' && typeof args[1] === 'string')) {
       this.externalsMap.set(...args)
     }
 
@@ -360,7 +360,7 @@ export class Webpack extends Helper {
     which module requests should be treated as external.
   */
   async discoverExternals() {
-    const externals = await this.attemptMethodAsync("externals")
+    const externals = await this.attemptMethodAsync('externals')
 
     if (isObject(externals)) {
       Object.keys(externals).forEach(k => this.externalsMap.set(k, externals[k]))
@@ -376,7 +376,7 @@ export class Webpack extends Helper {
   }
 
   async discoverModuleLocations() {
-    const moduleLocations = await this.attemptMethodAsync("moduleLocations")
+    const moduleLocations = await this.attemptMethodAsync('moduleLocations')
 
     if (isObject(moduleLocations)) {
       Object.keys(moduleLocations).forEach(k => this.moduleLocation(k, moduleLocations[k]))
@@ -392,8 +392,8 @@ export class Webpack extends Helper {
   }
 
   async discoverModuleAliases() {
-    const moduleAliases = await this.attemptMethodAsync("moduleAliases")
-    const packageAliases = this.get("runtime.currentPackage.aliases", {})
+    const moduleAliases = await this.attemptMethodAsync('moduleAliases')
+    const packageAliases = this.get('runtime.currentPackage.aliases', {})
     const configuredAliases = this.aliases || {}
 
     const aliasConfig = this.lodash.defaults({}, configuredAliases, moduleAliases, packageAliases)
@@ -407,14 +407,14 @@ export class Webpack extends Helper {
 
   @action
   define(a, b) {
-    this.definitionsMap.set(a, typeof b === "string" ? b : JSON.stringify(b))
+    this.definitionsMap.set(a, typeof b === 'string' ? b : JSON.stringify(b))
     return this
   }
 
   async discoverDefinitions() {
-    const definitions = await this.attemptMethodAsync("definitions")
-    const hardCoded = this.tryResult("define", () =>
-      this.get("runtime.currentPackage.define", this.get("runtime.options.define"))
+    const definitions = await this.attemptMethodAsync('definitions')
+    const hardCoded = this.tryResult('define', () =>
+      this.get('runtime.currentPackage.define', this.get('runtime.options.define'))
     )
     const definitionsConfig = this.lodash.defaults({}, definitions, hardCoded)
 
@@ -432,9 +432,9 @@ export class Webpack extends Helper {
   }
 
   async discoverProvidedModules() {
-    const providedModules = await this.attemptMethodAsync("providedModules")
-    const hardCoded = this.tryResult("provide", () =>
-      this.get("runtime.currentPackage.provide", this.get("runtime.options.provide"))
+    const providedModules = await this.attemptMethodAsync('providedModules')
+    const hardCoded = this.tryResult('provide', () =>
+      this.get('runtime.currentPackage.provide', this.get('runtime.options.provide'))
     )
     const providedModulesConfig = this.lodash.defaults({}, providedModules, hardCoded)
 
@@ -468,7 +468,7 @@ export class Webpack extends Helper {
 
     this.rules.forEach((rule, i) => {
       rule.name = rule.name || `rule-${i}`
-      this.rule(rule.name, this.lodash.omit(rule, "name"))
+      this.rule(rule.name, this.lodash.omit(rule, 'name'))
     })
 
     return this
@@ -483,10 +483,10 @@ export class Webpack extends Helper {
   }
 
   async discoverPlugins() {
-    const plugins = await this.attemptMethodAsync("webpackPlugins")
+    const plugins = await this.attemptMethodAsync('webpackPlugins')
 
     if (isEmpty(plugins)) {
-      this.runtime.debug("None found")
+      this.runtime.debug('None found')
       return this
     }
 
@@ -507,41 +507,41 @@ export class Webpack extends Helper {
   }
 
   get configOptions() {
-    return this.priv("configOptions")
+    return this.priv('configOptions')
   }
 
   set buildTarget(val) {
-    this.configOptions.set("buildTarget", val)
+    this.configOptions.set('buildTarget', val)
     return val
   }
 
   set cwd(val) {
-    this.configOptions.set("cwd", val)
+    this.configOptions.set('cwd', val)
     return val
   }
 
   set libraryTarget(val) {
-    this.configOptions.set("libraryTarget", val)
+    this.configOptions.set('libraryTarget', val)
     return val
   }
 
   set outputPath(val) {
-    this.configOptions.set("outputPath", val)
+    this.configOptions.set('outputPath', val)
     return val
   }
 
   set publicPath(val) {
-    this.configOptions.set("publicPath", val)
+    this.configOptions.set('publicPath', val)
     return val
   }
 
   set outputFilename(val) {
-    this.configOptions.set("outputFilename", val)
+    this.configOptions.set('outputFilename', val)
     return val
   }
 
   set entry(val) {
-    this.configOptions.set("entry", val)
+    this.configOptions.set('entry', val)
     return val
   }
 
@@ -550,73 +550,73 @@ export class Webpack extends Helper {
   // so once the config options observable has control of the value, it can be changed
   // by an external UI and we can react to that
   configOption(param, defaultVal) {
-    const result = this.invoke("configOptions.has", param)
-      ? this.invoke("configOptions.get", param)
+    const result = this.invoke('configOptions.has', param)
+      ? this.invoke('configOptions.get', param)
       : this.tryResult(param, defaultVal)
 
     if (result) return result
 
-    return typeof defaultVal === "function" ? defaultVal.call(this, param) : defaultVal
+    return typeof defaultVal === 'function' ? defaultVal.call(this, param) : defaultVal
   }
 
   get pkg() {
-    return this.result("options.pkg", () => this.runtime.currentPackage)
+    return this.result('options.pkg', () => this.runtime.currentPackage)
   }
 
   @computed
   get buildTarget() {
-    return this.configOption("target", "web")
+    return this.configOption('target', 'web')
   }
 
   @computed
   get aliases() {
-    return this.configOption("aliases", {})
+    return this.configOption('aliases', {})
   }
 
   @computed
   get rules() {
-    return this.configOption("rules", [])
+    return this.configOption('rules', [])
   }
 
   @computed
   get moduleFolders() {
     return uniq(
       compact([
-        ...this.configOption("moduleFolders", []),
-        ...this.configOption("moduleLocations", [])
+        ...this.configOption('moduleFolders', []),
+        ...this.configOption('moduleLocations', []),
       ])
     )
   }
 
   @computed
   get cwd() {
-    return this.configOption("cwd", this.runtime.cwd)
+    return this.configOption('cwd', this.runtime.cwd)
   }
 
   @computed
   get externalModules() {
-    return this.configOption("externalModules", {})
+    return this.configOption('externalModules', {})
   }
 
   @computed
   get publicPath() {
-    return this.configOption("publicPath", this.buildTarget.match(/electron/i) ? "" : "/")
+    return this.configOption('publicPath', this.buildTarget.match(/electron/i) ? '' : '/')
   }
 
   @computed
   get outputPath() {
-    const outputPath = this.configOption("outputPath", () => "dist")
+    const outputPath = this.configOption('outputPath', () => 'dist')
     return this.runtime.resolve(outputPath)
   }
 
   @computed
   get outputFilename() {
-    return this.configOption("outputFilename", "[name].js")
+    return this.configOption('outputFilename', '[name].js')
   }
 
   @computed
   get libraryTarget() {
-    return this.configOption("libraryTarget", "umd")
+    return this.configOption('libraryTarget', 'umd')
   }
 
   @computed
@@ -624,14 +624,14 @@ export class Webpack extends Helper {
     const { runtime } = this
 
     return this.configOption(
-      "entry",
-      this.tryResult("entry", () => {
-        const indexPath = runtime.fsx.existsSync(runtime.join("src", "index.js"))
-          ? runtime.join("src", "index.js")
-          : runtime.join("index.js")
+      'entry',
+      this.tryResult('entry', () => {
+        const indexPath = runtime.fsx.existsSync(runtime.join('src', 'index.js'))
+          ? runtime.join('src', 'index.js')
+          : runtime.join('index.js')
 
         return {
-          index: [indexPath]
+          index: [indexPath],
         }
       })
     )
@@ -647,9 +647,9 @@ export class Webpack extends Helper {
         return new Plugin(...args)
       })
 
-    if (this.configOption("hot")) {
-      const opts = this.configOption("hot")
-      values.push(new webpack.HotModuleReplacementPlugin(typeof opts === "object" ? opts : {}))
+    if (this.configOption('hot')) {
+      const opts = this.configOption('hot')
+      values.push(new webpack.HotModuleReplacementPlugin(typeof opts === 'object' ? opts : {}))
     }
 
     return [...values]
@@ -662,7 +662,9 @@ export class Webpack extends Helper {
 
   @computed
   get configValidationMessages() {
-    return this.validateConfig().map(m => m && m.message).filter(f => f)
+    return this.validateConfig()
+      .map(m => m && m.message)
+      .filter(f => f)
   }
 
   validateConfig() {
@@ -675,7 +677,7 @@ export class Webpack extends Helper {
     Attempts to return a webpack plugin constructor given a string for convenience
   */
   resolvePlugin(pluginReference) {
-    if (typeof pluginReference !== "string") {
+    if (typeof pluginReference !== 'string') {
       return pluginReference
     }
 
@@ -685,7 +687,7 @@ export class Webpack extends Helper {
       return webpack[pluginReference]
     } else if (WEBPACK_OPTIMIZE_PLUGIN_NAMES.indexOf(pluginReference) >= 0) {
       return webpack.optimize[pluginReference]
-    } else if (pluginReference.startsWith("optimize.")) {
+    } else if (pluginReference.startsWith('optimize.')) {
       return webpack.optimize[pluginReference]
     }
 
@@ -729,7 +731,7 @@ export class Webpack extends Helper {
     return this.chain
       .plant(pluginRefs)
       .keyBy(
-        ref => (ref.match(/^[a-z]/) ? camelize(snakeCase(ref.replace(/^optimize./, ""))) : ref)
+        ref => (ref.match(/^[a-z]/) ? camelize(snakeCase(ref.replace(/^optimize./, ''))) : ref)
       )
       .mapValues(ref => this.resolvePlugin(ref))
       .value()
@@ -749,17 +751,17 @@ export class Webpack extends Helper {
 
   @computed
   get definitions() {
-    return this.chain.invoke("definitionsMap.toJSON").value()
+    return this.chain.invoke('definitionsMap.toJSON').value()
   }
 
   @computed
   get providedModules() {
-    return this.chain.invoke("providedModulesMap.toJSON").value()
+    return this.chain.invoke('providedModulesMap.toJSON').value()
   }
 
   @computed
   get target() {
-    return this.configOption("target", "web")
+    return this.configOption('target', 'web')
   }
 
   /**
@@ -767,7 +769,7 @@ export class Webpack extends Helper {
   */
   @computed
   get errors() {
-    return this.getStat("errors") || []
+    return this.getStat('errors') || []
   }
 
   /**
@@ -775,7 +777,7 @@ export class Webpack extends Helper {
   */
   @computed
   get warnings() {
-    return this.getStat("warnings") || []
+    return this.getStat('warnings') || []
   }
 
   /**
@@ -783,7 +785,7 @@ export class Webpack extends Helper {
   */
   @computed
   get hash() {
-    return this.getStat("hash") || []
+    return this.getStat('hash') || []
   }
 
   /**
@@ -793,7 +795,7 @@ export class Webpack extends Helper {
   get time() {
     const { children = [] } = this
 
-    return children.length > 0 ? sum(children.map(m => m.time)) : this.getStat("time")
+    return children.length > 0 ? sum(children.map(m => m.time)) : this.getStat('time')
   }
 
   /**
@@ -801,14 +803,14 @@ export class Webpack extends Helper {
   */
   @computed
   get assetsByChunkName() {
-    return this.getStat("assetsByChunkName") || {}
+    return this.getStat('assetsByChunkName') || {}
   }
 
   @computed
   get assetPaths() {
     const { outputPath } = this
     return this.chain
-      .get("assetsByChunkName")
+      .get('assetsByChunkName')
       .mapValues(basename => this.runtime.resolve(outputPath, basename))
       .value()
   }
@@ -838,7 +840,7 @@ export class Webpack extends Helper {
   */
   @computed
   get chunks() {
-    return this.getStat("chunks") || []
+    return this.getStat('chunks') || []
   }
 
   /**
@@ -846,7 +848,7 @@ export class Webpack extends Helper {
   */
   @computed
   get modules() {
-    return this.getStat("modules") || []
+    return this.getStat('modules') || []
   }
 
   /**
@@ -854,7 +856,7 @@ export class Webpack extends Helper {
   */
   @computed
   get filteredModules() {
-    return this.getStat("filteredModules")
+    return this.getStat('filteredModules')
   }
 
   /**
@@ -862,7 +864,7 @@ export class Webpack extends Helper {
   */
   @computed
   get children() {
-    return this.getStat("children") || []
+    return this.getStat('children') || []
   }
 
   getStat(stat) {
@@ -882,51 +884,52 @@ export class Webpack extends Helper {
       if (this.configs.has(this.name)) {
         return this.runtime.convertToJS(this.configs.get(this.name))
       } else {
-        throw "Multi configs not supported yet"
+        throw 'Multi configs not supported yet'
       }
     }
 
-    const cfg = values.length === 1
-      ? this.runtime.convertToJS(values[0])
-      : values.length === 0 ? {} : this.runtime.convertToJS(values)
+    const cfg =
+      values.length === 1
+        ? this.runtime.convertToJS(values[0])
+        : values.length === 0 ? {} : this.runtime.convertToJS(values)
 
     return this.lodash.mapValues(cfg, (v, k) => this.runtime.convertToJS(v))
   }
 
   get hasBabelRc() {
-    return this.runtime.fsx.existsSync(this.runtime.resolve(this.cwd, ".babelrc"))
+    return this.runtime.fsx.existsSync(this.runtime.resolve(this.cwd, '.babelrc'))
   }
 
   get localBabelRc() {
     return (
       (this.hasBabelRc &&
-        this.runtime.fsx.readJsonSync(this.runtime.resolve(this.cwd, ".babelrc"))) ||
+        this.runtime.fsx.readJsonSync(this.runtime.resolve(this.cwd, '.babelrc'))) ||
       {}
     )
   }
 
   @computed
   get disableBabel() {
-    return this.configOption("babel") === false || this.configOption("disableBabel")
+    return this.configOption('babel') === false || this.configOption('disableBabel')
   }
 
   @computed
   get babelConfig() {
-    const fn = this.tryGet("babelConfig")
+    const fn = this.tryGet('babelConfig')
 
-    if (this.configOptions.has("babelConfig")) {
-      return this.runtime.convertToJS(this.configOptions.get("babelConfig"))
+    if (this.configOptions.has('babelConfig')) {
+      return this.runtime.convertToJS(this.configOptions.get('babelConfig'))
     } else if (
-      this.configOption("babelrc") === false &&
-      this.configOption("babel") !== false &&
+      this.configOption('babelrc') === false &&
+      this.configOption('babel') !== false &&
       fn
     ) {
-      return { babelrc: false, ...this.runtime.convertToJS(this.tryResult("babelConfig")) }
-    } else if (this.configOption("babel") !== false && this.hasBabelRc) {
+      return { babelrc: false, ...this.runtime.convertToJS(this.tryResult('babelConfig')) }
+    } else if (this.configOption('babel') !== false && this.hasBabelRc) {
       return this.localBabelRc
-    } else if (this.configOption("babel") !== false && !this.hasBabelRc && fn) {
-      return { ...this.runtime.convertToJS(this.tryResult("babelConfig")) }
-    } else if (!fn && !this.hasBabelRc && this.configOption("babel") !== false) {
+    } else if (this.configOption('babel') !== false && !this.hasBabelRc && fn) {
+      return { ...this.runtime.convertToJS(this.tryResult('babelConfig')) }
+    } else if (!fn && !this.hasBabelRc && this.configOption('babel') !== false) {
       return {}
     }
   }
@@ -939,38 +942,38 @@ export class Webpack extends Helper {
     if (
       this.runtime.argv.enableAutoBabel &&
       !this.disableBabel &&
-      !rules.has("babel") &&
-      !moduleRules.has("babel")
+      !rules.has('babel') &&
+      !moduleRules.has('babel')
     ) {
-      rules.set("babel", {
+      rules.set('babel', {
         include: [this.runtime.cwd],
-        exclude: [this.runtime.join("node_modules"), path => !path.startsWith(this.runtime.cwd)],
+        exclude: [this.runtime.join('node_modules'), path => !path.startsWith(this.runtime.cwd)],
         use: compact([
           {
-            loader: "babel-loader",
-            options: this.babelConfig
-          }
-        ])
+            loader: 'babel-loader',
+            options: this.babelConfig,
+          },
+        ]),
       })
     }
 
-    !rules.has("yaml") && !moduleRules.has("yaml")
-    rules.set("yaml", [
+    !rules.has('yaml') && !moduleRules.has('yaml')
+    rules.set('yaml', [
       {
         test: /\.(yml|yaml)$/i,
         include: [this.runtime.cwd],
-        use: ["json-loader", "yaml-loader"]
-      }
+        use: ['json-loader', 'yaml-loader'],
+      },
     ])
 
     // if it already has json don't do anything
-    !rules.has("json") && !moduleRules.has("json")
-    rules.set("json", [
+    !rules.has('json') && !moduleRules.has('json')
+    rules.set('json', [
       {
-        loader: "json-loader",
+        loader: 'json-loader',
         test: /\.json$/,
-        include: [this.runtime.cwd]
-      }
+        include: [this.runtime.cwd],
+      },
     ])
 
     return Object.values(rules.toJSON())
@@ -996,7 +999,7 @@ export class Webpack extends Helper {
         use.unshift(loader)
       }
 
-      const formatted = { ...omit(rule, "name"), use }
+      const formatted = { ...omit(rule, 'name'), use }
 
       if (isEmpty(formatted.use)) {
         delete formatted.use
@@ -1027,7 +1030,7 @@ export class Webpack extends Helper {
   }
 
   set _stats(rawStats) {
-    this.privateData.set("rawStats", rawStats)
+    this.privateData.set('rawStats', rawStats)
 
     // remove source
     const json = rawStats.toJson({ source: false })
@@ -1041,33 +1044,33 @@ export class Webpack extends Helper {
   }
 
   get _stats() {
-    return this.privateData.get("stats")
+    return this.privateData.get('stats')
   }
 
   get configs() {
-    return this.privateData.get("configs")
+    return this.privateData.get('configs')
   }
 
   get _configs() {
-    return this.privateData.get("configs")
+    return this.privateData.get('configs')
   }
 
   get rawStats() {
     return (
-      this.privateData.get("rawStats") || {
+      this.privateData.get('rawStats') || {
         toString() {
-          return "Waiting to run"
+          return 'Waiting to run'
         },
         toJson() {
           return {}
-        }
+        },
       }
     )
   }
 
   stringifyStats(options = {}) {
-    const stats = this.privateData.get("rawStats")
-    return stats ? stats.toString({ colors: true, ...options }) : "Waiting to run."
+    const stats = this.privateData.get('rawStats')
+    return stats ? stats.toString({ colors: true, ...options }) : 'Waiting to run.'
   }
 
   /**
@@ -1092,14 +1095,14 @@ export class Webpack extends Helper {
     this.fireHook(WILL_RUN, compiler, compiler.options)
 
     try {
-      await this.attemptMethodAsync("compilerWillRun", compiler)
+      await this.attemptMethodAsync('compilerWillRun', compiler)
       if (isFunction(compilerWillRun)) {
         await compilerWillRun.call(this, compiler)
       }
     } catch (error) {
       this.runtime.error(`Error while running compilerWillRun hooks`, {
         message: error.message,
-        stack: error.stack
+        stack: error.stack,
       })
       throw error
     }
@@ -1122,14 +1125,14 @@ export class Webpack extends Helper {
     }
 
     try {
-      await this.attemptMethodAsync("compilerDidFinish", compiler, stats)
+      await this.attemptMethodAsync('compilerDidFinish', compiler, stats)
       if (isFunction(compilerDidFinish)) {
         await compilerDidFinish.call(this, compiler)
       }
     } catch (error) {
       this.runtime.error(`Error while running compilerWillRun hooks`, {
         message: error.message,
-        stack: error.stack
+        stack: error.stack,
       })
       throw error
     }
@@ -1173,7 +1176,7 @@ export class Webpack extends Helper {
 
     config = castArray(config)
 
-    await this.attemptMethodAsync("prepareWebpackConfig", config)
+    await this.attemptMethodAsync('prepareWebpackConfig', config)
 
     if (isFunction(prepareWebpackConfig)) {
       await prepareWebpackConfig.call(this, config, this.context)
@@ -1210,32 +1213,32 @@ export class Webpack extends Helper {
   }
 
   get loaderUtils() {
-    return require("loader-utils")
+    return require('loader-utils')
   }
 
   hmrEntry(entry, options = {}) {
     const { pick } = this.runtime.lodash
-    const qs = require("querystring").stringify(
+    const qs = require('querystring').stringify(
       pick(
         options,
-        "path",
-        "name",
-        "overlay",
-        "timeout",
-        "dynamicPublicPath",
-        "noInfo",
-        "quiet",
-        "reload"
+        'path',
+        'name',
+        'overlay',
+        'timeout',
+        'dynamicPublicPath',
+        'noInfo',
+        'quiet',
+        'reload'
       )
     )
 
-    const { client = "webpack-hot-middleware/client" } = options
+    const { client = 'webpack-hot-middleware/client' } = options
 
     return [`${client}?${qs}`, entry]
   }
 
   async createDevServer(options = {}) {
-    const WebpackDevServer = require("webpack-dev-server")
+    const WebpackDevServer = require('webpack-dev-server')
     const { pick } = this.runtime.lodash
     const compiler = await this.createCompiler(options)
     const server = new WebpackDevServer(compiler, {
@@ -1243,18 +1246,18 @@ export class Webpack extends Helper {
       setup(app, devServer) {
         if (options.hot) {
           app.use(
-            require("webpack-hot-middleware")(compiler, {
-              path: "/__webpack_hmr",
+            require('webpack-hot-middleware')(compiler, {
+              path: '/__webpack_hmr',
               log: false,
-              ...pick(options.middlewareOptions || options || {}, "log", "heartbeat", "path")
+              ...pick(options.middlewareOptions || options || {}, 'log', 'heartbeat', 'path'),
             })
           )
         }
 
-        if (typeof options.setup === "function") {
+        if (typeof options.setup === 'function') {
           options.setup(app, devServer)
         }
-      }
+      },
     })
 
     return server
@@ -1271,7 +1274,7 @@ export class Webpack extends Helper {
       throw err
     }
 
-    await this.attemptMethodAsync("compilerWillMount").catch(catcher(`compilerWillMount`))
+    await this.attemptMethodAsync('compilerWillMount').catch(catcher(`compilerWillMount`))
 
     const { compilerWasCreated, compilerWillMount } = { ...this.options, ...options }
 
@@ -1288,7 +1291,7 @@ export class Webpack extends Helper {
     // we make an observable _configs
     const compiler = webpack(config)
 
-    await this.attemptMethodAsync("compilerWasCreated", compiler, config, this.context).catch(
+    await this.attemptMethodAsync('compilerWasCreated', compiler, config, this.context).catch(
       catcher(`compilerWasCreated`)
     )
 
@@ -1316,7 +1319,7 @@ export class Webpack extends Helper {
 
     const compilerInstance = await this.createCompiler.call(this, options)
 
-    this.hide("compilerInstance", compilerInstance)
+    this.hide('compilerInstance', compilerInstance)
 
     return compilerInstance
   }
@@ -1325,10 +1328,10 @@ export class Webpack extends Helper {
     const { plugins = [] } = config
 
     const { NamedModulesPlugin, ProgressPlugin, DefinePlugin, ProvidePlugin } = this.resolvePlugins(
-      "NamedModulesPlugin",
-      "DefinePlugin",
-      "ProgressPlugin",
-      "ProvidePlugin"
+      'NamedModulesPlugin',
+      'DefinePlugin',
+      'ProgressPlugin',
+      'ProvidePlugin'
     )
 
     plugins.push(new NamedModulesPlugin())
@@ -1367,7 +1370,7 @@ export class Webpack extends Helper {
     //const { packageFinder } = this.runtime
     // const moduleLocations = await packageFinder.findPackageLocations()
 
-    await this.attemptMethodAsync("willLoadConfig", { options, providedConfig })
+    await this.attemptMethodAsync('willLoadConfig', { options, providedConfig })
 
     const {
       libraryTarget = this.libraryTarget,
@@ -1377,23 +1380,24 @@ export class Webpack extends Helper {
       entry = this.entry,
       cwd = this.cwd,
       publicPath = this.publicPath,
-      externalizeDependencies = (options.buildTarget || this.buildTarget) !== "web",
-      descriptionFiles = ["package.json"],
-      moduleLocations = ["packages", "node_modules"],
+      externalizeDependencies = (options.buildTarget || this.buildTarget) !== 'web',
+      descriptionFiles = ['package.json'],
+      moduleLocations = ['packages', 'node_modules'],
+      devtool = this.runtime.get('argv.devtool', 'cheap-module-eval-source-map'),
       loaderModuleLocations = [
-        skypager.resolve(__dirname, "node_modules"),
-        skypager.resolve(__dirname, "..")
-      ]
+        skypager.resolve(__dirname, 'node_modules'),
+        skypager.resolve(__dirname, '..'),
+      ],
     } = options
 
-    const webpackConfig = this.tryResult("webpackConfig", {})
+    const webpackConfig = this.tryResult('webpackConfig', {})
 
     const cfg = defaultsDeep({}, webpackConfig, {
       target: buildTarget,
 
       entry,
 
-      devtool: "cheap-module-eval-source-map",
+      devtool: devtool,
 
       context: this.runtime.resolve(cwd),
 
@@ -1401,18 +1405,18 @@ export class Webpack extends Helper {
         ...castArray(webpackConfig.plugins),
         ...castArray(providedConfig.plugins),
         ...castArray(options.plugins),
-        ...castArray(this.plugins)
+        ...castArray(this.plugins),
       ]),
 
       externals: compact([
         ...castArray(webpackConfig.externals),
         ...castArray(providedConfig.externals),
         ...castArray(options.externals),
-        ...this.externals
+        ...this.externals,
       ]),
 
       resolveLoader: {
-        modules: uniq([...loaderModuleLocations, "packages", "node_modules"])
+        modules: uniq([...loaderModuleLocations, 'packages', 'node_modules']),
       },
 
       resolve: {
@@ -1421,23 +1425,23 @@ export class Webpack extends Helper {
         modules: compact([
           ...uniq([
             this.runtime.resolve(cwd),
-            this.runtime.resolve(cwd, "src"),
-            ...compact(moduleLocations)
+            this.runtime.resolve(cwd, 'src'),
+            ...compact(moduleLocations),
           ]),
           ...castArray(providedConfig.moduleLocations),
-          ...castArray(options.moduleLocations)
+          ...castArray(options.moduleLocations),
         ]),
         cachePredicate({ path, request } = {}) {
           return true
-        }
+        },
       },
 
       module: {
         rules: compact([
           ...castArray(webpackConfig.rules),
           ...castArray(options.rules),
-          ...this.moduleRules
-        ])
+          ...this.moduleRules,
+        ]),
       },
 
       output: {
@@ -1445,17 +1449,17 @@ export class Webpack extends Helper {
         libraryTarget,
         filename: outputFilename,
         publicPath,
-        ...options.output
-      }
+        ...options.output,
+      },
     })
 
-    if (externalizeDependencies && typeof externalizeDependencies !== "string") {
+    if (externalizeDependencies && typeof externalizeDependencies !== 'string') {
       cfg.externals.push(this.generateExternalsFunction.call(this, { pkg: this.pkg }))
     }
 
-    const finalizeConfig = this.tryGet("finalizeConfig")
+    const finalizeConfig = this.tryGet('finalizeConfig')
 
-    if (typeof finalizeConfig === "function") {
+    if (typeof finalizeConfig === 'function') {
       return finalizeConfig.call(this, cfg) || cfg
     } else {
       return cfg
@@ -1463,7 +1467,7 @@ export class Webpack extends Helper {
   }
 
   isRequestExternal(ctx, req, callback) {
-    if (typeof callback !== "function") {
+    if (typeof callback !== 'function') {
       callback = function() {}
     }
 
@@ -1483,11 +1487,11 @@ export class Webpack extends Helper {
     @param {String} modulesDir - absolute path to a node_modules folder which has our external modules init
   */
   generateExternalsFunction(options = {}) {
-    const externalsHelper = require("./externals").call(this, options)
+    const externalsHelper = require('./externals').call(this, options)
 
     return (ctx, req, cb) => {
       externalsHelper(ctx, req, (err, result) => {
-        if (typeof result !== "undefined") {
+        if (typeof result !== 'undefined') {
           //runtime.debug("Externals Helper", { ctx, req, result })
         }
 
@@ -1501,11 +1505,11 @@ export class Webpack extends Helper {
 
     return this.chain
       .plant(loaderPaths)
-      .keyBy(path => path.split("/").pop())
+      .keyBy(path => path.split('/').pop())
       .mapValues((path, name) => ({
         path,
         name,
-        resolved: this.packageFinder.attemptResolve(name)
+        resolved: this.packageFinder.attemptResolve(name),
       }))
       .value()
   }
@@ -1515,25 +1519,25 @@ export class Webpack extends Helper {
 
     return this.chain
       .plant(pluginPaths)
-      .keyBy(path => path.split("/").pop())
+      .keyBy(path => path.split('/').pop())
       .mapValues((path, name) => ({
         path,
         name,
-        resolved: this.packageFinder.attemptResolve(name)
+        resolved: this.packageFinder.attemptResolve(name),
       }))
       .value()
   }
 
   static attach(runtime, options = {}) {
     const result = Helper.attach(runtime, Webpack, {
-      lookupProp: "webpack",
-      registryProp: "webpacks",
+      lookupProp: 'webpack',
+      registryProp: 'webpacks',
       registry:
         options.registry ||
-          Helper.createContextRegistry("webpacks", {
-            context: Helper.createMockContext()
-          }),
-      ...options
+        Helper.createContextRegistry('webpacks', {
+          context: Helper.createMockContext(),
+        }),
+      ...options,
     })
 
     runtime.compiler = async function createWebpackCompiler(...args) {
@@ -1574,40 +1578,40 @@ export default Webpack
 export const attach = Webpack.attach
 
 export const registerHelper = () => {
-  if (Helper.registry.available.indexOf("webpack") === -1) {
-    Helper.registerHelper("webpack", () => Webpack)
+  if (Helper.registry.available.indexOf('webpack') === -1) {
+    Helper.registerHelper('webpack', () => Webpack)
   }
 }
 
 export const VALID_CONFIG_KEYS = [
-  "entry",
-  "context",
-  "output",
-  "plugins",
-  "devtool",
-  "devServer",
-  "resolve",
-  "module",
-  "watch",
-  "watchOptions",
-  "externals",
-  "performance",
-  "stats",
-  "amd",
-  "bail",
-  "cache",
-  "loader",
-  "profile",
-  "recordsPath",
-  "recordsInputPath",
-  "recordsOutputPath",
-  "name",
-  "target",
-  "buildTarget",
-  "moduleAliases",
-  "moduleLocations",
-  "moduleFolders",
-  "externalizeDependencies"
+  'entry',
+  'context',
+  'output',
+  'plugins',
+  'devtool',
+  'devServer',
+  'resolve',
+  'module',
+  'watch',
+  'watchOptions',
+  'externals',
+  'performance',
+  'stats',
+  'amd',
+  'bail',
+  'cache',
+  'loader',
+  'profile',
+  'recordsPath',
+  'recordsInputPath',
+  'recordsOutputPath',
+  'name',
+  'target',
+  'buildTarget',
+  'moduleAliases',
+  'moduleLocations',
+  'moduleFolders',
+  'externalizeDependencies',
 ]
 
 /*
