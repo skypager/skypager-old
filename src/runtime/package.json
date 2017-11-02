@@ -36,9 +36,9 @@
       },
       "entryPoints": {
         "skypager-runtime": [
+          "expose?mobx!mobx",
           "babel-polyfill",
-          "expose?lodash!lodash/lodash.js",
-          "expose?mobx!mobx/lib/mobx.umd.js",
+          "expose?lodash!lodash/lodash.min.js",
           "expose?skypager!index.web.js"
         ]
       }
@@ -51,9 +51,9 @@
       },
       "entryPoints": {
         "skypager-runtime": [
+          "expose?mobx!mobx",
           "babel-polyfill",
           "expose?lodash!lodash/lodash.min.js",
-          "expose?mobx!mobx/lib/mobx.umd.min.js",
           "expose?skypager!index.web.js"
         ]
       }

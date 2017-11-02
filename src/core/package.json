@@ -29,17 +29,21 @@
     },
     "minifiedBundle": {
       "target": "web",
-      "lodash": true,
       "minify": true,
+      "externals": {
+        "skypager-runtime": "global skypager"
+      },
       "entryPoints": {
-        "skypager-core": "index.web.js"
+        "skypager-core": ["expose?skypager!skypager-runtime/skypager-runtime.js", "index.web.js"]
       }
     },
     "bundle": {
       "target": "web",
-      "lodash": true,
+      "externals": {
+        "skypager-runtime": "global skypager"
+      },
       "entryPoints": {
-        "skypager-core": "index.web.js"
+        "skypager-core": ["expose?skypager!skypager-runtime/skypager-runtime.js", "index.web.js"]
       }
     }
   }

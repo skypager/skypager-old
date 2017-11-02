@@ -1,7 +1,10 @@
 #!/bin/sh
 
 mkdir -p packages/skypager
-
 skypager build library
 skypager build bundle
 skypager build bundle --minify
+cp packages/skypager-runtimes-web/skypager-web.* packages/skypager
+cp packages/skypager-runtimes-react/skypager-react.* packages/skypager
+cp packages/skypager-runtime/skypager-runtime.* packages/skypager
+cp packages/skypage/skypage.* packages/skypager

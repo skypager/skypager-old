@@ -1,18 +1,18 @@
-import { relative, join, resolve, parse, sep, basename, dirname } from "path"
-import { parse as parseUrl, format as formatUrl } from "url"
-import { parse as parseQueryString } from "querystring"
+import { relative, join, resolve, parse, sep, basename, dirname } from 'path'
+import { parse as parseUrl, format as formatUrl } from 'url'
+import { parse as parseQueryString } from 'querystring'
 
-import * as _mobx from "mobx"
-import _lodash from "./lodash-dependencies"
-import * as _propUtils from "./utils/properties"
-import { attachEmitter } from "./utils/emitter"
-import mware from "./utils/mware"
-import _Helper from "./helpers/index"
-import Feature from "./helpers/feature"
-import Cache from "./cache"
-import WeakCache from "./weak-cache"
-import _configBuilder from "./config-builder"
-import * as _stringUtils from "./utils/string"
+import * as _mobx from 'mobx'
+import _lodash from './lodash-dependencies'
+import * as _propUtils from './utils/properties'
+import { attachEmitter } from './utils/emitter'
+import mware from './utils/mware'
+import _Helper from './helpers/index'
+import Feature from './helpers/feature'
+import Cache from './cache'
+import WeakCache from './weak-cache'
+import _configBuilder from './config-builder'
+import * as _stringUtils from './utils/string'
 
 export const lodash = _lodash
 export const mobx = _mobx
@@ -53,7 +53,7 @@ const {
   isEmpty,
   isArray,
   isObject,
-  flatten
+  flatten,
 } = lodash
 
 let runtimesRegistry
@@ -63,8 +63,8 @@ let singleton
 export class Runtime {
   get displayName() {
     return this.tryGet(
-      "displayName",
-      lodash.get(process || {}, "env.SKYPAGER_DISPLAY_NAME", "Skypager")
+      'displayName',
+      lodash.get(process || {}, 'env.SKYPAGER_DISPLAY_NAME', 'Skypager')
     )
   }
 
@@ -98,24 +98,24 @@ export class Runtime {
       return runtimesRegistry
     }
 
-    runtimesRegistry = new ContextRegistry("runtimes", {
+    runtimesRegistry = new ContextRegistry('runtimes', {
       context: Helper.createMockContext(),
       wrapper(fn) {
         return (...args) => new fn(...args)
       },
       fallback(id) {
         return base || Runtime
-      }
+      },
     })
 
-    runtimesRegistry.register("universal", () => Runtime)
+    runtimesRegistry.register('universal', () => Runtime)
 
     return runtimesRegistry
   }
 
-  static initializers = new ContextRegistry("initializers", {
+  static initializers = new ContextRegistry('initializers', {
     context: Helper.createMockContext(),
-    useDefaultExport: true
+    useDefaultExport: true,
   })
 
   get initializers() {
@@ -149,19 +149,19 @@ export class Runtime {
   }
 
   log(...args) {
-    this.invoke("logger.log", ...args)
+    this.invoke('logger.log', ...args)
   }
   warn(...args) {
-    this.invoke("logger.warn", ...args)
+    this.invoke('logger.warn', ...args)
   }
   debug(...args) {
-    this.invoke("logger.debug", ...args)
+    this.invoke('logger.debug', ...args)
   }
   error(...args) {
-    this.invoke("logger.error", ...args)
+    this.invoke('logger.error', ...args)
   }
   info(...args) {
-    this.invoke("logger.info", ...args)
+    this.invoke('logger.info', ...args)
   }
 
   constructor(options = {}, context = {}, middlewareFn) {
@@ -179,24 +179,24 @@ export class Runtime {
     enhanceObject(this, lodash)
     attachEmitter(this)
 
-    this.hide("logger", options.logger || console, true)
-    this.events.emit("runtimeWasCreated", this, this.constructor)
+    this.hide('logger', options.logger || console, true)
+    this.events.emit('runtimeWasCreated', this, this.constructor)
 
-    this.hideGetter("parent", () => context.parent || singleton)
+    this.hideGetter('parent', () => context.parent || singleton)
 
-    this.hide("configHistory", [], false)
-    this.hide("uuid", require("uuid")())
+    this.hide('configHistory', [], false)
+    this.hide('uuid', require('uuid')())
 
-    this.hide("_name", options.name || camelCase(snakeCase(this.cwd.split("/").pop())))
-    this.hideGetter("name", () => this._name)
+    this.hide('_name', options.name || camelCase(snakeCase(this.cwd.split('/').pop())))
+    this.hideGetter('name', () => this._name)
 
-    this.hide("cache", new Cache(options.cacheData || []))
-    this.hide("weakCache", new WeakCache(options.cacheData || [], this))
+    this.hide('cache', new Cache(options.cacheData || []))
+    this.hide('weakCache', new WeakCache(options.cacheData || [], this))
 
-    this.hide("rawOptions", options)
-    this.hide("optionsWithDefaults", defaults({}, options, this.defaultOptions))
+    this.hide('rawOptions', options)
+    this.hide('optionsWithDefaults', defaults({}, options, this.defaultOptions))
     this.hide(
-      "context",
+      'context',
       pick(defaults({}, context, this.defaultContext), ...keys(this.contextTypes))
     )
 
@@ -207,29 +207,29 @@ export class Runtime {
 
     if (isFunction(options.prepare)) prepare = lodash.flow(this.prepare, options.prepare)
 
-    this.hide("initialize", initializeSequence.bind(this, this, initialize), true)
-    this.hide("prepare", prepareSequence.bind(this, this, prepare), true)
-    this.hide("start", startSequence.bind(this, this, start), true)
+    this.hide('initialize', initializeSequence.bind(this, this, initialize), true)
+    this.hide('prepare', prepareSequence.bind(this, this, prepare), true)
+    this.hide('start', startSequence.bind(this, this, start), true)
 
-    this.hide("middlewares", { [STARTING]: mware(this), [PREPARING]: mware(this) })
+    this.hide('middlewares', { [STARTING]: mware(this), [PREPARING]: mware(this) })
 
-    this.hide("_enabledFeatures", {})
+    this.hide('_enabledFeatures', {})
 
     this.hide(
-      "registries",
-      new ContextRegistry("registries", {
-        context: require.context(".", false, /mock/)
+      'registries',
+      new ContextRegistry('registries', {
+        context: require.context('.', false, /mock/),
       })
     )
 
     this.hide(
-      "selectors",
-      new ContextRegistry("selectors", {
-        context: require.context(".", false, /mock/)
+      'selectors',
+      new ContextRegistry('selectors', {
+        context: require.context('.', false, /mock/),
       })
     )
 
-    this.hideGetter("selectorCache", () => {
+    this.hideGetter('selectorCache', () => {
       if (selectorCache.has(this)) {
         return selectorCache.get(this)
       }
@@ -239,12 +239,12 @@ export class Runtime {
     })
 
     extendObservable(this, {
-      state: map(toPairs(this.initialState))
+      state: map(toPairs(this.initialState)),
     })
 
     this.applyRuntimeInitializers()
 
-    if (typeof options.configure === "function") {
+    if (typeof options.configure === 'function') {
       this.configure(options.configure.bind(this))
     }
 
@@ -257,7 +257,7 @@ export class Runtime {
 
     this.attachAllHelpers()
 
-    if (typeof middlewareFn === "function") {
+    if (typeof middlewareFn === 'function') {
       this.use(middlewareFn.bind(this), INITIALIZING)
     }
 
@@ -266,7 +266,7 @@ export class Runtime {
     // right before the features get enabled
     this.autoConfigs.forEach(fn => this.configure(fn))
     this.constructor.autoConfigs = this.constructor.autoConfigs.filter(
-      fn => typeof fn === "function" && !fn.temp
+      fn => typeof fn === 'function' && !fn.temp
     )
 
     this.enableFeatures(this.autoEnabledFeatures)
@@ -275,21 +275,21 @@ export class Runtime {
   }
 
   set name(val) {
-    this.hide("_name", val, true)
+    this.hide('_name', val, true)
     return val
   }
 
   get autoInitialize() {
     return (
-      this.at("argv.autoInitialize", "constructor.autoInitialize").find(
-        v => typeof v !== "undefined"
+      this.at('argv.autoInitialize', 'constructor.autoInitialize').find(
+        v => typeof v !== 'undefined'
       ) !== false
     )
   }
 
   get autoPrepare() {
     return (
-      this.at("argv.autoPrepare", "constructor.autoPrepare").find(v => typeof v !== "undefined") !==
+      this.at('argv.autoPrepare', 'constructor.autoPrepare').find(v => typeof v !== 'undefined') !==
       false
     )
   }
@@ -300,11 +300,11 @@ export class Runtime {
     return (
       this.chain
         // whatever our constructor defines
-        .get("constructor.autoEnable", {})
+        .get('constructor.autoEnable', {})
         .keys()
         .concat(
           this.chain
-            .get("config.features", {})
+            .get('config.features', {})
             .pickBy(
               v =>
                 v &&
@@ -317,9 +317,9 @@ export class Runtime {
             .value()
         )
         // plus whatever features are already available whose name matches a helper tag prefix
-        .concat(this.availableFeatures.filter(id => helperTags.find(tag => id.startsWith(tag))))
+        .concat(this.availableFeatures.filter(id => helperTags.find(tag => id.indexOf(tag) === 0)))
         // plus whatever features are requested in the options passed to our constructor
-        .concat(castArray(this.get("argv.enable", [])))
+        .concat(castArray(this.get('argv.enable', [])))
         .flatten()
         .uniq()
         .reject(featureId => this.availableFeatures.indexOf(featureId) === -1)
@@ -328,7 +328,7 @@ export class Runtime {
   }
 
   static autoEnable = {
-    vm: {}
+    vm: {},
     //'observable': {},
     //'configurable': {},
   }
@@ -338,8 +338,8 @@ export class Runtime {
   }
 
   get autoConfigs() {
-    return this.get("constructor.autoConfigs", [])
-      .filter(f => typeof f === "function")
+    return this.get('constructor.autoConfigs', [])
+      .filter(f => typeof f === 'function')
       .map(fn => fn.bind(this))
   }
 
@@ -348,7 +348,7 @@ export class Runtime {
     const { initializers, helperTags: tags } = runtime
     const { pickBy } = this.lodash
 
-    return pickBy(initializers.allMembers(), (fn, id) => !!tags.find(tag => id.startsWith(tag)))
+    return pickBy(initializers.allMembers(), (fn, id) => !!tags.find(tag => id.indexOf(tag) === 0))
   }
 
   applyRuntimeInitializers() {
@@ -357,7 +357,7 @@ export class Runtime {
 
     this.debug(`Applying runtime initializers`, {
       tags: this.helperTags,
-      initializers: Object.keys(matches)
+      initializers: Object.keys(matches),
     })
 
     Helper.attachAll(this, this.helperOptions)
@@ -388,7 +388,7 @@ export class Runtime {
       right: true,
       insertOptions: false,
       hidden: false,
-      ...options
+      ...options,
     })
 
     return this
@@ -419,14 +419,14 @@ export class Runtime {
 
   get url() {
     return this.isBrowser
-      ? lodash.get("window.location", urlUtils.parse(`http://${stringUtils.kebabCase(this.name)}/`))
+      ? lodash.get('window.location', urlUtils.parse(`http://${stringUtils.kebabCase(this.name)}/`))
       : urlUtils.parse(`file://${argv.cwd}`)
   }
 
   get cwd() {
     return this.get(
-      "argv.cwd",
-      process && process.cwd ? process.cwd() : this.get("constructor.cwd", "")
+      'argv.cwd',
+      process && process.cwd ? process.cwd() : this.get('constructor.cwd', '')
     )
   }
 
@@ -434,11 +434,11 @@ export class Runtime {
     argv will refer to the initial options passed to the runtime, along with any default values that have been set
   */
   get argv() {
-    return this.get("optionsWithDefaults", {})
+    return this.get('optionsWithDefaults', {})
   }
 
   set argv(val = {}) {
-    this.set("optionsWithDefaults", { ...this.optionsWithDefaults, ...val })
+    this.set('optionsWithDefaults', { ...this.optionsWithDefaults, ...val })
   }
 
   /**
@@ -454,7 +454,7 @@ export class Runtime {
   static defaultContext = {}
 
   get defaultContext() {
-    return result(this.constructor, "defaultContext", {})
+    return result(this.constructor, 'defaultContext', {})
   }
 
   static optionTypes = {}
@@ -466,91 +466,91 @@ export class Runtime {
   static defaultOptions = {}
 
   get defaultOptions() {
-    return defaults(this.get("packageOptions"), result(this.constructor, "defaultOptions", {}))
+    return defaults(this.get('packageOptions'), result(this.constructor, 'defaultOptions', {}))
   }
 
   get env() {
-    if (this.isTest) return "test"
-    if (this.isDevelopment) return "development"
-    if (this.isProduction) return "production"
+    if (this.isTest) return 'test'
+    if (this.isDevelopment) return 'development'
+    if (this.isProduction) return 'production'
 
-    return "development"
+    return 'development'
   }
 
   get target() {
-    if (this.get("argv.universal")) return "universal"
-    if (this.get("argv.target")) return this.get("argv.target")
-    if (this.isElectron) return "electron"
-    if (this.isNode) return "node"
-    if (this.isBrowser) return "web"
+    if (this.get('argv.universal')) return 'universal'
+    if (this.get('argv.target')) return this.get('argv.target')
+    if (this.isElectron) return 'electron'
+    if (this.isNode) return 'node'
+    if (this.isBrowser) return 'web'
 
-    return "node"
+    return 'node'
   }
 
   // Helps the runtime search for helper packages based on the environment and target combo
   get helperTags() {
-    return this.get("options.helperTags", [
+    return this.get('options.helperTags', [
       this.env,
       `${this.env}/${this.target}`,
       this.target,
       `${this.target}/${this.env}`,
-      "universal"
+      'universal',
     ])
   }
 
   get isBrowser() {
     return !!(
-      typeof window !== "undefined" &&
-      typeof document !== "undefined" &&
-      (typeof process === "undefined" ||
-        typeof process.type === "undefined" ||
-        process.type === "web" ||
-        process.type === "browser")
+      typeof window !== 'undefined' &&
+      typeof document !== 'undefined' &&
+      (typeof process === 'undefined' ||
+        typeof process.type === 'undefined' ||
+        process.type === 'web' ||
+        process.type === 'browser')
     )
   }
 
   get isNode() {
-    return !!(typeof process !== "undefined" && !this.isElectron && process.title === "node")
+    return !!(typeof process !== 'undefined' && !this.isElectron && process.title === 'node')
   }
 
   get isElectron() {
     return !!(
-      typeof process !== "undefined" &&
-      typeof process.type !== "undefined" &&
-      typeof process.title !== "undefined" &&
-      (process.title.match(/electron/i) || process.versions["electron"])
+      typeof process !== 'undefined' &&
+      typeof process.type !== 'undefined' &&
+      typeof process.title !== 'undefined' &&
+      (process.title.match(/electron/i) || process.versions['electron'])
     )
   }
 
   get isElectronRenderer() {
     return !!(
-      typeof process !== "undefined" &&
-      process.type === "renderer" &&
-      typeof window !== "undefined" &&
-      typeof document !== "undefined"
+      typeof process !== 'undefined' &&
+      process.type === 'renderer' &&
+      typeof window !== 'undefined' &&
+      typeof document !== 'undefined'
     )
   }
 
   get isReactNative() {
     return !!(
-      typeof global !== "undefined" &&
-      typeof navigator !== "undefined" &&
-      navigator.product === "ReactNative"
+      typeof global !== 'undefined' &&
+      typeof navigator !== 'undefined' &&
+      navigator.product === 'ReactNative'
     )
   }
 
   get isDebug() {
-    return !!this.get("argv.debug")
+    return !!this.get('argv.debug')
   }
 
   get isDevelopment() {
     return (
       !this.isProduction &&
       !this.isTest &&
-      (this.get("argv.env") === "development" ||
-        !!this.get("argv.development") ||
-        !!this.get("argv.dev") ||
-        process.env.NODE_ENV === "development" ||
+      (this.get('argv.env') === 'development' ||
+        !!this.get('argv.development') ||
+        !!this.get('argv.dev') ||
+        process.env.NODE_ENV === 'development' ||
         isEmpty(process.env.NODE_ENV))
     )
   }
@@ -558,18 +558,18 @@ export class Runtime {
   get isTest() {
     return (
       !this.isProduction &&
-      (this.get("argv.env") === "test" ||
-        !!this.get("argv.test") ||
-        process.env.NODE_ENV === "test")
+      (this.get('argv.env') === 'test' ||
+        !!this.get('argv.test') ||
+        process.env.NODE_ENV === 'test')
     )
   }
 
   get isProduction() {
     return (
-      this.get("argv.env") === "production" ||
-      !!this.get("argv.production") ||
-      !!this.get("argv.prod") ||
-      process.env.NODE_ENV === "production"
+      this.get('argv.env') === 'production' ||
+      !!this.get('argv.production') ||
+      !!this.get('argv.prod') ||
+      process.env.NODE_ENV === 'production'
     )
   }
 
@@ -577,7 +577,7 @@ export class Runtime {
     stage = stage || this.stage
 
     const runtime = this
-    const pipeline = runtime.get(["middlewares", stage])
+    const pipeline = runtime.get(['middlewares', stage])
 
     if (!pipeline) {
       return Promise.resolve(this)
@@ -601,13 +601,13 @@ export class Runtime {
 
     let [fn] = args
 
-    if (typeof fn === "function") {
+    if (typeof fn === 'function') {
       const builder = fn(this.configurator())
-      this.hide("builder", builder, true)
+      this.hide('builder', builder, true)
       this.configHistory.push(this.builder.history)
       return this
-    } else if (typeof fn === "object") {
-      this.set("argv.baseConfig", defaultsDeep({}, fn, this.argv.baseConfig))
+    } else if (typeof fn === 'object') {
+      this.set('argv.baseConfig', defaultsDeep({}, fn, this.argv.baseConfig))
     }
 
     return this
@@ -622,7 +622,7 @@ export class Runtime {
   stateVersion = 0
 
   get initialState() {
-    return defaults({}, this.get("argv.initialState"), this.constructor.initialState)
+    return defaults({}, this.get('argv.initialState'), this.constructor.initialState)
   }
 
   @computed
@@ -636,18 +636,18 @@ export class Runtime {
   }
 
   get stage() {
-    return this.get("currentState.stage")
+    return this.get('currentState.stage')
   }
 
   get isInitialized() {
-    return this.get("currentState.initialized", false)
+    return this.get('currentState.initialized', false)
   }
 
   whenStarted(fn) {
     if (this.isStarted) {
       fn.call(this, this, this.options, this.context)
     } else {
-      this.once("runtimeDidStart", () => fn.call(this, this.options, this.context))
+      this.once('runtimeDidStart', () => fn.call(this, this.options, this.context))
     }
 
     return this
@@ -661,22 +661,22 @@ export class Runtime {
     if (this.isPrepared) {
       fn.call(this, this, this.options, this.context)
     } else {
-      this.once("runtimeIsPrepared", () => fn.call(this, this.options, this.context))
+      this.once('runtimeIsPrepared', () => fn.call(this, this.options, this.context))
     }
 
     return this
   }
 
   get isPrepared() {
-    return this.get("currentState.prepared", this.isRunning || this.isStarted)
+    return this.get('currentState.prepared', this.isRunning || this.isStarted)
   }
 
   get isRunning() {
-    return this.get("currentState.started", false)
+    return this.get('currentState.started', false)
   }
 
   get isStarted() {
-    return this.get("currentState.started", false)
+    return this.get('currentState.started', false)
   }
 
   beginTrackingState() {
@@ -686,17 +686,17 @@ export class Runtime {
 
     const mainDisposer = autorun((...args) => {
       this.stateVersion = this.stateVersion + 1
-      this.emit("change", this, this.currentState, this.stateVersion, ...args)
-      this.fireHook("stateDidChange", this.currentState, this.stateVersion, ...args)
-      this.events.emit("runtimeDidChange", this, this.currentState, this.stateVersion, ...args)
+      this.emit('change', this, this.currentState, this.stateVersion, ...args)
+      this.fireHook('stateDidChange', this.currentState, this.stateVersion, ...args)
+      this.events.emit('runtimeDidChange', this, this.currentState, this.stateVersion, ...args)
     })
 
     const stateDisposer = this.state.observe((update = {}) => {
       this.fireHook(`${update.name}DidChangeState`, update, this.currentState, this.stateVersion)
-      this.emit("stateWasUpdated", update, this.currentState, this.stateVersion)
+      this.emit('stateWasUpdated', update, this.currentState, this.stateVersion)
     })
 
-    this.hide("mainDisposer", () => {
+    this.hide('mainDisposer', () => {
       mainDisposer()
       stateDisposer()
       return this
@@ -762,13 +762,13 @@ export class Runtime {
         observerFn.call(scope || instance, change, instance, this.context)
       )
 
-      hide(instance, "cancelObserver", () => {
+      hide(instance, 'cancelObserver', () => {
         disposer()
         return instance
       })
     }
 
-    hide(instance, "toJS", () => toJS(instance))
+    hide(instance, 'toJS', () => toJS(instance))
 
     return instance
   }
@@ -786,17 +786,17 @@ export class Runtime {
   }
 
   strftime(...args) {
-    return require("./strftime")(...args)
+    return require('./strftime')(...args)
   }
 
   didCreateObservableHelper(helperInstance, helperClass) {
-    if (!helperInstance.has("state")) {
+    if (!helperInstance.has('state')) {
       makeStateful(helperInstance)
     }
 
-    if (helperInstance.tryGet("observables")) {
+    if (helperInstance.tryGet('observables')) {
       this.makeObservable(
-        helperInstance.tryResult("observables", {}, helperInstance.options, helperInstance.context),
+        helperInstance.tryResult('observables', {}, helperInstance.options, helperInstance.context),
         helperInstance
       )
     }
@@ -880,15 +880,15 @@ export class Runtime {
   }
 
   get availableFeatures() {
-    const mine = this.get("features.available", [])
-    const constructors = this.get("constructor.features.available", [])
+    const mine = this.get('features.available', [])
+    const constructors = this.get('constructor.features.available', [])
 
     return uniq([...mine, ...constructors])
   }
 
   get enabledFeatures() {
     return this.chain
-      .get("_enabledFeatures")
+      .get('_enabledFeatures')
       .mapValues((cacheKey, featureId) => this.cache.get(cacheKey) || this.feature(featureId))
       .value()
   }
@@ -896,13 +896,13 @@ export class Runtime {
   enableFeatures(options = {}) {
     const { availableFeatures } = this
 
-    if (typeof options === "string" || typeof options === "undefined") {
+    if (typeof options === 'string' || typeof options === 'undefined') {
       options = [options].filter(v => v)
     }
 
     if (isArray(options)) {
       options = options.reduce((memo, val) => {
-        if (typeof val === "string") {
+        if (typeof val === 'string') {
           memo[val] = {}
         } else if (isArray(val)) {
           memo[val[0]] = val[1]
@@ -923,19 +923,19 @@ export class Runtime {
         }
 
         feature.enable(cfg)
-        this.fireHook("featureWasEnabled", feature, this)
+        this.fireHook('featureWasEnabled', feature, this)
         Helper.attachAll(this, this.helperOptions)
 
         return feature
       } catch (error) {
-        this.fireHook("featureFailedToEnable", feature, error)
+        this.fireHook('featureFailedToEnable', feature, error)
         return error
       }
     })
   }
 
   fireHook(hookName, ...args) {
-    const fnHandler = this.get(["options", hookName], this.get(hookName))
+    const fnHandler = this.get(['options', hookName], this.get(hookName))
 
     this.runtimeEvents.emit(`runtime:${hookName}`, this, ...args)
     this.emit(`firingHook`, hookName, ...args)
@@ -945,7 +945,7 @@ export class Runtime {
       try {
         fnHandler.call(this, ...args)
       } catch (error) {
-        this.emit("hookError", hookName, error)
+        this.emit('hookError', hookName, error)
       }
     }
 
@@ -957,11 +957,11 @@ export class Runtime {
   }
 
   get Helper() {
-    return this.get("options.helperClass", this.get("context.helperClass", Helper))
+    return this.get('options.helperClass', this.get('context.helperClass', Helper))
   }
 
   get helperOptions() {
-    return this.get("options.helperOptions", this.get("context.helperOptions"), {})
+    return this.get('options.helperOptions', this.get('context.helperOptions'), {})
   }
 
   get helpers() {
@@ -973,7 +973,7 @@ export class Runtime {
   }
 
   get namespace() {
-    return this.get("options.namespace", "skypager-runtime")
+    return this.get('options.namespace', 'skypager-runtime')
   }
 
   /*
@@ -1005,18 +1005,18 @@ export class Runtime {
 
     //this.debug('using ', { fnType: (typeof fn), keys: Object.keys(fn), stage })
 
-    if (typeof fn === "object" && typeof fn.initializer === "function") {
+    if (typeof fn === 'object' && typeof fn.initializer === 'function') {
       return this.use(fn.initializer.bind(this), INITIALIZING)
-    } else if (typeof fn === "object" && typeof fn.attach === "function") {
+    } else if (typeof fn === 'object' && typeof fn.attach === 'function') {
       fn.attach.call(this, this, this.options, this.context)
     }
 
-    if (typeof fn === "object" && typeof (fn.middleware || fn.use) === "function") {
+    if (typeof fn === 'object' && typeof (fn.middleware || fn.use) === 'function') {
       fn = fn.middleware || fn.use || fn.default
       stage = stage || PREPARING
     }
 
-    if (typeof fn === "string") {
+    if (typeof fn === 'string') {
       if (runtime.availableFeatures.indexOf(fn) >= 0) {
         const featureId = fn.toString()
         fn = () => runtime.feature(featureId).enable()
@@ -1029,7 +1029,7 @@ export class Runtime {
       }
     }
 
-    if (fn && typeof fn.call === "function" && stage === INITIALIZING) {
+    if (fn && typeof fn.call === 'function' && stage === INITIALIZING) {
       fn.call(runtime, err => {
         if (err) {
           runtime.error(err.message || `Error while using fn ${fn.name}`, { error: err })
@@ -1040,19 +1040,19 @@ export class Runtime {
       return this
     }
 
-    if (typeof fn !== "function") {
+    if (typeof fn !== 'function') {
       return this
     }
 
-    if (typeof stage === "undefined" && this.isPrepared) {
+    if (typeof stage === 'undefined' && this.isPrepared) {
       stage = STARTING
     }
 
     // Get the middleware pipeline for this particular stage
 
-    const pipeline = runtime.result(["middlewares", stage], () => {
+    const pipeline = runtime.result(['middlewares', stage], () => {
       const p = mware(runtime)
-      runtime.set(["middlewares", stage], p)
+      runtime.set(['middlewares', stage], p)
       return p
     })
 
@@ -1064,10 +1064,10 @@ export class Runtime {
   createRegistry(name, options = {}) {
     const registry = Helper.createRegistry(name, {
       context: Helper.createMockContext(),
-      ...options
+      ...options,
     })
 
-    this.fireHook("registryWasCreated", name, registry, options)
+    this.fireHook('registryWasCreated', name, registry, options)
 
     return registry
   }
@@ -1084,7 +1084,7 @@ export class Runtime {
       mobx,
       lodash,
       currentState: this.currentState,
-      ...ctx
+      ...ctx,
     }
   }
 
@@ -1108,7 +1108,7 @@ export class Runtime {
   tryGet(property, defaultValue) {
     return (
       this.at(`options.${property}`, `context.${property}`).filter(
-        v => typeof v !== "undefined"
+        v => typeof v !== 'undefined'
       )[0] || defaultValue
     )
   }
@@ -1117,10 +1117,10 @@ export class Runtime {
     const val = this.tryGet(property)
 
     if (!val) {
-      return typeof defaultValue === "function"
+      return typeof defaultValue === 'function'
         ? defaultValue.call(this, { ...this.options, ...options }, { ...this.context, ...context })
         : defaultValue
-    } else if (typeof val === "function") {
+    } else if (typeof val === 'function') {
       return val.call(this, { ...this.options, ...options }, { ...this.context, ...context })
     } else {
       return val
@@ -1128,8 +1128,8 @@ export class Runtime {
   }
 
   // Merge the objects found at k starting with at options, provider, projectConfig
-  mergeGet(key, namespaces = ["options", "argv", "config"]) {
-    key = typeof key === "string" ? key.split(".") : key
+  mergeGet(key, namespaces = ['options', 'argv', 'config']) {
+    key = typeof key === 'string' ? key.split('.') : key
     key = flatten(castArray(key))
 
     return defaults({}, ...namespaces.map(n => this.get([n, ...key])))
@@ -1137,11 +1137,11 @@ export class Runtime {
 
   // Merge the objects found at k starting with at options, provider, projectConfig
   // If the property is a function, it will be called in the scope of the helper, with the helpers options and context
-  mergeResult(key, namespaces = ["options", "argv", "config"]) {
-    key = typeof key === "string" ? key.split(".") : key
+  mergeResult(key, namespaces = ['options', 'argv', 'config']) {
+    key = typeof key === 'string' ? key.split('.') : key
     key = flatten(castArray(key))
 
-    const ifFunc = v => (typeof v === "function" ? v.call(this, this.options, this.context) : v)
+    const ifFunc = v => (typeof v === 'function' ? v.call(this, this.options, this.context) : v)
 
     return defaults({}, ...namespaces.map(n => this.get([n, ...key])).map(ifFunc))
   }
@@ -1177,7 +1177,7 @@ export class Runtime {
         ...memo,
         [featureId]: function(builder, ...args) {
           return builder.feature(featureId, ...args)
-        }
+        },
       }),
       {}
     )
@@ -1195,8 +1195,8 @@ export class Runtime {
           ...existing,
           [helperId]: {
             ...(existing[helperId] || {}),
-            ...opts
-          }
+            ...opts,
+          },
         }
       },
       feature(existing, featureId, opts) {
@@ -1211,10 +1211,10 @@ export class Runtime {
           ...existing,
           [featureId]: {
             ...(existing[featureId] || {}),
-            ...opts
-          }
+            ...opts,
+          },
         }
-      }
+      },
     }
   }
 
@@ -1225,7 +1225,7 @@ export class Runtime {
       },
       helper(state = {}) {
         return state.helper || {}
-      }
+      },
     }
   }
 
@@ -1234,7 +1234,7 @@ export class Runtime {
   }
 
   get baseConfig() {
-    return this.mergeResult("baseConfig", ["argv", "constructor"]) || {}
+    return this.mergeResult('baseConfig', ['argv', 'constructor']) || {}
   }
 
   configurator(options = {}) {
@@ -1242,7 +1242,7 @@ export class Runtime {
       return this.builder
     }
 
-    const { scope = this, tap = this.tryGet("tapConfig") } = options
+    const { scope = this, tap = this.tryGet('tapConfig') } = options
 
     const features = this.getConfigFeaturesObject(options.features)
     const reducers = this.getConfigReducersObject(options.reducers)
@@ -1254,20 +1254,20 @@ export class Runtime {
       presets,
       baseConfig: {
         ...this.baseConfig,
-        ...(options.baseConfig || {})
+        ...(options.baseConfig || {}),
       },
       history: this.configHistory,
       scope,
       tap,
-      onStash: (...a) => this.emit("config:stashed", ...a),
-      onReset: (...a) => this.emit("config:reset", ...a),
+      onStash: (...a) => this.emit('config:stashed', ...a),
+      onReset: (...a) => this.emit('config:reset', ...a),
       ...this.configuratorOptions,
-      ...options
+      ...options,
     })
   }
 
   get configuratorOptions() {
-    return this.mergeResult("configuratorOptions", ["argv", "constructor"]) || {}
+    return this.mergeResult('configuratorOptions', ['argv', 'constructor']) || {}
   }
 
   get configKeysFn() {
@@ -1355,15 +1355,15 @@ export class Runtime {
 
 export const createSingleton = Runtime.createSingleton.bind(Runtime)
 
-export const INITIALIZING = "INITIALIZING"
-export const INITIALIZED = "INITIALIZED"
-export const PREPARING = "PREPARING"
-export const READY = "READY"
-export const STARTING = "STARTING"
-export const RUNNING = "RUNNING"
-export const START_FAILURE = "START_FAILURE"
-export const PREPARE_FAILURE = "PREPARE_FAILURE"
-export const INITIALIZE_FAILURE = "INITIALIZE_FAILURE"
+export const INITIALIZING = 'INITIALIZING'
+export const INITIALIZED = 'INITIALIZED'
+export const PREPARING = 'PREPARING'
+export const READY = 'READY'
+export const STARTING = 'STARTING'
+export const RUNNING = 'RUNNING'
+export const START_FAILURE = 'START_FAILURE'
+export const PREPARE_FAILURE = 'PREPARE_FAILURE'
+export const INITIALIZE_FAILURE = 'INITIALIZE_FAILURE'
 
 export const stages = {
   INITIALIZING,
@@ -1374,13 +1374,13 @@ export const stages = {
   RUNNING,
   START_FAILURE,
   INITIALIZE_FAILURE,
-  PREPARE_FAILURE
+  PREPARE_FAILURE,
 }
 
 export function initializeSequence(runtime, initializeMethod) {
   if (runtime.isInitialized) return runtime
 
-  runtime.fireHook("beforeInitialize", runtime)
+  runtime.fireHook('beforeInitialize', runtime)
 
   runtime.beginTrackingState()
   runtime.setState({ stage: INITIALIZING, initialized: true })
@@ -1392,9 +1392,9 @@ export function initializeSequence(runtime, initializeMethod) {
     throw error
   }
 
-  runtime.fireHook("afterInitialize", runtime)
+  runtime.fireHook('afterInitialize', runtime)
   runtime.setState({ stage: INITIALIZED })
-  events.emit("runtimeDidInitialize", runtime, runtime.constructor)
+  events.emit('runtimeDidInitialize', runtime, runtime.constructor)
 
   runtime.attachAllHelpers()
 
@@ -1407,18 +1407,18 @@ export async function prepareSequence(runtime, prepareMethod) {
   if (runtime.isPrepared) return runtime
 
   runtime.setState({ stage: PREPARING })
-  runtime.fireHook("preparing")
+  runtime.fireHook('preparing')
 
   try {
     await this.runMiddleware(PREPARING)
   } catch (error) {
     runtime.setState({ stage: PREPARE_FAILURE, error })
-    runtime.fireHook("prepareDidFail", error)
+    runtime.fireHook('prepareDidFail', error)
     throw error
   }
 
   try {
-    if (typeof runtime.options.prepare === "function") {
+    if (typeof runtime.options.prepare === 'function') {
       await Promise.resolve(runtime.options.prepare.call(runtime, runtime.argv, runtime.sandbox))
     }
 
@@ -1427,11 +1427,11 @@ export async function prepareSequence(runtime, prepareMethod) {
     runtime.setState({ stage: READY, prepared: true })
   } catch (error) {
     runtime.setState({ stage: PREPARE_FAILURE, error })
-    runtime.fireHook("prepareDidFail", error)
+    runtime.fireHook('prepareDidFail', error)
     throw error
   }
 
-  runtime.fireHook("runtimeIsPrepared")
+  runtime.fireHook('runtimeIsPrepared')
   return runtime
 }
 
@@ -1440,16 +1440,16 @@ export async function startSequence(runtime, startMethod) {
   if (runtime.isStarted) return runtime
 
   const beforeHooks = runtime
-    .at("options.beforeStart", "beforeStart", "options.runtimeWillStart", "runtimeWillStart")
-    .filter(f => typeof f === "function")
+    .at('options.beforeStart', 'beforeStart', 'options.runtimeWillStart', 'runtimeWillStart')
+    .filter(f => typeof f === 'function')
 
-  events.emit("runtimeIsStarting", runtime, runtime.constructor)
+  events.emit('runtimeIsStarting', runtime, runtime.constructor)
 
   if (beforeHooks.length > 0) {
     try {
       await Promise.all(beforeHooks.map(fn => fn.call(runtime, runtime.argv, runtime.sandbox)))
     } catch (error) {
-      runtime.setState({ stage: START_FAILURE, error, failureStage: "beforeHooks" })
+      runtime.setState({ stage: START_FAILURE, error, failureStage: 'beforeHooks' })
       throw error
     }
   }
@@ -1458,7 +1458,7 @@ export async function startSequence(runtime, startMethod) {
     runtime.setState({ stage: STARTING })
     await this.runMiddleware(STARTING)
   } catch (error) {
-    runtime.setState({ stage: START_FAILURE, error, failureStage: "middlewares" })
+    runtime.setState({ stage: START_FAILURE, error, failureStage: 'middlewares' })
     throw error
   }
 
@@ -1470,8 +1470,8 @@ export async function startSequence(runtime, startMethod) {
   }
 
   runtime.setState({ stage: RUNNING, started: true })
-  runtime.fireHook("runtimeDidStart", runtime, runtime.currentState)
-  events.emit("runtimeDidStart", runtime, runtime.currentState, runtime.constructor)
+  runtime.fireHook('runtimeDidStart', runtime, runtime.currentState)
+  events.emit('runtimeDidStart', runtime, runtime.currentState, runtime.constructor)
 
   return this
 }
@@ -1480,20 +1480,20 @@ export function makeStateful(obj) {
   obj.stateVersion = 0
 
   extendObservable(obj, {
-    state: map(toPairs(obj.initialState || {}))
+    state: map(toPairs(obj.initialState || {})),
   })
 
   autorun((...args) => {
     obj.stateVersion = obj.stateVersion + 1
-    obj.emit("change", obj, obj.currentState, obj.stateVersion)
-    obj.fireHook("stateDidChange", obj.currentState, obj.stateVersion)
+    obj.emit('change', obj, obj.currentState, obj.stateVersion)
+    obj.fireHook('stateDidChange', obj.currentState, obj.stateVersion)
   })
 
   obj.state.observe((update = {}) => {
     obj.fireHook(`${update.name}DidChangeState`, update)
   })
 
-  obj.getter("currentState", () => toJS(obj.state))
+  obj.getter('currentState', () => toJS(obj.state))
 
   return obj
 }

@@ -10,7 +10,7 @@ import {
   cloneDeep,
   lowerFirst,
   omit,
-} from "../lodash-dependencies"
+} from '../lodash-dependencies'
 
 const { defineProperty } = Object
 
@@ -36,7 +36,7 @@ export function propertyUtils(target) {
 export function createCollection(host = {}, items = []) {
   mixinPropertyUtils(host, true, false)
 
-  host.lazy("models", function() {
+  host.lazy('models', function() {
     return mixinPropertyUtils((isFunction(items) ? items.call(host) : items) || [], true)
   })
 
@@ -54,7 +54,7 @@ export function enhanceObject(target, options, lodash = {}) {
     hideProperty(target, name, fn)
   })
 
-  if (typeof options === "function" && options.VERSION) {
+  if (typeof options === 'function' && options.VERSION) {
     lodash = options
     options = {}
   }
@@ -79,14 +79,15 @@ export function enhanceObject(target, options, lodash = {}) {
     }
   }
 
-  if (includeChain && !has(target, "chain") && isFunction(lodash.chain)) {
-    hideGetter(target, "chain", partial(lodash.chain, target))
+  if (includeChain && !has(target, 'chain') && isFunction(lodash.chain)) {
+    hideGetter(target, 'chain', partial(lodash.chain, target))
   }
 
   return target
 }
 
-export const transformKey = key => lowerFirst(camelCase(key.replace(new RegExp(`^(get|lazy)`, ""), "")))
+export const transformKey = key =>
+  lowerFirst(camelCase(key.replace(new RegExp(`^(get|lazy)`, ''), '')))
 
 export function createInterface(interfaceMethods = {}, options = {}) {
   const {
@@ -118,10 +119,10 @@ export function createInterface(interfaceMethods = {}, options = {}) {
         }
 
         return prop.call(scope, ...args)
-      },
+      }
   )
 
-  defineProperty(interFace, "isInterface", {
+  defineProperty(interFace, 'isInterface', {
     enumerable: false,
     value: true,
     configurable: false,
@@ -131,7 +132,13 @@ export function createInterface(interfaceMethods = {}, options = {}) {
 }
 
 export function applyInterface(target, methods = {}, options = {}) {
-  const { scope = target, transformKeys = true, safe = true, hidden = false, configurable = false } = options
+  const {
+    scope = target,
+    transformKeys = true,
+    safe = true,
+    hidden = false,
+    configurable = false,
+  } = options
 
   const i = methods.isInterface
     ? methods
@@ -144,11 +151,11 @@ export function applyInterface(target, methods = {}, options = {}) {
       })
 
   mapValues(i, (method, propName) => {
-    if (transformKeys && propName.startsWith("get")) {
+    if (transformKeys && propName.indexOf('get') === 0) {
       ;(hidden ? hideGetter : getter)(target, transformKey(propName), method.bind(scope))
-    } else if (transformKeys && propName.startsWith("lazy")) {
+    } else if (transformKeys && propName.indexOf('lazy') === 0) {
       lazy(target, transformKey(propName), method.bind(scope))
-    } else if (propName === "isInterface") {
+    } else if (propName === 'isInterface') {
       // do nothing
     } else {
       defineProperty(target, propName, {
@@ -196,9 +203,9 @@ export function hideProperties(target, properties = {}) {
  * @return {Object}          Returns the target object
  */
 export function hideGetter(target, name, fn, options = {}) {
-  if (typeof options === "boolean") {
+  if (typeof options === 'boolean') {
     options = { configurable: options }
-  } else if (typeof options === "object") {
+  } else if (typeof options === 'object') {
     options = {
       configurable: true,
       scope: target,
@@ -209,7 +216,7 @@ export function hideGetter(target, name, fn, options = {}) {
     options = {}
   }
 
-  if (typeof fn === "function") {
+  if (typeof fn === 'function') {
     fn = partial(fn, ...(options.args || []))
   }
 
@@ -217,7 +224,7 @@ export function hideGetter(target, name, fn, options = {}) {
     enumerable: false,
     ...options,
     get: function() {
-      return typeof fn === "function" && options.call !== false ? fn.call(options.scope) : fn
+      return typeof fn === 'function' && options.call !== false ? fn.call(options.scope) : fn
     },
   })
 
@@ -233,9 +240,9 @@ export function getter(target, name, fn, options = {}) {
 }
 
 export function hideProperty(target, name, value, options = {}) {
-  if (typeof options === "boolean") {
+  if (typeof options === 'boolean') {
     options = { configurable: options }
-  } else if (typeof options === "object") {
+  } else if (typeof options === 'object') {
     options = {
       configurable: true,
       ...options,
@@ -272,9 +279,9 @@ export function lazy(target, attribute, fn, enumerable = false) {
       delete target[attribute]
 
       if (enumerable) {
-        return (target[attribute] = typeof fn === "function" ? fn.call(target) : fn)
+        return (target[attribute] = typeof fn === 'function' ? fn.call(target) : fn)
       } else {
-        let value = typeof fn === "function" ? fn.call(target) : fn
+        let value = typeof fn === 'function' ? fn.call(target) : fn
 
         defineProperty(target, attribute, {
           enumerable,
@@ -294,153 +301,153 @@ export const createEntity = (object = {}, ...args) => {
   return mixinPropertyUtils(cloneDeep(object), ...args)
 }
 
-export const hashObject = require("./object-hash")
+export const hashObject = require('./object-hash')
 
 const objectMethods = [
-  "assign",
-  "assignIn",
-  "assignInWith",
-  "assignWith",
-  "at",
-  "create",
-  "defaults",
-  "defaultsDeep",
-  "entries",
-  "entriesIn",
-  "extend",
-  "extendWith",
-  "findKey",
-  "findLastKey",
-  "forIn",
-  "forInRight",
-  "forOwn",
-  "forOwnRight",
-  "functions",
-  "functionsIn",
-  "get",
-  "has",
-  "hasIn",
-  "invert",
-  "invertBy",
-  "invoke",
-  "keys",
-  "keysIn",
-  "mapKeys",
-  "mapValues",
-  "merge",
-  "mergeWith",
-  "omit",
-  "omitBy",
-  "pick",
-  "pickBy",
-  "result",
-  "set",
-  "setWith",
-  "toPairs",
-  "toPairsIn",
-  "transform",
-  "unset",
-  "update",
-  "updateWith",
-  "values",
-  "valuesIn",
+  'assign',
+  'assignIn',
+  'assignInWith',
+  'assignWith',
+  'at',
+  'create',
+  'defaults',
+  'defaultsDeep',
+  'entries',
+  'entriesIn',
+  'extend',
+  'extendWith',
+  'findKey',
+  'findLastKey',
+  'forIn',
+  'forInRight',
+  'forOwn',
+  'forOwnRight',
+  'functions',
+  'functionsIn',
+  'get',
+  'has',
+  'hasIn',
+  'invert',
+  'invertBy',
+  'invoke',
+  'keys',
+  'keysIn',
+  'mapKeys',
+  'mapValues',
+  'merge',
+  'mergeWith',
+  'omit',
+  'omitBy',
+  'pick',
+  'pickBy',
+  'result',
+  'set',
+  'setWith',
+  'toPairs',
+  'toPairsIn',
+  'transform',
+  'unset',
+  'update',
+  'updateWith',
+  'values',
+  'valuesIn',
 ]
 
 const arrayMethods = [
-  "chunk",
-  "compact",
-  "concat",
-  "difference",
-  "differenceBy",
-  "differenceWith",
-  "drop",
-  "dropRight",
-  "dropRightWhile",
-  "dropWhile",
-  "fill",
-  "findIndex",
-  "findLastIndex",
-  "first",
-  "flatten",
-  "flattenDeep",
-  "flattenDepth",
-  "fromPairs",
-  "head",
-  "indexOf",
-  "initial",
-  "intersection",
-  "intersectionBy",
-  "intersectionWith",
-  "join",
-  "last",
-  "lastIndexOf",
-  "nth",
-  "pull",
-  "pullAll",
-  "pullAllBy",
-  "pullAllWith",
-  "pullAt",
-  "remove",
-  "reverse",
-  "slice",
-  "sortedIndex",
-  "sortedIndexBy",
-  "sortedIndexOf",
-  "sortedLastIndex",
-  "sortedLastIndexBy",
-  "sortedLastIndexOf",
-  "sortedUniq",
-  "sortedUniqBy",
-  "tail",
-  "take",
-  "takeRight",
-  "takeRightWhile",
-  "takeWhile",
-  "union",
-  "unionBy",
-  "unionWith",
-  "uniq",
-  "uniqBy",
-  "uniqWith",
-  "unzip",
-  "unzipWith",
-  "without",
-  "xor",
-  "xorBy",
-  "xorWith",
-  "zip",
-  "zipObject",
-  "zipObjectDeep",
-  "zipWith",
+  'chunk',
+  'compact',
+  'concat',
+  'difference',
+  'differenceBy',
+  'differenceWith',
+  'drop',
+  'dropRight',
+  'dropRightWhile',
+  'dropWhile',
+  'fill',
+  'findIndex',
+  'findLastIndex',
+  'first',
+  'flatten',
+  'flattenDeep',
+  'flattenDepth',
+  'fromPairs',
+  'head',
+  'indexOf',
+  'initial',
+  'intersection',
+  'intersectionBy',
+  'intersectionWith',
+  'join',
+  'last',
+  'lastIndexOf',
+  'nth',
+  'pull',
+  'pullAll',
+  'pullAllBy',
+  'pullAllWith',
+  'pullAt',
+  'remove',
+  'reverse',
+  'slice',
+  'sortedIndex',
+  'sortedIndexBy',
+  'sortedIndexOf',
+  'sortedLastIndex',
+  'sortedLastIndexBy',
+  'sortedLastIndexOf',
+  'sortedUniq',
+  'sortedUniqBy',
+  'tail',
+  'take',
+  'takeRight',
+  'takeRightWhile',
+  'takeWhile',
+  'union',
+  'unionBy',
+  'unionWith',
+  'uniq',
+  'uniqBy',
+  'uniqWith',
+  'unzip',
+  'unzipWith',
+  'without',
+  'xor',
+  'xorBy',
+  'xorWith',
+  'zip',
+  'zipObject',
+  'zipObjectDeep',
+  'zipWith',
 ]
 
 const collectionMethods = [
-  "countBy",
-  "each",
-  "eachRight",
-  "every",
-  "filter",
-  "find",
-  "findLast",
-  "flatMap",
-  "flatMapDeep",
-  "flatMapDepth",
-  "forEach",
-  "forEachRight",
-  "groupBy",
-  "includes",
-  "invokeMap",
-  "keyBy",
-  "map",
-  "orderBy",
-  "partition",
-  "reduce",
-  "reduceRight",
-  "reject",
-  "sample",
-  "sampleSize",
-  "shuffle",
-  "size",
-  "some",
-  "sortBy",
+  'countBy',
+  'each',
+  'eachRight',
+  'every',
+  'filter',
+  'find',
+  'findLast',
+  'flatMap',
+  'flatMapDeep',
+  'flatMapDepth',
+  'forEach',
+  'forEachRight',
+  'groupBy',
+  'includes',
+  'invokeMap',
+  'keyBy',
+  'map',
+  'orderBy',
+  'partition',
+  'reduce',
+  'reduceRight',
+  'reject',
+  'sample',
+  'sampleSize',
+  'shuffle',
+  'size',
+  'some',
+  'sortBy',
 ]
