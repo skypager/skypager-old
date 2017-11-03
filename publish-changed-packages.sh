@@ -11,6 +11,7 @@ main() {
     cd /Users/jon/Projects/skypager/packages/skypager-helpers-repl && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-helpers-server && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-helpers-service && npm publish
+    cd /Users/jon/Projects/skypager/packages/skypager-helpers-webpack && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-runtimes-development && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-runtimes-electron && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-runtimes-node && npm publish

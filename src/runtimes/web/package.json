@@ -27,10 +27,7 @@
         "mobx": "global mobx"
       },
       "entryPoints": {
-        "skypager-web": [
-          "expose?skypager!skypager-runtime/skypager-runtime.js",
-          "index.web.js"
-        ]
+        "skypager-web": ["expose?skypager!skypager-runtime", "index.web.js"]
       }
     },
     "bundle": {
@@ -41,10 +38,7 @@
         "mobx": "global mobx"
       },
       "entryPoints": {
-        "skypager-web": [
-          "expose?skypager!skypager-runtime/skypager-runtime.js",
-          "index.web.js"
-        ]
+        "skypager-web": ["expose?skypager!skypager-runtime", "index.web.js"]
       }
     }
   },

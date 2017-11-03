@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "7bc3248bd21f6092b001c68fba0ce12832f1b0ea",
-    "abbreviatedSha": "7bc3248bd2",
-    "branch": "feature/skypage-document-type",
-    "tag": "v37.6.4",
+    "sha": "b21a0c9ee3388a864c6248894cbd977a053582c0",
+    "abbreviatedSha": "b21a0c9ee3",
+    "branch": "master",
+    "tag": null,
     "root": "/Users/jon/Projects/skypager"
   },
   "packages": {

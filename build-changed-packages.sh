@@ -11,6 +11,7 @@ main() {
     /Users/jon/Projects/skypager/bin/run skypager-helpers-repl buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-helpers-server buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-helpers-service buildPackage
+    /Users/jon/Projects/skypager/bin/run skypager-helpers-webpack buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-runtimes-development buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-runtimes-electron buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-runtimes-node buildPackage

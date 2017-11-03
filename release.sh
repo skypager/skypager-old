@@ -12,6 +12,7 @@ main() {
     /Users/jon/Projects/skypager/bin/run skypager-helpers-repl buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-helpers-server buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-helpers-service buildPackage
+    /Users/jon/Projects/skypager/bin/run skypager-helpers-webpack buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-runtimes-development buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-runtimes-electron buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-runtimes-node buildPackage
@@ -32,6 +33,7 @@ main() {
     cd /Users/jon/Projects/skypager/packages/skypager-helpers-repl && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-helpers-server && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-helpers-service && npm publish
+    cd /Users/jon/Projects/skypager/packages/skypager-helpers-webpack && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-runtimes-development && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-runtimes-electron && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-runtimes-node && npm publish
