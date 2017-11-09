@@ -1,5 +1,5 @@
 main() {
-    lerna publish --skip-npm --yes --repo-version=37.6.4
+    lerna publish --skip-npm --yes --repo-version=37.6.5
     /Users/jon/Projects/skypager/bin/run skypager-runtime buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-core buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-helpers-bundler buildPackage
@@ -20,6 +20,8 @@ main() {
     /Users/jon/Projects/skypager/bin/run skypager-runtimes-universal buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-runtimes-web buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-features-document-database buildPackage
+    /Users/jon/Projects/skypager/bin/run skypager-features-file-manager buildPackage
+    /Users/jon/Projects/skypager/bin/run skypager-servers-portfolio buildPackage
     bin/export
     cd /Users/jon/Projects/skypager/packages/skypager-core && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-runtime && npm publish
@@ -41,6 +43,8 @@ main() {
     cd /Users/jon/Projects/skypager/packages/skypager-runtimes-universal && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-runtimes-web && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-features-document-database && npm publish
+    cd /Users/jon/Projects/skypager/packages/skypager-features-file-manager && npm publish
+    cd /Users/jon/Projects/skypager/packages/skypager-servers-portfolio && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager && npm publish
 
 }

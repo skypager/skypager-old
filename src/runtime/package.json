@@ -39,7 +39,7 @@
           "expose?mobx!mobx",
           "babel-polyfill",
           "expose?lodash!lodash/lodash.min.js",
-          "expose?skypager!index.web.js"
+          "index.web.js"
         ]
       }
     },
@@ -54,7 +54,7 @@
           "expose?mobx!mobx",
           "babel-polyfill",
           "expose?lodash!lodash/lodash.min.js",
-          "expose?skypager!index.web.js"
+          "index.web.js"
         ]
       }
     }

@@ -3,7 +3,7 @@ if (typeof global === 'undefined' && typeof window !== 'undefined') {
 }
 
 if (typeof process === 'undefined') {
-  window.process = { env: {} }
+  global.process = { env: {} }
 }
 
 const pageHelper = require('skypager-helpers-page')
@@ -25,3 +25,7 @@ module.exports = skypager
 skypager.hide('runtimeProvider', 'web', true)
 skypager.hide('runtimeModule', module.id, true)
 skypager.hide('runtimePackageInfo', __PACKAGE__, true)
+
+if (!global.skypager) {
+  global.skypager = skypager
+}

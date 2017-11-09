@@ -19,5 +19,7 @@
   "skypager-runtimes-react",
   "skypager-runtimes-universal",
   "skypager-runtimes-web",
-  "skypager-features-document-database"
+  "skypager-features-document-database",
+  "skypager-features-file-manager",
+  "skypager-servers-portfolio"
 ]
