@@ -9,7 +9,7 @@
     "skypager-document-types-babel": "^37.5.0",
     "skypager-document-types-manifest": "^37.5.0",
     "skypager-document-types-markdown": "^37.5.0",
-    "skypager-features-file-manager": "^37.6.1",
+    "skypager-features-file-manager": "^37.6.4",
     "skypager-helpers-document": "^37.6.4",
     "skypager-helpers-document-type": "^37.6.4"
   }

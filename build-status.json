@@ -1,8 +1,8 @@
 {
   "gitInfo": {
-    "sha": "b21a0c9ee3388a864c6248894cbd977a053582c0",
-    "abbreviatedSha": "b21a0c9ee3",
-    "branch": "master",
+    "sha": "8f6a47c631b4248bc3559926a7fb183248f45c5a",
+    "abbreviatedSha": "8f6a47c631",
+    "branch": "feature/web-runtime-refactoring",
     "tag": null,
     "root": "/Users/jon/Projects/skypager"
   },
@@ -241,7 +241,7 @@
     },
     "skypager-runtimes-node": {
       "success": false,
-      "version": "37.6.4",
+      "version": "37.6.5",
       "name": "skypager-runtimes-node",
       "package": {
         "success": true,

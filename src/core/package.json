@@ -34,7 +34,10 @@
         "skypager-runtime": "global skypager"
       },
       "entryPoints": {
-        "skypager-core": ["expose?skypager!skypager-runtime/skypager-runtime.js", "index.web.js"]
+        "skypager-core": [
+          "expose?skypager!skypager-runtime/skypager-runtime.js",
+          "index.web.js"
+        ]
       }
     },
     "bundle": {
@@ -43,7 +46,10 @@
         "skypager-runtime": "global skypager"
       },
       "entryPoints": {
-        "skypager-core": ["expose?skypager!skypager-runtime/skypager-runtime.js", "index.web.js"]
+        "skypager-core": [
+          "expose?skypager!skypager-runtime/skypager-runtime.js",
+          "index.web.js"
+        ]
       }
     }
   }
