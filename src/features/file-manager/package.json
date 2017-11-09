@@ -1,6 +1,6 @@
 {
   "name": "skypager-features-file-manager",
-  "version": "37.6.1",
+  "version": "37.6.2",
   "description": "an observable state machine for a projects files",
   "main": "index.js",
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",

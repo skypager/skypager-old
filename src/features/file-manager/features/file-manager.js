@@ -138,6 +138,35 @@ export const featureMethods = [
   'walkUpSync',
 ]
 
+export const hostMethods = ['requireContext']
+export const hostMixinOptions = {
+  partial: [],
+  injectOptions: false,
+}
+
+export function requireContext(rule, options = {}) {
+  const { keyBy = 'name', mapValues = 'path', formatId } = options
+
+  return this.chain
+    .invoke('fileManager.selectMatches', rule)
+    .keyBy(keyBy)
+    .mapKeys((v, k) => (formatId ? formatId(k, v) : k))
+    .mapValues(mapValues)
+    .thru(map => {
+      const req = key => __non_webpack_require__(map[key])
+
+      return Object.assign(req, {
+        resolve(key) {
+          return map[key]
+        },
+        keys() {
+          return Object.keys(map)
+        },
+      })
+    })
+    .value()
+}
+
 export function file(options = {}) {
   if (typeof options === 'string') {
     options = { id: options }

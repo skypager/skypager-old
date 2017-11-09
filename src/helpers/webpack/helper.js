@@ -106,6 +106,7 @@ export class Webpack extends Helper {
       outputFilename: 'string',
       externalModules: 'object',
       buildTarget: 'string',
+      target: 'string',
       moduleAliases: 'object',
       moduleLocations: 'object',
     }
@@ -162,25 +163,25 @@ export class Webpack extends Helper {
       return
     }
 
-    this.runtime.debug('discovering module locations')
+    //this.runtime.debug('discovering module locations')
     await this.discoverModuleLocations().catch(c('moduleLocations'))
 
-    this.runtime.debug('discovering module aliases')
+    //this.runtime.debug('discovering module aliases')
     await this.discoverModuleAliases().catch(c('moduleAliases'))
 
-    this.runtime.debug('discovering externals')
+    //this.runtime.debug('discovering externals')
     await this.discoverExternals().catch(c('externals'))
 
-    this.runtime.debug('discovering module rules')
+    //this.runtime.debug('discovering module rules')
     await this.discoverModuleRules().catch(c('moduleRules'))
 
-    this.runtime.debug('discovering module provide')
+    //this.runtime.debug('discovering module provide')
     await this.discoverProvidedModules().catch(c('providedModules'))
 
-    this.runtime.debug('discovering definitions')
+    //this.runtime.debug('discovering definitions')
     await this.discoverDefinitions().catch(c('definitions'))
 
-    this.runtime.debug('discovering other plugins')
+    //this.runtime.debug('discovering other plugins')
     await this.discoverPlugins().catch(c('plugins'))
 
     //this.runtime.debug("discovering entry points")
@@ -1392,6 +1393,9 @@ export class Webpack extends Helper {
 
     const webpackConfig = this.tryResult('webpackConfig', {})
 
+    //console.log('Webpack Config Before Defaults', webpackConfig)
+    //console.log('Aliases', this.moduleAliasMap.toJSON())
+
     const cfg = defaultsDeep({}, webpackConfig, {
       target: buildTarget,
 
@@ -1399,7 +1403,7 @@ export class Webpack extends Helper {
 
       devtool: devtool,
 
-      context: this.runtime.resolve(cwd),
+      context: this.configOption('context', this.runtime.resolve(cwd)),
 
       plugins: compact([
         ...castArray(webpackConfig.plugins),
@@ -1422,15 +1426,18 @@ export class Webpack extends Helper {
       resolve: {
         descriptionFiles,
         alias: this.moduleAliasMap.toJSON(),
-        modules: compact([
-          ...uniq([
-            this.runtime.resolve(cwd),
-            this.runtime.resolve(cwd, 'src'),
-            ...compact(moduleLocations),
-          ]),
-          ...castArray(providedConfig.moduleLocations),
-          ...castArray(options.moduleLocations),
-        ]),
+        modules: uniq(
+          compact([
+            ...uniq([
+              this.configOption('context', this.runtime.resolve(cwd)),
+              this.runtime.resolve(cwd),
+              this.runtime.resolve(cwd, 'src'),
+              ...compact(moduleLocations),
+            ]),
+            ...castArray(providedConfig.moduleLocations),
+            ...castArray(options.moduleLocations),
+          ])
+        ),
         cachePredicate({ path, request } = {}) {
           return true
         },

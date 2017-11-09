@@ -627,7 +627,10 @@ export class Runtime {
 
   @computed
   get currentState() {
-    return this.convertToJS(this.lodash.mapValues(this.state.toJSON(), v => this.convertToJS(v)))
+    const { convertToJS } = this
+    const { mapValues } = this.lodash
+
+    return mapValues(this.state.toJSON(), v => convertToJS(v))
   }
 
   @computed
@@ -686,14 +689,16 @@ export class Runtime {
 
     const mainDisposer = autorun((...args) => {
       this.stateVersion = this.stateVersion + 1
-      this.emit('change', this, this.currentState, this.stateVersion, ...args)
-      this.fireHook('stateDidChange', this.currentState, this.stateVersion, ...args)
-      this.events.emit('runtimeDidChange', this, this.currentState, this.stateVersion, ...args)
+      const { currentState, stateVersion } = this
+      this.emit('change', this, currentState, stateVersion, ...args)
+      this.fireHook('stateDidChange', currentState, stateVersion, ...args)
+      this.events.emit('runtimeDidChange', this, currentState, stateVersion, ...args)
     })
 
     const stateDisposer = this.state.observe((update = {}) => {
-      this.fireHook(`${update.name}DidChangeState`, update, this.currentState, this.stateVersion)
-      this.emit('stateWasUpdated', update, this.currentState, this.stateVersion)
+      const { currentState, stateVersion } = this
+      this.fireHook(`${update.name}DidChangeState`, update, currentState, stateVersion)
+      this.emit('stateWasUpdated', update, currentState, stateVersion)
     })
 
     this.hide('mainDisposer', () => {
@@ -707,12 +712,13 @@ export class Runtime {
 
   @action
   replaceState(newState = {}) {
-    return this.state.replace(newState)
+    return this.state.replace(toPairs(newState))
   }
 
   @action
   setState(newState = {}) {
-    return this.state.merge(newState)
+    const { toPairs } = this.lodash
+    return this.state.merge(toPairs(newState))
   }
 
   stateDidChange() {}
@@ -728,7 +734,7 @@ export class Runtime {
 
     // WOW clean this up
     // prettier-ignore
-    return extendObservable( target, mapValues(properties, val => {
+    return extendObservable(target, mapValues(properties, val => {
         if (isArray(val) && val[0] === "map" && isObject(val[1])) {
           return observable.map(toPairs(val[1]))
         } else if (isArray(val) && val[0] === "shallowMap" && isObject(val[1])) {
@@ -774,11 +780,11 @@ export class Runtime {
   }
 
   observeState(handler) {
-    return this.state.observe(handler.bind(this))
+    return this.state.observe(handler)
   }
 
   interceptState(handler) {
-    return this.state.intercept(handler.bind(this))
+    return this.state.intercept(handler)
   }
 
   convertToJS(...args) {
@@ -1481,19 +1487,21 @@ export function makeStateful(obj) {
 
   extendObservable(obj, {
     state: map(toPairs(obj.initialState || {})),
+    currentState: computed(() => obj.state.toJSON()),
   })
 
   autorun((...args) => {
-    obj.stateVersion = obj.stateVersion + 1
-    obj.emit('change', obj, obj.currentState, obj.stateVersion)
-    obj.fireHook('stateDidChange', obj.currentState, obj.stateVersion)
+    const stateVersion = (obj.stateVersion = obj.stateVersion + 1)
+    const { currentState } = obj
+    obj.emit('change', obj, currentState, stateVersion)
+    obj.fireHook('stateDidChange', currentState, stateVersion)
   })
 
   obj.state.observe((update = {}) => {
     obj.fireHook(`${update.name}DidChangeState`, update)
   })
 
-  obj.getter('currentState', () => toJS(obj.state))
+  //obj.getter('currentState', () => obj.state.toJSON())
 
   return obj
 }
