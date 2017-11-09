@@ -8,14 +8,14 @@
  *              which exist to make specific types of helpers available to specific types of projects.
  */
 
-import lodash from "../lodash-dependencies"
-import { hashObject, hideProperty, lazy, enhanceObject } from "../utils/properties"
-import { camelCase, snakeCase, camelize, underscore, singularize, pluralize } from "../utils/string"
-import ContextRegistry from "../registries/context"
-import configBuilder from "../config-builder"
-import { attach as attachEmitter } from "../utils/emitter"
+import lodash from '../lodash-dependencies'
+import { hashObject, hideProperty, lazy, enhanceObject } from '../utils/properties'
+import { camelCase, snakeCase, camelize, underscore, singularize, pluralize } from '../utils/string'
+import ContextRegistry from '../registries/context'
+import configBuilder from '../config-builder'
+import { attach as attachEmitter } from '../utils/emitter'
 
-const utils = require("./util")
+const utils = require('./util')
 const {
   flatten,
   castArray,
@@ -31,20 +31,20 @@ const {
   result,
   keys,
   has,
-  zipObjectDeep
+  zipObjectDeep,
 } = lodash
 
-const req = require.context("./helpers", false, /DISABLED\.js$/)
+const req = require.context('./helpers', false, /DISABLED\.js$/)
 
 let REGISTRY
 
 REGISTRY =
   REGISTRY ||
-  new ContextRegistry("helpers", {
+  new ContextRegistry('helpers', {
     context: req,
     componentWillRegister(...args) {
       return args
-    }
+    },
   })
 
 export class ContextError extends Error {}
@@ -66,7 +66,7 @@ export class Helper {
   static ProviderError = ProviderError
 
   static get features() {
-    return Helper.registry.lookup("feature").Feature.registry
+    return Helper.registry.lookup('feature').Feature.registry
   }
 
   static events = attachEmitter({})
@@ -84,11 +84,11 @@ export class Helper {
         helper.attach(host, options)
       }
 
-      Helper.events.emit("registered", { name, options })
+      Helper.events.emit('registered', { name, options })
 
       return result
     } catch (error) {
-      Helper.events.emit("register:error", { name, error, options })
+      Helper.events.emit('register:error', { name, error, options })
     }
   }
 
@@ -122,8 +122,8 @@ export class Helper {
    */
   static get optionTypes() {
     return {
-      id: "string",
-      provider: "object"
+      id: 'string',
+      provider: 'object',
     }
   }
 
@@ -134,10 +134,10 @@ export class Helper {
    */
   static get contextTypes() {
     return {
-      project: "object",
-      reg: "object",
-      host: "object",
-      runtime: "object"
+      project: 'object',
+      reg: 'object',
+      host: 'object',
+      runtime: 'object',
     }
   }
 
@@ -148,7 +148,7 @@ export class Helper {
   get providerTypes() {
     return defaults(
       {},
-      this.tryResult("providerTypes", {}),
+      this.tryResult('providerTypes', {}),
       this.constructor.providerTypes,
       Helper.providerTypes
     )
@@ -161,7 +161,7 @@ export class Helper {
   get optionTypes() {
     return defaults(
       {},
-      this.tryResult("optionTypes", {}),
+      this.tryResult('optionTypes', {}),
       this.constructor.optionTypes,
       Helper.optionTypes
     )
@@ -175,7 +175,7 @@ export class Helper {
     return defaults(
       {},
       { [this.registryName]: this.constructor.registry },
-      this.tryResult("contextTypes", {}),
+      this.tryResult('contextTypes', {}),
       this.constructor.contextTypes,
       Helper.contextTypes
     )
@@ -185,15 +185,15 @@ export class Helper {
    * A Helper class is attached to a host.
    */
   static attach(host, helperClass, options) {
-    Helper.events.emit("attach", host, helperClass, options)
+    Helper.events.emit('attach', host, helperClass, options)
     return attach(host, helperClass, options)
   }
 
   static attachAll(host, options = {}) {
-    Helper.events.emit("attachAll", host, options)
+    Helper.events.emit('attachAll', host, options)
 
     if (!this.isHostValid(host)) {
-      throw new Error("Invalid host for the helper registry. pass a project or a portfolio")
+      throw new Error('Invalid host for the helper registry. pass a project or a portfolio')
     }
 
     Helper.allHelperTypes.forEach(helperType => {
@@ -210,7 +210,7 @@ export class Helper {
   }
 
   static isHostValid(host) {
-    return typeof host.hide === "function" && typeof host.lazy === "function"
+    return typeof host.hide === 'function' && typeof host.lazy === 'function'
   }
 
   static cacheable(setting = true) {
@@ -261,49 +261,49 @@ export class Helper {
     options.provider = options.provider || {}
 
     this.lazy(
-      "name",
-      () => this.get("options.name", this.result("provider.name", () => options.name)),
+      'name',
+      () => this.get('options.name', this.result('provider.name', () => options.name)),
       true
     )
 
-    this.hide("uuid", require("uuid")())
+    this.hide('uuid', require('uuid')())
 
-    this.hide("context", context)
+    this.hide('context', context)
 
     try {
       this.hideGetter(`is${this.constructor.name}`, () => true)
     } catch (error) {}
 
-    this.hide("registryName", Helper.propNames(this.constructor.name).registryProp)
+    this.hide('registryName', Helper.propNames(this.constructor.name).registryProp)
 
     // these are all aliases
-    this.hideGetter("project", () => context.project || context.host || context.runtime)
-    this.hideGetter("host", () => context.project || context.host || context.runtime)
-    this.hideGetter("runtime", () => context.project || context.host || context.runtime)
+    this.hideGetter('project', () => context.project || context.host || context.runtime)
+    this.hideGetter('host', () => context.project || context.host || context.runtime)
+    this.hideGetter('runtime', () => context.project || context.host || context.runtime)
 
     if (this.project.beforeHelperCreate) {
       this.project.beforeHelperCreate.call(this.project, this, options, context, this.constructor)
     }
 
-    this.getter("options", () => omit({ ...this.defaultOptions, ...options }, "provider"))
-    this.hide("provider", this.constructor._decorateProvider(options.provider, this))
+    this.getter('options', () => omit({ ...this.defaultOptions, ...options }, 'provider'))
+    this.hide('provider', this.constructor._decorateProvider(options.provider, this))
 
-    this.lazy("id", () =>
+    this.lazy('id', () =>
       [
-        this.get("project.id", this.constructor.name),
+        this.get('project.id', this.constructor.name),
         options.name,
-        Math.floor(new Date() / 100)
-      ].join(":")
+        Math.floor(new Date() / 100),
+      ].join(':')
     )
 
-    this.hide("configHistory", [], false)
+    this.hide('configHistory', [], false)
 
     if (options.initialize !== false) {
       this.doInitialize()
     }
 
-    this.hide("configureWith", (...a) => {
-      console.log("> configWith is deprecated!")
+    this.hide('configureWith', (...a) => {
+      console.log('> configWith is deprecated!')
       console.trace()
       return this.conifgure(...a)
     })
@@ -318,38 +318,38 @@ export class Helper {
   }
 
   get isCached() {
-    return !!this.get("options.cacheable") && (this.cacheKey && this.cacheKey.length > 0)
+    return !!this.get('options.cacheable') && (this.cacheKey && this.cacheKey.length > 0)
   }
 
   get cacheKey() {
-    return this.get("options.cacheKey")
+    return this.get('options.cacheKey')
   }
 
   /** */
   async doInitialize() {
-    const initializer = this.tryGet("initialize", this.initialize)
-    this.fireHook("beforeInitialize")
+    const initializer = this.tryGet('initialize', this.initialize)
+    this.fireHook('beforeInitialize')
 
     if (initializer) {
       await Promise.resolve(initializer.call(this, this.options, this.context))
-      this.hide("isInitialized", true)
+      this.hide('isInitialized', true)
     }
 
-    this.fireHook("afterInitialize")
+    this.fireHook('afterInitialize')
     return this
   }
 
   fireHook(hookName, ...args) {
     this.helperEvents.emit(`${this.registryName}:${hookName}`, this, ...args)
     this.emit(hookName, ...args)
-    this.emit("firingHook", hookName, ...args)
+    this.emit('firingHook', hookName, ...args)
     this.attemptMethod(hookName, { args })
   }
 
   /**
    * Access the first value we find in our options hash in our provider hash
    */
-  tryGet(property, defaultValue, sources = ["options", "provider"]) {
+  tryGet(property, defaultValue, sources = ['options', 'provider']) {
     return (
       this.at(...sources.map(s => `${s}.${property}`)).find(v => !isUndefined(v)) || defaultValue
     )
@@ -365,10 +365,10 @@ export class Helper {
     const val = this.tryGet(property)
 
     if (!val) {
-      return typeof defaultValue === "function"
+      return typeof defaultValue === 'function'
         ? defaultValue.call(this, { ...this.options, ...options }, { ...this.context, ...context })
         : defaultValue
-    } else if (typeof val === "function") {
+    } else if (typeof val === 'function') {
       return val.call(this, { ...this.options, ...options }, { ...this.context, ...context })
     } else {
       return val
@@ -376,8 +376,8 @@ export class Helper {
   }
 
   // Merge the objects found at k starting with at options, provider, projectConfig
-  mergeGet(key, namespaces = ["options", "provider", "projectConfig"]) {
-    key = typeof key === "string" ? key.split(".") : key
+  mergeGet(key, namespaces = ['options', 'provider', 'projectConfig']) {
+    key = typeof key === 'string' ? key.split('.') : key
     key = flatten(castArray(key))
 
     return defaults({}, ...namespaces.map(n => this.get([n, ...key])))
@@ -385,11 +385,11 @@ export class Helper {
 
   // Merge the objects found at k starting with at options, provider, projectConfig
   // If the property is a function, it will be called in the scope of the helper, with the helpers options and context
-  mergeResult(key, namespaces = ["options", "provider", "projectConfig"]) {
-    key = typeof key === "string" ? key.split(".") : key
+  mergeResult(key, namespaces = ['options', 'provider', 'projectConfig']) {
+    key = typeof key === 'string' ? key.split('.') : key
     key = flatten(castArray(key))
 
-    const ifFunc = v => (typeof v === "function" ? v.call(this, this.options, this.context) : v)
+    const ifFunc = v => (typeof v === 'function' ? v.call(this, this.options, this.context) : v)
 
     return defaults({}, ...namespaces.map(n => this.get([n, ...key])).map(ifFunc))
   }
@@ -411,9 +411,9 @@ export class Helper {
   }
 
   getConfigPresetsObject(passed = {}) {
-    let providers = this.get("provider.configPresets", function() {})
-    let options = this.get("options.configPresets", function() {})
-    let constructors = this.get("constructor.configPresets", function() {})
+    let providers = this.get('provider.configPresets', function() {})
+    let options = this.get('options.configPresets', function() {})
+    let constructors = this.get('constructor.configPresets', function() {})
 
     providers = isFunction(providers)
       ? providers.call(this, this.options, this.context)
@@ -434,9 +434,9 @@ export class Helper {
   }
 
   getConfigFeaturesObject(passed = {}) {
-    let providers = this.get("provider.configFeatures", function() {})
-    let options = this.get("options.configFeatures", function() {})
-    let constructors = this.get("constructor.configFeatures", function() {})
+    let providers = this.get('provider.configFeatures', function() {})
+    let options = this.get('options.configFeatures', function() {})
+    let constructors = this.get('constructor.configFeatures', function() {})
 
     providers = isFunction(providers)
       ? providers.call(this, this.options, this.context)
@@ -457,9 +457,9 @@ export class Helper {
   }
 
   getConfigReducersObject() {
-    let providers = this.get("provider.configReducers", function() {})
-    let options = this.get("options.configReducers", function() {})
-    let constructors = this.get("constructor.configReducers", function() {})
+    let providers = this.get('provider.configReducers', function() {})
+    let options = this.get('options.configReducers', function() {})
+    let constructors = this.get('constructor.configReducers', function() {})
 
     providers = isFunction(providers) ? providers.call(this, this.options, this.context) : providers
     options = isFunction(options) ? options.call(this, this.options, this.context) : options
@@ -481,9 +481,9 @@ export class Helper {
     }
 
     const {
-      baseConfig = this.tryGet("baseConfig", {}),
+      baseConfig = this.tryGet('baseConfig', {}),
       scope = this,
-      tap = this.tryGet("tapConfig")
+      tap = this.tryGet('tapConfig'),
     } = options
 
     const features = this.getConfigFeaturesObject(options.features)
@@ -499,32 +499,32 @@ export class Helper {
       tap,
       baseConfig,
       keyFn: this.configKeysFn,
-      onStash: (...a) => this.emit("config:stashed", ...a),
-      onReset: (...a) => this.emit("config:reset", ...a)
+      onStash: (...a) => this.emit('config:stashed', ...a),
+      onReset: (...a) => this.emit('config:reset', ...a),
     })
   }
 
   get configKeysFn() {
     return (
       this.at(
-        "options.mapConfigKeys",
-        "provider.mapConfigKeys",
-        "constructor.mapConfigKeys",
-        "options.transformConfigKeys",
-        "provider.transformConfigKeys",
-        "constructor.transformConfigKeys"
-      ).find(f => typeof f === "function") || ((v, k) => pluralize(k))
+        'options.mapConfigKeys',
+        'provider.mapConfigKeys',
+        'constructor.mapConfigKeys',
+        'options.transformConfigKeys',
+        'provider.transformConfigKeys',
+        'constructor.transformConfigKeys'
+      ).find(f => typeof f === 'function') || ((v, k) => pluralize(k))
     )
   }
 
   configure(fn = c => c) {
-    this.lazy("builder", () => fn(this.configurator()), false)
+    this.lazy('builder', () => fn(this.configurator()), false)
     this.configHistory.push(this.builder.history)
     return this
   }
 
   get currentConfig() {
-    console.log("currentConfig is deprecated")
+    console.log('currentConfig is deprecated')
     console.trace()
     return this.config
   }
@@ -549,7 +549,7 @@ export class Helper {
   }
 
   createMixin(methods = {}, context = this.context, target = this) {
-    console.warn("createMixin is deprecated")
+    console.warn('createMixin is deprecated')
     const functions = pickBy(methods, isFunction)
     const partialed = mapValues(functions, fn => partialRight(fn.bind(target), context))
 
@@ -557,7 +557,7 @@ export class Helper {
   }
 
   applyMixin(methods = this.provider, context = this.context, target) {
-    console.warn("applyMixin is deprecated")
+    console.warn('applyMixin is deprecated')
     return Object.assign(this, this.createMixin(methods, context, target))
   }
 
@@ -569,7 +569,7 @@ export class Helper {
       right: true,
       insertOptions: false,
       hidden: false,
-      ...options
+      ...options,
     })
 
     return this
@@ -578,18 +578,18 @@ export class Helper {
   attemptMethod(methodName, ...args) {
     const handler = this.tryGet(methodName, this.get(methodName))
 
-    if (typeof handler === "undefined") {
-      if (this.project.isDevelopment && this.project.get("environment.DEBUG_HELPERS")) {
+    if (typeof handler === 'undefined') {
+      if (this.project.isDevelopment && this.project.get('environment.DEBUG_HELPERS')) {
         this.project.debug(`attemptMethod called on non-existent method: ${methodName} `, {
           name: this.name,
-          id: this.id
+          id: this.id,
         })
       }
 
       return false
     }
 
-    if (typeof handler === "function") {
+    if (typeof handler === 'function') {
       if (args.length === 0) {
         args.unshift({})
       }
@@ -613,7 +613,7 @@ export class Helper {
   callMethod(methodName, ...args) {
     const handler = this.tryGet(methodName)
 
-    if (typeof handler !== "function") {
+    if (typeof handler !== 'function') {
       throw new Error(`Could not find a property at ${methodName}`)
     }
 
@@ -625,11 +625,19 @@ export class Helper {
   }
 
   get invalidOptionKeys() {
-    return this.chain.get("options").omit(Object.keys(this.optionTypes)).keys().value()
+    return this.chain
+      .get('options')
+      .omit(Object.keys(this.optionTypes))
+      .keys()
+      .value()
   }
 
   get invalidContextKeys() {
-    return this.chain.get("context").omit(Object.keys(this.contextTypes)).keys().value()
+    return this.chain
+      .get('context')
+      .omit(Object.keys(this.contextTypes))
+      .keys()
+      .value()
   }
 
   get defaultOptions() {
@@ -641,29 +649,36 @@ export class Helper {
   }
 
   get projectConfig() {
+    const name = this.name || this.id
+    const cased = camelCase(snakeCase(name))
+    const { omit } = this.lodash
+
     const { projectConfigKeys = [] } = this
-    return defaultsDeep({}, ...this.at(projectConfigKeys))
+    return omit(defaultsDeep({}, ...this.at(projectConfigKeys)), name, cased)
   }
 
   get projectConfigKeys() {
-    let { name = this.id, groupName = this.constructor.registryName } = this
+    const groupName = this.constructor.registryName()
+    const name = this.name || this.id
 
     return [
+      `runtime.argv.${groupName}.${name}`,
       `runtime.options.${groupName}.${name}`,
       `runtime.config.${groupName}.${name}`,
+      `runtime.argv.${groupName}.${camelCase(snakeCase(name))}`,
       `runtime.options.${groupName}.${camelCase(snakeCase(name))}`,
-      `runtime.config.${groupName}.${camelCase(snakeCase(name))}`
+      `runtime.config.${groupName}.${camelCase(snakeCase(name))}`,
     ]
   }
 
   get argv() {
-    return omit(this.get("runtime.argv", this.get("host.argv", {})), "_", "")
+    return omit(this.get('runtime.argv', this.get('host.argv', {})), '_', '')
   }
 
-  static propNames(name = "") {
+  static propNames(name = '') {
     return {
       registryProp: camelCase(pluralize(snakeCase(name))),
-      lookupProp: singularize(camelCase(snakeCase(name)))
+      lookupProp: singularize(camelCase(snakeCase(name))),
     }
   }
 
@@ -693,7 +708,7 @@ export class Helper {
         } else {
           throw new Error(`Module ${key} not found in mock context`)
         }
-      }
+      },
     })
   }
 }
@@ -709,9 +724,9 @@ export const createContextRegistry = (name, ...args) => new ContextRegistry(name
 export { ContextRegistry }
 
 export function attach(host, helperClass, options = {}) {
-  const { registryProp, lookupProp, configKey = "options" } = {
+  const { registryProp, lookupProp, configKey = 'options' } = {
     ...Helper.propNames(helperClass.name),
-    ...options
+    ...options,
   }
 
   if (host[registryProp]) {
@@ -719,14 +734,14 @@ export function attach(host, helperClass, options = {}) {
   }
 
   if (host.fireHook) {
-    host.fireHook("willAttachHelpers", registryProp, helperClass, options)
+    host.fireHook('willAttachHelpers', registryProp, helperClass, options)
   }
 
   lazy(host, registryProp, () => options.registry || helperClass.createRegistry())
 
   // ensures that we can always access the function
-  hideProperty(host[registryProp], "createHelperByName", (name, opts = {}, ctx = {}) => {
-    if (typeof name !== "string") {
+  hideProperty(host[registryProp], 'createHelperByName', (name, opts = {}, ctx = {}) => {
+    if (typeof name !== 'string') {
       name = `${lookupProp}${lodash.uniqueId()}`
     }
 
@@ -737,7 +752,7 @@ export function attach(host, helperClass, options = {}) {
     opts = defaults(
       opts,
       { name, id: name, cacheHelper: !!helperClass.isCacheable },
-      omit(host.argv, "", "_"),
+      omit(host.argv, '', '_'),
       host.get(`${configKey}.${registryProp}.${name}`),
       host.get(`${configKey}.${registryProp}.${camelCase(snakeCase(name))}`)
     )
@@ -760,9 +775,9 @@ export function attach(host, helperClass, options = {}) {
       cacheHelper !== false &&
       provider.isCacheable !== false &&
       provider.cacheable !== false &&
-      typeof host.cache !== "undefined"
+      typeof host.cache !== 'undefined'
     )
-    const cacheKey = [registryProp, hashObject(omitBy(opts, cacheableKeys)), name].join(":")
+    const cacheKey = [registryProp, hashObject(omitBy(opts, cacheableKeys)), name].join(':')
 
     opts.cacheKey = cacheKey
     opts.cacheable = cacheable
@@ -773,8 +788,8 @@ export function attach(host, helperClass, options = {}) {
 
     // type case the values true, false, TRUE, FALSE
     keys(opts).forEach(key => {
-      if (typeof opts[key] === "string" && opts[key].match(/true|false/i)) {
-        opts[key] = opts[key].toLowerCase() === "true"
+      if (typeof opts[key] === 'string' && opts[key].match(/true|false/i)) {
+        opts[key] = opts[key].toLowerCase() === 'true'
       }
     })
 
@@ -800,13 +815,13 @@ export function attach(host, helperClass, options = {}) {
       host.lazy(opts.createGetter || opts.shortcut, () => helperInstance, true)
     }
 
-    helperInstance.hide("destroyHelper", () => {
+    helperInstance.hide('destroyHelper', () => {
       try {
         helperInstance.removeAllListeners()
         host.cache.delete(cacheKey)
       } catch (e) {}
 
-      helperInstance.fireHook("willBeDestroyed", helperInstance, host, opts)
+      helperInstance.fireHook('willBeDestroyed', helperInstance, host, opts)
       return true
     })
 
@@ -823,7 +838,7 @@ export function attach(host, helperClass, options = {}) {
       opts.observables ||
       helperClass.observables
     ) {
-      host.fireHook("didCreateObservableHelper", helperInstance, helperClass)
+      host.fireHook('didCreateObservableHelper', helperInstance, helperClass)
     }
 
     return helperInstance
@@ -831,7 +846,7 @@ export function attach(host, helperClass, options = {}) {
 
   hideProperty(
     host[registryProp],
-    "createLookup",
+    'createLookup',
     (defaultOptions = {}, cacheHelper = helperClass.isCacheable) => (id, options = {}, ...args) =>
       host[registryProp].createHelperByName(
         id,
@@ -844,8 +859,8 @@ export function attach(host, helperClass, options = {}) {
     const baseFn = (...args) => host[registryProp].createHelperByName(...args)
     const { camelCase, lowerFirst, kebabCase } = lodash
 
-    host.get([registryProp, "available"]).forEach(helperId => {
-      const parts = helperId.split("/").map(p => lowerFirst(camelCase(kebabCase(p))))
+    host.get([registryProp, 'available']).forEach(helperId => {
+      const parts = helperId.split('/').map(p => lowerFirst(camelCase(kebabCase(p))))
       lodash.set(baseFn, parts, (...rest) => {
         return baseFn(helperId, ...rest)
       })
@@ -865,5 +880,5 @@ export function attach(host, helperClass, options = {}) {
 const cacheableKeys = (value = {}, key) =>
   isFunction(value) ||
   (value && value.then && isFunction(value.then)) ||
-  key == "provider" ||
-  key === "compiler"
+  key == 'provider' ||
+  key === 'compiler'

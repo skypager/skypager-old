@@ -1,14 +1,14 @@
-import Helper from "./helper.js"
-import defaults from "lodash/defaults"
+import Helper from './helper.js'
+import defaults from 'lodash/defaults'
 
-const isFunction = o => typeof o === "function"
+const isFunction = o => typeof o === 'function'
 
 export class Feature extends Helper {
   static isCacheable = true
 
   static createRegistry(...args) {
-    const reg = Helper.createContextRegistry("features", {
-      context: require.context("../features", false, /\.js$/)
+    const reg = Helper.createContextRegistry('features', {
+      context: require.context('../features', false, /\.js$/),
     })
 
     reg.enabled = {}
@@ -18,16 +18,16 @@ export class Feature extends Helper {
 
   static attach(project, options = {}) {
     const result = Helper.attach(project, Feature, {
-      registryProp: "features",
-      lookupProp: "feature",
+      registryProp: 'features',
+      lookupProp: 'feature',
       cacheHelper: true,
       isCacheable: true,
       registry: Feature.registry,
-      ...options
+      ...options,
     })
 
-    if (project.makeObservable && !project.has("featureStatus")) {
-      project.makeObservable({ featureStatus: ["shallowMap", {}] })
+    if (project.makeObservable && !project.has('featureStatus')) {
+      project.makeObservable({ featureStatus: ['shallowMap', {}] })
     }
 
     return result
@@ -38,12 +38,12 @@ export class Feature extends Helper {
   }
 
   get featureMixinOptions() {
-    const opts = this.tryResult("featureMixinOptions") || this.tryResult("mixinOptions") || {}
+    const opts = this.tryResult('featureMixinOptions') || this.tryResult('mixinOptions') || {}
     return defaults({}, opts, this.defaultMixinOptions)
   }
 
   get hostMixinOptions() {
-    const opts = this.tryResult("hostMixinOptions") || this.tryResult("mixinOptions") || {}
+    const opts = this.tryResult('hostMixinOptions') || this.tryResult('mixinOptions') || {}
     return defaults({}, { scope: this.host }, opts, this.defaultMixinOptions)
   }
 
@@ -54,19 +54,19 @@ export class Feature extends Helper {
       partial: [this.context],
       insertOptions: true,
       right: true,
-      hidden: false
+      hidden: false,
     }
   }
 
   enable(cfg) {
-    if (this.get(["host", "_enabledFeatures", this.name]) === this.cacheKey) {
+    if (this.get(['host', '_enabledFeatures', this.name]) === this.cacheKey) {
       return this
     }
 
-    if (typeof cfg === "object") {
+    if (typeof cfg === 'object') {
       const { options = {} } = this
       const { defaultsDeep: defaults } = this.runtime.lodash
-      this.set("options", defaults({}, cfg, options))
+      this.set('options', defaults({}, cfg, options))
     } else if (isFunction(cfg)) {
       this.configure(cfg.bind(this))
     }
@@ -75,13 +75,13 @@ export class Feature extends Helper {
       this.host.applyInterface(this.hostMixin, this.hostMixinOptions)
     } catch (error) {}
 
-    this.attemptMethodAsync("featureWasEnabled", cfg, this.options)
+    this.attemptMethodAsync('featureWasEnabled', cfg, this.options)
       .then(result => {
-        this.runtime.featureStatus.set(this.name, { status: "enabled" })
+        this.runtime.featureStatus.set(this.name, { status: 'enabled' })
         return this
       })
       .catch(error => {
-        this.runtime.featureStatus.set(this.name, { status: "failed", error })
+        this.runtime.featureStatus.set(this.name, { status: 'failed', error })
         return this
       })
   }
@@ -97,7 +97,7 @@ export class Feature extends Helper {
 
   get projectMixin() {
     return this.chain
-      .get("hostMethods")
+      .get('hostMethods')
       .filter(m => isFunction(this.tryGet(m)))
       .keyBy(m => m)
       .mapValues(m => this.tryGet(m))
@@ -109,7 +109,7 @@ export class Feature extends Helper {
     const hostMethods = this.hostMethods
 
     return this.chain
-      .get("featureMethods")
+      .get('featureMethods')
       .filter(m => hostMethods.indexOf(m) === -1 && isFunction(this.tryGet(m)))
       .keyBy(m => m)
       .mapValues(m => this.tryGet(m))
@@ -118,27 +118,49 @@ export class Feature extends Helper {
   }
 
   get featureMethods() {
-    return this.tryResult("featureMethods", [])
+    return this.tryResult('featureMethods', [])
   }
 
   get runtimeMethods() {
-    return this.tryResult("runtimeMethods", () => this.hostMethods)
+    return this.tryResult('runtimeMethods', () => this.hostMethods)
   }
 
   get hostMethods() {
-    return this.tryResult("projectMethods", this.tryResult("hostMethods", []))
+    return this.tryResult('projectMethods', this.tryResult('hostMethods', []))
   }
 
   get projectMethods() {
-    return this.tryResult("projectMethods", this.tryResult("hostMethods", []))
+    return this.tryResult('projectMethods', this.tryResult('hostMethods', []))
   }
 
   get dependencies() {
-    return this.tryGet("dependencies", {})
+    return this.tryGet('dependencies', {})
   }
 
   get isSupported() {
-    return this.tryResult("isSupported", true)
+    return this.tryResult('isSupported', true)
+  }
+
+  get projectConfigKeys() {
+    const { camelCase, snakeCase } = this.runtime.stringUtils
+    const cased = camelCase(snakeCase(this.name))
+
+    return [
+      `runtime.argv.features.${this.name}`,
+      `runtime.options.features.${this.name}`,
+      `runtime.config.features.${this.name}`,
+      `runtime.argv.features.${cased}`,
+      `runtime.options.features.${cased}`,
+      `runtime.config.features.${cased}`,
+      `runtime.argv.${this.name}`,
+      `runtime.projectConfig.${this.name}`,
+      `runtime.options.${this.name}`,
+      `runtime.config.${this.name}`,
+      `runtime.argv.${cased}`,
+      `runtime.projectConfig.${cased}`,
+      `runtime.options.${cased}`,
+      `runtime.config.${cased}`,
+    ]
   }
 }
 

@@ -466,7 +466,12 @@ export class Runtime {
   static defaultOptions = {}
 
   get defaultOptions() {
-    return defaults(this.get('packageOptions'), result(this.constructor, 'defaultOptions', {}))
+    return defaults(
+      this.get('packageOptions'),
+      result(this.constructor, 'defaultOptions', {}),
+      // Find some way to be able to inject ARGV in projects which consume skypager via webpack
+      global.SKYPAGER_ARGV
+    )
   }
 
   get env() {
