@@ -59,7 +59,13 @@ export class Feature extends Helper {
   }
 
   enable(cfg) {
-    if (this.get(['host', '_enabledFeatures', this.name]) === this.cacheKey) {
+    const { runtime } = this
+
+    if (
+      runtime.isFeatureEnabled(this.name) &&
+      runtime.get(`enabledFeatures.${this.name}.cacheKey`) === this.cacheKey
+    ) {
+      this.runtime.debug(`Attempting to enable ${this.name} after it has already been enabled.`)
       return this
     }
 
@@ -77,11 +83,22 @@ export class Feature extends Helper {
 
     this.attemptMethodAsync('featureWasEnabled', cfg, this.options)
       .then(result => {
-        this.runtime.featureStatus.set(this.name, { status: 'enabled' })
+        this.runtime.featureStatus.set(this.name, {
+          cacheKey: this.cacheKey,
+          status: 'enabled',
+          cfg,
+          options: this.options,
+        })
         return this
       })
       .catch(error => {
-        this.runtime.featureStatus.set(this.name, { status: 'failed', error })
+        this.runtime.featureStatus.set(this.name, {
+          status: 'failed',
+          error,
+          cacheKey: this.cacheKey,
+          cfg,
+          options: this.options,
+        })
         return this
       })
   }

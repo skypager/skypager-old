@@ -899,9 +899,23 @@ export class Runtime {
 
   get enabledFeatures() {
     return this.chain
-      .get('_enabledFeatures')
-      .mapValues((cacheKey, featureId) => this.cache.get(cacheKey) || this.feature(featureId))
+      .invoke('featureStatus.toJSON')
+      .pickBy({ status: 'enabled' })
+      .mapValues(
+        ({ cacheKey } = {}, featureId) => this.cache.get(cacheKey) || this.feature(featureId)
+      )
       .value()
+  }
+
+  get enabledFeatureIds() {
+    return this.chain
+      .get('enabledFeatures')
+      .keys()
+      .value()
+  }
+
+  isFeatureEnabled(name) {
+    return this.lodash.has(this.enabledFeatures, name)
   }
 
   enableFeatures(options = {}) {
@@ -1174,6 +1188,28 @@ export class Runtime {
     const result = await selector.call(this, this.chain, ...args)
 
     return isFunction(result.value) ? result.value() : result
+  }
+
+  async selectThru(selectorId, ...args) {
+    const fn =
+      args.length && typeof args[args.length - 1] === 'function'
+        ? args[args.length - 1]
+        : this.lodash.identity
+
+    const response = await this.selectChain(selectorId, ...args)
+
+    return response.thru(fn).value()
+  }
+
+  async selectChainThru(selectorId, ...args) {
+    const fn =
+      args.length && typeof args[args.length - 1] === 'function'
+        ? args[args.length - 1]
+        : this.lodash.identity
+
+    const response = await this.selectChain(selectorId, ...args)
+
+    return response.thru(fn)
   }
 
   // run a selector, stay in lodash chain mode
