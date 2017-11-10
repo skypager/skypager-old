@@ -439,14 +439,34 @@ export function lazyMemoryFileSystem(options = {}) {
   return new Memory()
 }
 
-export function start(options = {}, cb = function() {}) {
-  this.startAsync(options)
-    .then(() => {
-      cb && cb.call(this, null, this)
-    })
-    .catch(e => {
-      cb.call(this, e, this)
-    })
+export function start(...args) {
+  let cb, options
+
+  if (typeof args[0] === 'function') {
+    cb = args[0]
+  } else if (typeof args[1] === 'function') {
+    cb = args[1]
+  }
+
+  if (typeof args[0] === 'undefined' || typeof args[0] === 'object') {
+    options = args[0] || {}
+  }
+
+  const promise = this.startAsync(options || {})
+
+  if (typeof cb === 'function') {
+    Promise.resolve(promise)
+      .then(() => {
+        cb && typeof cb.call === 'function' && cb.call(this, null, this)
+      })
+      .catch(e => {
+        cb && typeof cb.call === 'function' && cb.call(this, e, this)
+      })
+  } else {
+    return Promise.resolve(promise)
+      .then(() => this)
+      .catch(e => this)
+  }
 }
 
 export async function startAsync(options = {}) {
