@@ -145,7 +145,20 @@ export const hostMixinOptions = {
 }
 
 export function requireContext(rule, options = {}) {
-  const { keyBy = 'name', mapValues = 'path', formatId } = options
+  const {
+    requireFn = __non_webpack_require__,
+    keyBy = 'name',
+    mapValues = 'path',
+    formatId,
+  } = options
+
+  if (!this.fileManager) {
+    throw new Error(`The Require Context feature depends on the file-manager feature.`)
+  }
+
+  if (this.fileManager.status !== READY) {
+    throw new Error(`Please wait until the fileManager is ready to use this feature`)
+  }
 
   return this.chain
     .invoke('fileManager.selectMatches', rule)
@@ -153,7 +166,7 @@ export function requireContext(rule, options = {}) {
     .mapKeys((v, k) => (formatId ? formatId(k, v) : k))
     .mapValues(mapValues)
     .thru(map => {
-      const req = key => __non_webpack_require__(map[key])
+      const req = key => requireFn(map[key])
 
       return Object.assign(req, {
         resolve(key) {
@@ -168,11 +181,24 @@ export function requireContext(rule, options = {}) {
 }
 
 export function file(options = {}) {
+  const { runtime } = this
+
   if (typeof options === 'string') {
     options = { id: options }
   }
+
   const { id } = options
-  return this.files.get(id)
+  const foundById = this.files.get(id)
+
+  if (foundById) {
+    return foundById
+  }
+
+  const foundByPath = this.files.get(runtime.relative(id))
+
+  if (foundByPath) {
+    return foundByPath
+  }
 }
 /**
   @param {Boolean} autoStart
