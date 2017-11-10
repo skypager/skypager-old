@@ -11,7 +11,6 @@ main() {
     /Users/jon/Projects/skypager/bin/run skypager-helpers-repl buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-helpers-server buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-helpers-service buildPackage
-    /Users/jon/Projects/skypager/bin/run skypager-helpers-webpack buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-runtimes-development buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-runtimes-electron buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-runtimes-node buildPackage
@@ -19,8 +18,6 @@ main() {
     /Users/jon/Projects/skypager/bin/run skypager-runtimes-universal buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-runtimes-web buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-features-document-database buildPackage
-    /Users/jon/Projects/skypager/bin/run skypager-features-file-manager buildPackage
-    /Users/jon/Projects/skypager/bin/run skypager-servers-portfolio buildPackage
     bin/export
 
 }
