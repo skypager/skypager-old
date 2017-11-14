@@ -1,6 +1,6 @@
 {
   "name": "skypager-document-types-babel",
-  "version": "37.5.0",
+  "version": "38.0.0",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "skypager-document-types-markdown",
-  "version": "37.5.0",
+  "version": "38.0.0",
   "description": "markdown document type",
   "license": "MIT",
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
@@ -33,7 +33,7 @@
     "remark-validate-links": "^5.0.0",
     "remark-yaml-annotations": "^1.0.2",
     "remark-yaml-config": "^3.0.2",
-    "skypager-document-types-babel": "^37.5.0",
+    "skypager-document-types-babel": "^38.0.0",
     "unist-util-filter": "^0.2.1",
     "unist-util-find-after": "^2.0.0",
     "unist-util-find-all-after": "^1.0.0",

@@ -1,16 +1,16 @@
 {
   "name": "skypager-features-document-database",
-  "version": "37.7.0",
+  "version": "38.0.0",
   "description": "an observable state machine for a projects files",
   "main": "index.js",
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
-    "skypager-document-types-babel": "^37.5.0",
+    "skypager-document-types-babel": "^38.0.0",
     "skypager-document-types-manifest": "^37.5.0",
-    "skypager-document-types-markdown": "^37.5.0",
-    "skypager-features-file-manager": "^37.6.5",
-    "skypager-helpers-document": "^37.7.0",
-    "skypager-helpers-document-type": "^37.7.0"
+    "skypager-document-types-markdown": "^38.0.0",
+    "skypager-features-file-manager": "^38.0.0",
+    "skypager-helpers-document": "^38.0.0",
+    "skypager-helpers-document-type": "^38.0.0"
   }
 }
