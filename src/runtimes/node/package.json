@@ -16,7 +16,7 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "child-process-promise": "^2.2.1",
-    "chokidar": "^1.6.1",
+    "gaze": "^1.1.2",
     "detect-port": "^1.2.1",
     "find-up": "^2.1.0",
     "fs-extra-promise": "^0.4.1",

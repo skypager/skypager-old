@@ -1,14 +1,14 @@
-export const createGetter = ["packageCache"]
+export const createGetter = 'packageCache'
 
 export const featureMethods = [
-  "initializeFolder",
-  "buildSnapshot",
-  "getCachePath",
-  "exportSnapshot",
-  "findAvailableSnapshots",
-  "loadSnapshot",
-  "stats",
-  "snapshot"
+  'initializeFolder',
+  'buildSnapshot',
+  'getCachePath',
+  'exportSnapshot',
+  'findAvailableSnapshots',
+  'loadSnapshot',
+  'stats',
+  'snapshot',
 ]
 
 export function featureWasEnabled(o) {
@@ -19,14 +19,14 @@ export function observables(options = {}, context = {}) {
   const packageCache = this
 
   return {
-    snapshots: ["map", {}],
+    snapshots: ['map', {}],
     updateSnapshot: [
-      "action",
+      'action',
       function(name, data) {
         packageCache.snapshots.set(name, data)
         return packageCache
-      }
-    ]
+      },
+    ],
   }
 }
 
@@ -37,9 +37,9 @@ export async function snapshot(options = {}, ...args) {
   if (write) {
     await this.exportSnapshot({
       name,
-      fileName: [name, this.runtime.gitInfo.abbreviatedSha].join("-"),
+      fileName: [name, this.runtime.gitInfo.abbreviatedSha].join('-'),
       ...options,
-      snapshot
+      snapshot,
     })
   }
 
@@ -54,11 +54,11 @@ export async function findAvailableSnapshots(options = {}, context = {}) {
 
 export function getCachePath(options = {}, context = {}) {
   const { runtime = this.runtime } = context
-  const { name = runtime.currentPackage.name, baseFolder = "node_modules" } = options
+  const { name = runtime.currentPackage.name, baseFolder = 'node_modules' } = options
 
   return process.env.SKYPAGER_PACKAGE_CACHE_ROOT
-    ? runtime.resolve(process.env.SKYPAGER_PACKAGE_CACHE_ROOT, name, "snapshots")
-    : runtime.resolve(baseFolder, ".cache", name, "snapshots")
+    ? runtime.resolve(process.env.SKYPAGER_PACKAGE_CACHE_ROOT, name, 'snapshots')
+    : runtime.resolve(baseFolder, '.cache', name, 'snapshots')
 }
 
 export async function initializeFolder(options = {}, context = {}) {
@@ -68,11 +68,11 @@ export async function initializeFolder(options = {}, context = {}) {
 }
 
 export async function exportSnapshot(options = {}) {
-  if (typeof options === "string") {
+  if (typeof options === 'string') {
     options = { fileName: options }
   }
   const { snapshot } = options
-  const fileName = (options.fileName || this.runtime.currentPackage.name).replace(/\.json$/, "")
+  const fileName = (options.fileName || this.runtime.currentPackage.name).replace(/\.json$/, '')
   const snapshotPath = this.runtime.resolve(this.cachePath, `${fileName}.json`)
   await this.runtime.fsx.writeFileAsync(snapshotPath, JSON.stringify(snapshot, null))
 
@@ -80,23 +80,23 @@ export async function exportSnapshot(options = {}) {
 }
 
 export async function loadSnapshot(options = {}) {
-  if (typeof options === "string") {
+  if (typeof options === 'string') {
     options = { fileName: options }
   }
-  const fileName = (options.fileName || this.runtime.currentPackage.name).replace(/\.json$/, "")
+  const fileName = (options.fileName || this.runtime.currentPackage.name).replace(/\.json$/, '')
   const snapshotPath = this.runtime.resolve(this.cachePath, `${fileName}.json`)
   const snapshot = await this.runtime.fsx.readJsonAsync(snapshotPath)
 
-  this.updateSnapshot(fileName.replace(".json", ""), snapshot)
+  this.updateSnapshot(fileName.replace('.json', ''), snapshot)
 
   return snapshot
 }
 
 export async function stats(options = {}) {
-  if (typeof options === "string") {
+  if (typeof options === 'string') {
     options = { fileName: options }
   }
-  const fileName = (options.fileName || this.runtime.currentPackage.name).replace(/\.json$/, "")
+  const fileName = (options.fileName || this.runtime.currentPackage.name).replace(/\.json$/, '')
   const snapshotPath = this.runtime.resolve(this.cachePath, `${fileName}.json`)
   return this.runtime.fsx.snapshotAsync(snapshotPath)
 }
@@ -114,13 +114,13 @@ export async function buildSnapshot(options = {}) {
 
   const snapshot = await Promise.all(promiseMap)
 
-  runtime.fireHook("snapshotWasCreated", {
+  runtime.fireHook('snapshotWasCreated', {
     snapshot,
     options,
-    selectors
+    selectors,
   })
 
-  const keys = snapshot.map(s => s[0].replace(/\//g, "."))
+  const keys = snapshot.map(s => s[0].replace(/\//g, '.'))
   const values = snapshot.map(s => s[1])
 
   return deep ? runtime.lodash.zipObjectDeep(keys, values) : runtime.lodash.zipObject(keys, values)

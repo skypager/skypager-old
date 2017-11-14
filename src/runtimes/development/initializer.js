@@ -23,6 +23,8 @@ export function initializer(next) {
       runtime.set('mainScriptError', err)
       runtime.error(`Error running mainScript`, { error: err.message })
 
+      next && next.call && next(err)
+
       if (runtime.argv.safeMode) {
         console.error(`Error while running skypager main script. ${err.message}`)
         process.exit(1)

@@ -1,0 +1,27 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "node": "current",
+          "browsers": [
+            "Chrome >= 52",
+            "FireFox >= 44",
+            "Safari >= 7",
+            "Explorer 11",
+            "last 4 Edge versions"
+          ]
+        },
+        "useBuiltIns": true
+      }
+    ],
+    "stage-0",
+    "react"
+  ],
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-class-properties",
+    "syntax-class-properties"
+  ]
+}

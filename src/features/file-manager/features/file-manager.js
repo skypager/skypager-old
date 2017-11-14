@@ -96,6 +96,7 @@ export const featureMethods = [
 
   // Access to all of the observable file paths
   'getFileIds',
+  'getFilePaths',
 
   // Access to all of the observable directory paths
   'getDirectoryIds',
@@ -389,6 +390,12 @@ export function getStatusMap() {
   return this.result('runtime.git.statusMap', () => {
     throw new Error(`the file manager depends on the fit feature`)
   })
+}
+
+export function getFilePaths() {
+  return this.result('runtime.git.files.values', () => {
+    throw new Error(`the file manager depends on the fit feature`)
+  }).map(file => file.path)
 }
 
 export function getFileIds() {

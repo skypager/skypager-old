@@ -1,5 +1,6 @@
 import createSkywalker from 'skywalker'
 import micromatch from 'micromatch'
+import pathMatcher from 'runtime/utils/path-matcher'
 
 export const createGetter = 'skywalker'
 
@@ -32,6 +33,8 @@ export const featureMethods = [
   'readIgnoreFiles',
   'projectWalker',
   'lazyIgnorePatterns',
+  'matchPaths',
+  'selectMatches',
 ]
 
 export const observables = () => ({
@@ -182,8 +185,38 @@ export async function walk(...args) {
   return this
 }
 
-export function watcher(...args) {
-  return cb => walker.call(this, ...args).watch('gaze', cb)
+export function watcher(options = {}) {
+  try {
+    __non_webpack_require__.resolve('gaze')
+  } catch (error) {
+    throw new Error(`Missing the gaze module, so file watching is unavailable.`)
+  }
+
+  const skywalker = this.projectWalker(options)
+    .on('change', function(...args) {
+      console.log('change', args)
+    })
+    .on('remove', function() {
+      console.log('remove', args)
+    })
+    .on('created', function() {
+      console.log('created', args)
+    })
+    .on('rename', function() {
+      console.log('rename', args)
+    })
+
+  return cb => {
+    console.log('immediate callback')
+
+    skywalker.run().then(() => {
+      console.log('ran, running watcher')
+      skywalker.watch('gaze', (...args) => {
+        console.log('walker callback', args)
+      })
+      return this
+    })
+  }
 }
 
 export function lazyIgnorePatterns() {
@@ -226,3 +259,20 @@ export function readIgnoreFiles(options = {}) {
 }
 
 export const walker = projectWalker
+
+export function matchPaths(options = {}) {
+  const { castArray } = this.lodash
+  let { rules = options.rules || options || [] } = options
+
+  rules = castArray(rules).map(rule => (typeof rule === 'string' ? micromatch.makeRe(rule) : rule))
+
+  return options.fullPath
+    ? this.fileObjects.filter(file => pathMatcher(rules, file.path)).map(result => result.relative)
+    : this.fileIds.filter(fileId => pathMatcher(rules, fileId))
+}
+
+export function selectMatches(options = {}) {
+  const { convertToJS } = this.runtime
+  const paths = this.matchPaths(options)
+  return paths.map(key => convertToJS(this.files.get(key)))
+}

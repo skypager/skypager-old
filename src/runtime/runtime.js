@@ -61,12 +61,7 @@ let frameworkRuntime
 let singleton
 
 export class Runtime {
-  get displayName() {
-    return this.tryGet(
-      'displayName',
-      lodash.get(process || {}, 'env.SKYPAGER_DISPLAY_NAME', 'Skypager')
-    )
-  }
+  displayName = 'Skypager'
 
   static spawn(options = {}, context = {}, fn) {
     return new Runtime(options, context, fn)
@@ -176,6 +171,8 @@ export class Runtime {
       context = {}
     }
 
+    context = { ...global, ...context }
+
     enhanceObject(this, lodash)
     attachEmitter(this)
 
@@ -195,7 +192,8 @@ export class Runtime {
 
     this.hide('rawOptions', options)
     this.hide('optionsWithDefaults', defaults({}, options, this.defaultOptions))
-    this.hide(
+
+    this.hideGetter(
       'context',
       pick(defaults({}, context, this.defaultContext), ...keys(this.contextTypes))
     )
@@ -454,10 +452,10 @@ export class Runtime {
   static defaultContext = {}
 
   get defaultContext() {
-    return result(this.constructor, 'defaultContext', {})
+    return { ...global, ...result(this.constructor, 'defaultContext', {}) }
   }
 
-  static optionTypes = {}
+  static optionTypes = typeof global.SkypagerOptionTypes === 'object'
 
   get optionTypes() {
     return this.constructor.optionTypes
@@ -470,7 +468,8 @@ export class Runtime {
       this.get('packageOptions'),
       result(this.constructor, 'defaultOptions', {}),
       // Find some way to be able to inject ARGV in projects which consume skypager via webpack
-      global.SKYPAGER_ARGV
+      global.SKYPAGER_ARGV,
+      global.ARGV
     )
   }
 
@@ -914,6 +913,15 @@ export class Runtime {
       .value()
   }
 
+  get featureRefs() {
+    const { isEmpty } = this.lodash
+    return this.chain
+      .get('enabledFeatures')
+      .mapKeys(feature => feature.provider.createGetter || feature.provider.getter)
+      .omitBy((v, k) => isEmpty(k))
+      .value()
+  }
+
   isFeatureEnabled(name) {
     return this.lodash.has(this.enabledFeatures, name)
   }
@@ -1099,6 +1107,7 @@ export class Runtime {
 
   createSandbox(ctx = {}) {
     return {
+      // all aliases i've used over time for the same thing. should deprecrate them gracefully
       project: this,
       runtime: this,
       skypager: this,
@@ -1109,6 +1118,7 @@ export class Runtime {
       mobx,
       lodash,
       currentState: this.currentState,
+      ...this.featureRefs,
       ...ctx,
     }
   }
