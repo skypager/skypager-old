@@ -616,10 +616,6 @@ babel-helper-hoist-variables@^6.24.1:
     babel-runtime "^6.22.0"
     babel-types "^6.24.1"
 
-babel-helper-is-react-class@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/babel-helper-is-react-class/-/babel-helper-is-react-class-1.0.0.tgz#ef6f3678b05c76dbdeedadead7af98c2724d8431"
-
 babel-helper-optimise-call-expression@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-helper-optimise-call-expression/-/babel-helper-optimise-call-expression-6.24.1.tgz#f7a13427ba9f73f8f4fa993c54a97882d1244257"
@@ -1041,28 +1037,16 @@ babel-plugin-transform-function-bind@^6.22.0, babel-plugin-transform-function-bi
     babel-plugin-syntax-function-bind "^6.8.0"
     babel-runtime "^6.22.0"
 
-babel-plugin-transform-object-rest-spread@^6.16.0, babel-plugin-transform-object-rest-spread@^6.22.0:
+babel-plugin-transform-object-rest-spread@^6.16.0, babel-plugin-transform-object-rest-spread@^6.22.0, babel-plugin-transform-object-rest-spread@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-object-rest-spread/-/babel-plugin-transform-object-rest-spread-6.26.0.tgz#0f36692d50fef6b7e2d4b3ac1478137a963b7b06"
   dependencies:
     babel-plugin-syntax-object-rest-spread "^6.8.0"
     babel-runtime "^6.26.0"
 
-babel-plugin-transform-react-constant-elements@^6.5.0:
-  version "6.23.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-constant-elements/-/babel-plugin-transform-react-constant-elements-6.23.0.tgz#2f119bf4d2cdd45eb9baaae574053c604f6147dd"
-  dependencies:
-    babel-runtime "^6.22.0"
-
 babel-plugin-transform-react-display-name@^6.23.0, babel-plugin-transform-react-display-name@^6.3.13, babel-plugin-transform-react-display-name@^6.4.0:
   version "6.25.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-display-name/-/babel-plugin-transform-react-display-name-6.25.0.tgz#67e2bf1f1e9c93ab08db96792e05392bf2cc28d1"
-  dependencies:
-    babel-runtime "^6.22.0"
-
-babel-plugin-transform-react-inline-elements@^6.6.5:
-  version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-inline-elements/-/babel-plugin-transform-react-inline-elements-6.22.0.tgz#6687211a32b49a52f22c573a2b5504a25ef17c53"
   dependencies:
     babel-runtime "^6.22.0"
 
@@ -1087,16 +1071,6 @@ babel-plugin-transform-react-jsx@^6.24.1, babel-plugin-transform-react-jsx@^6.3.
     babel-helper-builder-react-jsx "^6.24.1"
     babel-plugin-syntax-jsx "^6.8.0"
     babel-runtime "^6.22.0"
-
-babel-plugin-transform-react-pure-class-to-function@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-pure-class-to-function/-/babel-plugin-transform-react-pure-class-to-function-1.0.1.tgz#32a649c97d653250b419cfd1489331b0290d9ee4"
-  dependencies:
-    babel-helper-is-react-class "^1.0.0"
-
-babel-plugin-transform-react-remove-prop-types@^0.2.5:
-  version "0.2.12"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.2.12.tgz#3406696df0b8b456089f9d726d27e7e123d2f929"
 
 babel-plugin-transform-regenerator@^6.21.0, babel-plugin-transform-regenerator@^6.22.0, babel-plugin-transform-regenerator@^6.9.0:
   version "6.26.0"
@@ -1200,15 +1174,6 @@ babel-preset-flow@^6.23.0:
   resolved "https://registry.yarnpkg.com/babel-preset-flow/-/babel-preset-flow-6.23.0.tgz#e71218887085ae9a24b5be4169affb599816c49d"
   dependencies:
     babel-plugin-transform-flow-strip-types "^6.22.0"
-
-babel-preset-react-optimize@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/babel-preset-react-optimize/-/babel-preset-react-optimize-1.0.1.tgz#c23509fba7cbc76d7de7050e7d26bcd22bc304e8"
-  dependencies:
-    babel-plugin-transform-react-constant-elements "^6.5.0"
-    babel-plugin-transform-react-inline-elements "^6.6.5"
-    babel-plugin-transform-react-pure-class-to-function "^1.0.1"
-    babel-plugin-transform-react-remove-prop-types "^0.2.5"
 
 babel-preset-react@^6.24.1:
   version "6.24.1"
@@ -1933,7 +1898,7 @@ child-process-promise@^2.0.3, child-process-promise@^2.2.0, child-process-promis
     node-version "^1.0.0"
     promise-polyfill "^6.0.1"
 
-chokidar@^1.6.0, chokidar@^1.6.1, chokidar@^1.7.0:
+chokidar@^1.6.0, chokidar@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-1.7.0.tgz#798e689778151c8076b4b360e5edd28cda2bb468"
   dependencies:
@@ -8835,40 +8800,44 @@ skypager-cli@^25.1.0:
     lodash "^4.17.4"
     skypager-repl "^25.0.1"
 
-skypager-core@^37.7.0:
-  version "37.7.0"
-  resolved "https://registry.yarnpkg.com/skypager-core/-/skypager-core-37.7.0.tgz#bb0421f1f702258500cbc012377c64fbcdfa626f"
+skypager-core@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-core/-/skypager-core-38.0.0.tgz#1bade0a6838d81cde8b049e04af17292f97e6114"
   dependencies:
-    skypager-helpers-client "^37.7.0"
-    skypager-helpers-command "^37.7.0"
-    skypager-helpers-document "^37.7.0"
-    skypager-helpers-document-type "^37.7.0"
-    skypager-helpers-page "^37.7.0"
+    skypager-helpers-client "^38.0.0"
+    skypager-helpers-command "^38.0.0"
+    skypager-helpers-document "^38.0.0"
+    skypager-helpers-document-type "^38.0.0"
+    skypager-helpers-page "^38.0.0"
     skypager-helpers-project "^37.5.0"
     skypager-helpers-project-type "^37.5.0"
-    skypager-helpers-repl "^37.7.0"
-    skypager-helpers-server "^37.7.0"
-    skypager-helpers-service "^37.7.0"
-    skypager-runtime "^37.7.0"
+    skypager-helpers-repl "^38.0.0"
+    skypager-helpers-server "^38.0.0"
+    skypager-helpers-service "^38.0.0"
+    skypager-runtime "^38.0.0"
 
-skypager-document-types-babel@^37.5.0:
-  version "37.5.0"
-  resolved "https://registry.yarnpkg.com/skypager-document-types-babel/-/skypager-document-types-babel-37.5.0.tgz#e008434ff6cb777360153858fa8ecae41b07dc25"
+skypager-document-types-babel@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-document-types-babel/-/skypager-document-types-babel-38.0.0.tgz#32d9321c53e0ab324f02a83bc435f84c2f009822"
   dependencies:
     babel-core "^6.24.1"
+    babel-plugin-transform-class-properties "^6.24.1"
     babel-plugin-transform-decorators-legacy "^1.3.4"
+    babel-plugin-transform-object-rest-spread "^6.26.0"
+    babel-plugin-transform-runtime "^6.23.0"
     babel-preset-env "^1.6.0"
     babel-preset-react "^6.24.1"
-    babel-preset-react-optimize "^1.0.1"
     babel-preset-stage-0 "^6.24.1"
+    babel-traverse "^6.26.0"
+    babel-types "^6.26.0"
 
 skypager-document-types-manifest@^37.5.0:
   version "37.5.0"
   resolved "https://registry.yarnpkg.com/skypager-document-types-manifest/-/skypager-document-types-manifest-37.5.0.tgz#2d4964a450ae866ca936549be6297d5794e01721"
 
-skypager-document-types-markdown@^37.5.0:
-  version "37.5.0"
-  resolved "https://registry.yarnpkg.com/skypager-document-types-markdown/-/skypager-document-types-markdown-37.5.0.tgz#90bc3c6f772fcef7a392514068e34dd9a9e80994"
+skypager-document-types-markdown@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-document-types-markdown/-/skypager-document-types-markdown-38.0.0.tgz#a161e02b0dbcb086401f45f06631ed01880241ba"
   dependencies:
     docblock-parser "1.0.0"
     hast-util-parse-selector "^2.0.0"
@@ -8897,7 +8866,7 @@ skypager-document-types-markdown@^37.5.0:
     remark-validate-links "^5.0.0"
     remark-yaml-annotations "^1.0.2"
     remark-yaml-config "^3.0.2"
-    skypager-document-types-babel "^37.5.0"
+    skypager-document-types-babel "^38.0.0"
     unist-util-filter "^0.2.1"
     unist-util-find-after "^2.0.0"
     unist-util-find-all-after "^1.0.0"
@@ -8918,23 +8887,23 @@ skypager-dotenv@^14.0.0:
   dependencies:
     dotenv latest
 
-skypager-features-document-database@^37.7.0:
-  version "37.7.0"
-  resolved "https://registry.yarnpkg.com/skypager-features-document-database/-/skypager-features-document-database-37.7.0.tgz#8bb75aa2f66746c1678ed65edd82bd016e5359a7"
+skypager-features-document-database@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-features-document-database/-/skypager-features-document-database-38.0.0.tgz#3f06bc38c929fead0146597a4f5668f0d9925e1c"
   dependencies:
-    skypager-document-types-babel "^37.5.0"
+    skypager-document-types-babel "^38.0.0"
     skypager-document-types-manifest "^37.5.0"
-    skypager-document-types-markdown "^37.5.0"
-    skypager-features-file-manager "^37.6.5"
-    skypager-helpers-document "^37.7.0"
-    skypager-helpers-document-type "^37.7.0"
+    skypager-document-types-markdown "^38.0.0"
+    skypager-features-file-manager "^38.0.0"
+    skypager-helpers-document "^38.0.0"
+    skypager-helpers-document-type "^38.0.0"
 
-skypager-features-file-manager@^37.6.5:
-  version "37.6.5"
-  resolved "https://registry.yarnpkg.com/skypager-features-file-manager/-/skypager-features-file-manager-37.6.5.tgz#5259502c8eb97ec064493fbf2a2ffa0db70c35ae"
+skypager-features-file-manager@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-features-file-manager/-/skypager-features-file-manager-38.0.0.tgz#f093b2e1d8e3f18967ddb853da9aef619d280828"
   dependencies:
-    chokidar "^1.6.1"
     fs-extra-promise "^0.4.1"
+    gaze "^1.1.2"
     md5-file "3.1.1"
     memory-fs "^0.4.1"
     skywalker "^0.3.2"
@@ -9035,37 +9004,37 @@ skypager-helper@^24.1.0:
     skypager-util "^24.1.0"
     uuid "^3.0.1"
 
-skypager-helpers-client@^37.7.0:
-  version "37.7.0"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-client/-/skypager-helpers-client-37.7.0.tgz#6f04d2076ba861aec17cf441e1c6070afb7e126a"
+skypager-helpers-client@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-client/-/skypager-helpers-client-38.0.0.tgz#d6d052863e57206e7125534f8469c26dcc196332"
   dependencies:
     axios "^0.16.1"
-    skypager-runtime "^37.7.0"
+    skypager-runtime "^38.0.0"
 
-skypager-helpers-command@^37.7.0:
-  version "37.7.0"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-command/-/skypager-helpers-command-37.7.0.tgz#fe7f211979daa94622f143638ab3690c5dfd359a"
+skypager-helpers-command@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-command/-/skypager-helpers-command-38.0.0.tgz#ab8928c3f800aaad734290e20dc8b331dce92717"
   dependencies:
     skypager-repl "^37.5.0"
-    skypager-runtime "^37.7.0"
+    skypager-runtime "^38.0.0"
 
-skypager-helpers-document-type@^37.7.0:
-  version "37.7.0"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-document-type/-/skypager-helpers-document-type-37.7.0.tgz#a822cd8ed45affff345d6139a08c0e7f0d1bc868"
+skypager-helpers-document-type@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-document-type/-/skypager-helpers-document-type-38.0.0.tgz#3da4f44a4d5a57488454669e249ffc35376a8f66"
   dependencies:
-    skypager-runtime "^37.7.0"
+    skypager-runtime "^38.0.0"
 
-skypager-helpers-document@^37.7.0:
-  version "37.7.0"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-document/-/skypager-helpers-document-37.7.0.tgz#81c9f7e2d99de9df53e9d76be1c1593683281d1c"
+skypager-helpers-document@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-document/-/skypager-helpers-document-38.0.0.tgz#c90e2e2352ae35552864c50d592bee9cad055dea"
   dependencies:
-    skypager-runtime "^37.7.0"
+    skypager-runtime "^38.0.0"
 
-skypager-helpers-page@^37.7.0:
-  version "37.7.0"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-page/-/skypager-helpers-page-37.7.0.tgz#76be7c1558b805b72217fd5b414d47de71053238"
+skypager-helpers-page@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-page/-/skypager-helpers-page-38.0.0.tgz#400ac95971789d49920f129c1f0c2c92f15d96e2"
   dependencies:
-    skypager-runtime "^37.7.0"
+    skypager-runtime "^38.0.0"
 
 skypager-helpers-project-type@^37.5.0:
   version "37.5.0"
@@ -9077,31 +9046,31 @@ skypager-helpers-project@^37.5.0:
   dependencies:
     skypager-helpers-project-type "^37.5.0"
 
-skypager-helpers-repl@^37.7.0:
-  version "37.7.0"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-repl/-/skypager-helpers-repl-37.7.0.tgz#37042aa6a895b8385d5f7c31628b5c47c4584a31"
+skypager-helpers-repl@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-repl/-/skypager-helpers-repl-38.0.0.tgz#5267b0fd8e6f5930cfc981a09b00b015728e0ba3"
   dependencies:
     bluebird "^3.5.0"
     skypager-repl "^37.5.0"
-    skypager-runtime "^37.7.0"
+    skypager-runtime "^38.0.0"
 
-skypager-helpers-server@^37.7.0:
-  version "37.7.0"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-server/-/skypager-helpers-server-37.7.0.tgz#e7c70714a5bdbe987bda49880b6b4b611abc56d8"
+skypager-helpers-server@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-server/-/skypager-helpers-server-38.0.0.tgz#07abcc7ca268ddc81ff3b5956787aa32f2afc02f"
   dependencies:
     express "^4.15.2"
-    skypager-runtime "^37.7.0"
+    skypager-runtime "^38.0.0"
 
-skypager-helpers-service@^37.7.0:
-  version "37.7.0"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-service/-/skypager-helpers-service-37.7.0.tgz#17d2cdf520e8915ccbd160a408f7781916d5a1dc"
+skypager-helpers-service@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-service/-/skypager-helpers-service-38.0.0.tgz#df1f804a4ad3899fccd538588fbf907dd05499b3"
   dependencies:
     express "^4.15.2"
-    skypager-runtime "^37.7.0"
+    skypager-runtime "^38.0.0"
 
-skypager-helpers-webpack@^37.6.5:
-  version "37.6.5"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-webpack/-/skypager-helpers-webpack-37.6.5.tgz#28e2487d055ca10c2cf97b92b465637308274b4f"
+skypager-helpers-webpack@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-webpack/-/skypager-helpers-webpack-38.0.0.tgz#6e500d7be73b71afe7281b68d4a61941be3446cb"
   dependencies:
     babel-loader "^7.0.0"
     babel-runtime "^6.23.0"
@@ -9123,9 +9092,9 @@ skypager-helpers-webpack@^37.6.5:
     promise-loader "^1.0.0"
     react-hot-loader "^3.0.0-beta.6"
     skeleton-loader "^1.1.3"
-    skypager-document-types-babel "^37.5.0"
-    skypager-document-types-markdown "^37.5.0"
-    skypager-features-file-manager "^37.6.5"
+    skypager-document-types-babel "^38.0.0"
+    skypager-document-types-markdown "^38.0.0"
+    skypager-features-file-manager "^38.0.0"
     style-loader "^0.18.0"
     url-loader "^0.5.8"
     val-loader "^1.0.2"
@@ -9272,9 +9241,9 @@ skypager-runtime@^24.0.0:
     mobx "^3.1.7"
     uuid "^3.0.1"
 
-skypager-runtime@^37.7.0:
-  version "37.7.0"
-  resolved "https://registry.yarnpkg.com/skypager-runtime/-/skypager-runtime-37.7.0.tgz#5a08243f91af6b56ef148d5f9e59425213023794"
+skypager-runtime@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-runtime/-/skypager-runtime-38.0.0.tgz#a6b155a7650e5f32dd0770e5f89da320834f2117"
   dependencies:
     babel-polyfill "^6.26.0"
     babel-runtime "^6.23.0"
@@ -9283,9 +9252,9 @@ skypager-runtime@^37.7.0:
     mobx "3.3.1"
     uuid "^3.0.1"
 
-skypager-runtimes-development@^37.7.0:
-  version "37.7.0"
-  resolved "https://registry.yarnpkg.com/skypager-runtimes-development/-/skypager-runtimes-development-37.7.0.tgz#8506437c044e0aec43b810c0aa0a9008a47d459a"
+skypager-runtimes-development@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-runtimes-development/-/skypager-runtimes-development-38.0.0.tgz#2665dfb3a84d495746b98d4934196951d59455d8"
   dependencies:
     body-parser "^1.17.2"
     cors "^2.8.3"
@@ -9293,46 +9262,47 @@ skypager-runtimes-development@^37.7.0:
     express "^4.15.3"
     express-history-api-fallback "^2.2.1"
     opn "^5.1.0"
-    skypager-document-types-babel "^37.5.0"
+    skypager-document-types-babel "^38.0.0"
     skypager-document-types-manifest "^37.5.0"
-    skypager-document-types-markdown "^37.5.0"
-    skypager-features-document-database "^37.7.0"
-    skypager-helpers-document "^37.7.0"
-    skypager-helpers-document-type "^37.7.0"
+    skypager-document-types-markdown "^38.0.0"
+    skypager-features-document-database "^38.0.0"
+    skypager-helpers-document "^38.0.0"
+    skypager-helpers-document-type "^38.0.0"
     skypager-helpers-project "^37.5.0"
-    skypager-helpers-webpack "^37.6.5"
-    skypager-runtimes-node "^37.7.0"
+    skypager-helpers-webpack "^38.0.0"
+    skypager-runtimes-node "^38.0.0"
 
-skypager-runtimes-node@^37.7.0:
-  version "37.7.0"
-  resolved "https://registry.yarnpkg.com/skypager-runtimes-node/-/skypager-runtimes-node-37.7.0.tgz#5013070d3da87cfce92038c8c17a892b52a60c5c"
+skypager-runtimes-node@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-runtimes-node/-/skypager-runtimes-node-38.0.0.tgz#1e39f6492c95c0471043e44315336ccee2f261fe"
   dependencies:
     bluebird "^3.5.0"
     child-process-promise "^2.2.1"
-    chokidar "^1.6.1"
     detect-port "^1.2.1"
     find-up "^2.1.0"
     fs-extra-promise "^0.4.1"
+    gaze "^1.1.2"
+    micromatch "^3.1.4"
     minimatch "^3.0.3"
     semver "^5.3.0"
-    skypager-features-file-manager "^37.6.5"
-    skypager-helpers-client "^37.7.0"
-    skypager-helpers-command "^37.7.0"
-    skypager-helpers-page "^37.7.0"
-    skypager-helpers-repl "^37.7.0"
-    skypager-helpers-server "^37.7.0"
+    skypager-features-file-manager "^38.0.0"
+    skypager-helpers-client "^38.0.0"
+    skypager-helpers-command "^38.0.0"
+    skypager-helpers-page "^38.0.0"
+    skypager-helpers-repl "^38.0.0"
+    skypager-helpers-server "^38.0.0"
     skypager-repl "^37.5.0"
-    skypager-runtime "^37.7.0"
+    skypager-runtime "^38.0.0"
     winston "^2.3.1"
 
-skypager-runtimes-web@^37.7.0:
-  version "37.7.0"
-  resolved "https://registry.yarnpkg.com/skypager-runtimes-web/-/skypager-runtimes-web-37.7.0.tgz#05b657a18b19063edc979f7fb2089bb85b8b8960"
+skypager-runtimes-web@^38.0.0:
+  version "38.0.0"
+  resolved "https://registry.yarnpkg.com/skypager-runtimes-web/-/skypager-runtimes-web-38.0.0.tgz#2f8e16d037deb2508dceccec44e6917a9f6e2435"
   dependencies:
     history "^4.6.1"
-    skypager-helpers-client "^37.7.0"
-    skypager-helpers-page "^37.7.0"
-    skypager-runtime "^37.7.0"
+    skypager-helpers-client "^38.0.0"
+    skypager-helpers-page "^38.0.0"
+    skypager-runtime "^38.0.0"
 
 skypager-server@^24.1.0:
   version "24.1.0"

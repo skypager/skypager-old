@@ -79,7 +79,9 @@ export const observables = () => ({
 
       directories.set(toFileId(fileInfo), {
         ...parse(fileInfo.path),
-        ...pick(fileInfo, 'path', 'extension', 'mime'),
+        ...pick(fileInfo, 'path', 'mime'),
+        isDirectory: true,
+        type: 'directory',
         relative: toFileId(fileInfo),
         stats: pick(fileInfo, statsKeys),
       })
@@ -98,7 +100,11 @@ export const observables = () => ({
 
       files.set(toFileId(fileInfo), {
         ...parse(fileInfo.path),
-        ...pick(fileInfo, 'path', 'extension', 'mime'),
+        ...pick(fileInfo, 'path', 'mime'),
+        isDirectory: false,
+        type: 'file',
+        isIndex: !!fileInfo.name.match(/index/i),
+        extension: `.${fileInfo.extension}`,
         relative: toFileId(fileInfo),
         stats: pick(fileInfo, statsKeys),
       })

@@ -14,3 +14,8 @@ tmp/
 websites/cdn.skypager.io/public/*
 websites/cdn.skypager.io/static/*
 export/
+build-status.json
+each-changed-package.sh
+build-changed-packages.sh
+publish-changed-packages.sh
+release.sh
