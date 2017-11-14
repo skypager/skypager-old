@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "480279abdc90ff1d4ee298a33b60aa1783ce6dcc",
-    "abbreviatedSha": "480279abdc",
-    "branch": "feature/web-runtime-refactoring",
-    "tag": "v37.7.0",
+    "sha": "e6afaa69016a1342c86e4a6af7b9bc1725cdca8f",
+    "abbreviatedSha": "e6afaa6901",
+    "branch": "feature/native-require-context",
+    "tag": null,
     "root": "/Users/jon/Projects/skypager"
   },
   "packages": {
@@ -464,7 +464,7 @@
       "success": false
     },
     "skypager-document-types-skypage": {
-      "version": "37.5.0",
+      "version": "37.7.0",
       "name": "skypager-document-types-skypage",
       "package": {
         "success": true,
