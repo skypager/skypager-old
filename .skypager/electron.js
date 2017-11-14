@@ -1,3 +1,4 @@
+/*
 // prettier-ignore
 (async function() {
   await skypager.fileManager.startAsync()
@@ -43,3 +44,4 @@
     }
   })
 })()
+*/

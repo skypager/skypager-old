@@ -1,12 +1,59 @@
 #!/usr/bin/env node
 
-const { join } = require("path")
+const { parse, join } = require('path')
+const lodash = require('lodash')
+const { readdirSync, existsSync } = require('fs')
+
+global.lodash = lodash
+
+const parseArgv = (base = {}) => {
+  const { snakeCase, camelCase, defaultsDeep, omitBy, mapKeys } = lodash
+
+  const procArgs = require('minimist')(process.argv.slice(2))
+
+  return omitBy(
+    defaultsDeep(
+      {},
+      base,
+      procArgs,
+      { _: [] },
+      mapKeys(procArgs, (v, k) => camelCase(snakeCase(k)))
+    ),
+    (v, k) => !k || k.length === 0 || k.match(/^\w+\-\w+/)
+  )
+}
 
 let instance
 
 process.env.skypager_silence_console_logs = true
 
-const loadSkypager = () => Promise.resolve(require(join(__dirname, "index.js")).main())
+const loadSkypager = () => Promise.resolve(require(join(__dirname, 'index.js')).main(parseArgv()))
+
+const discoverLocalCommands = runtime => {
+  try {
+    if (runtime.has('commands') && existsSync(runtime.resolve('src', 'commands'))) {
+      const commandFiles = readdirSync(runtime.resolve('src', 'commands')).filter(v =>
+        v.match(/\.js$/i)
+      )
+
+      commandFiles.forEach(commandFile =>
+        runtime.commands.register(
+          commandFile
+            .split('/')
+            .pop()
+            .replace('.js', ''),
+          () => require(runtime.resolve('src', 'commands', commandFile))
+        )
+      )
+
+      return runtime
+    } else {
+      return runtime
+    }
+  } catch (error) {
+    return runtime
+  }
+}
 
 const runMatchingCommand = runtime => {
   instance = instance || runtime
@@ -18,7 +65,7 @@ const handleExit = command => {
   if (command.shouldExit !== false) {
     process.exitCode = command.exitCode || 0
   } else {
-    process.on("SIGINT", () => {
+    process.on('SIGINT', () => {
       process.exit(command.exitCode || 0)
     })
     setInterval(() => {}, 100)
@@ -34,4 +81,8 @@ const handleCommandError = error => {
   process.exitCode = 1
 }
 
-loadSkypager().then(runMatchingCommand).then(handleExit).catch(handleCommandError)
+loadSkypager()
+  .then(discoverLocalCommands)
+  .then(runMatchingCommand)
+  .then(handleExit)
+  .catch(handleCommandError)

@@ -1,4 +1,5 @@
 /*
+/*
 skypager.mainCompiler = skypager
   .webpack({
     target: 'node',
@@ -9,6 +10,7 @@ skypager.mainCompiler.define('__PACKAGE__', {  })
 skypager.mainCompiler.define('__BUILD_STATUS__', {  })
 */
 
+/*
 try {
   const bsThemes = require.resolve("skypager-features-bootstrap-themes")
   skypager.features.register("bootstrap-themes", () => require(bsThemes))
@@ -16,7 +18,9 @@ try {
 } catch (error) {
   skypager.bsError = error
 }
+*/
 
+/*
 skypager.websiteCompiler = (o = {}) => {
   const {
     appName = skypager.get("argv.appName", skypager.gitInfo.sha),
@@ -41,7 +45,6 @@ skypager.websiteCompiler = (o = {}) => {
     })
   )
 
-  /*
   compiler.rule("babel", {
     include: [skypager.join("src")],
     exclude: [skypager.join("node_modules")],
@@ -49,7 +52,6 @@ skypager.websiteCompiler = (o = {}) => {
     options: { presets: ["skypager"] },
     test: [skypager.join("src"), f => f.match(/.js/)]
   })
-  */
 
   return compiler
 }
@@ -62,3 +64,4 @@ if (skypager.isElectron) {
 skypager.use(
 	 require(skypager.resolve('packages','skypager-servers-portfolio'))
 )
+*/

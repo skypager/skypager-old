@@ -1,5 +1,13 @@
 export const hostMethods = ['parseArgv']
 
+/**
+
+TODO
+
+Node runtime initialization is out of control at the moment.  Every feature available
+is autoloaded no matter what command is being run. Move these to the command prepare step
+
+*/
 export function featureWasEnabled(options = {}) {
   const { runtime } = this
   const { get, omit, defaultsDeep } = runtime.lodash
@@ -59,6 +67,10 @@ export function featureWasEnabled(options = {}) {
 
   runtime.feature('main-script').enable()
 
+  /**
+    TODO: It isn't necessary to load these every time.  Investigate
+    a lazy loading technique to use
+  */
   runtime.use(require('skypager-helpers-client'), 'INITIALIZING')
   runtime.use(require('skypager-helpers-server'), 'INITIALIZING')
   runtime.use(require('skypager-helpers-repl'), 'INITIALIZING')
