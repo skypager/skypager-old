@@ -9,16 +9,8 @@
     "build": "../skypager-cli/skypager build library",
     "build:watch": "../skypager-cli/skypager build library --watch"
   },
-  "files": [
-    "lib",
-    "index.js",
-    "src",
-    "README.md"
-  ],
-  "keywords": [
-    "REPL",
-    "ES6"
-  ],
+  "files": ["lib", "index.js", "src", "README.md"],
+  "keywords": ["REPL", "ES6"],
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
@@ -29,6 +21,7 @@
     "find-up": "^2.1.0",
     "fs-extra-promise": "^0.4.1",
     "minimatch": "^3.0.3",
+    "micromatch": "^3.1.4",
     "semver": "^5.3.0",
     "skypager-features-file-manager": "^37.6.5",
     "skypager-helpers-client": "^37.7.0",

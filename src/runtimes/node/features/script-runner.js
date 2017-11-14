@@ -8,13 +8,19 @@ export const featureMethods = [
   'lazyCurrentModule',
 ]
 
+export const hostMethods = ['getCurrentModule']
+
 export const createGetter = 'scriptRunner'
+
+export function getCurrentModule() {
+  return this.scriptRunner.currentModule
+}
 
 export function lazyCurrentModule() {
   const { runtime } = this
   const { existsSync: exists } = runtime.fsx
   const {
-    currentPackagePath = runtime.pathUtils.resolve(process.cwd(), 'package.json'),
+    currentPackagePath = runtime.pathUtils.resolve(runtime.cwd, 'package.json'),
   } = runtime.currentState
 
   if (exists(currentPackagePath)) {

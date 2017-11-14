@@ -1,18 +1,18 @@
-export const createGetter = ["mainScript"]
+export const createGetter = ['mainScript']
 
 export const featureMethods = [
-  "getMainScriptType",
-  "getSkypagerMainPath",
-  "lazyMainScriptExists",
-  "loadMainModule",
-  "runMainScript",
-  "readMainScript",
-  "toModule",
-  "toCodeRunner"
+  'getMainScriptType',
+  'getSkypagerMainPath',
+  'lazyMainScriptExists',
+  'loadMainModule',
+  'runMainScript',
+  'readMainScript',
+  'toModule',
+  'toCodeRunner',
 ]
 
 export function getMainScriptType() {
-  return "script"
+  return 'script'
 }
 
 export function getSkypagerMainPath() {
@@ -31,7 +31,15 @@ export async function readMainScript() {
 
 export async function loadMainModule(options = {}, context = {}) {
   const code = await this.readMainScript()
-  return this.toModule({ code, ...options }, context)
+  return this.toModule(
+    {
+      code,
+      filename: this.skypagerMainPath,
+      dirname: this.runtime.pathUtils.dirname(this.skypagerMainPath),
+      ...options,
+    },
+    context
+  )
 }
 
 export async function runMainScript(options = {}, context = {}) {
@@ -44,13 +52,13 @@ export async function runMainScript(options = {}, context = {}) {
 
   return this.toCodeRunner({ code, ...options }, context)()
     .then(result => {
-      this.runtime.state.set("mainScriptLoaded", true)
-      this.runtime.emit("mainScriptDidLoad")
+      this.runtime.state.set('mainScriptLoaded', true)
+      this.runtime.emit('mainScriptDidLoad')
       return result
     })
     .catch(error => {
-      this.runtime.state.set("mainScriptError", { message: error.message, stack: error.stack })
-      this.runtime.emit("mainScriptDidFail", error)
+      this.runtime.state.set('mainScriptError', { message: error.message, stack: error.stack })
+      this.runtime.emit('mainScriptDidFail', error)
 
       return { error }
     })
@@ -63,19 +71,23 @@ export function toCodeRunner(options = {}, context = {}) {
     runtime: this.runtime,
     skypager: this.runtime,
     ...this.runtime.slice(
-      "pathUtils",
-      "lodash",
-      "stringUtils",
-      "urlUtils",
-      "proc",
-      "mobx",
-      "packageFinder",
-      "fileManager",
-      "Helper",
-      "Runtime"
+      'pathUtils',
+      'lodash',
+      'stringUtils',
+      'urlUtils',
+      'proc',
+      'mobx',
+      'packageFinder',
+      'fileManager',
+      'Helper',
+      'Runtime'
     ),
     console,
-    ...context
+    process,
+    get testGlobal() {
+      return this
+    },
+    ...context,
   })
 }
 

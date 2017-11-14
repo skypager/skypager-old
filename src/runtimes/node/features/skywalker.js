@@ -1,7 +1,28 @@
 import createSkywalker from 'skywalker'
-import testPath from 'runtime/utils/path-matcher'
+import micromatch from 'micromatch'
 
 export const createGetter = 'skywalker'
+
+const statsKeys = [
+  'dev',
+  'mode',
+  'nlink',
+  'uid',
+  'gid',
+  'rdev',
+  'blksize',
+  'ino',
+  'size',
+  'blocks',
+  'atimeMs',
+  'mtimeMs',
+  'ctimeMs',
+  'birthtimeMs',
+  'atime',
+  'mtime',
+  'ctime',
+  'birthtime',
+]
 
 export const featureMethods = [
   'walk',
@@ -10,25 +31,101 @@ export const featureMethods = [
   'create',
   'readIgnoreFiles',
   'projectWalker',
+  'lazyIgnorePatterns',
 ]
+
+export const observables = () => ({
+  files: ['shallowMap', []],
+  directories: ['shallowMap', []],
+
+  directoryObjects: [
+    'computed',
+    function() {
+      return this.directories.values()
+    },
+  ],
+
+  directoryIds: [
+    'computed',
+    function() {
+      return this.directories.keys()
+    },
+  ],
+
+  fileObjects: [
+    'computed',
+    function() {
+      return this.files.values()
+    },
+  ],
+
+  fileIds: [
+    'computed',
+    function() {
+      return this.files.keys()
+    },
+  ],
+
+  addDirectory: [
+    'action',
+    function(fileInfo, baseFolder) {
+      const { directories, runtime } = this
+      const { pick } = runtime.lodash
+      const { parse, relative } = runtime.pathUtils
+      const toFileId = ({ path }) => relative(runtime.resolve(baseFolder || runtime.cwd), path)
+
+      directories.set(toFileId(fileInfo), {
+        ...parse(fileInfo.path),
+        ...pick(fileInfo, 'path', 'extension', 'mime'),
+        relative: toFileId(fileInfo),
+        stats: pick(fileInfo, statsKeys),
+      })
+
+      return this
+    },
+  ],
+
+  addFile: [
+    'action',
+    function(fileInfo, baseFolder) {
+      const { files, runtime } = this
+      const { pick } = runtime.lodash
+      const { parse, relative } = runtime.pathUtils
+      const toFileId = ({ path }) => relative(runtime.resolve(baseFolder || runtime.cwd), path)
+
+      files.set(toFileId(fileInfo), {
+        ...parse(fileInfo.path),
+        ...pick(fileInfo, 'path', 'extension', 'mime'),
+        relative: toFileId(fileInfo),
+        stats: pick(fileInfo, statsKeys),
+      })
+
+      return this
+    },
+  ],
+})
 
 export function create(options = {}) {
   if (typeof options === 'string') {
     options = { baseFolder: options }
   }
 
-  return this.projectWalker({ ...options, bare: true })
+  return this.projectWalker({ bare: true, ...options })
 }
 
 export function projectWalker(options = {}) {
   const { runtime } = this
+  const { addDirectory, addFile } = this
 
   if (typeof options === 'string') {
     options = { baseFolder: options }
   }
 
   const { baseFolder = runtime.cwd } = options
-  const { ignorePatterns = this.readIgnoreFiles(baseFolder) } = options
+  const {
+    ignorePatterns = this.readIgnoreFiles(options).map(p => micromatch.makeRe(p)),
+    exclude = [],
+  } = options
 
   let skywalker = createSkywalker(baseFolder)
 
@@ -36,26 +133,44 @@ export function projectWalker(options = {}) {
     return skywalker
   }
 
+  skywalker = skywalker
+    .ignoreDotFiles(true)
+    .directoryFilter(/node_modules|log|dist|build|tmp/, (next, done) => {
+      done(null, false)
+      return false
+    })
+    .fileFilter(/.log$/, (next, done) => {
+      done(null, false)
+      return false
+    })
+
   ignorePatterns.filter(v => typeof v === 'string' && v.length).forEach(pattern => {
-    skywalker = skywalker.ignore(pattern)
+    skywalker = skywalker
+      .directoryFilter(pattern, (n, d) => d(null, false))
+      .fileFilter(pattern, (n, d) => d(null, false))
   })
 
-  skywalker.run = (err, tree) => {
-    const files = []
-    const directories = []
+  const visit = node => {
+    const { _: info } = node
 
+    if (info.isDirectory) {
+      addDirectory(info)
+      return info.children.map(child => visit(child))
+    } else {
+      addFile(info)
+      return node
+    }
+  }
+
+  skywalker.run = (err, tree) => {
     return new Promise((resolve, reject) =>
-      skywalker
-        .on('file', file => {
-          files.push(file._)
-        })
-        .on('directory', file => {
-          directories.push(file._)
-        })
-        .start((err, tree) => {
-          err ? reject(err) : resolve({ tree, files, directories })
-        })
-    )
+      skywalker.start((err, tree) => {
+        err ? reject(err) : resolve(tree)
+      })
+    ).then(tree => {
+      visit(tree)
+      return { tree, files: this.files.keys(), directories: this.directories.keys() }
+    })
   }
 
   return skywalker
@@ -63,122 +178,51 @@ export function projectWalker(options = {}) {
 
 export async function walk(...args) {
   const i = walker.call(this, ...args)
-  const fileMap = await new Promise((resolve, reject) =>
-    i.start((err, file) => (err ? reject(err) : resolve(file)))
-  )
-
-  return fileMap
+  await i.run()
+  return this
 }
 
 export function watcher(...args) {
   return cb => walker.call(this, ...args).watch('gaze', cb)
 }
 
-export function readIgnoreFiles(baseFolder) {
+export function lazyIgnorePatterns() {
+  return this.readIgnoreFiles().map(pattern => micromatch.makeRe(pattern))
+}
+
+export function readIgnoreFiles(options = {}) {
+  if (typeof options === 'string') {
+    options = { baseFolder: options }
+  }
+
   const { runtime } = this
-  const { uniq } = runtime.lodash
+  const { compact, uniq } = runtime.lodash
+  const {
+    gitignore = true,
+    skypagerignore = true,
+    npmignore = false,
+    dockerignore = false,
+    baseFolder = runtime.cwd,
+  } = { ...this.options, options }
 
-  baseFolder = typeof baseFolder === 'string' ? baseFolder : runtime.cwd
+  const files = compact([
+    gitignore && runtime.fsx.findUpSync('.gitignore', { cwd: baseFolder }),
+    npmignore && runtime.fsx.findUpSync('.npmignore', { cwd: baseFolder }),
+    skypagerignore && runtime.fsx.findUpSync('.skypagerignore', { cwd: baseFolder }),
+    dockerignore && runtime.fsx.findUpSync('.dockerignore', { cwd: baseFolder }),
+  ])
 
-  const checkFiles = [
-    runtime.resolve(baseFolder, '.gitignore'),
-    runtime.resolve(baseFolder, '.skypagerignore'),
-  ]
-  const files = runtime.fsx.existingSync(...checkFiles)
-  const contents = files.map(file => runtime.fsx.readFileSync(file))
+  const contents = files.map(file => runtime.fsx.readFileSync(file).toString())
 
-  const patterns = uniq(
-    contents
-      .map(buffer => buffer.toString())
+  const combinedPatterns = uniq([
+    ...contents
       .reduce((memo, chunk) => (memo = memo.concat(chunk)), '')
       .split('\n')
       .map(t => t.trim())
-      .filter(f => f && f.length > 1 && !f.startsWith('#'))
-  )
+      .filter(f => f && f.length > 1 && !f.startsWith('#')),
+  ])
 
-  return patterns.map(pattern => (pattern.endsWith('/') ? `${pattern}**` : pattern))
+  return combinedPatterns.map(pattern => (pattern.endsWith('/') ? `${pattern}**` : pattern))
 }
 
-export function walker(...args) {
-  const feature = this
-  const { runtime } = this
-
-  let baseFolder, options, configure
-
-  if (typeof args[0] === 'string') {
-    baseFolder = args[0]
-    options = args[1]
-    configure = args[2]
-  } else if (typeof args[0] === 'object') {
-    options = args[0]
-    baseFolder = options.baseFolder || options.cwd || runtime.cwd
-    configure = options.configure || args[1]
-  }
-
-  if (typeof options === 'function') {
-    configure = options
-    options = {}
-  }
-
-  baseFolder = baseFolder || runtime.cwd
-
-  options = {
-    ignoreNodeModules: true,
-    ignoreOutput: true,
-    ignoreLogs: true,
-    ignoreTemp: true,
-    exclude: [],
-    include: [],
-    ...options,
-  }
-
-  const {
-    ignoreNodeModules,
-    ignoreOutput,
-    ignoreTemp,
-    ignoreLogs,
-    exclude = [],
-    include = [],
-  } = options
-
-  let walker = createSkywalker(baseFolder)
-    .emitErrors(options.emitErrors === true)
-    .ignoreDotFiles(true)
-    .directoryFilter(/\/\w+\//, function(next, done) {
-      const { path, filename, dirname } = this._
-
-      if (ignoreNodeModules && path.match(/node_modules/)) {
-        done(null, false)
-      } else if (ignoreLogs && filename.match(/log/i)) {
-        done(null, false)
-      } else if (ignoreOutput && path.match(/\/(lib|dist|public|packages|legacy|hold|public)/)) {
-        done(null, false)
-      } else if (ignoreTemp && filename.match(/^\.?(tmp|temp)/i)) {
-        done(null, false)
-      } else {
-        next()
-      }
-    })
-
-  if (ignoreNodeModules) {
-    walker.ignoreDirectories(/node_modules/)
-  }
-
-  if (ignoreOutput) {
-    walker.ignoreDirectories(/\/?(lib|dist|public|packages|pkg|build|public)\/?/)
-  }
-
-  if (ignoreLogs) {
-    walker.ignoreDirectories(/logs?/)
-  }
-
-  if (ignoreTemp) {
-    walker.ignoreDirectories(/(temp|tmp|.tmp)?/)
-  }
-
-  if (typeof configure === 'function') {
-    walker = configure.call(this, walker)
-  }
-
-  return walker
-}
+export const walker = projectWalker

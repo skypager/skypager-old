@@ -1,48 +1,74 @@
 import {
   readJsonAsync as readJson,
   readdirAsync as readdir,
-  existsAsync as exists
-} from "fs-extra-promise"
-import { resolve, basename, join } from "path"
-import pathMatcher from "runtime/utils/path-matcher"
-import semver from "semver"
+  existsAsync as exists,
+} from 'fs-extra-promise'
+import { resolve, basename, join } from 'path'
+import pathMatcher from 'runtime/utils/path-matcher'
+import semver from 'semver'
 
 const { all } = Promise
 
 export const featureMethods = [
-  "findByName",
-  "findPackageFoldersIn",
-  "getSemver",
-  "testPath",
-  "find",
-  "findPackageLocations",
-  "findNearest",
-  "attemptResolve",
-  "getCachedModuleIds"
+  'findByName',
+  'findPackageFoldersIn',
+  'getSemver',
+  'testPath',
+  'find',
+  'findPackageLocations',
+  'findNearest',
+  'attemptResolve',
+  'getCachedModuleIds',
+  'getCurrentModule',
+  'getCurrentModulePaths',
 ]
 
-export const hostMethods = ["getPackageFinder", "findPackages", "findPackage"]
+export function featureWasEnabled() {
+  this.runtime.feature('script-runner').enable()
+}
+
+export function getCurrentModule() {
+  return this.get('runtime.currentModule')
+}
+
+export function getCurrentModulePaths() {
+  return this.result(
+    'runtime.currentModule.paths',
+    () => this.runtime.vm.runInThisContext(`process.mainModule.paths`) || []
+  )
+}
+
+export const hostMethods = ['getPackageFinder', 'findPackages', 'findPackage']
 
 export function getCachedModuleIds() {
   return Object.keys(__non_webpack_require__.cache || {})
 }
 
+/**
+  Attempt to resolve a module to a requireable path. Returns false instead
+  of throwing an error when the resolution fails.
+
+  @param {String} name the name of the module to resolve to a location
+*/
 export function attemptResolve(options = {}) {
-  if (typeof options === "string") {
+  if (typeof options === 'string') {
     options = { name: options }
   }
 
-  const { name } = options
+  const { debug = false, name } = options
 
   try {
     return __non_webpack_require__.resolve(name)
   } catch (error) {
+    if (debug) {
+      console.error(`Error while resolving: ${name}`)
+    }
     return false
   }
 }
 
 export function getPackageFinder() {
-  return this.feature("package-finder")
+  return this.feature('package-finder')
 }
 
 export async function findPackages(...args) {
@@ -54,7 +80,7 @@ export async function findPackage(...args) {
 }
 
 export async function findNearest(options = {}) {
-  return this.runtime.fsx.findUpAsync("package.json", options)
+  return this.runtime.fsx.findUpAsync('package.json', options)
 }
 
 export async function find(options = {}, context = {}) {
@@ -68,7 +94,7 @@ export async function find(options = {}, context = {}) {
 
   let rules = options.rules || []
 
-  const { rule, moduleFolderName = "node_modules", parse = false, filter } = options
+  const { rule, moduleFolderName = 'node_modules', parse = false, filter } = options
 
   if (rule) {
     rules.push(rule)
@@ -77,13 +103,13 @@ export async function find(options = {}, context = {}) {
   rules = rules.map(
     rule =>
       isString(rule) && rule.match(/\*|\:|\+/)
-        ? val => require("path-to-regexp")(rule).test(val)
+        ? val => require('path-to-regexp')(rule).test(val)
         : rule
   )
 
   const packageStores = await this.findPackageLocations({
     ...options,
-    moduleFolderName
+    moduleFolderName,
   })
 
   let packagePaths = await Promise.all(
@@ -92,7 +118,7 @@ export async function find(options = {}, context = {}) {
 
   if (parse === false) {
     return flatten(packagePaths).filter(p => testPath(basename(p), rules))
-  } else if (parse === "matches") {
+  } else if (parse === 'matches') {
     packagePaths = flatten(packagePaths).filter(p => testPath(basename(p), rules))
   } else if (parse === true) {
     packagePaths = flatten(packagePaths)
@@ -100,9 +126,9 @@ export async function find(options = {}, context = {}) {
 
   const packageData = await Promise.all(
     packagePaths.map(p =>
-      readJson(join(p, "package.json")).then(data => ({
+      readJson(join(p, 'package.json')).then(data => ({
         ...data,
-        file: { path: join(p, "package.json"), dirname: p }
+        file: { path: join(p, 'package.json'), dirname: p },
       }))
     )
   )
@@ -113,7 +139,7 @@ export async function find(options = {}, context = {}) {
     version,
     minimum: minimumOpt,
     satisfies: satisfiesOpt,
-    maximum: maximumOpt
+    maximum: maximumOpt,
   } = options
 
   return packageData.filter(p => {
@@ -125,10 +151,10 @@ export async function find(options = {}, context = {}) {
     if (
       depends &&
       !(
-        get(p, ["dependencies", depends.toLowerCase()]) ||
-        get(p, ["devDependencies", depends.toLowerCase()]) ||
-        get(p, ["optionalDependencies", depends.toLowerCase()]) ||
-        get(p, ["peerDependencies", depends.toLowerCase()])
+        get(p, ['dependencies', depends.toLowerCase()]) ||
+        get(p, ['devDependencies', depends.toLowerCase()]) ||
+        get(p, ['optionalDependencies', depends.toLowerCase()]) ||
+        get(p, ['peerDependencies', depends.toLowerCase()])
       )
     ) {
       return false
@@ -142,9 +168,9 @@ export async function find(options = {}, context = {}) {
       return true
     }
 
-    if (typeof filter === "function") {
+    if (typeof filter === 'function') {
       return !!filter.call(runtime, p, options, context)
-    } else if (typeof filter === "string") {
+    } else if (typeof filter === 'string') {
       return !!get(p, filter)
     }
 
@@ -157,18 +183,18 @@ export function testPath(pathToTest, rulesToTestWith) {
 }
 
 export function getSemver() {
-  return require("semver")
+  return require('semver')
 }
 
 export async function findPackageLocations(options = {}) {
   const { runtime } = this
   const { flatten } = runtime.lodash
 
-  let { testPaths = runtime.vm.runInThisContext(`process.mainModule.paths`) || [] } = options
+  let { testPaths = this.currentModulePaths || [] } = options
 
-  const { additionalPaths = [], moduleFolderName = "node_modules" } = options
+  const { additionalPaths = [], moduleFolderName = 'node_modules' } = options
 
-  if (moduleFolderName !== "node_modules") {
+  if (moduleFolderName !== 'node_modules') {
     testPaths = testPaths.map(v => v.replace(/node_modules/, moduleFolderName))
   }
 
@@ -177,17 +203,17 @@ export async function findPackageLocations(options = {}) {
 
 export async function findPackageFoldersIn(basePath) {
   const folderNames = await readdir(basePath)
-  const manifestPathLocations = folderNames.map(n => join(basePath, n, "package.json"))
+  const manifestPathLocations = folderNames.map(n => join(basePath, n, 'package.json'))
 
   const existing = await allExisting(manifestPathLocations)
 
-  return existing.map(p => resolve(p, ".."))
+  return existing.map(p => resolve(p, '..'))
 }
 
 export async function findByName(name, options = {}) {
   const results = await this.find({
     ...options,
-    rule: `${name}$`
+    rule: `${name}$`,
   })
 
   return results[0]
