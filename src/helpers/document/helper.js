@@ -55,12 +55,15 @@ export class Document extends Helper {
   }
 
   formatPath(path) {
-    const formatter = this.tryGet('formatPath', this.lodash.identity)
+    const formatter = this.tryGet(
+      'docType.formatPath',
+      this.tryGet('formatPath', this.lodash.identity)
+    )
     return formatter(path)
   }
 
   get blankAST() {
-    return this.tryGet('blankAST', {})
+    return this.tryGet('docType.blankAST', this.tryGet('blankAst'))
   }
 
   get attributes() {
@@ -105,7 +108,7 @@ export class Document extends Helper {
   }
 
   get collectionMixin() {
-    return {}
+    return this.get('docType.collectionMixin', {})
   }
 
   get instanceMixin() {
@@ -114,12 +117,24 @@ export class Document extends Helper {
 
   get collectionMixinOptions() {
     const opts = this.tryResult('collectionMixinOptions') || this.tryResult('mixinOptions') || {}
-    return this.lodash.defaults({}, opts, this.defaultMixinOptions)
+    return this.lodash.defaults(
+      {},
+      opts,
+      this.get('docType.collectionMixinOptions', {}),
+      this.get('docType.mixinOptions', {}),
+      this.defaultMixinOptions
+    )
   }
 
   get instanceMixinOptions() {
     const opts = this.tryResult('instanceMixinOptions') || this.tryResult('mixinOptions') || {}
-    return this.lodash.defaults({}, opts, this.defaultMixinOptions)
+    return this.lodash.defaults(
+      {},
+      opts,
+      this.get('docType.instanceMixinOptions', {}),
+      this.get('docType.mixinOptions', {}),
+      this.defaultMixinOptions
+    )
   }
 
   get defaultMixinOptions() {

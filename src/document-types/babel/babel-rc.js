@@ -1,50 +1,49 @@
-module.exports = {
-  "env": {
-    "production": {
-      "presets": [
-        "react",
-        "react-optimize",
-        [
-          "env", {
-            "debug": true,
-            "modules": false,
-            "useBuiltIns": true,
-            "targets": {
-              "browsers": "defaults"
-            }
-          }
-        ],
-        "stage-0"
+import pick from 'lodash/pick'
+
+module.exports = function(options = {}) {
+  const {
+    node = '6.11.1',
+    browsers = [
+      'Chrome >= 52',
+      'FireFox >= 44',
+      'Safari >= 7',
+      'Explorer 11',
+      'last 4 Edge versions',
+    ],
+    additionalPlugins = [],
+    plugins = [
+      'transform-decorators-legacy',
+      'transform-class-properties',
+      'syntax-class-properties',
+    ],
+  } = options
+
+  const targets = {}
+
+  if (node !== false) {
+    targets.node = node
+  }
+
+  if (browsers !== false) {
+    targets.browsers = browsers
+  }
+
+  return {
+    presets: [
+      [
+        'env',
+        {
+          targets: {
+            node,
+            browsers,
+          },
+          useBuiltIns: true,
+          ...pick(options, 'modules', 'debug', 'useBuiltIns'),
+        },
       ],
-      "plugins": ["transform-decorators-legacy"]
-    },
-    "development": {
-      "presets": [
-        "react",
-        [
-          "env", {
-            "debug": false,
-            "modules": false,
-            "useBuiltIns": true,
-            "targets": {
-              "browsers": ["chrome >= 56"],
-							"node": "latest"
-            }
-          }
-        ],
-        "stage-0"
-      ],
-      "plugins": [
-        "transform-decorators-legacy"
-      ]
-    },
-    "cli": {
-      "presets": [
-        "react",
-        "env",
-        "stage-0"
-      ],
-      "plugins": ["transform-decorators-legacy"]
-    }
+      'stage-0',
+      'react',
+    ],
+    plugins: [...(plugins === false ? [] : plugins), ...additionalPlugins],
   }
 }
