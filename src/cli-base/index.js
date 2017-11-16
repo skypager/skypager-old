@@ -26,7 +26,7 @@ export const availableRuntimes = () => ({
   react: isModAvailable('runtimes/react') || isModAvailable('skypager-runtimes-react'),
 })
 
-export async function main() {
+export async function main(argv = {}) {
   const available = availableRuntimes()
 
   if (!available.node && !available.base && !available.universal && !available.development) {
