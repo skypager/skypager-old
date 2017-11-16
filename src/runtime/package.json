@@ -7,6 +7,7 @@
     "package": {
       "entryPoints": {
         "index": "index.js",
+        "runtime": "runtime.js",
         "helper": "helpers/helper.js",
         "feature": "helpers/feature.js",
         "config-builder": "config-builder/index.js",

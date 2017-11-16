@@ -42,6 +42,7 @@ const {
   result,
   keys,
   pick,
+  get,
   isFunction,
   omitBy,
   mapValues,
@@ -60,8 +61,100 @@ let runtimesRegistry
 let frameworkRuntime
 let singleton
 
+const defaultOptions = result(global, 'SkypagerDefaultOptions', {})
+const defaultContext = result(global, 'SkypagerDefaultContext', {})
+const contextTypes = result(global, 'SkypagerContextTypes', {})
+const optionTypes = result(global, 'SkypagerOptionTypes', {})
+
+const enableStrictMode = get(
+  global,
+  'process.env.SKYPAGER_STRICT_MODE',
+  get(global, 'SkypagerStrictMode', false)
+)
+
 export class Runtime {
   displayName = 'Skypager'
+
+  /**
+    The Context Types API defines a schema for properties that will be made available via the runtime's context system.
+
+    You can specify your own context types when you are extending the Runtime class.  If you are using Skypager as
+    a global singleton, you won't have the opportunity if you just require('skypager-runtime'), so you can define
+    a global variable SkypagerContextTypes and it will use these instead.
+  */
+  static contextTypes = contextTypes
+
+  /**
+    The Options Types API defines a schema for properties that will be attached to the runtime as an options property.
+
+    You can specify your own options types when you are extending the Runtime class.  If you are using Skypager as
+    a global singleton, you won't have the opportunity if you just require('skypager-runtime'), so you can define
+    a global variable SkypagerOptionTypes and it will use these instead.
+  */
+  static optionTypes = optionTypes
+
+  /**
+    The Default Context Object
+  */
+  static defaultContext = defaultContext
+
+  static defaultOptions = defaultOptions
+
+  static strictMode = enableStrictMode.toString() !== 'false'
+
+  get contextTypes() {
+    return defaults({}, result('constructor.contextTypes'), {
+      lodash: 'func',
+      mobx: 'object',
+      runtime: 'object',
+      skypager: 'object',
+      host: 'object',
+      project: 'object',
+    })
+  }
+
+  get optionTypes() {
+    return result(this.constructor, 'optionTypes', {})
+  }
+
+  get defaultContext() {
+    return result(this.constructor, 'defaultContext', {})
+  }
+
+  get defaultOptions() {
+    return defaults(
+      {},
+      get(this, 'projectConfig'),
+      result(this.constructor, 'defaultOptions'),
+      // Find some way to be able to inject ARGV in projects which consume skypager via webpack
+      global.SKYPAGER_ARGV,
+      global.ARGV
+    )
+  }
+
+  get optionsWithDefaults() {
+    return defaults({}, this.rawOptions, this.defaultOptions)
+  }
+
+  get strictMode() {
+    return !!get(this, 'rawOptions.strictMode', this.constructor.strictMode)
+  }
+
+  get options() {
+    return this.strictMode
+      ? pick(this.optionsWithDefaults, keys(this.optionTypes))
+      : this.optionsWithDefaults
+  }
+
+  get context() {
+    return defaults(
+      {},
+      pick(this.rawContext, keys(this.contextTypes)),
+      this.defaultContext,
+      { runtime: this, lodash: this.lodash },
+      pick(global, keys(this.contextTypes))
+    )
+  }
 
   static spawn(options = {}, context = {}, fn) {
     return new Runtime(options, context, fn)
@@ -171,8 +264,6 @@ export class Runtime {
       context = {}
     }
 
-    context = { ...global, ...context }
-
     enhanceObject(this, lodash)
     attachEmitter(this)
 
@@ -180,6 +271,8 @@ export class Runtime {
     this.events.emit('runtimeWasCreated', this, this.constructor)
 
     this.hideGetter('parent', () => context.parent || singleton)
+
+    this.hide('cwd', result(options, 'cwd', () => process && process.cwd && process.cwd()))
 
     this.hide('configHistory', [], false)
     this.hide('uuid', require('uuid')())
@@ -191,12 +284,15 @@ export class Runtime {
     this.hide('weakCache', new WeakCache(options.cacheData || [], this))
 
     this.hide('rawOptions', options)
-    this.hide('optionsWithDefaults', defaults({}, options, this.defaultOptions))
+    this.hide('rawContext', context)
+    // this.hide('optionsWithDefaults', defaults({}, options, this.defaultOptions))
 
+    /*
     this.hideGetter(
       'context',
       pick(defaults({}, context, this.defaultContext), ...keys(this.contextTypes))
     )
+    */
 
     let { start, initialize, prepare } = this
 
@@ -404,45 +500,24 @@ export class Runtime {
     return this
   }
 
-  /**
-    options will consist of the default options for this Runtime.
-    If the runtime is running in strictMode then only the optionTypes
-    that have been defined will be allowed
-  */
-  get options() {
-    return this.constructor.strictMode !== false
-      ? pick(this.optionsWithDefaults, ...keys(this.optionTypes))
-      : this.argv
-  }
-
   get url() {
     return this.isBrowser
       ? lodash.get('window.location', urlUtils.parse(`http://${stringUtils.kebabCase(this.name)}/`))
       : urlUtils.parse(`file://${argv.cwd}`)
   }
 
-  get cwd() {
-    return this.get(
-      'argv.cwd',
-      process && process.cwd ? process.cwd() : this.get('constructor.cwd', '')
-    )
-  }
-
   /**
     argv will refer to the initial options passed to the runtime, along with any default values that have been set
   */
   get argv() {
-    return this.get('optionsWithDefaults', {})
+    return this.get('rawOptions', {})
   }
 
   set argv(val = {}) {
-    this.set('optionsWithDefaults', { ...this.optionsWithDefaults, ...val })
+    this.set('rawOptions', { ...this.rawOptions, ...val })
   }
 
-  /**
-    The Runtime class can define option and context types, as well as any default
-    options or context that should be set.
-  */
+  /*
   static contextTypes = {}
 
   get contextTypes() {
@@ -472,6 +547,7 @@ export class Runtime {
       global.ARGV
     )
   }
+  */
 
   get env() {
     if (this.isTest) return 'test'
@@ -626,7 +702,13 @@ export class Runtime {
   stateVersion = 0
 
   get initialState() {
-    return defaults({}, this.get('argv.initialState'), this.constructor.initialState)
+    return defaults(
+      {},
+      this.get('argv.initialState'),
+      global.__INITIAL_STATE__,
+      result(global, 'SkypagerInitialState'),
+      this.constructor.initialState
+    )
   }
 
   @computed
@@ -816,7 +898,8 @@ export class Runtime {
         ? helperClass.observables.call(
             helperInstance,
             helperInstance.options,
-            helperInstance.context
+            helperInstance.context,
+            helperInstance
           )
         : helperClass.observables
 
@@ -1124,8 +1207,8 @@ export class Runtime {
   }
 
   /**
-  * Observable property system base on Mobx
-  */
+   * Observable property system base on Mobx
+   */
 
   hashObject(...args) {
     return hashObject(...args)
