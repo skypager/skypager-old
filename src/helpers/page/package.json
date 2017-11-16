@@ -1,13 +1,9 @@
 {
   "name": "skypager-helpers-page",
-  "version": "38.0.0",
+  "version": "38.1.0",
   "description": "skypager document type helper",
   "main": "index.js",
-  "files": [
-    "lib",
-    "index.js",
-    "src"
-  ],
+  "files": ["lib", "index.js", "src"],
   "scripts": {
     "test": "../skypager-cli/skypager test",
     "test:watch": "../skypager-cli/skypager test --watch",

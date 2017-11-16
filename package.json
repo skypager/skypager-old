@@ -1,6 +1,6 @@
 {
   "name": "skypager",
-  "version": "38.0.1",
+  "version": "38.1.0",
   "description": "a javscript launch platform",
   "main": "index.js",
   "browser": "skypager.min.js",
@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build:docker": "docker build -t datapimp/skypager-portfolio .",
-    "run:docker": "docker run -v \"packages:/myapp/public/packages\" -p 4001:4000 datapimp/skypager-portfolio",
+    "run:docker":
+      "docker run -v \"packages:/myapp/public/packages\" -p 4001:4000 datapimp/skypager-portfolio",
     "build": "bin/each buildPackage && bin/run skypager-repl yarn build && bin/export",
     "setup-dev": "yarn add skypager-framework@^26.1.1 skypager-cli@^25.1.0",
     "publish-packages": "sky run prepare-release --release"

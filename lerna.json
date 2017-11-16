@@ -1,6 +1,6 @@
 {
   "lerna": "2.0.0-beta.38",
-  "version": "38.0.0",
+  "version": "38.1.0",
   "packages": [
     ".",
     "src/*",
@@ -12,12 +12,6 @@
     "src/servers/*"
   ],
   "publish": {
-    "ignore": [
-      ".",
-      "src/**",
-      "apps/*",
-      "specs",
-      "containers/*"
-    ]
+    "ignore": [".", "src/**", "apps/*", "specs", "containers/*"]
   }
 }

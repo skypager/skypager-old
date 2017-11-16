@@ -1,6 +1,6 @@
 {
   "name": "skypager-runtimes-node",
-  "version": "38.0.0",
+  "version": "38.0.1",
   "description": "the skypager node runtime",
   "main": "index.js",
   "scripts": {
@@ -9,16 +9,8 @@
     "build": "../skypager-cli/skypager build library",
     "build:watch": "../skypager-cli/skypager build library --watch"
   },
-  "files": [
-    "lib",
-    "index.js",
-    "src",
-    "README.md"
-  ],
-  "keywords": [
-    "REPL",
-    "ES6"
-  ],
+  "files": ["lib", "index.js", "src", "README.md"],
+  "keywords": ["REPL", "ES6"],
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
