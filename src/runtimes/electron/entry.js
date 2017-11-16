@@ -1,16 +1,16 @@
-const skypager = require("skypager-runtimes-electron/main")
+const skypager = require('skypager-runtimes-electron/main')
 
-skypager.hide("electronMainRoot", __dirname)
+skypager.hide('electronMainRoot', __dirname)
 
 global.skypagerElectronMain = skypager
 
 if (process.argv[0].match(/electron$/i)) {
-  require("skypager-runtimes-development")
+  require('skypager-runtimes-development')
 }
 
-skypager.debug("Skypager Electron Entry Point", {
+skypager.debug('Skypager Electron Entry Point', {
   argv: skypager.argv,
-  cwd: skypager.cwd
+  cwd: skypager.cwd,
 })
 
 /*
@@ -32,20 +32,20 @@ async function start() {
     await loadEntry(skypager.resolve(skypager.argv.entry))
   }
 
-  if (skypager.get("argv._", []).length) {
-    const validPaths = skypager.argv._
-      .map(p => skypager.resolve(p))
-      .filter(f => skypager.fsx.existsSync(f))
+  if (skypager.get('argv._', []).length) {
+    const validPaths = skypager.argv._.map(p => skypager.resolve(p)).filter(f =>
+      skypager.fsx.existsSync(f)
+    )
 
     if (validPaths.length) {
-      skypager.debug("valid paths", { validPaths })
+      await loadEntry(validPaths[0])
     }
   } else if (!skypager.argv.entry) {
-    skypager.debug("show welcome")
+    skypager.debug('show welcome')
   }
 
-  if (skypager.get("argv.interactive") || skypager.get("argv.repl")) {
-    const repl = skypager.repl("interactive")
+  if (skypager.get('argv.interactive') || skypager.get('argv.repl')) {
+    const repl = skypager.repl('interactive')
     await repl.launch()
   }
 }
@@ -63,12 +63,13 @@ async function loadEntry(entryPath) {
 
   await runner().catch(error => {
     skypager.error(`Error while running entry at ${entryPath}`, { error: error.message })
-    return { error }
+    process.exit(1)
   })
 
   return skypager
 }
 
-start()
-  .catch(e => skypager.error(`Error`, { message: e.message }))
-  .then(() => skypager.invoke("debug", "started"))
+start().catch(e => {
+  skypager.error(`Error`, { message: e.message })
+  process.exit(1)
+})
