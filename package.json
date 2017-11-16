@@ -76,10 +76,6 @@
   },
   "homepage": "https://skypager.io",
   "skypager": {
-    "projectType": "portfolio",
-    "fileManager": {
-      "customOption": "1"
-    },
     "development": {
       "main": ".skypager/development.js"
     }

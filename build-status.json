@@ -1,8 +1,8 @@
 {
   "gitInfo": {
-    "sha": "2e2818caa12b4a92b35fd40c8eca847396287d30",
-    "abbreviatedSha": "2e2818caa1",
-    "branch": "master",
+    "sha": "e2715e4be32597a5bc9b073f495b8c040f4325c5",
+    "abbreviatedSha": "e2715e4be3",
+    "branch": "feature/runtime-refactor",
     "tag": null,
     "root": "/Users/jon/Projects/skypager"
   },
@@ -275,6 +275,7 @@
         "success": true,
         "assets": {
           "index": "index.js",
+          "runtime": "runtime.js",
           "feature": "feature.js",
           "helper": "helper.js",
           "registries": "registries.js",

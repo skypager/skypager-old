@@ -1,9 +1,0 @@
-{
-  "name": "skypager-features-analytics",
-  "version": "37.5.0",
-  "description": "analytics integrations available through segment.com and analytics.js",
-  "main": "index.js",
-  "repository": "https://github.com/skypager/skypager",
-  "author": "Jon Soeder <jon@chicago.com> (https://twitter.com/soederpop)",
-  "license": "MIT"
-}
