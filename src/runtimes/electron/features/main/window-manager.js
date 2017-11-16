@@ -46,46 +46,46 @@
 */
 
 export const VALID_BROWSER_WINDOW_OPTIONS = [
-  "width",
-  "height",
-  "x",
-  "y",
-  "useContentSize",
-  "center",
-  "minWidth",
-  "minHeight",
-  "maxWidth",
-  "maxHeight",
-  "resizable",
-  "movable",
-  "minimizable",
-  "maximizable",
-  "closable",
-  "focusable",
-  "alwaysOnTop",
-  "fullscreen",
-  "fullscreenable",
-  "skipTaskbar",
-  "kiosk",
-  "title",
-  "icon",
-  "show",
-  "frame",
-  "parent",
-  "modal",
-  "acceptFirstMouse",
-  "disableAutoHideCursor",
-  "autoHideMenuBar",
-  "enableLargerThanScreen",
-  "backgroundColor",
-  "hasShadow",
-  "darkTheme",
-  "transparent",
-  "type",
-  "thickFrame",
-  "vibrancy",
-  "zoomToPageWidth",
-  "tabbingIdentifier"
+  'width',
+  'height',
+  'x',
+  'y',
+  'useContentSize',
+  'center',
+  'minWidth',
+  'minHeight',
+  'maxWidth',
+  'maxHeight',
+  'resizable',
+  'movable',
+  'minimizable',
+  'maximizable',
+  'closable',
+  'focusable',
+  'alwaysOnTop',
+  'fullscreen',
+  'fullscreenable',
+  'skipTaskbar',
+  'kiosk',
+  'title',
+  'icon',
+  'show',
+  'frame',
+  'parent',
+  'modal',
+  'acceptFirstMouse',
+  'disableAutoHideCursor',
+  'autoHideMenuBar',
+  'enableLargerThanScreen',
+  'backgroundColor',
+  'hasShadow',
+  'darkTheme',
+  'transparent',
+  'type',
+  'thickFrame',
+  'vibrancy',
+  'zoomToPageWidth',
+  'tabbingIdentifier',
 ]
 
 /**
@@ -127,58 +127,58 @@ export const VALID_BROWSER_WINDOW_OPTIONS = [
 */
 
 export const VALID_WEB_PREFERENCES_OPTIONS = [
-  "devTools",
-  "nodeIntegration",
-  "nodeIntegrationInWorker",
-  "preload",
-  "sandbox",
-  "session",
-  "partition",
-  "zoomFactor",
-  "javascript",
-  "webSecurity",
-  "allowRunningInsecureContent",
-  "images",
-  "textAreasAreResizable",
-  "webgl",
-  "webaudio",
-  "plugins",
-  "experimentalFeatures",
-  "experimentalCanvasFeatures",
-  "scrollBounce",
-  "blinkFeatures",
-  "disableBlinkFeatures",
-  "defaultFontFamily",
-  "defaultFontSize",
-  "defaultMonospaceFontSize",
-  "minimumFontSize",
-  "defaultEncoding",
-  "backgroundThrottling",
-  "offscreen",
-  "contextIsolation"
+  'devTools',
+  'nodeIntegration',
+  'nodeIntegrationInWorker',
+  'preload',
+  'sandbox',
+  'session',
+  'partition',
+  'zoomFactor',
+  'javascript',
+  'webSecurity',
+  'allowRunningInsecureContent',
+  'images',
+  'textAreasAreResizable',
+  'webgl',
+  'webaudio',
+  'plugins',
+  'experimentalFeatures',
+  'experimentalCanvasFeatures',
+  'scrollBounce',
+  'blinkFeatures',
+  'disableBlinkFeatures',
+  'defaultFontFamily',
+  'defaultFontSize',
+  'defaultMonospaceFontSize',
+  'minimumFontSize',
+  'defaultEncoding',
+  'backgroundThrottling',
+  'offscreen',
+  'contextIsolation',
 ]
 
 export function featureWasEnabled() {}
 
 const privateData = new WeakMap()
 
-export const createGetter = ["windowManager"]
-export const hostMethods = ["getMainWindow"]
+export const createGetter = 'windowManager'
+export const hostMethods = 'getMainWindow'
 
 export const featureMethods = [
-  "createNativeBrowserWindow",
-  "createBrowserWindow",
-  "browserWindow",
-  "getAllWindows",
-  "createURL",
-  "findById",
-  "findByName",
-  "getByName",
-  "getWebContentsByName",
-  "getControllersByName",
-  "start",
-  "createForScript",
-  "controllerFor"
+  'createNativeBrowserWindow',
+  'createBrowserWindow',
+  'browserWindow',
+  'getAllWindows',
+  'createURL',
+  'findById',
+  'findByName',
+  'getByName',
+  'getWebContentsByName',
+  'getControllersByName',
+  'start',
+  'createForScript',
+  'controllerFor',
 ]
 
 export async function start() {
@@ -188,41 +188,42 @@ export async function start() {
 export async function createForScript(options = {}) {
   const { runtime } = this
 
-  if (typeof options === "string") {
+  if (typeof options === 'string') {
     options = { url: options }
   }
 
   options = {
     ...skypager.argv,
-    ...options
+    ...options,
   }
 
   const {
     readyToShow,
     url,
-    htmlPath = skypager.resolve(skypager.electronMainRoot, "welcome.html")
+    htmlPath = skypager.resolve(skypager.electronMainRoot, 'welcome.html'),
   } = options
 
-  const { windowName = runtime.hashObject({ url }), protocol = "file" } = options
+  const { windowName = runtime.hashObject({ url }), protocol = 'file' } = options
 
   const controller = this.browserWindow({
     windowName,
     name: windowName,
-    ...options
+    ...options,
   })
 
   const browserWindow = controller.getWindow()
 
   const windowURL = this.createURL({
-    url: htmlPath.startsWith("http") ? htmlPath : skypager.resolve(htmlPath),
+    url: htmlPath.startsWith('http') ? htmlPath : skypager.resolve(htmlPath),
     protocol,
-    args: { injectScripts: [this.createURL(url)] }
+    args: { injectScripts: [this.createURL(url)] },
   })
 
-  browserWindow.once("ready-to-show", () => {
+  browserWindow.once('ready-to-show', () => {
     readyToShow && readyToShow.call && readyToShow.call(this, browserWindow, controller)
   })
 
+  skypager.debug('Loading Window URL', { windowURL })
   browserWindow.loadURL(windowURL)
 
   return controller
@@ -230,27 +231,27 @@ export async function createForScript(options = {}) {
 
 export function observables(options = {}, context = {}) {
   return {
-    browserWindows: ["map", []],
+    browserWindows: ['map', []],
     windowsAreVisible: false,
-    windowsHaveFocus: false
+    windowsHaveFocus: false,
   }
 }
 
 export function createURL(options = {}) {
-  if (typeof options === "string") {
+  if (typeof options === 'string') {
     options = { url: options }
   }
-  const { args = {}, url, protocol = "file", slashes = true } = options
+  const { args = {}, url, protocol = 'file', slashes = true } = options
   const { runtime } = this
 
-  const encodedArgs = Object.keys(args).length === 0 ? "" : encodeURIComponent(JSON.stringify(args))
+  const encodedArgs = Object.keys(args).length === 0 ? '' : encodeURIComponent(JSON.stringify(args))
 
   var u
   if (
-    url.indexOf("http") === 0 ||
-    url.indexOf("data") === 0 ||
-    url.indexOf("file") === 0 ||
-    url.indexOf("skypager") === 0
+    url.indexOf('http') === 0 ||
+    url.indexOf('data') === 0 ||
+    url.indexOf('file') === 0 ||
+    url.indexOf('skypager') === 0
   ) {
     var urlData = runtime.urlUtils.parseUrl(url)
     var hash = urlData.hash || (encodedArgs && encodedArgs.length > 0) ? encodedArgs : undefined
@@ -260,7 +261,7 @@ export function createURL(options = {}) {
       protocol,
       pathname: url,
       slashes,
-      hash: encodedArgs && encodedArgs.length > 0 ? encodedArgs : undefined
+      hash: encodedArgs && encodedArgs.length > 0 ? encodedArgs : undefined,
     })
   }
 
@@ -269,8 +270,8 @@ export function createURL(options = {}) {
 
 export function getMainWindow(options = {}) {
   return this.windowManager.browserWindow({
-    windowName: "main",
-    name: "main"
+    windowName: 'main',
+    name: 'main',
   })
 }
 
@@ -289,25 +290,28 @@ export function findById(id) {
 
 export function getByName() {
   return this.chain
-    .invoke("browserWindows.toJSON")
+    .invoke('browserWindows.toJSON')
     .mapValues((id, name) => this.runtime.BrowserWindow.fromId(id))
     .value()
 }
 
 export function getWebContentsByName() {
-  return this.chain.get("byName").mapValues("webContents").value()
+  return this.chain
+    .get('byName')
+    .mapValues('webContents')
+    .value()
 }
 
 export function getControllersByName() {
   return this.chain
-    .invoke("browserWindows.toJSON")
+    .invoke('browserWindows.toJSON')
     .mapValues((id, name) => privateData.get(this.runtime.BrowserWindow.fromId(id)))
     .pickBy(v => v)
     .value()
 }
 
 export function browserWindow(options = {}) {
-  if (typeof options === "string") {
+  if (typeof options === 'string') {
     options = { name: options, windowName: options }
   }
 
@@ -319,7 +323,7 @@ export function browserWindow(options = {}) {
   })
   */
 
-  const { windowName = options.name ? options.name : "main", name = "main" } = options
+  const { windowName = options.name ? options.name : 'main', name = 'main' } = options
 
   if (this.browserWindows.has(windowName)) {
     const windowId = this.browserWindows.get(windowName)
@@ -330,23 +334,23 @@ export function browserWindow(options = {}) {
   const controller = createBrowserWindow.call(this, {
     windowName: name || options.windowName,
     name: name || options.windowName,
-    ...options
+    ...options,
   })
 
-  this.fireHook("didCreateBrowserWindow", controller.getWindow(), controller, this)
+  this.fireHook('didCreateBrowserWindow', controller.getWindow(), controller, this)
 
   return controller
 }
 
 export function createBrowserWindow(options = {}) {
-  const { windowName = options.name || "main" } = options
+  const { windowName = options.name || 'main' } = options
 
   //const ipcMain = this.runtime.electron.ipcMain
   const nativeBrowserWindow = this.createNativeBrowserWindow.call(this, options)
 
   this.browserWindows.set(windowName, nativeBrowserWindow.id)
 
-  const Positioner = require("./positioner")
+  const Positioner = require('./positioner')
 
   privateData.set(nativeBrowserWindow, {
     windowId: nativeBrowserWindow.id,
@@ -360,7 +364,7 @@ export function createBrowserWindow(options = {}) {
     },
     getWindow() {
       return nativeBrowserWindow
-    }
+    },
   })
 
   return privateData.get(nativeBrowserWindow)
@@ -380,7 +384,7 @@ export function createNativeBrowserWindow(options = {}) {
 
   const nativeBrowserWindow = new BrowserWindow({
     ...windowOptions,
-    webPreferences: webPreferences
+    webPreferences: webPreferences,
   })
 
   return nativeBrowserWindow
