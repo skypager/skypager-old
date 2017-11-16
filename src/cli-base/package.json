@@ -15,5 +15,7 @@
     "skypager-cli": "./skypager-cli",
     "sky": "./skypager-cli"
   },
-  "copy": ["src/cli-base/skypager-cli"]
+  "copy": [
+    "src/cli-base/skypager-cli"
+  ]
 }

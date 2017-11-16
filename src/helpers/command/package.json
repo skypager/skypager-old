@@ -1,12 +1,12 @@
 {
   "name": "skypager-helpers-command",
-  "version": "38.0.0",
+  "version": "38.1.0",
   "description": "an awesome repl",
   "main": "index.js",
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
     "skypager-repl": "^37.5.0",
-    "skypager-runtime": "^38.0.0"
+    "skypager-runtime": "^38.1.0"
   }
 }

@@ -12,6 +12,12 @@
     "src/servers/*"
   ],
   "publish": {
-    "ignore": [".", "src/**", "apps/*", "specs", "containers/*"]
+    "ignore": [
+      ".",
+      "src/**",
+      "apps/*",
+      "specs",
+      "containers/*"
+    ]
   }
 }

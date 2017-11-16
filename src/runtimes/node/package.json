@@ -1,6 +1,6 @@
 {
   "name": "skypager-runtimes-node",
-  "version": "38.0.1",
+  "version": "38.1.0",
   "description": "the skypager node runtime",
   "main": "index.js",
   "scripts": {
@@ -9,8 +9,16 @@
     "build": "../skypager-cli/skypager build library",
     "build:watch": "../skypager-cli/skypager build library --watch"
   },
-  "files": ["lib", "index.js", "src", "README.md"],
-  "keywords": ["REPL", "ES6"],
+  "files": [
+    "lib",
+    "index.js",
+    "src",
+    "README.md"
+  ],
+  "keywords": [
+    "REPL",
+    "ES6"
+  ],
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
@@ -23,14 +31,14 @@
     "micromatch": "^3.1.4",
     "minimatch": "^3.0.3",
     "semver": "^5.3.0",
-    "skypager-features-file-manager": "^38.0.0",
-    "skypager-helpers-client": "^38.0.0",
-    "skypager-helpers-command": "^38.0.0",
-    "skypager-helpers-page": "^38.0.0",
-    "skypager-helpers-repl": "^38.0.0",
-    "skypager-helpers-server": "^38.0.0",
+    "skypager-features-file-manager": "^38.1.0",
+    "skypager-helpers-client": "^38.1.0",
+    "skypager-helpers-command": "^38.1.0",
+    "skypager-helpers-page": "^38.1.0",
+    "skypager-helpers-repl": "^38.1.0",
+    "skypager-helpers-server": "^38.1.0",
     "skypager-repl": "^37.5.0",
-    "skypager-runtime": "^38.0.0",
+    "skypager-runtime": "^38.1.0",
     "winston": "^2.3.1"
   },
   "compilers": {
