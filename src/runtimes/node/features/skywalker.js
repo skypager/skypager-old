@@ -35,6 +35,10 @@ export const featureMethods = [
   'lazyIgnorePatterns',
   'matchPaths',
   'selectMatches',
+  'requireContext',
+  'requireDocumentContext',
+  'file',
+  'directory',
 ]
 
 export const observables = () => ({
@@ -130,11 +134,11 @@ export function projectWalker(options = {}) {
     options = { baseFolder: options }
   }
 
-  const { baseFolder = runtime.cwd } = options
-  const {
-    ignorePatterns = this.readIgnoreFiles(options).map(p => micromatch.makeRe(p)),
-    exclude = [],
-  } = options
+  let { baseFolder = runtime.get('argv', runtime.cwd) } = { ...this.options, ...options }
+
+  baseFolder = runtime.resolve(baseFolder)
+
+  const { ignorePatterns = this.readIgnoreFiles(options).map(p => micromatch.makeRe(p)) } = options
 
   let skywalker = createSkywalker(baseFolder)
 
@@ -183,6 +187,39 @@ export function projectWalker(options = {}) {
   }
 
   return skywalker
+}
+
+export function requireDocumentContext(rule, options = {}) {
+  const requireFn = resolvedPath => this.chain.get('fileObjects').filter({ path: resolvedPath })
+  return this.requireContext(rule, { ...options })
+}
+
+export function requireContext(rule, options = {}) {
+  const {
+    requireFn = __non_webpack_require__,
+    keyBy = 'name',
+    mapValues = 'path',
+    formatId,
+  } = options
+
+  return this.chain
+    .invoke('selectMatches', { ...options, rules: rule })
+    .keyBy(keyBy)
+    .mapKeys((v, k) => (formatId ? formatId(k, v) : k))
+    .mapValues(mapValues)
+    .thru(map => {
+      const req = key => requireFn(map[key])
+
+      return Object.assign(req, {
+        resolve(key) {
+          return map[key]
+        },
+        keys() {
+          return Object.keys(map)
+        },
+      })
+    })
+    .value()
 }
 
 export async function walk(...args) {
@@ -270,15 +307,52 @@ export function matchPaths(options = {}) {
   const { castArray } = this.lodash
   let { rules = options.rules || options || [] } = options
 
-  rules = castArray(rules).map(rule => (typeof rule === 'string' ? micromatch.makeRe(rule) : rule))
+  rules = castArray(rules)
 
-  return options.fullPath
+  if (options.glob) {
+    rules = rules.map(rule => (typeof rule === 'string' ? micromatch.makeRe(rule) : rule))
+  }
+
+  const results = options.fullPath
     ? this.fileObjects.filter(file => pathMatcher(rules, file.path)).map(result => result.relative)
     : this.fileIds.filter(fileId => pathMatcher(rules, fileId))
+
+  if (options.debug) {
+    return { rules, options, results, fileObjectsCount: this.fileIds.length }
+  }
+
+  return results
 }
 
 export function selectMatches(options = {}) {
   const { convertToJS } = this.runtime
   const paths = this.matchPaths(options)
-  return paths.map(key => convertToJS(this.files.get(key)))
+
+  if (options.debug) {
+    return paths
+  }
+
+  return paths.map(key => convertToJS(this.file(key)))
+}
+
+export function file(fileIdOrPath) {
+  return (
+    this.files.get(fileIdOrPath) ||
+    this.chain
+      .get('fileObjects', [])
+      .filter({ path: fileIdOrPath })
+      .first()
+      .value()
+  )
+}
+
+export function directory(fileIdOrPath) {
+  return (
+    this.directories.get(fileIdOrPath) ||
+    this.chain
+      .get('directoryObjects', [])
+      .filter({ path: fileIdOrPath })
+      .first()
+      .value()
+  )
 }

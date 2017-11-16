@@ -38,13 +38,14 @@ export function featureWasEnabled(options = {}) {
 
   const targetConfig = defaultsDeep({}, get(packageConfig, [env]), get(packageConfig, [target]))
 
-  defaultsDeep(runtime.argv, runtime.parseArgv(runtime.argv))
-
   runtime.hide('projectConfig', defaultsDeep({}, targetConfig, omit(packageConfig, target, env)))
+
+  defaultsDeep(runtime.argv, runtime.parseArgv(runtime.argv), runtime.projectConfig)
 
   runtime.feature('home-directory').enable()
   runtime.feature('logging').enable()
   runtime.feature('skywalker').enable()
+
   runtime.feature('package-finder').enable()
 
   runtime.packageFinder
@@ -58,7 +59,13 @@ export function featureWasEnabled(options = {}) {
     })
 
   runtime.feature('git').enable()
-  runtime.feature('package-cache').enable()
+
+  // This seems to be an ok way of lazy loading a feature
+  runtime.lazy('packageCache', () => {
+    runtime.feature('package-cache').enable()
+    return runtime.packageCache
+  })
+
   runtime.feature('file-downloader').enable()
 
   require('skypager-features-file-manager').attach(runtime)
