@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "5e61c9b3e8f9b2d7149a9b67119b8c2cf46cd0e7",
-    "abbreviatedSha": "5e61c9b3e8",
-    "branch": "develop",
-    "tag": "v38.1.0",
+    "sha": "027399374d37f681b155ba2b7de280235674be7f",
+    "abbreviatedSha": "027399374d",
+    "branch": "feature/electron-app-hooks",
+    "tag": null,
     "root": "/Users/jon/Projects/skypager"
   },
   "packages": {

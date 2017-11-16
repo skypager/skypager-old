@@ -34,10 +34,8 @@ export class Page extends Helper {
   */
   static observables() {
     const { defaultTemplateParams: p } = Page
-    const { defaults } = this.lodash
-
     return {
-      templateParams: ['map', defaults(this.buildOptions(p))],
+      templateParams: ['map', this.buildOptions(p)],
     }
   }
 
@@ -66,11 +64,13 @@ export class Page extends Helper {
   buildOptions(opts = {}) {
     const { isEmpty } = this.lodash
     const optionKeys = Object.keys(this.constructor.defaultTemplateParams)
+
     return this.chain
       .get('options')
-      .merge(opts)
       .pick(optionKeys)
       .omitBy(v => isEmpty(v))
+      .clone()
+      .defaults(opts, this.constructor.defaultTemplateParams)
       .value()
   }
 
