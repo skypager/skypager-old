@@ -4,13 +4,39 @@ skypager.hide('electronMainRoot', __dirname)
 
 global.skypagerElectronMain = skypager
 
-if (process.argv[0].match(/electron$/i)) {
+if (process.argv[0].match(/electron$/i) && process.env.NODE_ENV !== 'production') {
   require('skypager-runtimes-development')
 }
+
+const resolve = (...args) => {
+  const asModule = skypager.packageFinder.attemptResolve(...args)
+
+  if (asModule) {
+    return asModule
+  }
+
+  try {
+    const checkPath = skypager.resolve(...args)
+    if (skypager.fsx.existsSync(checkPath)) {
+      return checkPath
+    } else {
+      return false
+    }
+  } catch (error) {
+    return false
+  }
+}
+
+const entryPaths = skypager.chain
+  .get('argv._', [])
+  .map(p => resolve(p))
+  .filter(v => v)
+  .value()
 
 skypager.debug('Skypager Electron Entry Point', {
   argv: skypager.argv,
   cwd: skypager.cwd,
+  entryPaths,
 })
 
 /*
@@ -29,32 +55,28 @@ if (skypager.argv._.length) {
 
 async function start() {
   if (skypager.argv.entry) {
-    await loadEntry(skypager.resolve(skypager.argv.entry))
+    entryPaths.unshift(resolve(skypager.argv.entry))
   }
 
-  if (skypager.get('argv._', []).length) {
-    const validPaths = skypager.argv._.map(p => skypager.resolve(p)).filter(f =>
-      skypager.fsx.existsSync(f)
-    )
-
-    if (validPaths.length) {
-      await loadEntry(validPaths[0])
-    }
-  } else if (!skypager.argv.entry) {
-    skypager.debug('show welcome')
+  if (!entryPaths.length) {
+    entryPaths.unshift(resolve('skypager-runtimes-electron/entry.js'))
   }
+
+  await Promise.all(entryPaths.map(p => loadEntry(resolve(p))))
 
   if (skypager.get('argv.interactive') || skypager.get('argv.repl')) {
     const repl = skypager.repl('interactive')
-    await repl.launch()
+    await repl.launch({ entryPaths })
   }
 }
 
 async function loadEntry(entryPath) {
+  skypager.debug('Loading entry', { path: entryPath })
+
   const stat = await skypager.fsx.statAsync(entryPath)
 
   if (stat.isDirectory()) {
-    return this
+    return skypager
   }
 
   const code = await skypager.fsx.readFileAsync(entryPath).then(b => b.toString())
@@ -65,6 +87,8 @@ async function loadEntry(entryPath) {
     skypager.error(`Error while running entry at ${entryPath}`, { error: error.message })
     process.exit(1)
   })
+
+  skypager.debug('Loaded and ran entry', { entryPath })
 
   return skypager
 }

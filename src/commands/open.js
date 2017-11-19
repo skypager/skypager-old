@@ -22,6 +22,15 @@ export function checkRuntime(runtime) {
   }
 }
 
+/**
+  The Open command spawns an electron process using the same technique
+  as the electron command.  It uses the skypager electron runtime as the
+  main entry point, and uses the skypager virtual machine to load the entry
+  point of a requested application.
+
+  The original idea was to have a library of multiple applications based on the skypager runtime,
+  and load that application in the context of a skypager development runtime.
+*/
 export async function run(options = {}) {
   const { runtime } = this
 
