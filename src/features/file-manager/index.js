@@ -1,13 +1,11 @@
 export function attach(runtime, options = {}) {
   runtime = runtime || this
 
-  //throw "YOU FUCK"
-
-  runtime.selectors.add(require.context("./selectors", true, /\.js$/))
-  runtime.features.add(require.context("./features", false, /\.js$/))
+  runtime.selectors.add(require.context('./selectors', true, /\.js$/))
+  runtime.features.add(require.context('./features', false, /\.js$/))
 
   const {
-    sourceRoot = runtime.existsSync(runtime.resolve("src")) ? "src" : runtime.cwd
+    sourceRoot = runtime.existsSync(runtime.resolve('src')) ? 'src' : runtime.cwd,
   } = runtime.lodash.defaults(
     {},
     runtime.argv,
@@ -15,35 +13,35 @@ export function attach(runtime, options = {}) {
     runtime.currentPackage.skypager,
     runtime.options,
     {
-      sourceRoot: process.env.SKYPAGER_SOURCE_ROOT || process.env.SOURCE_ROOT || "src"
+      sourceRoot: process.env.SKYPAGER_SOURCE_ROOT || process.env.SOURCE_ROOT || 'src',
     }
   )
 
-  runtime.feature("file-manager").enable({
+  runtime.feature('file-manager').enable({
     baseFolder: runtime.resolve(options.baseFolder || options.base || sourceRoot || runtime.cwd),
     base: runtime.resolve(options.base || options.baseFolder || sourceRoot || runtime.cwd),
-    ...options
+    ...options,
   })
 
   if (runtime.commands) {
-    runtime.commands.register("fileManager", () => require("./commands/fileManager"))
+    runtime.commands.register('fileManager', () => require('./commands/fileManager'))
   }
 
   if (runtime.argv.moduleManager !== false) {
-    runtime.feature("module-manager").enable()
+    runtime.feature('module-manager').enable()
   }
 
   if (runtime.argv.packageManager !== false) {
-    runtime.feature("package-manager").enable()
+    runtime.feature('package-manager').enable()
   }
 
-  if (runtime.argv.fileManager) {
+  if (runtime.argv.startFileManager) {
     runtime.fileManager
       .startAsync(runtime.argv)
       .then(() => runtime.argv.packageManager && runtime.packageManager.startAsync())
       .then(() => runtime.argv.moduleManager && runtime.moduleManager.startAsync())
       .catch(e => {
-        this.runtime.debug("File Manager Failed to Start Automatically", { message: e.message })
+        this.runtime.debug('File Manager Failed to Start Automatically', { message: e.message })
       })
   }
 }
