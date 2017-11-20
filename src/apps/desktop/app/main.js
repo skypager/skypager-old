@@ -1,10 +1,10 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("skypager-runtimes-electron/main.js"));
+		module.exports = factory(require("skypager-runtimes-electron"));
 	else if(typeof define === 'function' && define.amd)
-		define(["skypager-runtimes-electron/main.js"], factory);
+		define(["skypager-runtimes-electron"], factory);
 	else {
-		var a = typeof exports === 'object' ? factory(require("skypager-runtimes-electron/main.js")) : factory(root["skypager-runtimes-electron/main.js"]);
+		var a = typeof exports === 'object' ? factory(require("skypager-runtimes-electron")) : factory(root["skypager-runtimes-electron"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
 })(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
@@ -81,14 +81,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ "./src/main.js":
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("/* WEBPACK VAR INJECTION */(function(skypager) {const { windowManager } = skypager\n\nconst mainWindow = windowManager.browserWindow({\n  name: 'main',\n  windowName: 'main',\n  height: 900,\n  width: 1200,\n})\n\nskypager.debug('Main Window', { mainWindow: mainWindow.windowId })\n\n/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvbWFpbi5qcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9tYWluLmpzPzM0NzkiXSwic291cmNlc0NvbnRlbnQiOlsiY29uc3QgeyB3aW5kb3dNYW5hZ2VyIH0gPSBza3lwYWdlclxuXG5jb25zdCBtYWluV2luZG93ID0gd2luZG93TWFuYWdlci5icm93c2VyV2luZG93KHtcbiAgbmFtZTogJ21haW4nLFxuICB3aW5kb3dOYW1lOiAnbWFpbicsXG4gIGhlaWdodDogOTAwLFxuICB3aWR0aDogMTIwMCxcbn0pXG5cbnNreXBhZ2VyLmRlYnVnKCdNYWluIFdpbmRvdycsIHsgbWFpbldpbmRvdzogbWFpbldpbmRvdy53aW5kb3dJZCB9KVxuXG5cblxuLy8vLy8vLy8vLy8vLy8vLy8vXG4vLyBXRUJQQUNLIEZPT1RFUlxuLy8gLi9zcmMvbWFpbi5qc1xuLy8gbW9kdWxlIGlkID0gLi9zcmMvbWFpbi5qc1xuLy8gbW9kdWxlIGNodW5rcyA9IDAiXSwibWFwcGluZ3MiOiJBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOztBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./src/main.js\n");
+eval("const skypager = __webpack_require__(0)\nconst url = skypager.get('argv.url', `file://${__dirname}/index.html`)\n\nskypager.debug(\n  `Skypager Desktop Editor App Main Entry Point Reached. Waiting for skypager to start`\n)\n\nskypager.whenStarted(() => {\n  const { windowManager } = skypager\n\n  const mainWindow = windowManager.browserWindow({\n    name: 'main',\n    windowName: 'main',\n    height: 900,\n    width: 1200,\n    show: false,\n  })\n\n  const win = mainWindow.getWindow()\n\n  skypager.debug(`Loading URL: ${url}`)\n  win.loadURL(url)\n\n  win.once('ready-to-show', () => win.show())\n})\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvbWFpbi5qcy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9tYWluLmpzPzM0NzkiXSwic291cmNlc0NvbnRlbnQiOlsiY29uc3Qgc2t5cGFnZXIgPSByZXF1aXJlKCdza3lwYWdlci1ydW50aW1lcy1lbGVjdHJvbicpXG5jb25zdCB1cmwgPSBza3lwYWdlci5nZXQoJ2FyZ3YudXJsJywgYGZpbGU6Ly8ke19fZGlybmFtZX0vaW5kZXguaHRtbGApXG5cbnNreXBhZ2VyLmRlYnVnKFxuICBgU2t5cGFnZXIgRGVza3RvcCBFZGl0b3IgQXBwIE1haW4gRW50cnkgUG9pbnQgUmVhY2hlZC4gV2FpdGluZyBmb3Igc2t5cGFnZXIgdG8gc3RhcnRgXG4pXG5cbnNreXBhZ2VyLndoZW5TdGFydGVkKCgpID0+IHtcbiAgY29uc3QgeyB3aW5kb3dNYW5hZ2VyIH0gPSBza3lwYWdlclxuXG4gIGNvbnN0IG1haW5XaW5kb3cgPSB3aW5kb3dNYW5hZ2VyLmJyb3dzZXJXaW5kb3coe1xuICAgIG5hbWU6ICdtYWluJyxcbiAgICB3aW5kb3dOYW1lOiAnbWFpbicsXG4gICAgaGVpZ2h0OiA5MDAsXG4gICAgd2lkdGg6IDEyMDAsXG4gICAgc2hvdzogZmFsc2UsXG4gIH0pXG5cbiAgY29uc3Qgd2luID0gbWFpbldpbmRvdy5nZXRXaW5kb3coKVxuXG4gIHNreXBhZ2VyLmRlYnVnKGBMb2FkaW5nIFVSTDogJHt1cmx9YClcbiAgd2luLmxvYWRVUkwodXJsKVxuXG4gIHdpbi5vbmNlKCdyZWFkeS10by1zaG93JywgKCkgPT4gd2luLnNob3coKSlcbn0pXG5cblxuXG4vLy8vLy8vLy8vLy8vLy8vLy9cbi8vIFdFQlBBQ0sgRk9PVEVSXG4vLyAuL3NyYy9tYWluLmpzXG4vLyBtb2R1bGUgaWQgPSAuL3NyYy9tYWluLmpzXG4vLyBtb2R1bGUgY2h1bmtzID0gMCJdLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7Iiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./src/main.js\n");
 
 /***/ }),
 
 /***/ 0:
 /***/ (function(module, exports) {
 
-eval("module.exports = require(\"skypager-runtimes-electron/main.js\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMC5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy9leHRlcm5hbCBcInNreXBhZ2VyLXJ1bnRpbWVzLWVsZWN0cm9uL21haW4uanNcIj9mNjU2Il0sInNvdXJjZXNDb250ZW50IjpbIm1vZHVsZS5leHBvcnRzID0gcmVxdWlyZShcInNreXBhZ2VyLXJ1bnRpbWVzLWVsZWN0cm9uL21haW4uanNcIik7XG5cblxuLy8vLy8vLy8vLy8vLy8vLy8vXG4vLyBXRUJQQUNLIEZPT1RFUlxuLy8gZXh0ZXJuYWwgXCJza3lwYWdlci1ydW50aW1lcy1lbGVjdHJvbi9tYWluLmpzXCJcbi8vIG1vZHVsZSBpZCA9IDBcbi8vIG1vZHVsZSBjaHVua3MgPSAwIl0sIm1hcHBpbmdzIjoiQUFBQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///0\n");
+eval("module.exports = require(\"skypager-runtimes-electron\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMC5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy9leHRlcm5hbCBcInNreXBhZ2VyLXJ1bnRpbWVzLWVsZWN0cm9uXCI/MjE5MSJdLCJzb3VyY2VzQ29udGVudCI6WyJtb2R1bGUuZXhwb3J0cyA9IHJlcXVpcmUoXCJza3lwYWdlci1ydW50aW1lcy1lbGVjdHJvblwiKTtcblxuXG4vLy8vLy8vLy8vLy8vLy8vLy9cbi8vIFdFQlBBQ0sgRk9PVEVSXG4vLyBleHRlcm5hbCBcInNreXBhZ2VyLXJ1bnRpbWVzLWVsZWN0cm9uXCJcbi8vIG1vZHVsZSBpZCA9IDBcbi8vIG1vZHVsZSBjaHVua3MgPSAwIl0sIm1hcHBpbmdzIjoiQUFBQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///0\n");
 
 /***/ }),
 

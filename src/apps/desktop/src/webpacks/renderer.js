@@ -18,6 +18,10 @@ export function outputFilename() {
   return '[name].js'
 }
 
+export function moduleLocations() {
+  return [this.runtime.join('src')]
+}
+
 export function rules() {
   const { compact } = this.lodash
   const { runtime } = this
@@ -43,6 +47,21 @@ export function rules() {
   ]
 }
 
+export function externals() {
+  return {
+    'skypager-runtimes-electron': 'commonjs2 skypager-runtimes-electron/renderer.js',
+    react: 'global React',
+    'react-dom': 'global ReactDOM',
+    'react-router-dom': 'global ReactRouterDOM',
+    'semantic-ui-react': 'global semanticUIReact',
+    'prop-types': 'global PropTypes',
+    axios: 'global axios',
+    moment: 'global moment',
+    mobx: 'global skypager.mobx',
+    lodash: 'global skypager.lodash',
+  }
+}
+
 export function webpackPlugins() {
   return {
     'html-webpack-plugin': {
@@ -58,9 +77,6 @@ export function webpackPlugins() {
         flatten: false,
       },
     ],
-    ProvidePlugin: {
-      skypager: 'skypager-runtimes-electron/renderer.js',
-    },
   }
 }
 

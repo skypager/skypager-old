@@ -8,6 +8,22 @@ export function entry() {
   }
 }
 
+export function moduleLocations() {
+  return [this.runtime.join('src')]
+}
+
+export function configWasGenerated(webpackConfig) {
+  webpackConfig.node = {
+    ...(webpackConfig.node || {}),
+    dirname: false,
+    filename: false,
+    __filename: false,
+    __dirname: false,
+  }
+
+  return webpackConfig
+}
+
 export function outputPath() {
   return this.runtime.resolve('app')
 }
@@ -16,10 +32,24 @@ export function outputFilename() {
   return '[name].js'
 }
 
-export function webpackPlugins() {
+export function externals() {
   return {
-    ProvidePlugin: {
-      skypager: 'skypager-runtimes-electron/main.js',
-    },
+    'skypager-runtimes-electron': 'commonjs2 skypager-runtimes-electron',
+    'skypager-runtimes-node': 'commonjs2 skypager-runtimes-node',
+    'skypager-runtimes-development': 'commonjs2 skypager-runtimes-development',
+    axios: `commonjs2 ${this.runtime.resolve('src', 'vendor', 'axios.js')}`,
+    moment: `commonjs2 ${this.runtime.resolve('src', 'vendor', 'moment.js')}`,
+    react: `commonjs2 ${this.runtime.resolve('src', 'vendor', 'react.js')}`,
+    'react-dom': `commonjs2 ${this.runtime.resolve('src', 'vendor', 'react-dom.js')}`,
+    'react-router-dom': `commonjs2 ${this.runtime.resolve('src', 'vendor', 'react-router-dom.js')}`,
+    'semantic-ui-react': `commonjs2 ${this.runtime.resolve(
+      'src',
+      'vendor',
+      'semantic-ui-react.min.js'
+    )}`,
   }
+}
+
+export function webpackPlugins() {
+  return []
 }
