@@ -1,4 +1,4 @@
-const skypager = require('skypager-runtimes-react')
+const skypager = require('skypager-runtimes-web')
 
 skypager.parseArgv = function parseArgv(opts = {}) {
   window.__args__ = {}

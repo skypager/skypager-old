@@ -79,6 +79,33 @@ async function loadEntry(entryPath) {
     return skypager
   }
 
+  try {
+    const result = await skypager.scriptRunner.runScriptAtPath({
+      script: entryPath,
+      throwErrors: true,
+      displayErrors: true,
+    })
+    skypager.debug(`Loaded And Ran Entry`, skypager.lodash.omit(result, 'code'))
+    //skypager.debug('Current Module', { currentModule: skypager.currentModule })
+  } catch (error) {
+    skypager.error(`Error while running ${entryPath}`, {
+      message: error.message,
+      stack: error.stack,
+    })
+  }
+
+  return skypager
+}
+
+async function loadEntryOld(entryPath) {
+  skypager.debug('Loading entry', { path: entryPath })
+
+  const stat = await skypager.fsx.statAsync(entryPath)
+
+  if (stat.isDirectory()) {
+    return skypager
+  }
+
   const code = await skypager.fsx.readFileAsync(entryPath).then(b => b.toString())
 
   const runner = skypager.createCodeRunner(code, { thisContext: true })
