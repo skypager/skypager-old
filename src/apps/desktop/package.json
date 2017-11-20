@@ -1,0 +1,14 @@
+{
+  "name": "skypager-apps-desktop-editor",
+  "version": "38.0.0",
+  "main": "app/main.js",
+  "dependencies": {
+    "skypager": "^38.1.0"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^4.2.1",
+    "electron": "^1.7.9",
+    "expose-loader": "^0.7.4",
+    "friendly-errors-webpack-plugin": "^1.6.1"
+  }
+}

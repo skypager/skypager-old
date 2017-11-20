@@ -2,9 +2,7 @@
 <head>
 <meta charset="UTF-8" />
 <script type="text/javascript">
-if (typeof global === 'undefined') {
-  window.global = window
-}
+if (typeof global === 'undefined') { window.global = window; }
 </script>
 <style>
 html, body, #app {
@@ -14,19 +12,11 @@ margin: 0;
 padding: 0;
 }
 </style>
-<script>
-window.process = window.process || {}
-window.process.env = window.process.env || {}
-</script>
-<link class='template-stylesheet' rel="stylesheet" href="/semantic.min.css" />
+<link class='template-stylesheet' rel="stylesheet" href="semantic.css" />
 <script>try { window.__INITIAL_STATE__ = {}; } catch(error) { console.log('Error injecting initial state', error) }</script>
-<link href="/styles.css" rel="stylesheet"></head>
+</head>
 <body id="" class="">
 <div id="app"></div>
-<script class='dll' src="/react.min.js"></script>
-<script class='dll' src="/react-dom.min.js"></script>
-<script class='dll' src="/prop-types.min.js"></script>
-<script class='dll' src="/semantic-ui-react.min.js"></script>
-<script>require("/Users/jon/Projects/skypager/packages/skypager-runtimes-electron/renderer.js")</script>
-</body>
+<script class='dll' src="react.js"></script><script class='dll' src="react-dom.js"></script><script class='dll' src="react-router-dom.js"></script><script class='dll' src="prop-types.js"></script><script class='dll' src="semantic-ui-react.min.js"></script>
+<script type="text/javascript" src="renderer.js"></script></body>
 </html>
