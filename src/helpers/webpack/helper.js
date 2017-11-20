@@ -322,8 +322,17 @@ export class Webpack extends Helper {
   }
 
   async refreshConfig() {
-    const config = await this.generateConfig()
+    const { isEmpty } = this.lodash
+    let config = await this.generateConfig()
+
+    const result = this.attemptMethod('configWasGenerated', config)
+
+    if (!isEmpty(result)) {
+      config = result
+    }
+
     this.updateConfig(this.name, config)
+
     this.configVersion = this.configVersion + 1
     return config
   }
