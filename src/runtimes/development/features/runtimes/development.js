@@ -39,9 +39,13 @@ export function featureWasEnabled() {
 
   runtime.hideGetter('attachedDevHelpers', () => attached)
 
-  lazyAttach('webpack', () => {
+  if (runtime.commandBase === 'webpack' || runtime.argv.webpack) {
     runtime.use(require('skypager-helpers-webpack'))
-  })
+  } else {
+    lazyAttach('webpack', () => {
+      runtime.use(require('skypager-helpers-webpack'))
+    })
+  }
 
   lazyAttach('projectType', () => {
     runtime.use(require('skypager-helpers-project-type'))
