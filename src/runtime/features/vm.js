@@ -52,6 +52,7 @@ export function createCodeRunner(code, options = {}, sandbox) {
       return {
         result,
         code,
+        usedContext: vmContext ? 'vmContext' : thisContext ? 'thisContext' : 'sandboxedContext',
         hash: hashObject({ code }),
       }
     } catch (error) {

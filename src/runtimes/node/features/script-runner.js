@@ -130,7 +130,7 @@ export async function runScriptAtPath(options = {}) {
   const scriptPath = runtime.resolve(script)
   const code = await runtime.fsx.readFileAsync(scriptPath).then(b => b.toString())
 
-  return await doRun.call(this, createRunner.call(this, { code, scriptPath }))
+  return await doRun.call(this, createRunner.call(this, { ...options, code, scriptPath }))
 }
 
 export async function runPackageScript(options = {}) {
@@ -179,6 +179,8 @@ function createRunner(options = {}) {
 
     require: this.get('currentModule.require', process.mainModule.require),
 
+    __non_webpack_require__: this.get('currentModule.require', process.mainModule.require),
+
     process,
 
     print: (...args) => skypager.cli.print(...args),
@@ -191,12 +193,6 @@ function createRunner(options = {}) {
     selectChain: (...args) => skypager.selectChain(...args),
     get chain() {
       return skypager.chain
-    },
-    get directories() {
-      return skypager.fileManager.directories
-    },
-    get files() {
-      return skypager.fileManager.files
     },
     get state() {
       return skypager.currentState
