@@ -742,8 +742,24 @@ export class Runtime {
     return this
   }
 
+  whenStartedAsync() {
+    return new Promise((resolve, reject) => {
+      this.whenStarted(() => {
+        resolve(this)
+      })
+    })
+  }
+
   whenReady(fn) {
     return this.whenPrepared(fn)
+  }
+
+  whenReadyAsync() {
+    return new Promise((resolve, reject) => {
+      this.whenReady(() => {
+        resolve(this)
+      })
+    })
   }
 
   whenPrepared(fn) {
@@ -754,6 +770,14 @@ export class Runtime {
     }
 
     return this
+  }
+
+  whenPreparedAsync() {
+    return new Promise((resolve, reject) => {
+      this.whenPrepared(() => {
+        resolve(this)
+      })
+    })
   }
 
   get isPrepared() {
@@ -1051,6 +1075,10 @@ export class Runtime {
   }
 
   fireHook(hookName, ...args) {
+    if (this.argv.debugHooks) {
+      this.debug(`Firing Hook`, { hookName, argsLength: args.length })
+    }
+
     const fnHandler = this.get(['options', hookName], this.get(hookName))
 
     this.runtimeEvents.emit(`runtime:${hookName}`, this, ...args)
@@ -1061,7 +1089,13 @@ export class Runtime {
       try {
         fnHandler.call(this, ...args)
       } catch (error) {
+        this.argv.debugHooks &&
+          this.error(`Error while firing hook: ${hookName}`, { error: error.message })
         this.emit('hookError', hookName, error)
+      }
+    } else {
+      if (this.argv.debugHooks) {
+        this.debug(`No hook named ${hookName} present`)
       }
     }
 
