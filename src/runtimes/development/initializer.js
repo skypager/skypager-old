@@ -1,6 +1,10 @@
 export function initializer(next) {
   const runtime = this
 
+  if (runtime.argv.profile) {
+    runtime.profiler.profileStart('developmentRuntimeEnabled')
+  }
+
   if (runtime.state.get('devInitializerFinished')) {
     next && next.call && next()
     return
@@ -14,20 +18,7 @@ export function initializer(next) {
 
   runtime.state.set('devInitializerFinished', true)
 
-  runtime.mainScript
-    .runMainScript()
-    .then(() => {
-      next && next.call && next()
-    })
-    .catch(err => {
-      runtime.set('mainScriptError', err)
-      runtime.error(`Error running mainScript`, { error: err.message })
-
-      next && next.call && next(err)
-
-      if (runtime.argv.safeMode) {
-        console.error(`Error while running skypager main script. ${err.message}`)
-        process.exit(1)
-      }
-    })
+  if (runtime.argv.profile) {
+    runtime.profiler.profileEnd('developmentRuntimeEnabled')
+  }
 }

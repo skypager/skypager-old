@@ -10,18 +10,11 @@ export function initializer(next) {
     return
   }
 
-  runtime.feature('runtimes/node').enable()
-
-  runtime.state.set('initializerFinished', true)
-
-  runtime.mainScript
-    .runMainScript()
-    .then((result = {}) => {
-      next && next.call && next()
-    })
-    .catch(err => {
-      runtime.set('mainScriptError', err)
-      runtime.error(`Error running mainScript`, { error: err.message })
-      next && next.call && next(err)
-    })
+  try {
+    runtime.feature('runtimes/node').enable()
+    runtime.state.set('initializerFinished', true)
+    next && next.call && next()
+  } catch (error) {
+    next && next.call && next(error)
+  }
 }

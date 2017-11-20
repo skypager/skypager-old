@@ -9,7 +9,34 @@ export const featureMethods = [
   'readMainScript',
   'toModule',
   'toCodeRunner',
+  'whenReady',
 ]
+
+export function whenReady() {
+  const { runtime } = this
+
+  return new Promise((resolve, reject) => {
+    const isLoaded = runtime.state.get('mainScriptLoaded')
+    const isFailed = runtime.state.get('mainScriptError')
+
+    if (isLoaded) {
+      resolve(runtime)
+    } else if (isFailed) {
+      reject(
+        new Error(
+          runtime.get('currentState.mainScriptError.message', 'Main Script Failed when loadeing')
+        )
+      )
+    } else {
+      runtime.once('mainScriptDidLoad', () => {
+        resolve(runtime)
+        runtime.off('mainScriptDidFail')
+      })
+
+      runtime.once('mainScriptDidFail', e => reject(e))
+    }
+  })
+}
 
 export function getMainScriptType() {
   return 'script'
@@ -45,9 +72,11 @@ export async function loadMainModule(options = {}, context = {}) {
 export async function runMainScript(options = {}, context = {}) {
   const code = await this.readMainScript()
 
-  if (process.mainModule && process.mainModule.require && process.mainModule.require) {
-    context.require = context.require || process.mainModule.require
-    context.require.resolve = __non_webpack_require__.resolve
+  if (!context.require) {
+    if (process.mainModule && process.mainModule.require && process.mainModule.require) {
+      context.require = context.require || process.mainModule.require
+      context.require.resolve = __non_webpack_require__.resolve
+    }
   }
 
   return this.toCodeRunner({ code, ...options }, context)()

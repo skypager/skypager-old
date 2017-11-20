@@ -1,34 +1,38 @@
-import { relative, resolve, join } from "path"
+import { relative, resolve, join } from 'path'
 
-export const hostMethods = ["getHomeFolder"]
+export const hostMethods = ['getHomeFolder']
 
 export const featureMethods = [
-  "initializeHomeFolder",
-  "createHomePackageManifest",
-  "installHomeDependencies",
-  "linkFrameworkExecutables",
-  "installFrameworkShortcuts"
+  'initializeHomeFolder',
+  'createHomePackageManifest',
+  'installHomeDependencies',
+  'linkFrameworkExecutables',
+  'installFrameworkShortcuts',
 ]
 
 export const defaultPackageContent = {
   private: true,
-  name: "skypager-home-package",
-  description: "houses the internal skypager package system",
-  version: "1.0.0",
+  name: 'skypager-home-package',
+  description: 'houses the internal skypager package system',
+  version: '1.0.0',
   dependencies: {
-    skypager: "latest",
-    "skypager-cli-base": "latest",
-    "skypager-document-types-babel": "latest",
-    "babel-register": "latest",
-    "babel-runtime": "latest"
-  }
+    skypager: 'latest',
+    'skypager-cli-base': 'latest',
+    'skypager-document-types-babel': 'latest',
+    'babel-register': 'latest',
+    'babel-runtime': 'latest',
+  },
 }
 
 export function featureWasEnabled(options = {}) {
+  this.setupSkypagerHome(options).then(() => {})
+}
+
+export function setupSkypagerHome(options = {}) {
   const { runtime } = this
-  const { homeFolderName = ".skypager", homeFolder = homedir() } = {
+  const { homeFolderName = '.skypager', homeFolder = homedir() } = {
     ...runtime.options,
-    ...options
+    ...options,
   }
   const homeFolderPath = options.homeFolderPath || resolve(homeFolder, homeFolderName)
 
@@ -36,15 +40,15 @@ export function featureWasEnabled(options = {}) {
     .then(() => this.createHomePackageManifest())
     .catch(error => {
       runtime.error(`Error while initializing home folder`, { message: error.message })
-      this.set("initError", error)
+      this.set('initError', error)
       return {}
     })
 }
 
 export function installHomeDependencies(options = {}) {
-  return this.runtime.proc.async.spawn("npm", ["install"], {
+  return this.runtime.proc.async.spawn('npm', ['install'], {
     cwd: this.runtime.homeFolder.path,
-    ...options
+    ...options,
   })
 }
 
@@ -52,19 +56,19 @@ export async function installFrameworkShortcuts(options = {}) {}
 
 export async function linkFrameworkExecutables(options = {}) {
   await this.runtime.fsx.ensureSymlinkAsync(
-    this.runtime.homeFolder.join("node_modules", "skypager-cli-base", "skypager-cli"),
-    this.runtime.homeFolder.join("bin", "skypager-cli")
+    this.runtime.homeFolder.join('node_modules', 'skypager-cli-base', 'skypager-cli'),
+    this.runtime.homeFolder.join('bin', 'skypager-cli')
   )
 }
 
 export async function createHomePackageManifest(options = {}) {
-  const exists = await this.runtime.fsx.existsAsync(this.runtime.homeFolder.resolve("package.json"))
+  const exists = await this.runtime.fsx.existsAsync(this.runtime.homeFolder.resolve('package.json'))
 
   if (!exists) {
     await this.runtime.homeFolder.writeFileAsync(
-      this.runtime.homeFolder.join("package.json"),
+      this.runtime.homeFolder.join('package.json'),
       JSON.stringify(defaultPackageContent, null, 2),
-      "utf8"
+      'utf8'
     )
   }
 
@@ -76,7 +80,7 @@ export async function initializeHomeFolder(options = {}, context = {}) {
   const { fsx = runtime.fsx } = context
   const {
     homeFolderPath,
-    subfolders = ["logs", "src", "pkg", "bin", ".cache", ".secrets"]
+    subfolders = ['logs', 'src', 'pkg', 'bin', '.cache', '.secrets'],
   } = this.lodash.defaults({}, options, this.options)
   const { ensureDirAsync } = runtime.fsx
 
@@ -97,14 +101,14 @@ export function getHomeFolder(options = {}, context = {}) {
   const runtime = this
   const { fsx } = runtime
 
-  const { homeFolderName = ".skypager", homeFolder = homedir() } = { ...this.options, ...options }
+  const { homeFolderName = '.skypager', homeFolder = homedir() } = { ...this.options, ...options }
 
   const homeFolderPath = resolve(homeFolder, homeFolderName)
 
   const fsxMethods = Object.keys(fsx).filter(m => m.match(/sync$/i))
 
   const partialize = (...args) => {
-    if (typeof args[0] === "string") {
+    if (typeof args[0] === 'string') {
       args[0] = resolve(homeFolderPath, args[0])
     }
 
@@ -122,10 +126,10 @@ export function getHomeFolder(options = {}, context = {}) {
         ...memo,
         [meth]: (...args) => {
           return runtime.fsx[meth](...partialize(...args))
-        }
+        },
       }),
       {}
-    )
+    ),
   }
 }
 
@@ -134,16 +138,16 @@ function homedir() {
   var home = env.HOME
   var user = env.LOGNAME || env.USER || env.LNAME || env.USERNAME
 
-  if (process.platform === "win32") {
+  if (process.platform === 'win32') {
     return env.USERPROFILE || env.HOMEDRIVE + env.HOMEPATH || home || null
   }
 
-  if (process.platform === "darwin") {
-    return home || (user ? "/Users/" + user : null)
+  if (process.platform === 'darwin') {
+    return home || (user ? '/Users/' + user : null)
   }
 
-  if (process.platform === "linux") {
-    return home || (process.getuid() === 0 ? "/root" : user ? "/home/" + user : null)
+  if (process.platform === 'linux') {
+    return home || (process.getuid() === 0 ? '/root' : user ? '/home/' + user : null)
   }
 
   return home || null

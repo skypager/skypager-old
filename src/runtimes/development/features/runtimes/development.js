@@ -11,9 +11,47 @@ export function featureWasEnabled() {
   })
   **/
 
-  runtime
-    .use(require('skypager-helpers-webpack'))
-    .use(require('skypager-helpers-project-type'))
-    .use(require('skypager-helpers-document'))
-    .use(require('skypager-helpers-project'))
+  const attached = {}
+
+  const lazyAttach = (baseName, fn) => {
+    runtime.lazy(baseName, () => {
+      if (attached[baseName]) {
+        return runtime[baseName]
+      }
+
+      fn()
+      attached[baseName] = true
+
+      return runtime[baseName]
+    })
+
+    runtime.lazy(`${baseName}s`, () => {
+      if (attached[baseName]) {
+        return runtime[`${baseName}s`]
+      }
+
+      fn()
+      attached[baseName] = true
+
+      return runtime[`${baseName}s`]
+    })
+  }
+
+  runtime.hideGetter('attachedDevHelpers', () => attached)
+
+  lazyAttach('webpack', () => {
+    runtime.use(require('skypager-helpers-webpack'))
+  })
+
+  lazyAttach('projectType', () => {
+    runtime.use(require('skypager-helpers-project-type'))
+  })
+
+  lazyAttach('document', () => {
+    runtime.use(require('skypager-helpers-document'))
+  })
+
+  lazyAttach('project', () => {
+    runtime.use(require('skypager-helpers-project'))
+  })
 }
