@@ -107,6 +107,7 @@ export class Webpack extends Helper {
       externalModules: 'object',
       buildTarget: 'string',
       target: 'string',
+      target: 'string',
       moduleAliases: 'object',
       moduleLocations: 'object',
     }
@@ -487,7 +488,7 @@ export class Webpack extends Helper {
     const plugins = await this.attemptMethodAsync('webpackPlugins')
 
     if (isEmpty(plugins)) {
-      this.runtime.debug('None found')
+      //this.runtime.debug('None found')
       return this
     }
 
@@ -566,7 +567,7 @@ export class Webpack extends Helper {
 
   @computed
   get buildTarget() {
-    return this.configOption('target', 'web')
+    return this.configOption('buildTarget') || this.configOption('target', 'web')
   }
 
   @computed
@@ -1071,7 +1072,9 @@ export class Webpack extends Helper {
 
   stringifyStats(options = {}) {
     const stats = this.privateData.get('rawStats')
-    return stats ? stats.toString({ colors: true, ...options }) : 'Waiting to run.'
+    return stats
+      ? stats.toString(typeof options === 'string' ? options : { colors: true, ...options })
+      : 'Waiting to run.'
   }
 
   /**
@@ -1150,19 +1153,28 @@ export class Webpack extends Helper {
 
     @see https://webpack.js.org/configuration/watch/
   */
-  async watch(options = {}) {
+  async watch(options = {}, cb) {
     const { runtime } = this
     const compiler = await this.compiler(options)
 
     const { aggregateTimeout = 300, poll = false, ignored = /node_modules/ } = options
 
-    compiler.watch({ aggregateTimeout, ignored, poll }, function(err, stats) {
+    compiler.watch({ aggregateTimeout, ignored, poll }, (err, stats) => {
+      if (!err && stats) {
+        this._stats = stats
+      }
+
+      if (typeof cb === 'function') {
+        cb(err, stats)
+        return
+      }
+
       if (err) {
         runtime.error(`Fatal error in watcher: ${err.message}`)
         return
       }
 
-      runtime.info(`Webpack watcher success`)
+      runtime.debug(`Webpack watcher success`)
     })
   }
 

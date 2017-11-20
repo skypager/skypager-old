@@ -58,7 +58,7 @@ const discoverLocalCommands = runtime => {
 const runMatchingCommand = runtime => {
   instance = instance || runtime
   const cliHandler = runtime.matchingCommand || runtime.cliHandler
-  return cliHandler.run().then(() => cliHandler)
+  return runtime.whenPreparedAsync().then(() => cliHandler.run().then(() => cliHandler))
 }
 
 const handleExit = command => {
