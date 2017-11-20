@@ -52,6 +52,8 @@ export function featureWasEnabled(options = {}) {
     runtime.invoke('profiler.profileStart', 'loggerEnabled')
     runtime.feature('logging').enable()
     runtime.invoke('profiler.profileEnd', 'loggerEnabled')
+  } else {
+    runtime.lazy('logger', () => console)
   }
 
   runtime.lazy('opener', () => {

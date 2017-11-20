@@ -237,19 +237,23 @@ export class Runtime {
   }
 
   log(...args) {
-    this.invoke('logger.log', ...args)
+    console.log(...args)
   }
+
   warn(...args) {
-    this.invoke('logger.warn', ...args)
+    console.warn ? console.warn(...args) : console.log(...args)
   }
+
   debug(...args) {
-    this.invoke('logger.debug', ...args)
+    console.debug ? console.debug(...args) : console.log(...args)
   }
+
   error(...args) {
-    this.invoke('logger.error', ...args)
+    console.error ? console.error(...args) : console.log(...args)
   }
+
   info(...args) {
-    this.invoke('logger.info', ...args)
+    console.info ? console.info(...args) : console.log(...args)
   }
 
   constructor(options = {}, context = {}, middlewareFn) {
@@ -267,8 +271,9 @@ export class Runtime {
     enhanceObject(this, lodash)
     attachEmitter(this)
 
-    this.hide('logger', options.logger || console, true)
     this.events.emit('runtimeWasCreated', this, this.constructor)
+
+    this.lazy('logger', () => console, true)
 
     this.hideGetter('parent', () => context.parent || singleton)
 
