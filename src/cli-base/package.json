@@ -1,6 +1,6 @@
 {
   "name": "skypager-cli-base",
-  "version": "38.1.0",
+  "version": "38.2.0",
   "description": "a lightweight cli for working inside of skypager portfolios",
   "main": "index.js",
   "repository": "https://github.com/skypager/skypager",
