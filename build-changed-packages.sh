@@ -2,6 +2,7 @@ main() {
     /Users/jon/Projects/skypager/bin/run skypager-runtime buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-cli-base buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-core buildPackage
+    /Users/jon/Projects/skypager/bin/run skypager-docs-design-goals buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-helpers-bundler buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-helpers-client buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-helpers-command buildPackage

@@ -1,6 +1,6 @@
 {
   "name": "skypager-runtimes-development",
-  "version": "38.1.0",
+  "version": "38.2.0",
   "description": "skypager development",
   "main": "index.js",
   "license": "MIT",
@@ -14,11 +14,11 @@
     "skypager-document-types-babel": "^38.0.0",
     "skypager-document-types-manifest": "^37.5.0",
     "skypager-document-types-markdown": "^38.0.0",
-    "skypager-features-document-database": "^38.1.0",
-    "skypager-helpers-document": "^38.1.0",
-    "skypager-helpers-document-type": "^38.1.0",
+    "skypager-features-document-database": "^38.2.0",
+    "skypager-helpers-document": "^38.2.0",
+    "skypager-helpers-document-type": "^38.2.0",
     "skypager-helpers-project": "^37.5.0",
-    "skypager-helpers-webpack": "^38.1.0",
-    "skypager-runtimes-node": "^38.1.0"
+    "skypager-helpers-webpack": "^38.2.0",
+    "skypager-runtimes-node": "^38.2.0"
   }
 }

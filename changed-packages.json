@@ -2,6 +2,7 @@
   "skypager",
   "skypager-cli-base",
   "skypager-core",
+  "skypager-docs-design-goals",
   "skypager-runtime",
   "skypager-helpers-bundler",
   "skypager-helpers-client",

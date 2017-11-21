@@ -1,8 +1,9 @@
 main() {
-    lerna publish --skip-npm --yes --repo-version=38.1.0
+    lerna publish --skip-npm --yes --repo-version=38.2.0
     /Users/jon/Projects/skypager/bin/run skypager-runtime buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-cli-base buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-core buildPackage
+    /Users/jon/Projects/skypager/bin/run skypager-docs-design-goals buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-helpers-bundler buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-helpers-client buildPackage
     /Users/jon/Projects/skypager/bin/run skypager-helpers-command buildPackage
@@ -26,6 +27,7 @@ main() {
     bin/export
     cd /Users/jon/Projects/skypager/packages/skypager-cli-base && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-core && npm publish
+    cd /Users/jon/Projects/skypager/packages/skypager-docs-design-goals && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-runtime && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-helpers-bundler && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-helpers-client && npm publish

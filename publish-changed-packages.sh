@@ -1,6 +1,7 @@
 main() {
     cd /Users/jon/Projects/skypager/packages/skypager-cli-base && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-core && npm publish
+    cd /Users/jon/Projects/skypager/packages/skypager-docs-design-goals && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-runtime && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-helpers-bundler && npm publish
     cd /Users/jon/Projects/skypager/packages/skypager-helpers-client && npm publish
