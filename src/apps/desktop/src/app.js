@@ -1,7 +1,10 @@
 import { React, Component, types, skypager, ReactRouterDOM } from './globals'
 import Home from './pages/Home/Home'
+import PackageBrowser from './pages/PackageBrowser/PackageBrowser'
+import Console from './pages/Console/Console'
+import SidebarLayout from 'layouts/SidebarLayout'
 
-const { MemoryRouter: Router } = ReactRouterDOM
+const { Route, Switch, MemoryRouter: Router } = ReactRouterDOM
 
 export class App extends Component {
   static childContextTypes = {
@@ -37,11 +40,16 @@ export class App extends Component {
   }
 
   render() {
-    const main = this.props.runtime.electronMain
+    const { runtime } = this.props
+    const { menuItems = [] } = runtime.currentState
 
     return (
       <Router>
-        <Route path="/" component={Home} />
+        <SidebarLayout visible sidebarWidth="thin" menuItems={menuItems}>
+          <Route exact path="/" component={Home} />
+          <Route path="/package-browser" component={PackageBrowser} />
+          <Route path="/console" component={Console} />
+        </SidebarLayout>
       </Router>
     )
   }

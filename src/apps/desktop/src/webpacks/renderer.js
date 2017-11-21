@@ -2,11 +2,18 @@ export const target = 'electron-renderer'
 
 export function entry() {
   const { runtime } = this
+  const { hot = false, host = 'localhost', port = 3000 } = runtime.argv
 
   const rendererPath = runtime.join('src', 'renderer.js')
 
+  const hotEntries = [
+    'react-hot-loader/patch',
+    `webpack-dev-server/client?http://${host}:${port}`,
+    'webpack/hot/only-dev-server',
+  ]
+
   return {
-    renderer: [`expose-loader?runtime!${rendererPath}`],
+    renderer: [...(hot ? hotEntries : []), rendererPath],
   }
 }
 
@@ -30,11 +37,7 @@ export function rules() {
     {
       name: 'babel',
       test: /\.js$/,
-      exclude: [
-        /node_modules/,
-        this.runtime.join('node_modules'),
-        this.runtime.join('src/templates'),
-      ],
+      exclude: [/node_modules/, runtime.join('node_modules'), runtime.join('src/templates')],
       use: compact([
         {
           loader: 'babel-loader',

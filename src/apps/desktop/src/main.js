@@ -22,4 +22,8 @@ skypager.whenStarted(() => {
   win.loadURL(url)
 
   win.once('ready-to-show', () => win.show())
+
+  if (skypager.argv.interactive || skypager.argv.repl) {
+    skypager.repl('interactive').launch()
+  }
 })
