@@ -1,7 +1,14 @@
-const skypager = require('skypager-runtimes-node')
 const electron = require('electron')
+let skypager
 
-module.exports = skypager
+if (process.env.SKYPAGER_DEV) {
+  require('skypager-runtimes-node')
+  skypager = require('skypager-runtimes-development')
+} else {
+  skypager = require('skypager-runtimes-node')
+}
+
+module.exports = global.skypager = skypager
 
 skypager.electron = electron
 

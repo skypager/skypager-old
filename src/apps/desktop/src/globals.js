@@ -9,9 +9,13 @@ const injections = Object.assign({}, semanticUIReact, {
   Row: semanticUIReact.GridRow,
   Column: semanticUIReact.GridCol,
   Component: React.Component,
+  Inspect: (props = {}) => {
+    return <pre>{JSON.stringify(props, null, 2)}</pre>
+  },
   types: PropTypes,
   skypager,
   runtime: skypager,
+  mainRuntime: skypager.electronMain,
   lodash: skypager.lodash,
   React,
   ReactDOM,

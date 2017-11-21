@@ -1,6 +1,6 @@
-import skypager, { Runtime } from "skypager-runtime"
-import { start } from "repl"
-import Promise from "bluebird"
+import skypager, { Runtime } from 'skypager-runtime'
+import { start } from 'repl'
+import Promise from 'bluebird'
 
 const { Helper } = Runtime
 const { createContextRegistry } = Helper
@@ -22,98 +22,106 @@ export class Repl extends Helper {
     privates.fetch = (key, fn) => {
       if (privates.has(key)) {
         return privates.get(key)
-      } else if (fn && typeof fn === "function") {
+      } else if (fn && typeof fn === 'function') {
         const result = fn(key)
 
         if (result) {
           privates.set(key, result)
           return result
         }
-      } else if (fn && typeof fn !== "function") {
+      } else if (fn && typeof fn !== 'function') {
         privates.set(key, fn)
         return fn
       }
     }
 
-    this.hideGetter("privates", () => privates)
+    this.hideGetter('privates', () => privates)
+
+    let replServer
+
+    this.hideGetter('replServer', () => {
+      this.repl
+      replServer
+    })
 
     this.lazy(
-      "repl",
+      'repl',
       () => {
-        this.attemptMethod("replWillCreate", this.replOptions)
+        try {
+          this.attemptMethod('replWillCreate', this.replOptions)
 
-        const replServer = this.createReplServer()
+          replServer = this.createReplServer()
 
-        const serverContext = this.buildContext(replServer.context)
+          //const serverContext = this.buildContext(replServer.context)
 
-        replServer.on("reset", ctx => {
-          this.attemptMethod("replDidReset", ctx, replServer)
-          const newContext = this.buildContext({})
-        })
+          replServer.on('reset', ctx => {
+            this.attemptMethod('replDidReset', ctx, replServer)
+            //const newContext = this.buildContext({})
+          })
 
-        replServer.on("exit", this.replDidExit.bind(this))
+          replServer.on('exit', this.replDidExit.bind(this))
 
-        this.attemptMethod("replWasCreated", replServer)
-
-        return replServer
+          this.attemptMethod('replWasCreated', replServer)
+        } catch (error) {}
       },
       true
     )
   }
 
   get replOptions() {
-    const replOptions = this.privates.get("replOptions")
+    const replOptions = this.privates.get('replOptions')
     if (replOptions) {
       return replOptions
     }
-    return this.privates.fetch("replOptions", () => this.buildReplOptions())
+
+    return this.privates.fetch('replOptions', () => this.buildReplOptions())
   }
 
   buildReplOptions(i = {}) {
     const toObj = val =>
-      typeof val === "function" ? val.call(this, this.options, this.context) : val || {}
-    const suppliedAsOptions = toObj(this.get("options.replOptions", () => ({})))
-    const suppliedByProvider = toObj(this.get("provider.replOptions", () => ({})))
+      typeof val === 'function' ? val.call(this, this.options, this.context) : val || {}
+    const suppliedAsOptions = toObj(this.get('options.replOptions', () => ({})))
+    const suppliedByProvider = toObj(this.get('provider.replOptions', () => ({})))
 
     const replOptions = defaults({}, i, suppliedAsOptions, suppliedByProvider, {
-      useGlobal: this.tryGet("useGlobal", false),
-      ignoreUndefined: this.tryGet("ignoreUndefined", true),
-      colors: this.tryGet("colors", true),
-      terminal: this.tryGet("isTerminal", true)
+      useGlobal: this.tryGet('useGlobal', false),
+      ignoreUndefined: this.tryGet('ignoreUndefined', true),
+      colors: this.tryGet('colors', true),
+      terminal: this.tryGet('isTerminal', true),
     })
 
-    if (!replOptions.eval && !this.tryGet("evalFn")) {
+    if (!replOptions.eval && !this.tryGet('evalFn')) {
       replOptions.eval = this.promiseEvalFn
     }
 
-    if (!replOptions.writer && this.tryGet("writerFn")) {
-      replOptions.writer = this.tryGet("writerFn")
+    if (!replOptions.writer && this.tryGet('writerFn')) {
+      replOptions.writer = this.tryGet('writerFn')
     }
 
     return replOptions
   }
 
   replDidExit() {
-    if (this.tryGet("replDidExit")) return this.callMethod("replDidExit")
-    this.runtime.fireHook("replDidExit", this, this.repl)
+    if (this.tryGet('replDidExit')) return this.callMethod('replDidExit')
+    this.runtime.fireHook('replDidExit', this, this.repl)
   }
 
   launch(context = {}) {
-    this.attemptMethod("replWillLaunch")
+    this.attemptMethod('replWillLaunch')
 
-    this.attemptMethod("displayBanner")
+    this.attemptMethod('displayBanner')
 
     this.updateContext(context)
 
-    this.attemptMethod("displayHelp")
+    this.attemptMethod('displayHelp')
 
-    this.attemptMethod("replDidLaunch")
+    this.attemptMethod('replDidLaunch')
 
     return this
   }
 
   get cli() {
-    return require("skypager-repl/dist/cli").default
+    return require('skypager-repl/dist/cli').default
   }
 
   processCommand(commandInput) {
@@ -121,7 +129,7 @@ export class Repl extends Helper {
   }
 
   resetContext(newContextValues = {}) {
-    this.invoke("repl.reset")
+    this.invoke('repl.reset')
 
     Object.keys(this.repl.context).forEach(key => {
       delete this.repl.context[key]
@@ -129,7 +137,7 @@ export class Repl extends Helper {
 
     this.updateContext({
       ...this.buildContext(this.repl.context),
-      ...newContextValues
+      ...newContextValues,
     })
 
     return this
@@ -152,18 +160,19 @@ export class Repl extends Helper {
       configurable: true,
       get() {
         return value
-      }
+      },
     })
 
     return this
   }
 
   buildContext(context = {}) {
-    const builder = this.tryGet("buildContext")
+    const builder = this.tryGet('buildContext')
 
-    const built = typeof builder === "function"
-      ? builder.call(this, context, this.context)
-      : { ...this.context, ...context, ...(builder || {}) }
+    const built =
+      typeof builder === 'function'
+        ? builder.call(this, context, this.context)
+        : { ...this.context, ...context, ...(builder || {}) }
 
     Object.keys(built).forEach(key => {
       Object.defineProperty(context, key, {
@@ -171,7 +180,7 @@ export class Repl extends Helper {
         configurable: true,
         get() {
           return built[key]
-        }
+        },
       })
     })
 
@@ -179,38 +188,65 @@ export class Repl extends Helper {
   }
 
   get isAsync() {
-    return this.tryResult("isAsync", true)
+    return this.tryResult('isAsync', true)
   }
 
   get evalTimeout() {
-    return this.tryGet("evalTimeout", 5000)
+    return this.tryGet('evalTimeout', 5000)
   }
 
   get codeRunner() {
     if (!this.currentCodeRunner) {
       return this.defaultEvalFn
-    } else if (typeof this.currentCodeRunner === "string") {
+    } else if (typeof this.currentCodeRunner === 'string') {
       return this.runners.lookup(this.currentCodeRunner).run.bind(this)
-    } else if (typeof this.currentCodeRunner === "function") {
+    } else if (typeof this.currentCodeRunner === 'function') {
       return this.currentCodeRunner.bind(this)
     }
   }
 
-  createReplServer(options = {}, callback) {
-    try {
-      const input = this.tryResult("input", () => process && process.stdin)
-      const output = this.tryResult("output", () => process && process.output)
-      const replServer = start(defaults({}, options, this.replOptions, { input, output }))
+  get replOutput() {
+    if (this.privates.has('replOutput')) {
+      return this.privates.get('replOutput')
+    }
 
-      if (typeof callback === "function") {
+    const output = this.tryResult('output', this.tryResult('replOutput', () => process.stdout))
+
+    this.privates.set('replOutput', output)
+
+    return output
+  }
+
+  get replInput() {
+    if (this.privates.has('replInput')) {
+      return this.privates.get('replInput')
+    }
+
+    const input = this.tryResult('input', this.tryResult('replInput', () => process.stdin))
+
+    this.privates.set('replInput', input)
+
+    return input
+  }
+
+  createReplServer(options = {}, callback) {
+    this.privates.set(
+      'createOptions',
+      defaults({}, options, this.replOptions, { input: this.replInput, output: this.replOutput })
+    )
+
+    try {
+      const replServer = start(this.privates.get('createOptions'))
+
+      if (typeof callback === 'function') {
         callback.call(this, null, replServer)
       }
 
       return replServer
     } catch (error) {
-      this.runtime.error("Error creating REPL Server", { message: error.message })
+      this.runtime.error('Error creating REPL Server', { message: error.message })
 
-      if (typeof callback === "function") {
+      if (typeof callback === 'function') {
         callback.call(this, error)
       } else {
         throw error
@@ -219,12 +255,12 @@ export class Repl extends Helper {
   }
 
   get vmRunner() {
-    const runner = this.runners.lookup("vm").run
+    const runner = this.runners.lookup('vm').run
     return runner.bind(this)
   }
 
   get defaultEvalFn() {
-    const runner = this.runners.lookup("vm").run
+    const runner = this.runners.lookup('vm').run
     return runner.bind(this)
   }
 
@@ -241,19 +277,19 @@ export class Repl extends Helper {
   }
 
   createRunner(options = {}) {
-    const { type = "vm" } = options
+    const { type = 'vm' } = options
 
     try {
       const runner = this.runners.lookup(type)
 
-      return runner && runner.run ? runner.run.bind(this) : this.runners.lookup("vm").run.bind(this)
+      return runner && runner.run ? runner.run.bind(this) : this.runners.lookup('vm').run.bind(this)
     } catch (error) {
       return code => `There was an error building the REPL runner: ${error.message}`
     }
   }
 
   createDefaultEvalFn() {
-    const runner = this.runners.lookup("vm").run
+    const runner = this.runners.lookup('vm').run
     return runner.bind(this)
   }
 
@@ -270,7 +306,7 @@ export class Repl extends Helper {
   }
 
   setTimeoutWarning() {
-    console.log("timeout warning")
+    console.log('timeout warning')
   }
 
   finishWaiting() {
@@ -291,7 +327,7 @@ export class Repl extends Helper {
       }
 
       // if the result isn't a promise then handle it and move on
-      if (result && typeof result.then !== "function") {
+      if (result && typeof result.then !== 'function') {
         return callback(null, term.handleEvalResult.call(term, result, command, context))
       } else if (!result) {
         return callback(null, term.handleEvalResult.call(term, result, command, context))
@@ -299,7 +335,7 @@ export class Repl extends Helper {
 
       term.waitForResult(callback)
 
-      if (result && typeof result.then === "function") {
+      if (result && typeof result.then === 'function') {
         Promise.resolve(result)
           .then(val => {
             callback(null, term.handleEvalResult.call(term, val, command, context))
@@ -317,16 +353,16 @@ export class Repl extends Helper {
 
   handleEvalError(error, command, context) {
     this.finishWaiting()
-    this.fireHook("receivedError", error, command, context, this)
+    this.fireHook('receivedError', error, command, context, this)
     return error
   }
 
   set unwrapLodash(val) {
-    this.privates.set("unwrapLodash", !!val)
+    this.privates.set('unwrapLodash', !!val)
   }
 
   get unwrapLodash() {
-    return !!this.privates.get("unwrapLodash")
+    return !!this.privates.get('unwrapLodash')
   }
 
   handleEvalResult(result, command, context) {
@@ -337,15 +373,15 @@ export class Repl extends Helper {
         this.unwrapLodash &&
         result &&
         result.value &&
-        typeof result.value === "function" &&
+        typeof result.value === 'function' &&
         result.constructor &&
-        result.constructor.name === "LodashWrapper"
+        result.constructor.name === 'LodashWrapper'
       ) {
         result = result.value()
       }
     } catch (error) {}
 
-    this.fireHook("receivedResult", result, command, context, this)
+    this.fireHook('receivedResult', result, command, context, this)
 
     return result
   }
@@ -367,7 +403,7 @@ export class Repl extends Helper {
         help,
         action(...args) {
           return action.call(c, ...args.push(options))
-        }
+        },
       })
 
       this.loadedCommands.push(commandId)
@@ -385,7 +421,7 @@ export class Repl extends Helper {
       const provider = this.extensions.lookup(extensionId)
       const ext = provider.default ? provider.default : provider
 
-      if (typeof ext === "function") {
+      if (typeof ext === 'function') {
         ext.call(this, repl, options, ...args)
       }
 
@@ -398,9 +434,9 @@ export class Repl extends Helper {
   validateExtension(provider) {
     provider = provider.default ? provider.default : provider
 
-    if (typeof provider !== "function") {
+    if (typeof provider !== 'function') {
       throw new Error(
-        "Repl extensions should be functions which are passed an instance of the console"
+        'Repl extensions should be functions which are passed an instance of the console'
       )
     }
   }
@@ -408,16 +444,16 @@ export class Repl extends Helper {
   validateCommand(provider = {}) {
     const { help, command, action } = provider
 
-    if (typeof action !== "function") {
-      throw new Error("Command extensions should export an action function")
+    if (typeof action !== 'function') {
+      throw new Error('Command extensions should export an action function')
     }
 
-    if (typeof help === "undefined") {
-      throw new Error("Command extensions should export a short message via the help property")
+    if (typeof help === 'undefined') {
+      throw new Error('Command extensions should export a short message via the help property')
     }
 
-    if (typeof command === "undefined") {
-      throw new Error("Command extensions should export a command string property")
+    if (typeof command === 'undefined') {
+      throw new Error('Command extensions should export a command string property')
     }
   }
 
@@ -457,38 +493,38 @@ export class Repl extends Helper {
     return this.constructor.displays
   }
 
-  static extensions = createContextRegistry("extensions", {
-    context: require.context("./extensions", true, /\.js$/)
+  static extensions = createContextRegistry('extensions', {
+    context: require.context('./extensions', true, /\.js$/),
   })
 
-  static commands = createContextRegistry("commands", {
-    context: require.context("./commands", true, /\.js$/)
+  static commands = createContextRegistry('commands', {
+    context: require.context('./commands', true, /\.js$/),
   })
 
-  static runners = createContextRegistry("runners", {
-    context: require.context("./runners", true, /\.js$/)
+  static runners = createContextRegistry('runners', {
+    context: require.context('./runners', true, /\.js$/),
   })
 
-  static displays = createContextRegistry("displays", {
-    context: require.context("./displays", true, /\.js$/)
+  static displays = createContextRegistry('displays', {
+    context: require.context('./displays', true, /\.js$/),
   })
 
   static isCacheable = true
 
   static attach(host, options = {}) {
     const {
-      registryProp = "repls",
-      lookupProp = "repl",
-      registry = createContextRegistry("repls", {
-        context: require.context("../../repls", false, /\.js$/)
-      })
+      registryProp = 'repls',
+      lookupProp = 'repl',
+      registry = createContextRegistry('repls', {
+        context: require.context('../../repls', false, /\.js$/),
+      }),
     } = options
 
     return Helper.attach(host, Repl, {
       lookupProp,
       registryProp,
       registry,
-      ...options
+      ...options,
     })
   }
 }
@@ -496,8 +532,8 @@ export class Repl extends Helper {
 export default Repl
 
 export const registerHelper = () => {
-  if (Helper.registry.available.indexOf("repl") === -1) {
-    Helper.registerHelper("repl", () => Repl)
+  if (Helper.registry.available.indexOf('repl') === -1) {
+    Helper.registerHelper('repl', () => Repl)
   }
 }
 

@@ -39,7 +39,7 @@ export function featureWasEnabled() {
 
   runtime.hideGetter('attachedDevHelpers', () => attached)
 
-  if (runtime.commandBase === 'webpack' || runtime.argv.webpack) {
+  if (runtime.commandBase === 'webpack' || runtime.argv.webpack || runtime.argv.SKYPAGER_DEV) {
     runtime.use(require('skypager-helpers-webpack'))
   } else {
     lazyAttach('webpack', () => {

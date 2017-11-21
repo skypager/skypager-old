@@ -75,17 +75,23 @@ export async function run(options = {}) {
   ])
   */
 
+  const electronArgs = [
+    entryPath,
+    '--require',
+    runtime.packageFinder.attemptResolve('skypager-runtimes-electron/entry.js'),
+    ...process.argv.slice(3),
+  ]
+
+  console.log('Electron Args', electronArgs)
+
   try {
-    const child = spawn(
-      __non_webpack_require__(electron),
-      [
-        entryPath,
-        '--require',
-        runtime.packageFinder.attemptResolve('skypager-runtimes-electron/entry.js'),
-        ...process.argv.slice(3),
-      ],
-      { stdio: 'inherit', env: defaults({}, process.env, { ELECTRON_NO_ASAR: true }) }
-    )
+    const child = spawn(__non_webpack_require__(electron), electronArgs, {
+      stdio: 'inherit',
+      env: defaults({}, process.env, {
+        SKYPAGER_DEV: !!runtime.argv.dev,
+        ELECTRON_NO_ASAR: true,
+      }),
+    })
 
     child.on('close', function(code) {
       process.exit(code)
