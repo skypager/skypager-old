@@ -1,6 +1,10 @@
-async function registerHelpers() {
-  skypager.webpacks.register('renderer', () => require('./src/webpacks/renderer.js'))
-  skypager.webpacks.register('main', () => require('./src/webpacks/main.js'))
+function registerHelpers() {
+  const { webpacks } = skypager
+
+  webpacks.register('renderer', () => require('./src/webpacks/renderer.js'))
+  webpacks.register('main', () => require('./src/webpacks/main.js'))
+
+  return webpacks
 }
 
 registerHelpers().then(() => {

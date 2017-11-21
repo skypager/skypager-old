@@ -34,9 +34,7 @@ export function outputFilename() {
 
 export function externals() {
   return {
-    'skypager-runtimes-electron': 'commonjs2 skypager-runtimes-electron',
-    'skypager-runtimes-node': 'commonjs2 skypager-runtimes-node',
-    'skypager-runtimes-development': 'commonjs2 skypager-runtimes-development',
+    'skypager-runtimes-electron': 'global skypager',
     axios: `commonjs2 ${this.runtime.resolve('src', 'vendor', 'axios.js')}`,
     moment: `commonjs2 ${this.runtime.resolve('src', 'vendor', 'moment.js')}`,
     react: `commonjs2 ${this.runtime.resolve('src', 'vendor', 'react.js')}`,
