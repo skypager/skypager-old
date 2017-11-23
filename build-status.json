@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "31fa111a087455eded15e26e3436aef1682d8f8e",
-    "abbreviatedSha": "31fa111a08",
+    "sha": "e10736f1943bc62c4dd1d3dbff3cd56349d2175b",
+    "abbreviatedSha": "e10736f194",
     "branch": "develop",
-    "tag": "v38.2.0",
+    "tag": "v38.3.1",
     "root": "/Users/jon/Projects/skypager"
   },
   "packages": {
@@ -31,7 +31,7 @@
     },
     "skypager-runtimes-universal": {
       "success": false,
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-runtimes-universal",
       "package": {
         "success": true,
@@ -86,7 +86,7 @@
     },
     "skypager-helpers-document": {
       "success": false,
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-helpers-document",
       "package": {
         "success": true,
@@ -97,7 +97,7 @@
     },
     "skypager-runtimes-react": {
       "success": false,
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-runtimes-react",
       "bundle": {
         "success": true,
@@ -125,7 +125,7 @@
     },
     "skypager-helpers-service": {
       "success": true,
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-helpers-service",
       "package": {
         "success": true,
@@ -147,7 +147,7 @@
     },
     "skypager-helpers-page": {
       "success": true,
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-helpers-page",
       "package": {
         "success": true,
@@ -158,7 +158,7 @@
     },
     "skypager-helpers-document-type": {
       "success": true,
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-helpers-document-type",
       "package": {
         "success": true,
@@ -169,7 +169,7 @@
     },
     "skypager-helpers-client": {
       "success": true,
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-helpers-client",
       "package": {
         "success": true,
@@ -180,7 +180,7 @@
     },
     "skypager-helpers-server": {
       "success": true,
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-helpers-server",
       "package": {
         "success": true,
@@ -191,7 +191,7 @@
     },
     "skypager-helpers-bundler": {
       "success": true,
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-helpers-bundler",
       "package": {
         "success": true,
@@ -202,7 +202,7 @@
     },
     "skypager-helpers-repl": {
       "success": true,
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-helpers-repl",
       "package": {
         "success": true,
@@ -213,7 +213,7 @@
     },
     "skypager-helpers-command": {
       "success": false,
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-helpers-command",
       "package": {
         "success": true,
@@ -224,7 +224,7 @@
     },
     "skypager-runtimes-web": {
       "success": false,
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-runtimes-web",
       "bundle": {
         "success": true,
@@ -241,7 +241,7 @@
     },
     "skypager-runtimes-node": {
       "success": false,
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-runtimes-node",
       "package": {
         "success": true,
@@ -263,7 +263,7 @@
     },
     "skypager-runtime": {
       "success": false,
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-runtime",
       "bundle": {
         "success": true,
@@ -299,7 +299,7 @@
     },
     "skypager-runtimes-development": {
       "success": false,
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-runtimes-development",
       "package": {
         "success": true,
@@ -347,7 +347,7 @@
       "success": false
     },
     "skypager-core": {
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-core",
       "package": {
         "success": true,
@@ -425,7 +425,7 @@
       "success": false
     },
     "skypager-features-document-database": {
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-features-document-database",
       "package": {
         "success": true,
@@ -435,7 +435,7 @@
       }
     },
     "skypager-runtimes-electron": {
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-runtimes-electron",
       "package": {
         "success": true,
@@ -561,7 +561,7 @@
       "success": false
     },
     "skypager-helpers-context": {
-      "version": "38.2.0",
+      "version": "38.3.1",
       "name": "skypager-helpers-context",
       "package": {
         "success": true,

@@ -1,23 +1,26 @@
-import * as runtimeModel from "./runtime"
-import mapValues from "lodash/mapValues"
-import flatten from "lodash/flatten"
-import pickBy from "lodash/pickBy"
-import set from "lodash/set"
-import get from "lodash/get"
-import semver from "semver"
-import { relative } from "path"
+import * as runtimeModel from './runtime'
+import mapValues from 'lodash/mapValues'
+import flatten from 'lodash/flatten'
+import pickBy from 'lodash/pickBy'
+import set from 'lodash/set'
+import get from 'lodash/get'
+import semver from 'semver'
+import { relative } from 'path'
 
 const { keys } = Object
 
-export const routes = ["src/:subfolders+/package.json"]
+export const routes = ['src/:subfolders+/package.json']
 
 export const collectionMethods = (options, context) => ({
   findBy(fn) {
-    return this.instanceChain.values().filter(fn.bind(this)).value()
+    return this.instanceChain
+      .values()
+      .filter(fn.bind(this))
+      .value()
   },
 
   findByName(name) {
-    return this.keyBy("name")[name]
+    return this.keyBy('name')[name]
   },
 
   findDependentsOf(name) {
@@ -35,9 +38,10 @@ export const collectionMethods = (options, context) => ({
     const deps = this.findDependentsOf(packageName)
     const pkg = this.findByName(packageName)
 
-    updatedVersion = typeof updatedVersion === "string"
-      ? updatedVersion
-      : typeof updatedVersion === "object" ? pkg.version : false
+    updatedVersion =
+      typeof updatedVersion === 'string'
+        ? updatedVersion
+        : typeof updatedVersion === 'object' ? pkg.version : false
 
     if (!updatedVersion) {
       return false
@@ -49,7 +53,7 @@ export const collectionMethods = (options, context) => ({
       let [target, location, version] = loc
       const dep = model.findByName(depName)
 
-      version = version.replace(/^\^/, "")
+      version = version.replace(/^\^/, '')
 
       if (dep && !semver.eq(version, updatedVersion) && dep.updatePackage) {
         model.runtime.debug(
@@ -61,12 +65,15 @@ export const collectionMethods = (options, context) => ({
     })
   },
 
-  keyBy(prop = "name") {
+  keyBy(prop = 'name') {
     return this.instanceChain.keyBy(prop).value()
   },
 
   getVersionMap() {
-    return this.instanceChain.keyBy("name").mapValues("version").value()
+    return this.instanceChain
+      .keyBy('name')
+      .mapValues('version')
+      .value()
   },
 
   getMutualDependencyEntries() {
@@ -89,29 +96,33 @@ export const collectionMethods = (options, context) => ({
 
   getDependencyEntries() {
     return this.instanceChain
-      .keyBy("name")
+      .keyBy('name')
       .mapValues(v => {
         const {
           dependencies = {},
           devDependencies = {},
           optionalDependencies = {},
-          peerDependencies = {}
+          peerDependencies = {},
         } = v
         const deps = { dependencies, devDependencies, optionalDependencies, peerDependencies }
         const entries = type => keys(deps[type]).map(dep => [dep, type, deps[type][dep]])
 
-        return flatten(keys(deps).map(type => entries(type)).filter(i => i.length > 0))
+        return flatten(
+          keys(deps)
+            .map(type => entries(type))
+            .filter(i => i.length > 0)
+        )
       })
       .value()
-  }
+  },
 })
 
 async function preparePackageFolder(project) {
-  await project.fsx.mkdirpAsync(project.resolve("packages", this.name))
+  await project.fsx.mkdirpAsync(project.resolve('packages', this.name))
 
   await project.fsx.copyAsync(
     project.resolve(this.baseRelativePath),
-    project.resolve("packages", this.name, "package.json")
+    project.resolve('packages', this.name, 'package.json')
   )
 
   //await project.fsx.copyAsync(project.resolve(this.relativeDirname), project.resolve("packages", this.name, "src"))
@@ -125,23 +136,28 @@ export function instanceMethods(options = {}, context = {}) {
     checkPublishedVersions() {
       const cwd = project.resolve(this.relativeDirname)
 
-      const published = require("child_process")
-        .execSync("npm dist-tag ls", {
-          cwd
+      const published = require('child_process')
+        .execSync('npm dist-tag ls', {
+          cwd,
         })
         .toString()
         .trim()
-        .split("\n")
+        .split('\n')
         .filter(line => line.match(/latest/i))
-        .map(line => line.split(":").pop().trim())
-        .join("\n")
+        .map(line =>
+          line
+            .split(':')
+            .pop()
+            .trim()
+        )
+        .join('\n')
 
       const current = this.version
 
       return {
         published,
         current,
-        outdated: current !== published
+        outdated: current !== published,
       }
     },
 
@@ -158,7 +174,7 @@ export function instanceMethods(options = {}, context = {}) {
 
     remove(key) {
       const pkg = this.readPackage()
-      key = typeof key === "string" ? key.split(".") : key
+      key = typeof key === 'string' ? key.split('.') : key
       const objKey = key.slice(0, key.length - 1)
       const obj = get(pkg, objKey)
 
@@ -198,16 +214,16 @@ export function instanceMethods(options = {}, context = {}) {
       const { project } = context
 
       const sourceRoot = project.join(this.relativeDirname)
-      const outputPath = project.resolve("packages", this.name)
+      const outputPath = project.resolve('packages', this.name)
 
       const currentVersion = this.version
       const packageSettings = this.skypager || {}
 
       const {
-        baseCompiler = project.get("argv.baseCompiler", "node"),
+        baseCompiler = project.get('argv.baseCompiler', 'node'),
         entryPoints = this.entryPoints
           ? mapValues(this.entryPoints, v => (v.match(/.js$/) ? project.resolve(sourceRoot, v) : v))
-          : { index: project.resolve(sourceRoot, "index.js") }
+          : { index: project.resolve(sourceRoot, 'index.js') },
       } = options
 
       const { externals, aliases } = this
@@ -216,7 +232,7 @@ export function instanceMethods(options = {}, context = {}) {
       if (copy.length > 0) {
         copy = copy.map(v => ({
           from: v,
-          to: outputPath
+          to: outputPath,
         }))
       }
 
@@ -225,38 +241,38 @@ export function instanceMethods(options = {}, context = {}) {
           assetManifest: true,
           cacheHelper: false,
           postProcessors() {},
-          ...options
+          ...options,
         })
         .configure(cfg => {
           return cfg
             .entry(entryPoints)
             .modules(project.resolve(this.relativeDirname))
-            .modules(project.resolve("packages"))
-            .externals(project.resolve(this.relativeDirname, "node_modules"))
-            .externals(project.resolve(this.relativeDirname, "package.json"))
-            .externals(project.resolve("packages", this.name, "package.json"))
-            .externals(project.resolve("package.json"))
-            .externals(project.resolve("node_modules"))
-            .alias("skypager-runtime/lib", project.join("src", "runtime"))
-            .alias("lodash", project.join("node_modules/lodash"))
+            .modules(project.resolve('packages'))
+            .externals(project.resolve(this.relativeDirname, 'node_modules'))
+            .externals(project.resolve(this.relativeDirname, 'package.json'))
+            .externals(project.resolve('packages', this.name, 'package.json'))
+            .externals(project.resolve('package.json'))
+            .externals(project.resolve('node_modules'))
+            .alias('skypager-runtime/lib', project.join('src', 'runtime'))
+            .alias('lodash', project.join('node_modules/lodash'))
             .output({
-              path: project.resolve("packages", this.name),
-              libraryTarget: "umd"
+              path: project.resolve('packages', this.name),
+              libraryTarget: 'umd',
             })
             .when(externals, c => c.externals(externals))
             .when(aliases, c => c.alias(aliases))
             .when(copy.length > 0, c => c.copy(copy))
-            .when(typeof options.cfg === "function", options.cfg)
-            .plugin("webpack.DefinePlugin", {
-              [`process.env.${this.name.replace(/\-/g, "_").toUpperCase()}`]: JSON.stringify(
+            .when(typeof options.cfg === 'function', options.cfg)
+            .plugin('webpack.DefinePlugin', {
+              [`process.env.${this.name.replace(/\-/g, '_').toUpperCase()}`]: JSON.stringify(
                 this.name
               ),
               __PACKAGE__: JSON.stringify({
                 ...packageSettings,
                 version: currentVersion,
                 sha: project.gitInfo.sha,
-                branch: project.gitInfo.branch
-              })
+                branch: project.gitInfo.branch,
+              }),
             })
         })
     },
@@ -268,7 +284,7 @@ export function instanceMethods(options = {}, context = {}) {
     async compilerConfigs(opts = {}) {
       return await this.runCompilers({
         ...opts,
-        configOnly: true
+        configOnly: true,
       })
     },
 
@@ -276,9 +292,9 @@ export function instanceMethods(options = {}, context = {}) {
       const { print } = project.cli
 
       print(
-        `Building package ${this.name} ${this.version} ${this.compilers
-          ? "with custom configs"
-          : ""}`
+        `Building package ${this.name} ${this.version} ${
+          this.compilers ? 'with custom configs' : ''
+        }`
       )
 
       let results = []
@@ -289,15 +305,16 @@ export function instanceMethods(options = {}, context = {}) {
         } else {
           results.push(
             await this.buildStandardPackage({
-              statsName: "package",
-              ...opts
+              statsName: 'package',
+              ...opts,
             })
           )
         }
 
         print(
-          `Finished ${results.length} compilers. ${results.filter(f => f.wasSuccessful)
-            .length}/${results.length}`
+          `Finished ${results.length} compilers. ${results.filter(f => f.wasSuccessful).length}/${
+            results.length
+          }`
         )
 
         results.forEach(c => {
@@ -317,7 +334,7 @@ export function instanceMethods(options = {}, context = {}) {
 
       if (project.argv.only && compilers[project.argv.only]) {
         compilers = {
-          [project.argv.only]: compilers[project.argv.only]
+          [project.argv.only]: compilers[project.argv.only],
         }
       }
 
@@ -327,8 +344,8 @@ export function instanceMethods(options = {}, context = {}) {
         const pkgCompiler = await this.buildStandardPackage({
           ...project.argv,
           ...compilers.package,
-          statsName: "package",
-          ...opts
+          statsName: 'package',
+          ...opts,
         })
 
         results.push(pkgCompiler)
@@ -338,9 +355,9 @@ export function instanceMethods(options = {}, context = {}) {
         const bundleCompiler = await this.buildBundlePackage.call(this, {
           ...project.argv,
           ...compilers.bundle,
-          statsName: "bundle",
-          baseCompiler: "web",
-          ...opts
+          statsName: 'bundle',
+          baseCompiler: 'web',
+          ...opts,
         })
 
         results.push(bundleCompiler)
@@ -349,23 +366,23 @@ export function instanceMethods(options = {}, context = {}) {
       if (compilers.electronRenderer) {
         const electronRendererCompiler = await this.buildStandardPackage.call(this, {
           ...project.argv,
-          statsName: "electronRenderer",
+          statsName: 'electronRenderer',
           ...compilers.electronRenderer,
-          target: "electron-renderer",
+          target: 'electron-renderer',
           ...opts,
           cfg(c) {
             return c.copy([
               {
-                from: project.resolve(relativeDirname, "jquery.min.js")
+                from: project.resolve(relativeDirname, 'jquery.min.js'),
               },
               {
-                from: project.resolve(relativeDirname, "tether.min.js")
+                from: project.resolve(relativeDirname, 'tether.min.js'),
               },
               {
-                from: project.resolve(relativeDirname, "welcome.html")
-              }
+                from: project.resolve(relativeDirname, 'welcome.html'),
+              },
             ])
-          }
+          },
         })
 
         results.push(electronRendererCompiler)
@@ -374,23 +391,23 @@ export function instanceMethods(options = {}, context = {}) {
       if (compilers.electronMain) {
         const electronMainCompiler = await this.buildStandardPackage.call(this, {
           ...project.argv,
-          statsName: "electronMain",
+          statsName: 'electronMain',
           ...compilers.electronMain,
-          target: "electron-main",
+          target: 'electron-main',
           entryPoints: {
-            main: "main.js"
+            main: 'main.js',
           },
           cfg(c) {
             return c.copy([
               {
-                from: project.resolve(relativeDirname, "index.js")
+                from: project.resolve(relativeDirname, 'index.js'),
               },
               {
-                from: project.resolve(relativeDirname, "entry.js")
-              }
+                from: project.resolve(relativeDirname, 'entry.js'),
+              },
             ])
           },
-          ...opts
+          ...opts,
         })
 
         results.push(electronMainCompiler)
@@ -399,10 +416,10 @@ export function instanceMethods(options = {}, context = {}) {
       if (compilers.minifiedBundle) {
         const minifiedBundlerCompiler = await this.buildBundlePackage.call(this, {
           ...project.argv,
-          statsName: "minified",
-          baseCompiler: "web",
+          statsName: 'minified',
+          baseCompiler: 'web',
           ...compilers.minifiedBundle,
-          ...opts
+          ...opts,
         })
 
         results.push(minifiedBundlerCompiler)
@@ -412,13 +429,13 @@ export function instanceMethods(options = {}, context = {}) {
     },
 
     async buildBundlePackage(opts = {}) {
-      const outputPath = project.resolve("packages", this.name)
+      const outputPath = project.resolve('packages', this.name)
       const define = opts.define || {}
-      const version = this.version || project.get("manifest.version")
+      const version = this.version || project.get('manifest.version')
 
       const externals = {
         ...(this.externals || {}),
-        ...opts.externals
+        ...opts.externals,
       }
 
       const compiler = this.compiler({
@@ -426,35 +443,43 @@ export function instanceMethods(options = {}, context = {}) {
         cfg(c) {
           return c
             .entry(opts.entryPoints)
-            .output({ libraryTarget: "umd", path: outputPath, filename: "[name].js" })
-            .plugin("webpack.DefinePlugin", {
+            .output({ libraryTarget: 'umd', path: outputPath, filename: '[name].js' })
+            .plugin('webpack.DefinePlugin', {
               __PACKAGE__: JSON.stringify({
                 version,
                 sha: project.gitInfo.sha,
-                branch: project.gitInfo.branch
+                branch: project.gitInfo.branch,
               }),
-              "process.env.SKYPAGER_RELEASE": JSON.stringify(project.get("manifest.version")),
-              ...mapValues(define, (v, k) => JSON.stringify(v))
+              'process.env.SKYPAGER_RELEASE': JSON.stringify(project.get('manifest.version')),
+              ...mapValues(define, (v, k) => JSON.stringify(v)),
             })
+
+            .when(typeof opts.uglify !== 'undefined', c => {
+              return c.plugin('webpack.optimize.UglifyJsPlugin', opts.uglify)
+            })
+
             .when(opts.minify, c =>
               c
-                .plugin("webpack.optimize.UglifyJsPlugin", {
+                .plugin('webpack.optimize.UglifyJsPlugin', {
                   compress: {
-                    warnings: false
-                  }
+                    warnings: false,
+                  },
+                  comments: false,
+                  mangle: true,
+                  minimize: true,
                 })
-                .output({ filename: "[name].min.js" })
+                .output({ filename: '[name].min.js' })
             )
         },
         compilerWillMount(webpackConfig) {
-          webpackConfig.target = opts.target || "web"
-          webpackConfig.entry = opts.entryPoints || { index: "index.web.js" }
+          webpackConfig.target = opts.target || 'web'
+          webpackConfig.entry = opts.entryPoints || { index: 'index.web.js' }
 
-          if (webpackConfig.target !== "web") {
+          if (webpackConfig.target !== 'web') {
             webpackConfig.node = {
               ...(webpackConfig.node || {}),
               __dirname: false,
-              __filename: false
+              __filename: false,
             }
           }
 
@@ -463,7 +488,7 @@ export function instanceMethods(options = {}, context = {}) {
           webpackConfig.externals = [externals]
 
           return webpackConfig
-        }
+        },
       })
 
       if (opts.configOnly) {
@@ -477,7 +502,7 @@ export function instanceMethods(options = {}, context = {}) {
       }
 
       await persistBuildResults(this, compiler, {
-        statsName: "bundle"
+        statsName: 'bundle',
       })
 
       return compiler
@@ -491,14 +516,14 @@ export function instanceMethods(options = {}, context = {}) {
       const compiler = this.compiler({
         ...opts,
         compilerWillMount(webpackConfig) {
-          webpackConfig.target = opts.target ? opts.target : "node"
+          webpackConfig.target = opts.target ? opts.target : 'node'
 
-          if (webpackConfig.target.startsWith("electron")) {
+          if (webpackConfig.target.startsWith('electron')) {
             webpackConfig.node = { __dirname: false, __filename: false, ...webpackConfig.node }
           }
 
           return webpackConfig
-        }
+        },
       })
 
       if (opts.configOnly) {
@@ -517,7 +542,7 @@ export function instanceMethods(options = {}, context = {}) {
         compiler.printStats()
       }
 
-      await persistBuildResults(this, compiler, { statsName: "package", ...opts })
+      await persistBuildResults(this, compiler, { statsName: 'package', ...opts })
 
       if (project.argv.watch) {
         compiler.watch({}, () => {
@@ -527,30 +552,30 @@ export function instanceMethods(options = {}, context = {}) {
       }
 
       return compiler
-    }
+    },
   })
 }
 
 function persistBuildResults(pkg, compiler, options) {
   const { project } = compiler
-  const buildStats = require(process.cwd() + "/build-status.json")
+  const buildStats = require(process.cwd() + '/build-status.json')
 
   buildStats.gitInfo = project.gitInfo
   buildStats.failed = buildStats.failed || {}
 
   const current = buildStats.packages || {}
-  const manifest = project.fsx.readJsonSync(project.resolve(compiler.outputPath, "package.json"))
+  const manifest = project.fsx.readJsonSync(project.resolve(compiler.outputPath, 'package.json'))
 
   current[pkg.name] = {
     ...(current[pkg.name] || {}),
     version: manifest.version,
     name: pkg.name,
-    [options.statsName || "package"]: {
+    [options.statsName || 'package']: {
       success: compiler.wasSuccessful,
       assets: mapValues(compiler.assetModulesByChunkName, (abs, chunk) =>
         relative(compiler.outputPath, abs)
-      )
-    }
+      ),
+    },
   }
 
   const stats = compiler.stats.toJson({
@@ -558,13 +583,13 @@ function persistBuildResults(pkg, compiler, options) {
     modules: true,
     source: false,
     reasons: true,
-    timings: true
+    timings: true,
   })
 
   project.fsx.writeFileSync(
-    compiler.outputPath + `/${options.statsName || "package"}.stats.json`,
+    compiler.outputPath + `/${options.statsName || 'package'}.stats.json`,
     JSON.stringify(stats, null, 2),
-    "utf8"
+    'utf8'
   )
 
   if (!compiler.wasSuccessful) {
@@ -572,28 +597,28 @@ function persistBuildResults(pkg, compiler, options) {
       buildStats.failed[pkg.name] = {}
     }
 
-    buildStats.failed[pkg.name][options.statsName || "package"] = {
+    buildStats.failed[pkg.name][options.statsName || 'package'] = {
       warnings: compiler.rawWarnings.length,
-      errors: compiler.errors.length
+      errors: compiler.errors.length,
     }
 
     Object.assign(current[pkg.name], {
       success: false,
-      [options.statsName || "package"]: {
+      [options.statsName || 'package']: {
         warnings: compiler.rawWarnings.length,
         errors: compiler.errors.length,
-        hash: compiler.hash
-      }
+        hash: compiler.hash,
+      },
     })
   } else {
     if (buildStats.failed[pkg.name]) {
-      delete buildStats.failed[pkg.name][options.statsName || "package"]
+      delete buildStats.failed[pkg.name][options.statsName || 'package']
     }
   }
 
   buildStats.packages = {
     ...(buildStats.packages || {}),
-    ...current
+    ...current,
   }
 
   buildStats.failed = pickBy(buildStats.failed, (v = {}) => Object.keys(v).length > 0)
@@ -601,7 +626,7 @@ function persistBuildResults(pkg, compiler, options) {
   // if any of the packages builds are not successful, then the package itself isnt
   buildStats.packages = mapValues(buildStats.packages, (pkgInfo, name) => {
     mapValues(pkgInfo, (v, key) => {
-      if (typeof v === "object" && v.success === false) {
+      if (typeof v === 'object' && v.success === false) {
         pkgInfo.success = false
       }
     })
@@ -610,8 +635,8 @@ function persistBuildResults(pkg, compiler, options) {
   })
 
   project.fsx.writeFileSync(
-    process.cwd() + "/build-status.json",
+    process.cwd() + '/build-status.json',
     JSON.stringify(buildStats, null, 2),
-    "utf8"
+    'utf8'
   )
 }
