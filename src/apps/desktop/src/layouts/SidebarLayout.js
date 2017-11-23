@@ -6,15 +6,43 @@ export class SidebarLayout extends Component {
     runtime: types.object,
   }
 
+  constructor(props = {}, context = {}) {
+    super(props, context)
+
+    this.state = {
+      visible: !!props.visible,
+    }
+  }
+
+  toggleSidebar = () => {
+    const { runtime } = this.context
+    runtime.toggleSidebar()
+  }
+
+  componentWillMount() {
+    const { runtime } = this.context
+
+    this.disposer = runtime.state.observe(({ name, newValue }) => {
+      if (name === 'sidebarIsVisible') {
+        this.setState({ visible: newValue })
+      }
+    })
+  }
+
+  componentWillUnmount() {
+    this.disposer()
+  }
+
   render() {
     const {
       sidebarAnimation = 'push',
       sidebarWidth = 'thin',
-      visible = false,
       children,
       menuItems = [],
       sidebarProps = { icon: 'labeled' },
     } = this.props
+
+    const { visible } = this.state
 
     return (
       <Sidebar.Pushable as={Segment} basic>
@@ -30,9 +58,7 @@ export class SidebarLayout extends Component {
           {menuItems.map((menuItem, key) => <SidebarLayout.MenuItem key={key} {...menuItem} />)}
         </Sidebar>
 
-        <Sidebar.Pusher style={{ height: '100%', width: '100%', overflow: 'scroll' }}>
-          <div style={{ maxWidth: '85%' }}>{children}</div>
-        </Sidebar.Pusher>
+        <Sidebar.Pusher style={{ height: '100%' }}>{children}</Sidebar.Pusher>
       </Sidebar.Pushable>
     )
   }

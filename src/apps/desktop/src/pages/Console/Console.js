@@ -1,4 +1,5 @@
 import { types, Component } from '../../globals'
+import Inspector from 'react-json-inspector'
 
 export class Console extends Component {
   static contextTypes = {
@@ -125,7 +126,7 @@ export class Console extends Component {
     } else if (typeof stringified !== 'undefined' && stringified !== 'undefined') {
       return (
         <Segment>
-          <pre>{stringified}</pre>
+          <Inspector data={result} />
         </Segment>
       )
     }

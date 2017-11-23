@@ -4,7 +4,10 @@
   "main": "app/main.js",
   "license": "MIT",
   "dependencies": {
-    "skypager": "^38.1.0"
+    "brace": "^0.11.0",
+    "react-ace": "^5.7.0",
+    "react-json-inspector": "^7.1.1",
+    "skypager": "^38.3.1"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^4.2.1",

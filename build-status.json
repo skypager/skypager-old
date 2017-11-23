@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "e10736f1943bc62c4dd1d3dbff3cd56349d2175b",
-    "abbreviatedSha": "e10736f194",
-    "branch": "develop",
-    "tag": "v38.3.1",
+    "sha": "63f83ff85df999d08c4ec14c6422eb25a179d5e4",
+    "abbreviatedSha": "63f83ff85d",
+    "branch": "feature/desktop-app",
+    "tag": null,
     "root": "/Users/jon/Projects/skypager"
   },
   "packages": {
@@ -414,7 +414,7 @@
       "success": false
     },
     "skypager-features-file-manager": {
-      "version": "38.2.0",
+      "version": "38.3.0",
       "name": "skypager-features-file-manager",
       "package": {
         "success": true,

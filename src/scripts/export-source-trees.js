@@ -20,10 +20,16 @@ async function exportRoot(rootNode) {
   await skypager.fsx.mkdirpAsync(
     skypager.join('dist', 'src-bundles', manifest.name, manifest.version)
   )
-  await skypager.fsx.writeJsonAsync(
-    skypager.join('dist', 'src-bundles', manifest.name, manifest.version, 'source-bundle.json'),
-    data
-  )
+  await skypager.fsx
+    .writeJsonAsync(
+      skypager.join('dist', 'src-bundles', manifest.name, manifest.version, 'source-bundle.json'),
+      data
+    )
+    .catch(error => {
+      print(`Error while exporting: ${manifest.name}`)
+      print(error.message, 4, 2)
+      print(error.stack, 8, 2)
+    })
 
   return data
 }

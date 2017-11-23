@@ -2,6 +2,7 @@ import { React, Component, types, skypager, ReactRouterDOM } from './globals'
 import Home from './pages/Home/Home'
 import PackageBrowser from './pages/PackageBrowser/PackageBrowser'
 import Console from './pages/Console/Console'
+import FileManager from './pages/FileManager/FileManager'
 import SidebarLayout from 'layouts/SidebarLayout'
 
 const { Route, Switch, MemoryRouter: Router } = ReactRouterDOM
@@ -41,14 +42,15 @@ export class App extends Component {
 
   render() {
     const { runtime } = this.props
-    const { menuItems = [] } = runtime.currentState
+    const { sidebarIsVisible, menuItems = [] } = runtime.currentState
 
     return (
       <Router>
-        <SidebarLayout visible sidebarWidth="thin" menuItems={menuItems}>
+        <SidebarLayout visible={!!sidebarIsVisible} sidebarWidth="thin" menuItems={menuItems}>
           <Route exact path="/" component={Home} />
           <Route path="/package-browser" component={PackageBrowser} />
           <Route path="/console" component={Console} />
+          <Route path="/file-manager" component={FileManager} />
         </SidebarLayout>
       </Router>
     )

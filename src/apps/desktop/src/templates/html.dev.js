@@ -9,7 +9,7 @@ export default async function compile(params = {}) {
   page.dllPublicPath = ''
   page.publicPath = ''
 
-  page.stylesheets = ['semantic.css']
+  page.stylesheets = ['semantic.css', 'json-inspector.css']
 
   page.dllScripts = [
     'react.js',

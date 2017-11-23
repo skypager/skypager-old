@@ -1,11 +1,15 @@
-import { Link, types, Component } from '../../globals'
+import { List, Grid, GridColumn as Column, Link, types, Component } from '../../globals'
 import SidebarLayout from 'layouts/SidebarLayout'
+import Editor from 'components/Editor'
+import FilesTree from 'components/FilesTree'
 
 export class Home extends Component {
   static contextTypes = {
     main: types.object,
     runtime: types.object,
   }
+
+  state = {}
 
   async componentWillMount() {
     const { runtime } = this.context
@@ -14,7 +18,7 @@ export class Home extends Component {
   }
 
   render() {
-    const { main, runtime } = this.context
+    const { main } = this.context
     const { version, name = main.name } = main.get('currentPackage')
 
     return (
@@ -26,6 +30,13 @@ export class Home extends Component {
           content="Project Home"
           subheader={name + ' ' + (version ? `v${version}` : '')}
         />
+        <Grid>
+          <Column>
+            <Segment circular as={Link} to="/file-manager">
+              <Icon size="large" name="file outline" />
+            </Segment>
+          </Column>
+        </Grid>
       </Segment>
     )
   }

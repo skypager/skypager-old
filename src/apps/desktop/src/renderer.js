@@ -3,22 +3,42 @@ import { start } from './app'
 
 skypager.features.add(require.context('./features/renderer', false, /\.js$/))
 
+skypager.use('layouts')
+
 skypager.setState({
+  sidebarIsVisible: false,
   menuItems: [
     {
       content: 'Home',
       icon: 'home',
-      link: '/',
+      onClick: () => {
+        runtime.navigate(`/`)
+        runtime.setState({ sidebarIsVisible: false })
+      },
     },
     {
       content: 'Packages',
+      icon: 'folder outline',
+      onClick: () => {
+        runtime.navigate(`/package-browser`)
+        runtime.setState({ sidebarIsVisible: false })
+      },
+    },
+    {
+      content: 'File Manager',
       icon: 'file outline',
-      link: '/package-browser',
+      onClick: () => {
+        runtime.navigate(`/file-manager`)
+        runtime.setState({ sidebarIsVisible: false })
+      },
     },
     {
       content: 'Console',
       icon: 'code',
-      link: '/console',
+      onClick: () => {
+        runtime.navigate(`/console`)
+        runtime.setState({ sidebarIsVisible: false })
+      },
     },
   ],
 })
