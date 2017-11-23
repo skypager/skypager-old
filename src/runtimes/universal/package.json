@@ -1,6 +1,6 @@
 {
   "name": "skypager-runtimes-universal",
-  "version": "38.2.0",
+  "version": "38.3.0",
   "description": "provides registries of domain specific module loaders",
   "main": "index.js",
   "browser": "dist/skypager-runtime.js",
@@ -20,7 +20,7 @@
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
-    "skypager-runtime": "^38.2.0"
+    "skypager-runtime": "^38.3.0"
   },
   "repository": {
     "type": "github",

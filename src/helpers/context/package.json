@@ -1,12 +1,12 @@
 {
   "name": "skypager-helpers-context",
-  "version": "38.2.0",
+  "version": "38.3.0",
   "description": "skypager context helper",
   "main": "index.js",
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
-    "skypager-runtime": "^38.2.0"
+    "skypager-runtime": "^38.3.0"
   },
   "repository": {
     "type": "github",

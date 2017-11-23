@@ -1,6 +1,6 @@
 {
   "name": "skypager-servers-portfolio",
-  "version": "38.2.0",
+  "version": "38.3.0",
   "description": "a server for the skypager portfolio management api",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "author": "Jon Soeder <jon@chicago.com> (https://twitter.com/soederpop)",
   "license": "MIT",
   "dependencies": {
-    "skypager-features-file-manager": "^38.2.0",
+    "skypager-features-file-manager": "^38.3.0",
     "skypager-features-lerna-adapter": "^37.5.0",
     "skypager-features-watchman": "36.0.3",
     "skypager-servers-graphql": "^37.5.0"
