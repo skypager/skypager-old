@@ -1,6 +1,6 @@
 {
   "name": "skypager-runtime",
-  "version": "38.3.0",
+  "version": "38.3.1",
   "description": "universal javascript application runtime",
   "main": "index.js",
   "compilers": {
@@ -50,9 +50,15 @@
         "mobx": "global mobx",
         "lodash": "global lodash"
       },
+      "uglify": {
+        "compress": false,
+        "comments": false,
+        "beautify": false,
+        "mangle": true
+      },
       "entryPoints": {
         "skypager-runtime": [
-          "expose?mobx!mobx",
+          "expose?mobx!mobx/lib/mobx.umd.min.js",
           "babel-polyfill",
           "expose?lodash!lodash/lodash.min.js",
           "index.web.js"
