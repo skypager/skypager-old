@@ -54,6 +54,7 @@ const {
   isEmpty,
   isArray,
   isObject,
+  isUndefined,
   flatten,
 } = lodash
 
@@ -105,7 +106,6 @@ export class Runtime {
   get contextTypes() {
     return defaults({}, result('constructor.contextTypes'), {
       lodash: 'func',
-      mobx: 'object',
       runtime: 'object',
       skypager: 'object',
       host: 'object',
@@ -277,12 +277,15 @@ export class Runtime {
 
     this.hideGetter('parent', () => context.parent || singleton)
 
-    this.hide('cwd', result(options, 'cwd', () => process && process.cwd && process.cwd()))
+    this.hide(
+      'cwd',
+      result(options, 'cwd', () => (!isUndefined(process) ? result(process, 'cwd', '/') : '/'))
+    )
 
     this.hide('configHistory', [], false)
     this.hide('uuid', require('uuid')())
 
-    this.hide('_name', options.name || camelCase(snakeCase(this.cwd.split('/').pop())))
+    this.hideGetter('_name', () => options.name || camelCase(snakeCase(this.cwd.split('/').pop())))
     this.hideGetter('name', () => this._name)
 
     this.hide('cache', new Cache(options.cacheData || []))
@@ -290,14 +293,6 @@ export class Runtime {
 
     this.hide('rawOptions', options)
     this.hide('rawContext', context)
-    // this.hide('optionsWithDefaults', defaults({}, options, this.defaultOptions))
-
-    /*
-    this.hideGetter(
-      'context',
-      pick(defaults({}, context, this.defaultContext), ...keys(this.contextTypes))
-    )
-    */
 
     let { start, initialize, prepare } = this
 
