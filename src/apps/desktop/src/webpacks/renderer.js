@@ -79,6 +79,9 @@ export function webpackPlugins() {
         from: this.runtime.resolve('src', 'vendor'),
         flatten: false,
       },
+      {
+        from: this.runtime.resolve('node_modules', 'react-json-inspector', 'json-inspector.css'),
+      },
     ],
   }
 }

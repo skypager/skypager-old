@@ -5,9 +5,9 @@ import { Route, Link, NavLink } from 'react-router-dom'
 import * as semanticUIReact from 'semantic-ui-react'
 
 const injections = Object.assign({}, semanticUIReact, {
-  Col: semanticUIReact.GridCol,
+  Col: semanticUIReact.GridColumn,
   Row: semanticUIReact.GridRow,
-  Column: semanticUIReact.GridCol,
+  Column: semanticUIReact.GridColumn,
   Component: React.Component,
   Inspect: (props = {}) => {
     return <pre>{JSON.stringify(props, null, 2)}</pre>
