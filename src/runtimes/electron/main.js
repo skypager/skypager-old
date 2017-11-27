@@ -60,10 +60,7 @@ skypager.electron.app.on('ready', function() {
     cb(`skypager.log(${JSON.stringify(request)})`)
   })
 
-  skypager.debug('Electron App is Ready')
-
   skypager.start().then(() => {
-    skypager.debug(`Skypager Runtime is started`)
     skypager.setState({ started: true })
   })
 })

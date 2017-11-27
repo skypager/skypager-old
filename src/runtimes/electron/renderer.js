@@ -42,12 +42,22 @@ if (skypager.get('syncable.state.set')) {
   skypager.syncable.state.set('ready', true)
 }
 
-const { injectScripts = [] } = skypager.argv
+const { injectScript = [], injectScripts = [] } = {
+  ...skypager.electronMain.argv,
+  ...skypager.argv,
+}
 
-Promise.all(injectScripts.map(scriptPath => skypager.assetLoader.injectScript(scriptPath)))
-  .then(() => {
-    console.log('Injected Scripts', injectScripts)
-  })
-  .catch(error => {
-    console.error('Error while injecting scripts', error, injectScripts)
-  })
+const { castArray } = skypager.lodash
+
+const inject = [...castArray(injectScript), ...castArray(injectScripts)]
+if (!skypager.state.get('scriptsHaveBeenInjected')) {
+  console.log('Injecting', inject)
+
+  Promise.all(inject.map(scriptPath => skypager.assetLoader.injectScript(scriptPath)))
+    .then(() => {})
+    .catch(error => {
+      console.error('Error while injecting scripts', error, injectScripts)
+    })
+
+  skypager.state.set('scriptsHaveBeenInjected', true)
+}
