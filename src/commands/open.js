@@ -62,18 +62,10 @@ export async function run(options = {}) {
   const entryPath = skypager.chain
     .get('argv._', [])
     .slice(1)
+    .map(input => (input === 'desktop-editor' ? 'skypager-apps-desktop-editor' : input))
     .map(p => resolve(p))
     .find(v => v)
     .value()
-
-  /*
-  console.log([
-    entryPath,
-    '--require',
-    runtime.packageFinder.attemptResolve('skypager-runtimes-electron/entry.js'),
-    ...process.argv.slice(3),
-  ])
-  */
 
   const electronArgs = [
     entryPath,
@@ -81,8 +73,6 @@ export async function run(options = {}) {
     runtime.packageFinder.attemptResolve('skypager-runtimes-electron/entry.js'),
     ...process.argv.slice(3),
   ]
-
-  console.log('Electron Args', electronArgs)
 
   try {
     const child = spawn(__non_webpack_require__(electron), electronArgs, {
