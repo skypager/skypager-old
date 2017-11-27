@@ -107,7 +107,7 @@ export async function buildSnapshot(options = {}) {
 
   const promiseMap = selectors.map(selectorId =>
     runtime
-      .select(selectorId)
+      .select(selectorId, options)
       .then(results => [selectorId, results])
       .catch(err => [selectorId, err])
   )
