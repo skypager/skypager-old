@@ -18,26 +18,25 @@ export class Home extends Component {
   }
 
   render() {
-    const { main } = this.context
-    const { version, name = main.name } = main.get('currentPackage')
+    const { runtime } = this.context
+    const { menuItems = [] } = runtime.currentState
+    const { sortBy } = runtime.lodash
+
+    const cards = sortBy(menuItems.filter(v => v.content !== 'Home'), 'content')
 
     return (
-      <Segment basic>
-        <Header
-          as="h2"
-          icon="home"
-          dividing
-          content="Project Home"
-          subheader={name + ' ' + (version ? `v${version}` : '')}
-        />
-        <Grid>
-          <Column>
-            <Segment circular as={Link} to="/file-manager">
-              <Icon size="large" name="file outline" />
-            </Segment>
-          </Column>
-        </Grid>
-      </Segment>
+      <Card.Group itemsPerRow={3} style={{ margin: '24px auto', width: '95%' }}>
+        {cards.map((item, i) => (
+          <Card onClick={item.onClick} key={i}>
+            <Card.Content>
+              <Card.Header>
+                <Icon name={item.icon} />
+                {item.content}
+              </Card.Header>
+            </Card.Content>
+          </Card>
+        ))}
+      </Card.Group>
     )
   }
 }

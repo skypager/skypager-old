@@ -3,7 +3,11 @@ try {
 } catch (error) {}
 
 const skypager = __non_webpack_require__('skypager-runtimes-electron')
-const url = skypager.get('argv.url', `file://${__dirname}/index.html`)
+const dev = skypager.argv.dev
+const url = skypager.get(
+  'argv.url',
+  dev ? `file://${__dirname}/dev.html` : `file://${__dirname}/index.html`
+)
 
 skypager.features.add(require.context('./features/main', false, /.js$/))
 

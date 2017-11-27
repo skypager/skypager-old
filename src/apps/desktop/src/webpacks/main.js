@@ -25,7 +25,7 @@ export function configWasGenerated(webpackConfig) {
 }
 
 export function outputPath() {
-  return this.runtime.resolve('app')
+  return this.runtime.resolve('public')
 }
 
 export function outputFilename() {

@@ -38,26 +38,16 @@ export class PackageBrowser extends Component {
     const { sortBy } = lodash
 
     return (
-      <Segment basic>
-        <Header
-          dividing
-          as="h2"
-          icon="file outline"
-          content="Package Browser"
-          subheader="For working with any subpackages"
-        />
-        <Loader active={!loaded} />
-        <Card.Group itemsPerRow={3}>
-          {sortBy(packageData, sortColumn).map((pkg, key) => (
-            <PackageCard
-              isChanged={changedPackageIds.indexOf(pkg._packageId) >= 0}
-              onClick={this.handleCardClick(pkg)}
-              key={key}
-              {...pkg}
-            />
-          ))}
-        </Card.Group>
-      </Segment>
+      <Card.Group itemsPerRow={3}>
+        {sortBy(packageData, sortColumn).map((pkg, key) => (
+          <PackageCard
+            isChanged={changedPackageIds.indexOf(pkg._packageId) >= 0}
+            onClick={this.handleCardClick(pkg)}
+            key={key}
+            {...pkg}
+          />
+        ))}
+      </Card.Group>
     )
   }
 }

@@ -1,8 +1,14 @@
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+
 export const target = 'electron-renderer'
 
 export function entry() {
   const { runtime } = this
-  const { hot = false, host = 'localhost', port = 3000 } = runtime.argv
+  const {
+    hot = skypager.commandPhrase === 'run hot',
+    host = 'localhost',
+    port = 3000,
+  } = this.options
 
   const rendererPath = runtime.join('src', 'renderer.js')
 
@@ -10,6 +16,7 @@ export function entry() {
     'react-hot-loader/patch',
     `webpack-dev-server/client?http://${host}:${port}`,
     'webpack/hot/only-dev-server',
+    'expose-loader?skypager!skypager-runtimes-electron/renderer.js',
   ]
 
   return {
@@ -18,7 +25,7 @@ export function entry() {
 }
 
 export function outputPath() {
-  return this.runtime.resolve('app')
+  return this.runtime.resolve('public')
 }
 
 export function outputFilename() {
@@ -65,22 +72,65 @@ export function externals() {
   }
 }
 
+export function configWasGenerated(config) {
+  if (skypager.devHtmlInserted) {
+    return config
+  }
+
+  if (skypager.commandPhrase !== 'run hot') {
+    skypager.devHtmlInserted = true
+
+    config.plugins.push(
+      new HtmlWebpackPlugin({
+        template: 'src/templates/html.dev.js',
+        skypager: this.runtime,
+        runtime: this.runtime,
+        inject: false,
+        filename: 'dev.html',
+      })
+    )
+    return config
+  }
+}
+
 export function webpackPlugins() {
+  const { runtime } = this
+  const { dirname } = runtime.pathUtils
+  const res = (...args) => runtime.packageFinder.attemptResolve(...args)
+  const from = (...args) => ({ from: res(...args) })
+
   return {
     'html-webpack-plugin': {
       template: 'src/templates/html.dev.js',
-      skypager: this.runtime,
-      runtime: this.runtime,
+      skypager: runtime,
+      runtime: runtime,
       inject: true,
       filename: 'index.html',
     },
+
     'copy-webpack-plugin': [
+      from('react/dist/react.js'),
+      from('react-dom/dist/react-dom.js'),
+      from('prop-types/prop-types.js'),
+      from('react-router-dom/umd/react-router-dom.js'),
+      from('semantic-ui-react/dist/umd/semantic-ui-react.min.js'),
+      from('react-json-inspector/json-inspector.css'),
       {
-        from: this.runtime.resolve('src', 'vendor'),
-        flatten: false,
+        from: res('skypager-runtimes-electron/renderer.js'),
+        to: 'skypager-runtimes-electron-renderer.js',
       },
       {
-        from: this.runtime.resolve('node_modules', 'react-json-inspector', 'json-inspector.css'),
+        from: dirname(res('semantic-ui-css/semantic.css')),
+        to: runtime.join('public'),
+        flatten: false,
+        ignore: [
+          '**/components/**',
+          'components/**',
+          'README.md',
+          'LICENSE',
+          'package.json',
+          'package.js',
+        ],
       },
     ],
   }

@@ -3,6 +3,8 @@ import { start } from './app'
 
 skypager.features.add(require.context('./features/renderer', false, /\.js$/))
 
+console.log('hi')
+
 skypager.use('layouts')
 
 skypager.setState({

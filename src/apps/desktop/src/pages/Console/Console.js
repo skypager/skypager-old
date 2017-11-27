@@ -10,6 +10,7 @@ export class Console extends Component {
   async componentWillMount() {
     const { runtime } = this.context
     const { history } = this.props
+    console.log('console')
     runtime.navigate = link => history.push(link)
   }
 
@@ -135,14 +136,6 @@ export class Console extends Component {
   render() {
     return (
       <Segment basic>
-        <Header
-          dividing
-          as="h2"
-          icon="code"
-          content="Console"
-          subheader="Interactive Project REPL"
-        />
-
         <Segment>
           <Form.Input
             type="text"

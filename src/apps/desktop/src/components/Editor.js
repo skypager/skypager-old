@@ -49,10 +49,10 @@ function Editor(props) {
       width="100%"
       value={value}
       editorProps={{ $blockScrolling: Infinity }}
-      highlightActiveLine={false}
+      highlightActiveLine={true}
       minLines={40}
       maxLines={Infinity}
-      showGutter={false}
+      showGutter={true}
       showPrintMargin={false}
       wrapEnabled
       tabSize={2}
