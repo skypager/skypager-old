@@ -19,3 +19,8 @@ each-changed-package.sh
 build-changed-packages.sh
 publish-changed-packages.sh
 release.sh
+**/vendor/**
+src/apps/desktop/src/vendor
+src/apps/desktop/app
+src/apps/desktop/src/vendor/**
+src/apps/desktop/app/**
