@@ -16,6 +16,8 @@
         "quotes": 0,
         "camelcase": 0,
         "no-underscore-dangle": 0,
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
         "no-unused-vars": ["error", {
           "vars": "local",
           "args": "none",
