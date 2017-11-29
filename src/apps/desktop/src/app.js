@@ -3,7 +3,7 @@ import Home from './pages/Home/Home'
 import PackageBrowser from './pages/PackageBrowser/PackageBrowser'
 import Console from './pages/Console/Console'
 import FileManager from './pages/FileManager/FileManager'
-import SidebarAppLayout from 'layouts/SidebarAppLayout'
+import TopMenuAppLayout from 'layouts/TopMenuAppLayout'
 
 const { Route, Switch, MemoryRouter: Router } = ReactRouterDOM
 
@@ -47,18 +47,16 @@ export class App extends Component {
 
     return (
       <Router>
-        <SidebarAppLayout
+        <TopMenuAppLayout
           subscriptions={['layoutProps', 'loading', 'sidebarIsVisible']}
           loading={!!runtime.state.get('loading')}
-          visible={!!sidebarIsVisible}
-          sidebarWidth="thin"
           menuItems={menuItems}
         >
           <Route exact path="/" component={Home} />
           <Route path="/package-browser" component={PackageBrowser} />
           <Route path="/console" component={Console} />
           <Route path="/file-manager" component={FileManager} />
-        </SidebarAppLayout>
+        </TopMenuAppLayout>
       </Router>
     )
   }

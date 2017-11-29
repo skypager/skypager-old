@@ -1,4 +1,6 @@
 import { types, Component } from '../../globals'
+import CollapsibleColumnLayout from 'layouts/CollapsibleColumnLayout'
+import MenuItemsCardGroup from 'components/MenuItemsCardGroup'
 
 export class Home extends Component {
   static contextTypes = {
@@ -14,26 +16,32 @@ export class Home extends Component {
     runtime.navigate = link => history.push(link)
   }
 
-  render() {
-    const { runtime } = this.context
-    const { menuItems = [] } = runtime.currentState
-    const { sortBy } = runtime.lodash
-
-    const cards = sortBy(menuItems.filter(v => v.content !== 'Home'), 'content')
-
+  renderRightColumn() {
     return (
-      <Card.Group itemsPerRow={3} style={{ margin: '24px auto', width: '95%' }}>
-        {cards.map((item, i) => (
-          <Card onClick={item.onClick} key={i}>
-            <Card.Content>
-              <Card.Header>
-                <Icon name={item.icon} />
-                {item.content}
-              </Card.Header>
-            </Card.Content>
-          </Card>
-        ))}
-      </Card.Group>
+      <Container fluid style={{ padding: '1em 1em' }}>
+        <Segment stacked>Right</Segment>
+      </Container>
+    )
+  }
+
+  renderLeftColumn() {
+    return (
+      <Container fluid style={{ padding: '1em 1em' }}>
+        <Segment stacked>Left</Segment>
+      </Container>
+    )
+  }
+
+  render() {
+    return (
+      <CollapsibleColumnLayout
+        leftWidth={3}
+        rightWidth={3}
+        right={this.renderRightColumn()}
+        left={this.renderLeftColumn()}
+      >
+        <MenuItemsCardGroup filter={menuItem => menuItem.content !== 'Home'} />
+      </CollapsibleColumnLayout>
     )
   }
 }
