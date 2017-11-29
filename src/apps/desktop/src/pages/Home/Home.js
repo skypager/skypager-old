@@ -37,6 +37,7 @@ export class Home extends Component {
       <CollapsibleColumnLayout
         leftWidth={3}
         rightWidth={3}
+        showRight={false}
         right={this.renderRightColumn()}
         left={this.renderLeftColumn()}
       >

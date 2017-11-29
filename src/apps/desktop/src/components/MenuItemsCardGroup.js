@@ -8,12 +8,6 @@ export class MenuItemsCardGroup extends Component {
 
   state = {}
 
-  async componentWillMount() {
-    const { runtime } = this.context
-    const { history } = this.props
-    runtime.navigate = link => history.push(link)
-  }
-
   renderRightColumn() {
     return (
       <Container fluid style={{ padding: '1em 1em' }}>

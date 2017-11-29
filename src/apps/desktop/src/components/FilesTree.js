@@ -37,20 +37,24 @@ export class FilesTree extends Component {
     <FilesTreeFolder {...this.props} directoryId={directoryId} key={directoryId} />
   )
 
+  shouldComponentUpdate() {
+    return false
+  }
+
   render() {
-    const { onFileClick, fileManager } = this.props
+    const { onFileClick, fileManager, style = {}, listProps = {} } = this.props
     const directoryIds = fileManager.directoryIds.filter(v => v.length && v.split('/').length === 1)
     const fileIds = fileManager.fileIds.filter(v => v.length && v.split('/').length === 1)
 
+    console.log('Rendering Files Tree')
+
     return (
-      <List>
+      <List style={style} {...listProps}>
         {directoryIds.filter(v => v.length).map(this.renderFolder)}
         {fileIds.map(fileId => (
           <List.Item key={fileId} id={fileId} onClick={onFileClick}>
             <List.Icon name="file outline" />
-            <List.Content>
-              <List.Header>{fileId.split('/').pop()}</List.Header>
-            </List.Content>
+            <List.Content onClick={onFileClick}>{fileId.split('/').pop()}</List.Content>
           </List.Item>
         ))}
       </List>

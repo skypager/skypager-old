@@ -26,13 +26,10 @@ export class FileManager extends Component {
     await main.fileManager.whenActivated()
   }
 
-  handleFileClick = async (e, { id: currentFile }) => {
+  async handleFileClick(e, { id: currentFile }) {
     e.preventDefault()
-
-    const { main } = this.context
-    const { fileManager = main.fileManager } = this.props
-
-    const file = fileManager.file(currentFile)
+    console.log('Handling File Click', currentFile, arguments)
+    this.setState({ currentFile })
   }
 
   render() {
@@ -42,8 +39,12 @@ export class FileManager extends Component {
 
     return (
       <SplitColumnLayout widths={[3, 13]}>
-        <FilesTree fileManager={main.fileManager} onFileClick={this.handleFileClick} />
-        {currentFile ? <FileViewer file={fileManager.file(currentFile)} /> : <div />}
+        <FilesTree
+          style={{ padding: '1em' }}
+          fileManager={fileManager}
+          onFileClick={this.handleFileClick.bind(this)}
+        />
+        <div>{currentFile}</div>
       </SplitColumnLayout>
     )
   }
