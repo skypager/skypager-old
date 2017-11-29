@@ -1,7 +1,5 @@
-import { List, Grid, GridColumn as Column, Link, types, Component } from '../../globals'
-import SidebarLayout from 'layouts/SidebarLayout'
+import { types, Component } from '../../globals'
 import SplitColumnLayout from 'layouts/SplitColumnLayout'
-import Editor from 'components/Editor'
 import FilesTree from 'components/FilesTree'
 import FileViewer from './FileViewer'
 
@@ -26,7 +24,6 @@ export class FileManager extends Component {
   async componentDidMount() {
     const { main } = this.context
     await main.fileManager.whenActivated()
-    await main.select('files/asts')
   }
 
   handleFileClick = async (e, { id: currentFile }) => {
@@ -35,9 +32,7 @@ export class FileManager extends Component {
     const { main } = this.context
     const { fileManager = main.fileManager } = this.props
 
-    await fileManager.readContent({ include: [currentFile] })
-
-    this.setState({ currentFile })
+    const file = fileManager.file(currentFile)
   }
 
   render() {

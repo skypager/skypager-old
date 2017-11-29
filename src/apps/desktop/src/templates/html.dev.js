@@ -1,4 +1,4 @@
-export default async function compile(params = {}) {
+export default (async function compile(params = {}) {
   const { compilation, webpack, webpackConfig, htmlWebpackPlugin: { files, options } } = params
   const { skypager } = options
 
@@ -6,8 +6,8 @@ export default async function compile(params = {}) {
 
   page.initialState = {}
 
-  page.dllPublicPath = ''
-  page.publicPath = ''
+  page.dllPublicPath = skypager.argv.hot ? '/' : ''
+  page.publicPath = skypager.argv.hot ? '/' : ''
 
   page.stylesheets = ['semantic.css', 'json-inspector.css']
 
@@ -30,5 +30,7 @@ export default async function compile(params = {}) {
   </style>
   `
 
+  page.bodyBottom = ``
+
   return await page.render()
-}
+})

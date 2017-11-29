@@ -1,9 +1,8 @@
 import { skypager, ReactDOM } from './globals'
 import { start } from './app'
+import { AppContainer } from 'react-hot-loader'
 
 skypager.features.add(require.context('./features/renderer', false, /\.js$/))
-
-console.log('hi')
 
 skypager.use('layouts')
 
@@ -46,7 +45,12 @@ skypager.setState({
 })
 
 skypager.renderApp = Component =>
-  ReactDOM.render(<Component runtime={skypager} />, document.getElementById('app'))
+  ReactDOM.render(
+    <AppContainer>
+      <Component runtime={skypager} />
+    </AppContainer>,
+    document.getElementById('app')
+  )
 
 module.exports = skypager
 
@@ -64,5 +68,14 @@ skypager.hideGetter('mainEnvironment', () => {
     return v
   })
 })
+
+if (module.hot) {
+  if (module.hot) {
+    module.hot.accept('./app.js', () => {
+      skypager.state.set('loaded', true)
+      skypager.renderApp(require('./app.js').App)
+    })
+  }
+}
 
 start()

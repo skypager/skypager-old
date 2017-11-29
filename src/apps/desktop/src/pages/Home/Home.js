@@ -1,7 +1,4 @@
-import { List, Grid, GridColumn as Column, Link, types, Component } from '../../globals'
-import SidebarLayout from 'layouts/SidebarLayout'
-import Editor from 'components/Editor'
-import FilesTree from 'components/FilesTree'
+import { types, Component } from '../../globals'
 
 export class Home extends Component {
   static contextTypes = {
