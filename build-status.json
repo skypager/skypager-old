@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "e10736f1943bc62c4dd1d3dbff3cd56349d2175b",
-    "abbreviatedSha": "e10736f194",
+    "sha": "bddb1e0c534253cc957c8e08befc8427c56f0bf7",
+    "abbreviatedSha": "bddb1e0c53",
     "branch": "develop",
-    "tag": "v38.3.1",
+    "tag": null,
     "root": "/Users/jon/Projects/skypager"
   },
   "packages": {
@@ -75,7 +75,7 @@
     },
     "skypager-helpers-webpack": {
       "success": false,
-      "version": "38.2.0",
+      "version": "38.3.0",
       "name": "skypager-helpers-webpack",
       "package": {
         "success": true,
