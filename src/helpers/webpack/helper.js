@@ -1375,6 +1375,8 @@ export class Webpack extends Helper {
       plugins.push(new ProvidePlugin(this.providedModules))
     }
 
+    this.attemptMethod('injectPlugins', plugins, config)
+
     return config
   }
 
@@ -1482,7 +1484,10 @@ export class Webpack extends Helper {
     })
 
     if (externalizeDependencies && typeof externalizeDependencies !== 'string') {
-      cfg.externals.push(this.generateExternalsFunction.call(this, { pkg: this.pkg }))
+      cfg.externals.push(this.generateExternalsFunction.call(this, {
+        pkg: this.pkg,
+        ...this.tryResult('externalsOptions', {})
+      }))
     }
 
     const finalizeConfig = this.tryGet('finalizeConfig')
