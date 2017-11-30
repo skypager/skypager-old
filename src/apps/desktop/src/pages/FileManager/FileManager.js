@@ -28,7 +28,6 @@ export class FileManager extends Component {
 
   async handleFileClick(e, { id: currentFile }) {
     e.preventDefault()
-    console.log('Handling File Click', currentFile, arguments)
     this.setState({ currentFile })
   }
 
@@ -44,7 +43,7 @@ export class FileManager extends Component {
           fileManager={fileManager}
           onFileClick={this.handleFileClick.bind(this)}
         />
-        <FileViewer currentFile={currentFile} />
+        <FileViewer currentFile={currentFile} file={file} />
       </SplitColumnLayout>
     )
   }

@@ -31,18 +31,41 @@ export class App extends Component {
   }
 
   async componentWillMount() {
-    const main = this.props.runtime.electronMain
+    const { runtime } = this.props
+
+    const main = runtime.electronMain
     await main.fileManager.startAsync()
+
     this.setState({ fileManagerStarted: true })
 
     main.on('stateDidChange', () => {
-      this.setState({ stateVersion: main.stateVersion })
+      this.setState({ mainStateVersion: main.stateVersion })
     })
+
+    runtime.on('stateDidChange', () => {
+      this.setState({ stateVersion: runtime.stateVersion })
+    })
+  }
+
+  renderLeftSidebar() {
+    return <div>HI Left</div>
+  }
+
+  renderRightSidebar() {
+    return <div>HI Right</div>
+  }
+
+  renderBottomSidebar() {
+    return <div>HI Bottom</div>
+  }
+
+  renderTopSidebar() {
+    return <div>HI Top</div>
   }
 
   render() {
     const { runtime } = this.props
-    const { sidebarIsVisible, menuItems = [] } = runtime.currentState
+    const { showRightSidebar, showLeftSidebar, menuItems = [] } = runtime.currentState
     const { layoutProps = {} } = runtime.currentState
 
     return (
@@ -51,6 +74,11 @@ export class App extends Component {
           subscriptions={['layoutProps', 'loading', 'sidebarIsVisible']}
           loading={!!runtime.state.get('loading')}
           menuItems={menuItems}
+          showRight={showRightSidebar}
+          showLeft={showLeftSidebar}
+          left={this.renderLeftSidebar()}
+          right={this.renderRightSidebar()}
+          {...layoutProps}
         >
           <Route exact path="/" component={Home} />
           <Route path="/package-browser" component={PackageBrowser} />
