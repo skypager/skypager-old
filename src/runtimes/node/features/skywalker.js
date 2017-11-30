@@ -99,7 +99,7 @@ export const observables = () => ({
     function(fileInfo, baseFolder) {
       const { files, runtime } = this
       const { pick } = runtime.lodash
-      const { parse, relative } = runtime.pathUtils
+      const { parse, relative, dirname } = runtime.pathUtils
       const toFileId = ({ path }) => relative(runtime.resolve(baseFolder || runtime.cwd), path)
 
       files.set(toFileId(fileInfo), {
@@ -110,6 +110,7 @@ export const observables = () => ({
         isIndex: !!fileInfo.name.match(/index/i),
         extension: `.${fileInfo.extension}`,
         relative: toFileId(fileInfo),
+        relativeDirname: dirname(toFileId(fileInfo)),
         stats: pick(fileInfo, statsKeys),
       })
 
