@@ -43,7 +43,7 @@ export class FileManager extends Component {
           fileManager={fileManager}
           onFileClick={this.handleFileClick.bind(this)}
         />
-        <FileViewer currentFile={currentFile} file={file} />
+        <FileViewer currentFile={currentFile} />
       </SplitColumnLayout>
     )
   }

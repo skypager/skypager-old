@@ -1,6 +1,7 @@
 import { React, Component, types, skypager, ReactRouterDOM } from './globals'
 import Home from './pages/Home/Home'
 import PackageBrowser from './pages/PackageBrowser/PackageBrowser'
+import PackageDetails from './pages/PackageDetails/PackageDetails'
 import Console from './pages/Console/Console'
 import FileManager from './pages/FileManager/FileManager'
 import TopMenuAppLayout from 'layouts/TopMenuAppLayout'
@@ -81,7 +82,8 @@ export class App extends Component {
           {...layoutProps}
         >
           <Route exact path="/" component={Home} />
-          <Route path="/package-browser" component={PackageBrowser} />
+          <Route exact path="/package-browser" component={PackageBrowser} />
+          <Route path="/package-browser/:packageId" component={PackageDetails} />
           <Route path="/console" component={Console} />
           <Route path="/file-manager" component={FileManager} />
         </TopMenuAppLayout>

@@ -14,7 +14,7 @@ export class PackageBrowser extends Component {
 
   handleCardClick = pkg => e => {
     e.preventDefault()
-    console.log('handled click', pkg.name)
+    runtime.navigate(`/package-browser/${pkg.name}`)
   }
 
   async componentWillMount() {
@@ -38,7 +38,8 @@ export class PackageBrowser extends Component {
     const { sortBy } = lodash
 
     return (
-      <Container style={{ padding: '1em' }}>
+      <Container style={{ marginTop: '40px' }}>
+        <Header icon="folder outline" as="h3" content="Package Browser" dividing />
         <Card.Group itemsPerRow={3}>
           {sortBy(packageData, sortColumn).map((pkg, key) => (
             <PackageCard

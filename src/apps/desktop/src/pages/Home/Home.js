@@ -38,6 +38,7 @@ export class Home extends Component {
         leftWidth={3}
         rightWidth={3}
         showRight={false}
+        showLeft={false}
         right={this.renderRightColumn()}
         left={this.renderLeftColumn()}
       >
