@@ -1,29 +1,93 @@
-import { Grid, Row, Column, Component } from '../../globals'
+import { types, Grid, Row, Column, Component } from '../../globals'
 import Editor from 'components/Editor'
 import Inspector from 'react-json-inspector'
 
 export class FileViewer extends Component {
-  render() {
-    const { relative, content, ast, extension } = this.props.file
+  static contextTypes = {
+    runtime: types.object,
+    main: types.object,
+  }
 
-    let mode
+  constructor(props = {}, context = {}) {
+    super(props, context)
+
+    const { currentFile } = this.props
+
+    this.state = {
+      currentFile,
+      file: {},
+      mode: 'markdown',
+      content: undefined,
+    }
+  }
+
+  componentWillReceiveProps(nextProps = {}) {
+    const { currentFile } = nextProps
+
+    if (currentFile && currentFile !== this.state.currentFile) {
+      this.readFile(currentFile).then(() => {
+        this.setState({ loaded: true })
+      })
+    } else if (!currentFile || !currentFile.length) {
+      this.setState({ content: '' })
+    }
+  }
+
+  async readFile(currentFile) {
+    const { main } = this.context
+    const { fileManager } = main
+    const file = currentFile && fileManager.file(currentFile)
+
+    if (file) {
+      this.setState({ file, currentFile })
+    }
+
+    if (file) {
+      await main.fsx.readFileAsync(file.path).then(buffer => {
+        const content = buffer.toString()
+        this.setState({ content })
+        return content
+      })
+    }
+
+    return { currentFile }
+  }
+
+  async componentDidMount() {
+    const { main } = this.context
+    const { fileManager } = main
+    const { currentFile } = this.state
+
+    const file = currentFile && fileManager.file(currentFile)
+
+    if (file && currentFile) {
+      await this.readFile(currentFile)
+    }
+  }
+
+  render() {
+    const { currentFile, file = {}, content } = this.state
+    const { relative = currentFile, extension = '.md' } = file
+    let { mode } = this.state
 
     if (extension === '.md') {
       mode = 'markdown'
     } else if (extension === '.js') {
       mode = 'jsx'
+    } else {
+      mode = 'markdown'
     }
 
     return (
       <Grid>
         <Row columns="one">
           <Column>
-            <Editor mode={mode} id={relative} value={content} />
+            {!!(content && content.length) && <Editor mode={mode} id={relative} value={content} />}
           </Column>
         </Row>
         <Row columns="one">
           <Column>
-            <Inspector data={ast} />
+            <Inspector data={file} currentFile={currentFile} />
           </Column>
         </Row>
       </Grid>
