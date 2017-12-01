@@ -9,11 +9,7 @@ const url = skypager.get(
   dev ? `http://localhost:3000/index.html` : `file://${__dirname}/index.html`
 )
 
-skypager.features.add(require.context('./features/main', false, /.js$/))
-
-skypager.debug(
-  `Skypager Desktop Editor App Main Entry Point Reached. Waiting for skypager to start`
-)
+skypager.features.add(require.context('./features/main', true, /.js$/))
 
 skypager.whenStarted(() => {
   const { windowManager } = skypager
@@ -27,6 +23,10 @@ skypager.whenStarted(() => {
   })
 
   const win = mainWindow.getWindow()
+
+  skypager.use('adapters')
+
+  // .use('runtime-spawner')
 
   skypager.debug(`Loading URL: ${url}`)
   win.loadURL(url)

@@ -2,9 +2,20 @@ import { skypager, ReactDOM } from './globals'
 import { start } from './app'
 import { AppContainer } from 'react-hot-loader'
 
-skypager.features.add(require.context('./features/renderer', false, /\.js$/))
+const featuresContext = require.context('./features/renderer', true, /\.js$/)
 
-skypager.use('layouts')
+skypager.features.add(featuresContext)
+
+console.log(featuresContext.keys)
+
+skypager
+  .use('local-keybindings')
+  .use('layouts')
+  .use('drawers')
+  .use('adapters/selectors')
+  .use('adapters/file-manager')
+  .use('adapters/package-finder')
+  .use('adapters/package-manager')
 
 skypager.setState({
   sidebarIsVisible: false,

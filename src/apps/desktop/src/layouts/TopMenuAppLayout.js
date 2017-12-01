@@ -5,46 +5,42 @@ export class TopMenuAppLayout extends Component {
     runtime: types.object,
   }
 
-  render() {
+  constructor(props = {}, context = {}) {
+    super(props, context)
+
+    this.state = {
+      showTop: !!props.showTop,
+    }
+  }
+
+  componentWillMount() {
     const { runtime } = this.context
-    const { showRight, showLeft, menuItems, right, left, children } = this.props
+
+    if (!runtime.layouts) {
+      runtime.use('layouts')
+    }
+
+    runtime.layouts.state.observe(({ name, newValue }) => {
+      this.setState({ [name]: newValue })
+    })
+  }
+
+  componentWillUnmount() {
+    this.disposer()
+  }
+
+  render() {
+    const { children, menuItems } = this.props
+    const { showTop } = this.state
 
     return (
       <Container fluid>
-        <Menu attached="top" compact inverted>
-          {menuItems.map((item, key) => <Menu.Item key={item.content || key} {...item} />)}
-        </Menu>
-        <Sidebar.Pushable>
-          <Sidebar as={Segment} visible={showLeft} inverted animation="overlay" direction="left">
-            <Button
-              circle
-              icon="bars"
-              inverted
-              size="mini"
-              floated="right"
-              onClick={() => runtime.setState({ showLeftSidebar: false })}
-            />
-            {left}
-          </Sidebar>
-          <Sidebar.Pusher>{children}</Sidebar.Pusher>
-          <Sidebar
-            visible={showRight}
-            as={Segment}
-            raised
-            inverted
-            animation="overlay"
-            direction="right"
-          >
-            <Button
-              circle
-              icon="bars"
-              inverted
-              size="mini"
-              onClick={() => runtime.setState({ showRightSidebar: false })}
-            />
-            {right}
-          </Sidebar>
-        </Sidebar.Pushable>
+        {!!showTop && (
+          <Menu attached="top" compact inverted>
+            {menuItems.map((item, key) => <Menu.Item key={item.content || key} {...item} />)}
+          </Menu>
+        )}
+        <Container fluid>{children}</Container>
       </Container>
     )
   }

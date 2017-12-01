@@ -27,10 +27,23 @@ export default (async function compile(params = {}) {
       margin: 0;
       padding: 0;
     }
+
+    .MultiDrawerLayout .ui.bottom.sidebar,
+    .MultiDrawerLayout .ui.top.sidebar
+     {
+      height: 50% !important;
+    }
+
+    .Console .ui.input input {
+      color: #FFFFFF !important;
+    }
   </style>
   `
 
-  page.bodyBottom = ``
+  page.bodyBottom = `
+    <script>
+    </script>
+  `
 
   return await page.render()
 })

@@ -1,4 +1,4 @@
-export const createGetter = 'layouts'
+export const createGetter = 'drawers'
 
 export const featureMethods = [
   'toggle',
@@ -7,6 +7,8 @@ export const featureMethods = [
   'toggleBottom',
   'toggleTop',
   'setState',
+  'lazyDrawersRegistry',
+  'lookup',
 ]
 
 export const featureMixinOptions = {
@@ -19,10 +21,27 @@ export const initialState = {
   showRight: false,
   showTop: false,
   showBottom: false,
+  drawerVersion: 0,
 }
 
 export function featureWasEnabled() {
   this.setState(initialState)
+
+  this.runtime.keybindings.bind('space h', () => {
+    this.toggleLeft()
+  })
+
+  this.runtime.keybindings.bind('space l', () => {
+    this.toggleRight()
+  })
+
+  this.runtime.keybindings.bind('space j', () => {
+    this.toggleBottom()
+  })
+
+  this.runtime.keybindings.bind('space k', () => {
+    this.toggleTop()
+  })
 }
 
 export function observables() {
@@ -49,6 +68,39 @@ export function setState(merge = {}) {
   }
 
   return this
+}
+
+export function lazyDrawersRegistry() {
+  const ctx = require.context('../../drawers', true, /.js$/)
+
+  const registry = this.runtime.Helper.createContextRegistry('drawers', {
+    context: ctx,
+    wrapper(fn) {
+      return fn.default ? fn.default : fn
+    },
+  })
+
+  if (module.hot) {
+    module.hot.accept(ctx.id, () => {
+      registry.add(require.context('../../drawers', true, /.js$/))
+      this.setState({ drawerVersion: this.state.drawerVersion + 1 })
+    })
+  }
+
+  return registry
+}
+
+export function lookup(drawerComponentId) {
+  try {
+    const Component = this.drawersRegistry.lookup(drawerComponentId)
+    return Component
+  } catch (error) {
+    return () => (
+      <div>
+        <pre>{error.message}</pre>
+      </div>
+    )
+  }
 }
 
 export function toggle(direction, desiredState) {
