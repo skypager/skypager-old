@@ -12,6 +12,8 @@ skypager
   .use('local-keybindings')
   .use('layouts')
   .use('drawers')
+  .use('navigation')
+  .use('adapters/ipc')
   .use('adapters/selectors')
   .use('adapters/file-manager')
   .use('adapters/package-finder')

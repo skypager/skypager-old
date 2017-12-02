@@ -29,8 +29,6 @@ skypager.whenStarted(() => {
     .use('adapters')
     .use('application-menu')
 
-  // .use('runtime-spawner')
-
   skypager.debug(`Loading URL: ${url}`)
 
   win.loadURL(url)
