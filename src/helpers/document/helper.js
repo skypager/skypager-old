@@ -6,6 +6,8 @@ export class Document extends Helper {
 
   static isObservable = true
 
+  static allowAnonymousProviders = true
+
   static attach(runtime, options = {}) {
     if (!runtime.has('documentType')) {
       DocumentType.attach(runtime)
