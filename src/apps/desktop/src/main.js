@@ -19,17 +19,23 @@ skypager.whenStarted(() => {
     windowName: 'main',
     height: 900,
     width: 1200,
-    show: process.env.SKYPAGER_DEV,
+    show: skypager.argv.autoShow !== false && process.env.SKYPAGER_DEV,
   })
 
   const win = mainWindow.getWindow()
 
-  skypager.use('adapters')
+  skypager
+    .use('skypage')
+    .use('adapters')
+    .use('application-menu')
 
   // .use('runtime-spawner')
 
   skypager.debug(`Loading URL: ${url}`)
+
   win.loadURL(url)
+
+  skypager.fileManager.startAsync()
 
   win.once('ready-to-show', () => win.show())
 

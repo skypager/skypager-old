@@ -1,8 +1,8 @@
 {
   "gitInfo": {
-    "sha": "1950b93c0f01b337f04596f02904cc8569c161c7",
-    "abbreviatedSha": "1950b93c0f",
-    "branch": "develop",
+    "sha": "9ebc5aa2ebb8a6c13ba75423ac1c7a499a8ca5dc",
+    "abbreviatedSha": "9ebc5aa2eb",
+    "branch": "feature/desktop-app",
     "tag": null,
     "root": "/Users/jon/Projects/skypager"
   },
