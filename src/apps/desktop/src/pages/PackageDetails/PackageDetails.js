@@ -62,6 +62,13 @@ export class PackageDetails extends Component {
             <Breadcrumb
               sections={[
                 {
+                  key: 'Home',
+                  content: 'Home',
+                  link: true,
+                  active: false,
+                  onClick: () => runtime.navigate('/'),
+                },
+                {
                   key: 'PackageManager',
                   content: 'Package Browser',
                   link: true,

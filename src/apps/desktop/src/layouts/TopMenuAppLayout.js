@@ -20,7 +20,7 @@ export class TopMenuAppLayout extends Component {
       runtime.use('layouts')
     }
 
-    runtime.layouts.state.observe(({ name, newValue }) => {
+    this.disposer = runtime.layouts.state.observe(({ name, newValue }) => {
       this.setState({ [name]: newValue })
     })
   }

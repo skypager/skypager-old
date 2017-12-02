@@ -1,4 +1,5 @@
 import { types, Component } from '../../globals'
+import TopMenuAppLayout from 'layouts/TopMenuAppLayout'
 
 export class Home extends Component {
   static contextTypes = {
@@ -11,11 +12,19 @@ export class Home extends Component {
   async componentWillMount() {
     const { runtime } = this.context
     const { history } = this.props
+
+    runtime.history = history
     runtime.navigate = link => history.push(link)
   }
 
   render() {
-    return <div>HI. What up?</div>
+    const { runtime } = this.context
+    const { menuItems } = runtime.currentState
+    return (
+      <TopMenuAppLayout showTop menuItems={menuItems}>
+        <div>HI. What up?</div>
+      </TopMenuAppLayout>
+    )
   }
 }
 

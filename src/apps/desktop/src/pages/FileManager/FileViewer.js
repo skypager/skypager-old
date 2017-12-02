@@ -53,6 +53,20 @@ export class FileViewer extends Component {
     return { currentFile }
   }
 
+  async handleSave() {
+    const { main } = this.context
+    const { file = {}, content } = this.state
+
+    this.setState({ saving: true })
+    await main.fsx.writeFileAsync(file.path, content, 'utf8')
+    this.setState({ saving: false })
+  }
+
+  handleFileChange(newContent) {
+    console.log(newContent.length)
+    this.setState({ content: newContent })
+  }
+
   async componentDidMount() {
     const { main } = this.context
     const { fileManager } = main
@@ -79,18 +93,25 @@ export class FileViewer extends Component {
     }
 
     return (
-      <Grid>
-        <Row columns="one">
-          <Column>
-            {!!(content && content.length) && <Editor mode={mode} id={relative} value={content} />}
-          </Column>
-        </Row>
-        <Row columns="one">
-          <Column>
-            <Inspector data={file} currentFile={currentFile} />
-          </Column>
-        </Row>
-      </Grid>
+      <div style={{ height: '100%', width: '100%', margin: 0, padding: 0 }}>
+        <Menu attached="top">
+          <Menu.Item icon="list" onClick={this.props.toggleFilesTree} />
+          <Menu.Item loading={this.state.saving} icon="save" onClick={this.handleSave.bind(this)} />
+          <Menu.Menu style={{ float: 'right' }}>
+            <Menu.Item
+              disabled={!currentFile || !currentFile.length}
+              icon="info"
+              onClick={this.props.toggleFileInfo}
+            />
+          </Menu.Menu>
+        </Menu>
+        <Editor
+          onChange={this.handleFileChange.bind(this)}
+          mode={mode}
+          id={relative}
+          value={content || ''}
+        />
+      </div>
     )
   }
 }

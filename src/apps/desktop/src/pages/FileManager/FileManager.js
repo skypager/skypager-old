@@ -1,7 +1,8 @@
 import { types, Component } from '../../globals'
-import SplitColumnLayout from 'layouts/SplitColumnLayout'
+import CollapsibleColumnLayout from 'layouts/CollapsibleColumnLayout'
 import FilesTree from 'components/FilesTree'
 import FileViewer from './FileViewer'
+import FileInfo from './FileInfo'
 
 export class FileManager extends Component {
   static contextTypes = {
@@ -13,12 +14,22 @@ export class FileManager extends Component {
     directoryIds: [],
     fileIds: [],
     loaded: false,
+    showFilesTree: true,
+    showFileInfo: false,
   }
 
   async componentWillMount() {
     const { runtime } = this.context
     const { history } = this.props
     runtime.navigate = link => history.push(link)
+
+    runtime.keybindings.bind('mod+k mod+b', () => {
+      this.setState({ showFilesTree: !this.state.showFilesTree })
+    })
+  }
+
+  componentWillUnmount() {
+    runtime.keybindings.unbind('mod+k mod+b')
   }
 
   async componentDidMount() {
@@ -26,7 +37,7 @@ export class FileManager extends Component {
     await main.fileManager.whenActivated()
   }
 
-  async handleFileClick(e, { id: currentFile }) {
+  async handleFileClick(e, { id: currentFile } = {}) {
     e.preventDefault()
     this.setState({ currentFile })
   }
@@ -37,14 +48,31 @@ export class FileManager extends Component {
     const { fileManager = main.fileManager } = this.props
 
     return (
-      <SplitColumnLayout widths={[3, 13]}>
-        <FilesTree
-          style={{ padding: '1em' }}
-          fileManager={fileManager}
-          onFileClick={this.handleFileClick.bind(this)}
+      <CollapsibleColumnLayout
+        leftWidth={3}
+        rightWidth={6}
+        showLeft={this.state.showFilesTree}
+        showRight={this.state.showFileInfo}
+        right={<div>RIGHT</div>}
+        leftProps={{
+          inverted: true,
+          style: { height: '100%', padding: '1em 0em 0em 1em', margin: 0 },
+        }}
+        left={
+          <FilesTree
+            style={{ padding: '1em', overflowY: 'scroll', height: '100%', width: '100%' }}
+            fileManager={fileManager}
+            onFileClick={this.handleFileClick.bind(this)}
+          />
+        }
+        right={<FileInfo currentFile={currentFile} />}
+      >
+        <FileViewer
+          currentFile={currentFile}
+          toggleFilesTree={() => this.setState({ showFilesTree: !this.state.showFilesTree })}
+          toggleFileInfo={() => this.setState({ showFileInfo: !this.state.showFileInfo })}
         />
-        <FileViewer currentFile={currentFile} />
-      </SplitColumnLayout>
+      </CollapsibleColumnLayout>
     )
   }
 }

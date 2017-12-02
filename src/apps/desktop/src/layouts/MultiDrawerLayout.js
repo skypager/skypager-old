@@ -138,10 +138,15 @@ export class MultiDrawerLayout extends Component {
       bottomProps = this.props.bottomProps,
     } = this.state
 
-    const showRight = !!(this.props.showRight || this.state.showRight)
-    const showLeft = !!this.props.showLeft || this.state.showLeft
-    const showTop = !!this.props.showTop || this.state.showTop
-    const showBottom = !!this.props.showBottom || this.state.showBottom
+    const showRight =
+      !!(this.props.showRight || this.state.showRight) && !!(this.props.right || this.state.right)
+    const showLeft =
+      !!this.props.showLeft || (this.state.showLeft && !!(this.props.left || this.state.left))
+    const showTop =
+      !!this.props.showTop || (this.state.showTop && !!(this.props.top || this.state.top))
+    const showBottom =
+      !!this.props.showBottom ||
+      (this.state.showBottom && !!(this.props.bottom || this.state.bottom))
 
     return (
       <Sidebar.Pushable

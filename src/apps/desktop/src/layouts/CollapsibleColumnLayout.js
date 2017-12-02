@@ -19,8 +19,25 @@ export const CollapsibleColumnLayout = (props = {}) => {
   return (
     <Grid as="div">
       {showLeft && <Column stretched width={leftWidth} {...leftProps} children={left} />}
-      <Column {...mainProps} width={mainWidth} children={children} />
-      {showRight && <Column stretched width={rightWidth} {...rightProps} children={right} />}
+      <Column
+        {...mainProps}
+        style={{
+          ...(showLeft ? { paddingLeft: 0 } : {}),
+          ...(showRight ? { paddingRight: 0 } : {}),
+          ...(mainProps.style || {}),
+        }}
+        width={mainWidth}
+        children={children}
+      />
+      {showRight && (
+        <Column
+          stretched
+          width={rightWidth}
+          {...rightProps}
+          style={{ paddingLeft: 0 }}
+          children={right}
+        />
+      )}
     </Grid>
   )
 }

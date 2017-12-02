@@ -46,8 +46,6 @@ export class FilesTree extends Component {
     const directoryIds = fileManager.directoryIds.filter(v => v.length && v.split('/').length === 1)
     const fileIds = fileManager.fileIds.filter(v => v.length && v.split('/').length === 1)
 
-    console.log('Rendering Files Tree')
-
     return (
       <List style={style} {...listProps}>
         {directoryIds.filter(v => v.length).map(this.renderFolder)}
