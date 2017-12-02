@@ -103,6 +103,8 @@ export const featureMethods = [
   'walkUp',
 
   'walkUpSync',
+
+  'loadDocument',
 ]
 
 export const hostMethods = ['requireContext']
@@ -145,6 +147,23 @@ export function requireContext(rule, options = {}) {
       })
     })
     .value()
+}
+
+export async function loadDocument(options = {}) {
+  const { runtime } = this
+
+  if (typeof options === 'string') {
+    options = { id: options }
+  }
+
+  const file = this.file(options)
+
+  if (!file.content) {
+    const content = await runtime.fsx.readFileAsync(file.path)
+    this.updateFileContent(file.relative, content.toString())
+  }
+
+  return runtime.document(file.relative, { provider: file, ...options })
 }
 
 export function file(options = {}) {
