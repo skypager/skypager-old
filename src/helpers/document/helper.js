@@ -6,6 +6,8 @@ export class Document extends Helper {
 
   static isObservable = true
 
+  static allowAnonymousProviders = true
+
   static attach(runtime, options = {}) {
     if (!runtime.has('documentType')) {
       DocumentType.attach(runtime)
@@ -31,7 +33,14 @@ export class Document extends Helper {
     const doc = this
 
     return {
-      state: ['shallowMap', this.lodash.toPairs(doc.attributes)],
+      observableAttributes: [
+        'shallowMap',
+        {
+          content: doc.attributes.content,
+          hash: doc.attributes.hash,
+          path: doc.attributes.path,
+        },
+      ],
     }
   }
 
@@ -44,6 +53,7 @@ export class Document extends Helper {
       'base',
       'content',
       'ast',
+      'astHash',
       'hash',
       'stats',
       'mime',
@@ -72,7 +82,9 @@ export class Document extends Helper {
     const base = this.lodash.defaultsDeep({}, pick(options), pick(provider), {
       ast: this.blankAST,
       content: '',
-      meta: {},
+      meta: {
+        ...(provider.meta || {}),
+      },
     })
 
     return {
@@ -84,7 +96,7 @@ export class Document extends Helper {
   get docType() {
     if (this.docTypeId) {
       try {
-        return this.runtime.documentType(this.docTypeId, this.options, this.context)
+        return this.runtime.documentType(this.docTypeId)
       } catch (e) {}
     }
   }

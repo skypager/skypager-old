@@ -1,9 +1,23 @@
 import { skypager, ReactDOM } from './globals'
 import { start } from './app'
+import { AppContainer } from 'react-hot-loader'
 
-skypager.features.add(require.context('./features/renderer', false, /\.js$/))
+const featuresContext = require.context('./features/renderer', true, /\.js$/)
 
-skypager.use('layouts')
+skypager.features.add(featuresContext)
+
+console.log(featuresContext.keys)
+
+skypager
+  .use('local-keybindings')
+  .use('layouts')
+  .use('drawers')
+  .use('navigation')
+  .use('adapters/ipc')
+  .use('adapters/selectors')
+  .use('adapters/file-manager')
+  .use('adapters/package-finder')
+  .use('adapters/package-manager')
 
 skypager.setState({
   sidebarIsVisible: false,
@@ -43,8 +57,32 @@ skypager.setState({
   ],
 })
 
-skypager.renderApp = Component =>
-  ReactDOM.render(<Component runtime={skypager} />, document.getElementById('app'))
+const removeSplashEl = () => {
+  if (typeof document !== 'undefined') {
+    const splashEl = document.querySelector('#splash')
+    splashEl.parentNode.removeChild(splashEl)
+  }
+}
+
+skypager.renderApp = Component => {
+  if (!skypager.__performedInitialResize) {
+    const { height, width } = skypager.electronMain.feature('displays').displaySize
+
+    skypager.browserWindow.hide()
+    skypager.browserWindow.setSize(Math.floor(width * 0.8), Math.floor(height * 0.8))
+    skypager.browserWindow.center()
+    removeSplashEl()
+  }
+
+  const el = ReactDOM.render(
+    <AppContainer>
+      <Component runtime={skypager} />
+    </AppContainer>,
+    document.getElementById('app')
+  )
+
+  return el
+}
 
 module.exports = skypager
 
@@ -62,5 +100,14 @@ skypager.hideGetter('mainEnvironment', () => {
     return v
   })
 })
+
+if (module.hot) {
+  if (module.hot) {
+    module.hot.accept('./app.js', () => {
+      skypager.state.set('loaded', true)
+      skypager.renderApp(require('./app.js').App)
+    })
+  }
+}
 
 start()

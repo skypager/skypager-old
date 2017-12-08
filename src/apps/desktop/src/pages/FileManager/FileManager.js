@@ -1,8 +1,8 @@
-import { List, Grid, GridColumn as Column, Link, types, Component } from '../../globals'
-import SidebarLayout from 'layouts/SidebarLayout'
-import Editor from 'components/Editor'
+import { types, Component } from '../../globals'
+import CollapsibleColumnLayout from 'layouts/CollapsibleColumnLayout'
 import FilesTree from 'components/FilesTree'
 import FileViewer from './FileViewer'
+import FileInfo from './FileInfo'
 
 export class FileManager extends Component {
   static contextTypes = {
@@ -14,58 +14,65 @@ export class FileManager extends Component {
     directoryIds: [],
     fileIds: [],
     loaded: false,
+    showFilesTree: true,
+    showFileInfo: false,
   }
 
   async componentWillMount() {
     const { runtime } = this.context
     const { history } = this.props
     runtime.navigate = link => history.push(link)
+
+    runtime.keybindings.bind('mod+k mod+b', () => {
+      this.setState({ showFilesTree: !this.state.showFilesTree })
+    })
+  }
+
+  componentWillUnmount() {
+    runtime.keybindings.unbind('mod+k mod+b')
   }
 
   async componentDidMount() {
     const { main } = this.context
     await main.fileManager.whenActivated()
-    await main.select('files/asts')
-    this.setState({ loaded: true })
   }
 
-  handleFileClick = async (e, { id: currentFile }) => {
+  async handleFileClick(e, { id: currentFile } = {}) {
     e.preventDefault()
-
-    const { main } = this.context
-    const { fileManager = main.fileManager } = this.props
-
-    await fileManager.readContent({ include: [currentFile] })
-
     this.setState({ currentFile })
   }
 
   render() {
     const { main } = this.context
-    const { loaded } = this.state
+    const { currentFile } = this.state
     const { fileManager = main.fileManager } = this.props
 
     return (
-      <Segment basic>
-        <Header
-          as="h2"
-          icon="file outline"
-          dividing
-          content="FileManager"
-          subheader="Browse Project Files"
+      <CollapsibleColumnLayout
+        leftWidth={3}
+        rightWidth={6}
+        showLeft={this.state.showFilesTree}
+        showRight={this.state.showFileInfo}
+        right={<div>RIGHT</div>}
+        leftProps={{
+          inverted: true,
+          style: { height: '100%', padding: '1em 0em 0em 1em', margin: 0 },
+        }}
+        left={
+          <FilesTree
+            style={{ padding: '1em', overflowY: 'scroll', height: '100%', width: '100%' }}
+            fileManager={fileManager}
+            onFileClick={this.handleFileClick.bind(this)}
+          />
+        }
+        right={<FileInfo currentFile={currentFile} />}
+      >
+        <FileViewer
+          currentFile={currentFile}
+          toggleFilesTree={() => this.setState({ showFilesTree: !this.state.showFilesTree })}
+          toggleFileInfo={() => this.setState({ showFileInfo: !this.state.showFileInfo })}
         />
-        <Loader active={!loaded} />
-        <Grid as="div" divided="vertical" style={{ height: '100%' }}>
-          <Column width={3}>
-            <FilesTree fileManager={main.fileManager} onFileClick={this.handleFileClick} />
-          </Column>
-          <Column width={13} style={{ overflowY: 'scroll' }}>
-            {this.state.currentFile && (
-              <FileViewer file={fileManager.file(this.state.currentFile)} />
-            )}
-          </Column>
-        </Grid>
-      </Segment>
+      </CollapsibleColumnLayout>
     )
   }
 }

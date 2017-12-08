@@ -57,15 +57,20 @@ export async function useAvailableCompiler({ compilerId, action, options, args, 
 }
 
 export async function runCompiler(compiler) {
+  const statsOptions = this.runtime.argv.verbose ? {} : { minimal: true }
+
   await compiler.run()
 
   if (compiler.hasWarnings) {
     this.print(`Compiler had warnings.`)
+    this.print(
+      compiler.stringifyStats({ colors: true, warnings: true, errors: true, minimal: true })
+    )
   } else if (compiler.hasErrors) {
     this.print(`Compiler had errors.`)
     this.print(compiler.stringifyStats('errors-only'))
   } else if (compiler.wasSuccessful) {
-    this.print(`Compiler was successful.`)
+    this.print(compiler.stringifyStats({ colors: true, ...statsOptions }))
   }
 
   return compiler

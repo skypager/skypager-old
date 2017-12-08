@@ -7,13 +7,12 @@ export class FilesTreeFolder extends Component {
     expanded: false,
   }
 
-  handleClick = e => {
-    e.preventDefault()
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.expanded !== nextState.expanded) {
+      return true
+    }
 
-    this.setState(current => ({
-      ...current,
-      expanded: !this.state.expanded,
-    }))
+    return false
   }
 
   render() {
@@ -22,20 +21,33 @@ export class FilesTreeFolder extends Component {
     const { dirname } = fileManager.runtime.pathUtils
     const { expanded } = this.state
     const depth = directoryId.split('/').length
-    const childDirectories = fileManager.directoryIds.filter(
-      v => v.startsWith(directoryId) && v.split('/').length === depth + 1
-    )
+    const childDirectories = expanded
+      ? fileManager.directoryIds.filter(
+          v => v.startsWith(directoryId) && v.split('/').length === depth + 1
+        )
+      : []
 
-    const childFiles = fileManager.fileIds.filter(fileId => dirname(fileId) === directoryId)
+    const childFiles = expanded
+      ? fileManager.fileIds.filter(fileId => dirname(fileId) === directoryId)
+      : []
+
+    const handleClick = e => {
+      e.preventDefault()
+
+      this.setState(current => ({
+        ...current,
+        expanded: !this.state.expanded,
+      }))
+    }
 
     return (
       <List.Item key={directoryId}>
         <List.Icon
-          onClick={this.handleClick}
+          onClick={handleClick}
           name={expanded ? `folder open outline` : 'folder outline'}
         />
         <List.Content>
-          <List.Header onClick={this.handleClick}>{directoryId.split('/').pop()}</List.Header>
+          <List.Header onClick={handleClick}>{directoryId.split('/').pop()}</List.Header>
           {expanded && (
             <List.List>
               {childDirectories.map(dir => (
@@ -44,9 +56,7 @@ export class FilesTreeFolder extends Component {
               {childFiles.map(fileId => (
                 <List.Item key={fileId} id={fileId} onClick={onFileClick}>
                   <List.Icon name="file outline" />
-                  <List.Content>
-                    <List.Header>{fileId.split('/').pop()}</List.Header>
-                  </List.Content>
+                  <List.Content>{fileId.split('/').pop()}</List.Content>
                 </List.Item>
               ))}
             </List.List>

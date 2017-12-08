@@ -4,6 +4,7 @@ import 'brace/mode/jsx'
 import 'brace/mode/html'
 import 'brace/mode/markdown'
 import 'brace/theme/tomorrow'
+import 'brace/theme/monokai'
 
 const { types } = global
 
@@ -45,7 +46,7 @@ function Editor(props) {
     <AceEditor
       name={id}
       mode={mode}
-      theme="tomorrow"
+      theme="monokai"
       width="100%"
       height="100px"
       value={value}

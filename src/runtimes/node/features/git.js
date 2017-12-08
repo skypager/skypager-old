@@ -203,6 +203,7 @@ export async function walk(options = {}) {
         directories.set(relativeDirname, {
           ...parsed,
           path: dir,
+          relativeDirname: dirname(relativeDirname),
           relative: relativeDirname,
           stats: result,
         })
@@ -220,6 +221,7 @@ export async function walk(options = {}) {
       files.set(relativeFile, {
         ...parsed,
         path,
+        relativeDirname: dirname(relativeFile),
         relative: relativeFile,
         stats,
         extension: parsed.ext,

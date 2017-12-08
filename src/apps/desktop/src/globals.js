@@ -1,4 +1,4 @@
-import skypager from 'skypager-runtimes-electron'
+import skypager from 'skypager-runtimes-electron/renderer'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Route, Link, NavLink } from 'react-router-dom'

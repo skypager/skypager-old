@@ -1,8 +1,2 @@
-# Skypager Helpers Service
-
-** skypager document loader
-
-This is an auto-generated README.
-
-## TODO
- - [ ] Write a proper readme describing what this package does
+# Skypager Services
+> a helper for creating collections of API endpoints to be mounted on the runtime

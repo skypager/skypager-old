@@ -1,5 +1,6 @@
 const babelTransformer = require('skypager-document-types-babel')
 const markdownTransformer = require('skypager-document-types-markdown')
+const { pathMatcher } = require('skypager-runtime/utils/path-matcher')
 
 const defaultBabelConfig = {
   presets: ['stage-0', 'react'],
@@ -14,7 +15,17 @@ export default async function readFileAsts(chain, options = {}) {
     babel = true,
     markdown = true,
     include = [],
-    exclude = [/.log$/, /logs/, /.lock/, /node_modules/, /secrets/, /\.env/],
+    exclude = [
+      /.log$/,
+      /logs/,
+      /.lock/,
+      /node_modules/,
+      /secrets/,
+      /\.env/,
+      /vendor/,
+      /public\/.*\.\w+$/,
+      /\.min\.js$/,
+    ],
     extensions = [],
     rootNode,
     props = [],
@@ -58,11 +69,16 @@ export default async function readFileAsts(chain, options = {}) {
     include.push(this.resolve(rootNode))
   }
 
+  //console.log('Reading Content', include, exclude)
   await this.fileManager.readContent({ ...options, include, exclude })
+  //console.log('Hashing Files')
   await this.fileManager.hashFiles({ ...options, include, exclude })
+  //console.log('Selecting Matches')
+  const results = await this.fileManager.selectMatches({ exclude, rules: include, fullPath: true })
 
-  const results = await this.fileManager.selectMatches({ rules: include, fullPath: true })
+  const { cloneDeep } = this.lodash
 
+  //console.log('Got Results', results.count)
   const transform = (content, transformId, fileId) => {
     const fn = transforms[transformId]
 
@@ -71,7 +87,7 @@ export default async function readFileAsts(chain, options = {}) {
     }
 
     try {
-      return fn(content, options[`${transformId}Options`] || {})
+      return cloneDeep(fn(content, options[`${transformId}Options`] || {}))
     } catch (error) {
       if (options.debug) {
         runtime.error(`Error generating ast for ${fileId}`, {
@@ -82,17 +98,27 @@ export default async function readFileAsts(chain, options = {}) {
         })
       }
 
-      return { error: true, fileId, transformId, message: error.message }
+      return { error: true, fileId, transformId, message: error.message, stack: error.stack }
     }
   }
 
   return chain
     .plant(results)
     .keyBy('relative')
+    .pickBy(file => {
+      const pass = !exclude.length || !pathMatcher(exclude, file.path)
+
+      if (!pass) {
+        //console.log('Rejecting ' + file.path)
+      }
+
+      return !!pass
+    })
     .mapValues((file, id) => {
       // TODO: Check the hash and dont generate the ast if it exists already
       const { ast, hash, astHash, content, extension } = file
 
+      //console.log('Bilding AST For ', file.path, file.stats.size)
       if (ast && hash && astHash && hash === astHash) {
         file.ast = ast
       } else {

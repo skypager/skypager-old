@@ -1,14 +1,14 @@
 export const featureMethods = [
-  "getAllDisplays",
-  "getCursorPosition",
-  "getCurrentDisplay",
-  "getDisplaySize",
-  "getPrimaryDisplay",
-  "getIsMultiDisplay",
-  "getIsTouchSupportAvailable",
-  "getIsUsingPrimaryDisplay",
-  "getIsUsingExternalDisplay",
-  "getExternalDisplay",
+  'getAllDisplays',
+  'getCursorPosition',
+  'getCurrentDisplay',
+  'getDisplaySize',
+  'getPrimaryDisplay',
+  'getIsMultiDisplay',
+  'getIsTouchSupportAvailable',
+  'getIsUsingPrimaryDisplay',
+  'getIsUsingExternalDisplay',
+  'getExternalDisplay',
 ]
 
 export function getAllDisplays() {
@@ -20,7 +20,7 @@ export function getCursorPosition() {
 }
 
 export function getCurrentDisplay() {
-  return this.runtime.electron.screen.getDisplayNearestPoint(cursorPosition())
+  return this.runtime.electron.screen.getDisplayNearestPoint(this.cursorPosition)
 }
 
 export function getDisplaySize() {
@@ -32,7 +32,7 @@ export function getPrimaryDisplay() {
 }
 
 export function getIsTouchSupportAvailable() {
-  return this.currentDisplay.touchSupport === "available"
+  return this.currentDisplay.touchSupport === 'available'
 }
 
 export function getIsMultiDisplay() {

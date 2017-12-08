@@ -1,5 +1,5 @@
-export const createGetter = 'fileManager'
 import pathMatcher from 'runtime/utils/path-matcher'
+import { router, applyRoute } from 'runtime/utils/router'
 import md5File from 'md5-file'
 import * as computedProperties from './file-manager/computed'
 import * as actions from './file-manager/actions'
@@ -7,53 +7,13 @@ import Promise from 'bluebird'
 import Memory from 'memory-fs'
 export { walkUp, walkUpSync } from './package-manager'
 
-export const CREATED = 'CREATED'
-export const STARTING = 'STARTING'
-export const FAILED = 'FAILED'
-export const READY = 'READY'
-
-export const STATUSES = {
-  CREATED,
-  READY,
-  FAILED,
-  STARTING,
-}
-
-export const RECEIVED_FILE_CONTENT = 'willReceiveContent'
-export const RECEIVED_FILE_UPDATE = 'didReceiveFileUpdate'
-export const RECEIVED_FILE_ADD = 'didReceiveFile'
-export const RECEIVED_FILE_REMOVE = 'didRemoveFile'
-export const RECEIVED_FILE_NOTIFICATION = 'didReceiveNotification'
-
-export const RECEIVED_DIRECTORY_UPDATE = 'didReceiveDirectoryUpdate'
-export const RECEIVED_STATUS_UPDATE = 'didReceiveStatusUpdate'
-export const WILL_READ_FILES = 'willReadFiles'
-export const DID_FAIL = 'didFail'
-export const WAS_ACTIVATED = 'wasActivated'
-export const WILL_START = 'willStart'
-
-export const LIFECYCLE_HOOKS = {
-  RECEIVED_FILE_CONTENT,
-  RECEIVED_FILE_ADD,
-  RECEIVED_FILE_REMOVE,
-  RECEIVED_FILE_UPDATE,
-  RECEIVED_STATUS_UPDATE,
-  RECEIVED_FILE_NOTIFICATION,
-  RECEIVED_DIRECTORY_UPDATE,
-  WILL_READ_FILES,
-  DID_FAIL,
-  WAS_ACTIVATED,
-  WILL_START,
-}
+export const createGetter = 'fileManager'
 
 export function observables(options = {}) {
   return {
     status: CREATED,
   }
 }
-
-export const getStatuses = () => STATUSES
-export const getLifeCycleHooks = () => LIFECYCLE_HOOKS
 
 export const featureMethods = [
   // A Mobx Observable Map of file metadata
@@ -81,7 +41,13 @@ export const featureMethods = [
   // A Utility for testing a path with a rule or set of rules
   'getPathMatcher',
 
+  'applyRouteMetadata',
+
+  'matchRoute',
+
   'matchPaths',
+
+  'matchPatterns',
 
   'selectMatches',
 
@@ -137,6 +103,8 @@ export const featureMethods = [
   'walkUp',
 
   'walkUpSync',
+
+  'loadDocument',
 ]
 
 export const hostMethods = ['requireContext']
@@ -181,6 +149,23 @@ export function requireContext(rule, options = {}) {
     .value()
 }
 
+export async function loadDocument(options = {}) {
+  const { runtime } = this
+
+  if (typeof options === 'string') {
+    options = { id: options }
+  }
+
+  const file = this.file(options)
+
+  if (!file.content) {
+    const content = await runtime.fsx.readFileAsync(file.path)
+    this.updateFileContent(file.relative, content.toString())
+  }
+
+  return runtime.document(file.relative, { provider: file, ...options })
+}
+
 export function file(options = {}) {
   const { runtime } = this
 
@@ -219,17 +204,25 @@ export function featureWasEnabled(options = {}) {
     ...options,
   }
 
-  if (autoStart || this.runtime.argv.fileManager) {
+  if (autoStart || this.runtime.argv.startFileManager) {
     this.startAsync()
       .then(() => {
-        if (this.packageManager && this.runtime.argv.packageManager) {
-          return this.packageManager.startAsync().then(() => {})
+        if (this.packageManager && this.runtime.argv.startPackageManager) {
+          return this.packageManager
+            .startAsync()
+            .then(() => {
+              this.emit('packageManagerDidStart', this.packageManager)
+            })
+            .catch(error => {
+              this.emit('packageManagerDidFail', error, this.packageManager)
+            })
         }
       })
       .catch(error => {
         this.error = error
         this.emit(DID_FAIL, error)
         this.status = FAILED
+        this.runtime.error(`File Manager Failed to start`, { message: error.message })
       })
   }
 }
@@ -279,21 +272,115 @@ export function getChains() {
   const fileManager = this
 
   return {
+    patterns(...args) {
+      const fileIds = fileManager.matchPatterns(...args)
+      return fileManager.chain
+        .plant(fileIds)
+        .keyBy(v => v)
+        .mapValues(v => fileManager.file(v))
+    },
+
+    route(route, options = {}) {
+      return fileManager.chain.invoke('applyRouteMetadata', route, options)
+    },
+
     get files() {
-      return fileManager.chain.invoke('files.toJS').value()
+      return fileManager.chain.get('fileObjects')
     },
     get directories() {
-      return fileManager.chain.invoke('directories.toJS').value()
+      return fileManager.chain.get('directoryObjects')
     },
   }
 }
 
+export function applyRouteMetadata(route, options = {}) {
+  const { meta: staticMeta = {} } = options
+  const { mapValues } = this.lodash
+
+  const results = this.chain
+    .invoke('matchRoute', route, options)
+    .keyBy('subject')
+    .mapValues('result')
+    .value()
+
+  return mapValues(results, (metadata, fileId) => {
+    if (options.directories) {
+      const directory = this.directories.get(fileId)
+      const { meta = {} } = directory
+
+      this.directories.set(fileId, {
+        ...directory,
+        meta: {
+          ...meta,
+          ...staticMeta,
+          ...metadata,
+        },
+      })
+
+      return this.directories.get(fileId)
+    } else {
+      const file = this.files.get(fileId)
+      const { meta = {} } = file
+
+      this.files.set(fileId, {
+        ...file,
+        meta: {
+          ...meta,
+          ...staticMeta,
+          ...metadata,
+        },
+      })
+
+      return this.files.get(fileId)
+    }
+  })
+}
+
+export function matchRoute(route, options = {}) {
+  const subjects = options.directories ? this.directoryIds : this.fileIds
+
+  return applyRoute(route, subjects, {
+    discard: true,
+    ...options,
+  })
+}
+
+export function matchPatterns(options = {}) {
+  const { exclude = [], rules = options.rules || options.include || options || [] } = options
+
+  const { castArray } = this.lodash
+  const { makeRe } = this.runtime.feature('matcher')
+
+  const excludePatterns = castArray(exclude).map(p => (typeof p === 'string' ? makeRe(p) : p))
+  const includePatterns = castArray(rules).map(p => (typeof p === 'string' ? makeRe(p) : p))
+
+  return this.matchPaths({
+    ...options,
+    rules: includePatterns,
+    exclude: excludePatterns,
+  })
+}
+
 export function matchPaths(options = {}) {
-  const { rules = options.rules || options || [] } = options
+  const { castArray } = this.lodash
+  let { exclude = [], rules = options.rules || options.include || options || [] } = options
+
+  exclude = castArray(exclude)
+  rules = castArray(rules)
 
   return options.fullPath
-    ? this.fileObjects.filter(file => pathMatcher(rules, file.path)).map(result => result.relative)
-    : this.fileIds.filter(fileId => pathMatcher(rules, fileId))
+    ? this.fileObjects
+        .filter(
+          file =>
+            (!rules.length || pathMatcher(rules, file.path)) &&
+            (!exclude.length || !pathMatcher(exclude, file.path))
+        )
+        .map(result => result.relative)
+    : this.fileIds.filter(
+        fileId =>
+          (!rules.length || pathMatcher(rules, fileId)) &&
+          (!exclude.length || !pathMatcher(exclude, fileId))
+      )
 }
 
 export function selectMatches(options = {}) {
@@ -664,3 +751,46 @@ export function wrapMemoryFileSystem() {
 
   return memfs
 }
+
+export const CREATED = 'CREATED'
+export const STARTING = 'STARTING'
+export const FAILED = 'FAILED'
+export const READY = 'READY'
+
+export const STATUSES = {
+  CREATED,
+  READY,
+  FAILED,
+  STARTING,
+}
+
+export const RECEIVED_FILE_CONTENT = 'willReceiveContent'
+export const RECEIVED_FILE_UPDATE = 'didReceiveFileUpdate'
+export const RECEIVED_FILE_ADD = 'didReceiveFile'
+export const RECEIVED_FILE_REMOVE = 'didRemoveFile'
+export const RECEIVED_FILE_NOTIFICATION = 'didReceiveNotification'
+
+export const RECEIVED_DIRECTORY_UPDATE = 'didReceiveDirectoryUpdate'
+export const RECEIVED_STATUS_UPDATE = 'didReceiveStatusUpdate'
+export const WILL_READ_FILES = 'willReadFiles'
+export const DID_FAIL = 'didFail'
+export const WAS_ACTIVATED = 'wasActivated'
+export const WILL_START = 'willStart'
+
+export const LIFECYCLE_HOOKS = {
+  RECEIVED_FILE_CONTENT,
+  RECEIVED_FILE_ADD,
+  RECEIVED_FILE_REMOVE,
+  RECEIVED_FILE_UPDATE,
+  RECEIVED_STATUS_UPDATE,
+  RECEIVED_FILE_NOTIFICATION,
+  RECEIVED_DIRECTORY_UPDATE,
+  WILL_READ_FILES,
+  DID_FAIL,
+  WAS_ACTIVATED,
+  WILL_START,
+}
+
+export const getStatuses = () => STATUSES
+
+export const getLifeCycleHooks = () => LIFECYCLE_HOOKS

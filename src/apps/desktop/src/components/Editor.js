@@ -4,6 +4,7 @@ import 'brace/mode/jsx'
 import 'brace/mode/html'
 import 'brace/mode/markdown'
 import 'brace/theme/tomorrow'
+import 'brace/theme/monokai'
 
 const { types } = global
 
@@ -39,20 +40,21 @@ languageTools.addCompleter(semanticUIReactCompleter)
 */
 
 function Editor(props) {
-  const { id, mode, value, ...rest } = props
+  const { id, mode, value, onChange, theme = 'tomorrow', ...rest } = props
 
   return (
     <AceEditor
-      name={id}
+      name={id || 'empty-editor'}
       mode={mode}
-      theme="tomorrow"
+      theme={theme}
       width="100%"
+      height="95%"
       value={value}
+      onChange={onChange}
       editorProps={{ $blockScrolling: Infinity }}
-      highlightActiveLine={false}
+      highlightActiveLine={true}
       minLines={40}
-      maxLines={Infinity}
-      showGutter={false}
+      showGutter={true}
       showPrintMargin={false}
       wrapEnabled
       tabSize={2}

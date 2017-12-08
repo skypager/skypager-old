@@ -1,15 +1,21 @@
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+
 export const target = 'electron-renderer'
 
 export function entry() {
   const { runtime } = this
-  const { hot = false, host = 'localhost', port = 3000 } = runtime.argv
+  const {
+    hot = skypager.commandPhrase === 'run hot',
+    host = 'localhost',
+    port = 3000,
+  } = this.options
 
   const rendererPath = runtime.join('src', 'renderer.js')
 
   const hotEntries = [
     'react-hot-loader/patch',
     `webpack-dev-server/client?http://${host}:${port}`,
-    'webpack/hot/only-dev-server',
+    'webpack/hot/only-dev-server'
   ]
 
   return {
@@ -18,7 +24,7 @@ export function entry() {
 }
 
 export function outputPath() {
-  return this.runtime.resolve('app')
+  return this.runtime.resolve('public')
 }
 
 export function outputFilename() {
@@ -40,6 +46,9 @@ export function rules() {
       exclude: [/node_modules/, runtime.join('node_modules'), runtime.join('src/templates')],
       use: compact([
         {
+          loader: 'react-hot-loader/webpack',
+        },
+        {
           loader: 'babel-loader',
           options: {
             babelrc: true,
@@ -52,35 +61,87 @@ export function rules() {
 
 export function externals() {
   return {
-    'skypager-runtimes-electron': 'commonjs2 skypager-runtimes-electron/renderer.js',
     react: 'global React',
     'react-dom': 'global ReactDOM',
     'react-router-dom': 'global ReactRouterDOM',
     'semantic-ui-react': 'global semanticUIReact',
     'prop-types': 'global PropTypes',
     axios: 'global axios',
-    moment: 'global moment',
-    mobx: 'global skypager.mobx',
-    lodash: 'global skypager.lodash',
+    moment: 'global moment'
+  }
+}
+
+export function configWasGenerated(config) {
+  config.devServer = {
+    ...(config.devServer || {}),
+    inline: false,
+  }
+
+  console.log(config.externals)
+  console.log(config.target)
+  return config
+}
+
+export function injectPlugins(plugins) {
+  console.log('injecting plugins')
+}
+
+function externalsOptions() {
+  return {
+    whitelist: [
+      /webpack-dev-server/,
+      /react-hot-loader/,
+      /webpack\/hot\/only-dev-server/
+    ]
   }
 }
 
 export function webpackPlugins() {
+  const { runtime } = this
+  const { dirname } = runtime.pathUtils
+  const res = (...args) => {
+    const result = runtime.packageFinder.attemptResolve(...args)
+
+    if (!result) {
+      return runtime.resolve(...args)
+    }
+
+    return result
+  }
+  const from = (...args) => ({ from: res(...args) })
+
   return {
     'html-webpack-plugin': {
       template: 'src/templates/html.dev.js',
-      skypager: this.runtime,
-      runtime: this.runtime,
+      skypager: runtime,
+      runtime: runtime,
       inject: true,
       filename: 'index.html',
     },
+
     'copy-webpack-plugin': [
+      from('react/dist/react.js'),
+      from('react-dom/dist/react-dom.js'),
+      from('prop-types/prop-types.js'),
+      from('react-router-dom/umd/react-router-dom.js'),
+      from('semantic-ui-react/dist/umd/semantic-ui-react.min.js'),
+      from('react-json-inspector/json-inspector.css'),
       {
-        from: this.runtime.resolve('src', 'vendor'),
-        flatten: false,
+        from: res('skypager-runtimes-electron/renderer.js'),
+        to: 'skypager-runtimes-electron-renderer.js',
       },
       {
-        from: this.runtime.resolve('node_modules', 'react-json-inspector', 'json-inspector.css'),
+        from: dirname(res('semantic-ui-css/semantic.css')),
+        to: runtime.join('public'),
+        flatten: false,
+        ignore: [
+          '**/components/**',
+          'components/**',
+          'README.md',
+          'LICENSE',
+          'package.json',
+          'package.js',
+        ],
       },
     ],
   }
@@ -99,10 +160,13 @@ export function babelConfig() {
   return {
     presets: validate([
       [
+        packageFinder.attemptResolve('react-hot-loader/babel'),
         packageFinder.attemptResolve('babel-preset-env'),
         {
           targets: {
             browsers: ['>10%'],
+            node: '6.11.1',
+            electron: '1.8.1',
           },
         },
       ],
