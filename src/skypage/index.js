@@ -30,4 +30,4 @@ export function initializer(next) {
   }
 }
 
-export default initializer
+export default (global.SkypageDocumentType = initializer)

@@ -1,4 +1,9 @@
 export function component(options = {}, { React, runtime, types }) {
+  // this is because of the VFile relying on process.cwd()
+  if (process && typeof process.cwd !== 'function') {
+    process.cwd = () => runtime.cwd
+  }
+
   return class Skypage extends React.Component {
     static childContextTypes = {
       runtime: types.object,
@@ -25,7 +30,9 @@ export function component(options = {}, { React, runtime, types }) {
     render() {
       const { wrapper, doc, components: remarkReactComponents, runtime } = this.props
 
-      const children = runtime.documentTypes('skypage').compile(doc.ast, { remarkReactComponents })
+      const children = runtime
+        .documentType('skypage')
+        .provider.compile(doc.ast, { remarkReactComponents })
 
       return React.createElement(wrapper, { doc, children })
     }
