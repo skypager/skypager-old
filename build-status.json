@@ -1,0 +1,796 @@
+{
+  "gitInfo": {
+    "sha": "7236998d9e0fc21290663f2152f2743ddb330d15",
+    "abbreviatedSha": "7236998d9e",
+    "branch": "feature/node-improvements",
+    "tag": null,
+    "root": "/Users/jonathan/Projects/skypager-dev/framework"
+  },
+  "packages": {
+    "skypager-document-types-manifest": {
+      "success": false,
+      "version": "37.5.0",
+      "name": "skypager-document-types-manifest",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-project-types-library": {
+      "success": true,
+      "version": "29.4.0",
+      "name": "skypager-project-types-library",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-runtimes-universal": {
+      "success": false,
+      "version": "38.3.1",
+      "name": "skypager-runtimes-universal",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-runtimes-voice": {
+      "success": true,
+      "version": "28.1.0",
+      "name": "skypager-runtimes-voice",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-project-types-helper": {
+      "success": true,
+      "version": "29.4.0",
+      "name": "skypager-project-types-helper",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-document-types-babel": {
+      "success": false,
+      "version": "38.0.0",
+      "name": "skypager-document-types-babel",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-helpers-webpack": {
+      "success": false,
+      "version": "38.4.0",
+      "name": "skypager-helpers-webpack",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-helpers-document": {
+      "success": false,
+      "version": "38.3.1",
+      "name": "skypager-helpers-document",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-runtimes-react": {
+      "success": false,
+      "version": "38.3.1",
+      "name": "skypager-runtimes-react",
+      "bundle": {
+        "warnings": 0,
+        "errors": 1
+      },
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      }
+    },
+    "skypager-runtimes-project": {
+      "success": false,
+      "version": "29.4.0",
+      "name": "skypager-runtimes-project",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-helpers-service": {
+      "success": true,
+      "version": "38.3.1",
+      "name": "skypager-helpers-service",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-helpers-project-type": {
+      "success": false,
+      "version": "37.5.0",
+      "name": "skypager-helpers-project-type",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-helpers-page": {
+      "success": true,
+      "version": "38.3.1",
+      "name": "skypager-helpers-page",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-helpers-document-type": {
+      "success": true,
+      "version": "38.3.1",
+      "name": "skypager-helpers-document-type",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-helpers-client": {
+      "success": true,
+      "version": "38.3.1",
+      "name": "skypager-helpers-client",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-helpers-server": {
+      "success": true,
+      "version": "38.3.1",
+      "name": "skypager-helpers-server",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-helpers-bundler": {
+      "success": true,
+      "version": "38.3.1",
+      "name": "skypager-helpers-bundler",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-helpers-repl": {
+      "success": true,
+      "version": "38.3.1",
+      "name": "skypager-helpers-repl",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-helpers-command": {
+      "success": false,
+      "version": "38.3.1",
+      "name": "skypager-helpers-command",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-runtimes-web": {
+      "success": false,
+      "version": "38.3.1",
+      "name": "skypager-runtimes-web",
+      "bundle": {
+        "success": true,
+        "assets": {
+          "skypager-web": "skypager-web.min.js"
+        }
+      },
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-runtimes-node": {
+      "success": false,
+      "version": "38.3.1",
+      "name": "skypager-runtimes-node",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-document-types-markdown": {
+      "success": false,
+      "version": "38.0.0",
+      "name": "skypager-document-types-markdown",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-runtime": {
+      "success": false,
+      "version": "38.3.1",
+      "name": "skypager-runtime",
+      "bundle": {
+        "success": true,
+        "assets": {
+          "skypager-runtime": "skypager-runtime.min.js"
+        }
+      },
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js",
+          "runtime": "runtime.js",
+          "feature": "feature.js",
+          "helper": "helper.js",
+          "registries": "registries.js",
+          "context-registry": "context-registry.js",
+          "utils": "utils.js",
+          "config-builder": "config-builder.js",
+          "utils/properties": "utils/properties.js",
+          "utils/router": "utils/router.js",
+          "utils/registry": "utils/registry.js",
+          "utils/emitter": "utils/emitter.js",
+          "utils/string": "utils/string.js",
+          "utils/path-to-regexp": "utils/path-to-regexp.js",
+          "utils/query": "utils/query.js",
+          "utils/path-matcher": "utils/path-matcher.js",
+          "utils/inflect": "utils/inflect.js",
+          "utils/object-hash": "utils/object-hash.js",
+          "utils/mware": "utils/mware.js",
+          "utils/entity": "utils/entity.js"
+        }
+      }
+    },
+    "skypager-runtimes-development": {
+      "success": false,
+      "version": "38.3.1",
+      "name": "skypager-runtimes-development",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-framework": {
+      "version": "28.6.0",
+      "name": "skypager-framework",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      },
+      "bundle": {
+        "success": true,
+        "assets": {
+          "skypager-framework": "skypager-framework.min.js"
+        }
+      }
+    },
+    "skypager-cli-base": {
+      "version": "38.3.0",
+      "name": "skypager-cli-base",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      },
+      "success": false
+    },
+    "skypager-features-process-streamer": {
+      "version": "37.5.0",
+      "name": "skypager-features-process-streamer",
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      },
+      "success": false
+    },
+    "skypager-core": {
+      "version": "38.3.1",
+      "name": "skypager-core",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      },
+      "success": false,
+      "bundle": {
+        "success": true,
+        "assets": {
+          "skypager-core": "skypager-core.min.js"
+        }
+      }
+    },
+    "skypager-specs": {
+      "name": "skypager-specs",
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      },
+      "success": false,
+      "version": "37.5.0"
+    },
+    "skypager-features-react-renderer": {
+      "version": "37.5.0",
+      "name": "skypager-features-react-renderer",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      },
+      "bundle": {
+        "success": true,
+        "assets": {
+          "skypager-react-renderer": "skypager-react-renderer.min.js"
+        }
+      },
+      "success": false
+    },
+    "skypager-websites-documentation": {
+      "version": "29.1.0",
+      "name": "skypager-websites-documentation",
+      "package": {
+        "success": true,
+        "assets": {
+          "app": "app.js"
+        }
+      },
+      "success": false
+    },
+    "skypager-node-server": {
+      "version": "29.3.0",
+      "name": "skypager-node-server",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      },
+      "success": false
+    },
+    "skypager-features-file-manager": {
+      "version": "38.3.0",
+      "name": "skypager-features-file-manager",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      },
+      "success": false
+    },
+    "skypager-features-document-database": {
+      "version": "38.3.1",
+      "name": "skypager-features-document-database",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-runtimes-electron": {
+      "version": "38.3.1",
+      "name": "skypager-runtimes-electron",
+      "package": {
+        "success": true,
+        "assets": {
+          "main": "main.js",
+          "index": "index.js"
+        }
+      },
+      "bundle": {
+        "success": true,
+        "assets": {
+          "renderer": "renderer.js"
+        }
+      },
+      "electronRenderer": {
+        "success": true,
+        "assets": {
+          "renderer": "renderer.js"
+        }
+      },
+      "electronMain": {
+        "success": true,
+        "assets": {
+          "main": "main.js"
+        }
+      },
+      "success": false
+    },
+    "skypager-document-types-skypage": {
+      "version": "38.0.0",
+      "name": "skypager-document-types-skypage",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-react-container": {
+      "version": "29.3.0",
+      "name": "skypager-react-container",
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      },
+      "success": false
+    },
+    "skypager-runtimes-react-bootstrap": {
+      "version": "29.3.0",
+      "name": "skypager-runtimes-react-bootstrap",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      },
+      "success": false,
+      "bundle": {
+        "success": true,
+        "assets": {
+          "skypager-react-bootstrap": "skypager-react-bootstrap.min.js"
+        }
+      }
+    },
+    "skypager-containers-base": {
+      "version": "29.3.0",
+      "name": "skypager-containers-base",
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      },
+      "success": false
+    },
+    "skypager-containers-react": {
+      "version": "30.0.3",
+      "name": "skypager-containers-react",
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      },
+      "success": false
+    },
+    "skypager-containers-node": {
+      "version": "30.0.3",
+      "name": "skypager-containers-node",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-features-bootstrap-themes": {
+      "version": "37.5.0",
+      "name": "skypager-features-bootstrap-themes",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      },
+      "success": false
+    },
+    "skypager-helpers-project": {
+      "version": "37.5.0",
+      "name": "skypager-helpers-project",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-containers-env": {
+      "version": "30.0.3",
+      "name": "skypager-containers-env",
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      },
+      "success": false
+    },
+    "skypager-helpers-context": {
+      "version": "38.3.1",
+      "name": "skypager-helpers-context",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-apps-desktop": {
+      "version": "30.5.1",
+      "name": "skypager-apps-desktop",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      },
+      "success": false
+    },
+    "website": {
+      "version": "1.0.0",
+      "name": "website",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-features-watchman": {
+      "version": "37.5.0",
+      "name": "skypager-features-watchman",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-features-lerna-adapter": {
+      "version": "37.5.0",
+      "name": "skypager-features-lerna-adapter",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-apps-portfolio-manager": {
+      "version": "36.1.0",
+      "name": "skypager-apps-portfolio-manager",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-servers-graphql": {
+      "version": "37.5.0",
+      "name": "skypager-servers-graphql",
+      "package": {
+        "warnings": 0,
+        "errors": 3
+      },
+      "success": false
+    },
+    "skypager-servers-portfolio": {
+      "version": "38.3.0",
+      "name": "skypager-servers-portfolio",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-apps-website": {
+      "version": "30.5.1",
+      "name": "skypager-apps-website",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-features-analytics": {
+      "version": "37.5.0",
+      "name": "skypager-features-analytics",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      },
+      "success": false
+    },
+    "skypager-document-types-markdown-react": {
+      "version": "37.5.0",
+      "name": "skypager-document-types-markdown-react",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
+    },
+    "skypager-repl": {
+      "version": "37.5.0",
+      "name": "skypager-repl",
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      },
+      "success": false
+    },
+    "skypage": {
+      "version": "37.6.4",
+      "name": "skypage",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      },
+      "success": false,
+      "bundle": {
+        "success": true,
+        "assets": {
+          "skypage": "skypage.min.js"
+        }
+      }
+    },
+    "skypager-docs": {
+      "version": "37.6.1",
+      "name": "skypager-docs",
+      "package": {
+        "warnings": 0,
+        "errors": 2
+      },
+      "success": false
+    },
+    "skypager-docs-design-goals": {
+      "version": "38.3.0",
+      "name": "skypager-docs-design-goals",
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      },
+      "success": false
+    },
+    "skypager-apps-desktop-editor": {
+      "version": "38.0.0",
+      "name": "skypager-apps-desktop-editor",
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      },
+      "success": false
+    }
+  },
+  "failed": {
+    "skypager-react-container": {
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      }
+    },
+    "skypager-containers-base": {
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      }
+    },
+    "skypager-containers-env": {
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      }
+    },
+    "skypager-servers-graphql": {
+      "package": {
+        "warnings": 0,
+        "errors": 3
+      }
+    },
+    "skypager-repl": {
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      }
+    },
+    "skypager-docs": {
+      "package": {
+        "warnings": 0,
+        "errors": 2
+      }
+    },
+    "skypager-docs-design-goals": {
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      }
+    },
+    "skypager-apps-desktop-editor": {
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      }
+    },
+    "skypager-containers-react": {
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      }
+    },
+    "skypager-features-process-streamer": {
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      }
+    },
+    "skypager-runtimes-react": {
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      },
+      "bundle": {
+        "warnings": 0,
+        "errors": 1
+      }
+    },
+    "skypager-specs": {
+      "package": {
+        "warnings": 0,
+        "errors": 1
+      }
+    }
+  }
+}

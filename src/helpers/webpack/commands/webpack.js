@@ -111,18 +111,30 @@ export async function serveCompiler(compiler) {
     host,
     publicPath: compiler.publicPath || '/',
     quiet: false,
-    ...this.runtime.argv,
+    ...this.runtime.chain
+      .get('argv')
+      .pick(
+        'historyApiFallback',
+        'noInfo',
+        'hot',
+        'contentBase',
+        'port',
+        'host',
+        'publicPath',
+        'quiet'
+      )
+      .value(),
     stats: { colors: true, minimal: true },
   })
 
-  devServer.listen(port, hostname, err => {
+  devServer.listen(port, host, err => {
     if (err) {
-      print(`ERROR Starting Dev Server`)
-      print(err.message, 4)
+      this.print(`ERROR Starting Dev Server`)
+      this.print(err.message, 4)
       return
     }
 
-    print(`Dev Server is listening on http://${host}:${port}`)
+    this.print(`Dev Server is listening on http://${host}:${port}`)
   })
 }
 
