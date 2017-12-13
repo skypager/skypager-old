@@ -1,0 +1,9 @@
+*.DS_Store
+config/development.js
+config/production.js
+npm-debug.log
+node_modules/
+.tmp/
+lib/
+*.log
+public/
