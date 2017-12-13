@@ -1,5 +1,6 @@
 .gitignore
-public/
-dist/
+build/
 node_modules/
 npm-debug.log
+webpack.dev.config.babel.js
+webpack.prod.config.babel.js

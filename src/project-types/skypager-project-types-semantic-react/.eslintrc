@@ -1,8 +1,7 @@
 {
     "parser": "babel-eslint",
     "globals": {
-      "skypager": true,
-      "runtime": true
+      "skypager": true
     },
     "extends": ["prettier-standard", "standard-jsx"],
     "plugins": [
