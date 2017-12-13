@@ -57,11 +57,11 @@
     "lodash": "^4.17.4",
     "mobx": "3.3.1",
     "skypager-cli-base": "^37.5.0",
-    "skypager-core": "^38.3.1",
+    "skypager-core": "^38.4.0",
     "skypager-document-types-babel": "^38.0.0",
-    "skypager-runtimes-development": "^38.3.1",
-    "skypager-runtimes-node": "^38.3.1",
-    "skypager-runtimes-web": "^38.3.1"
+    "skypager-runtimes-development": "^38.4.0",
+    "skypager-runtimes-node": "^38.4.0",
+    "skypager-runtimes-web": "^38.4.0"
   },
   "entryPoints": {
     "index": "./src/index.js"

@@ -1,6 +1,6 @@
 {
   "name": "skypager-helpers-service",
-  "version": "38.3.1",
+  "version": "38.4.0",
   "description": "skypager document loader",
   "main": "index.js",
   "files": [
@@ -18,7 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.15.2",
-    "skypager-runtime": "^38.3.1"
+    "skypager-runtime": "^38.4.0"
   },
   "skypager": {
     "paths": {
