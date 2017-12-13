@@ -17,7 +17,7 @@ export const defaultPackageContent = {
   version: '1.0.0',
   dependencies: {
     skypager: 'latest',
-    'skypager-cli-base': 'latest',
+    'skypager-cli': 'latest',
     'skypager-document-types-babel': 'latest',
     'babel-register': 'latest',
     'babel-runtime': 'latest',
