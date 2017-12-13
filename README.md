@@ -1,8 +1,8 @@
 # Skypager
 
-![Skypager Logo](https://github.com/skypager/skypager/raw/develop/skypager-logo.png)
-
 > Universal Javascript Project Automation Framework
+
+![Skypager Logo](https://github.com/skypager/skypager/raw/develop/skypager-logo.png)
 
 ## Design Goals
 
