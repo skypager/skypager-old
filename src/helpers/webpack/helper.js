@@ -1387,6 +1387,19 @@ export class Webpack extends Helper {
     options = { ...this.options, ...options }
     const { uniq, pick, defaultsDeep } = this.runtime.lodash
 
+    // If the user wants to use standard webpack config, just export a property called
+    // standard config, and we will skip any attempts to add to it
+    if (this.tryGet('standardConfig')) {
+      return this.attemptMethodAsync(
+        'standardConfig',
+        this.runtime.get('argv.env', this.runtime.env),
+        {
+          ...this.runtime.argv,
+          ...options,
+        }
+      )
+    }
+
     const providedConfig = mapValues(
       pick(this.provider || {}, VALID_CONFIG_KEYS),
       (v, k) => (isFunction(v) ? v.call(this, this.options, this.context) : v)
@@ -1484,10 +1497,12 @@ export class Webpack extends Helper {
     })
 
     if (externalizeDependencies && typeof externalizeDependencies !== 'string') {
-      cfg.externals.push(this.generateExternalsFunction.call(this, {
-        pkg: this.pkg,
-        ...this.tryResult('externalsOptions', {})
-      }))
+      cfg.externals.push(
+        this.generateExternalsFunction.call(this, {
+          pkg: this.pkg,
+          ...this.tryResult('externalsOptions', {}),
+        })
+      )
     }
 
     const finalizeConfig = this.tryGet('finalizeConfig')
