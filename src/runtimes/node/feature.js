@@ -8,7 +8,18 @@ Node runtime initialization is out of control at the moment.  Every feature avai
 is autoloaded no matter what command is being run. Move these to the command prepare step
 
 */
-export function featureWasEnabled(options = {}) {
+
+export function featureWasEnabled(...args) {
+  try {
+    enabledHook.call(this, ...args)
+  } catch (error) {
+    console.error('Error enabling node runtime')
+    console.error(error.message)
+    console.log(error.stack)
+  }
+}
+
+export function enabledHook(options = {}) {
   const { runtime } = this
   const { get, omit, defaultsDeep } = runtime.lodash
 
@@ -131,9 +142,7 @@ export function featureWasEnabled(options = {}) {
       require('skypager-features-file-manager').attach(runtime)
       runtime.invoke('profiler.profileEnd', 'fileManagerEnabled')
       return runtime.feature('file-manager')
-    } catch(e) {
-
-    }
+    } catch (e) {}
   })
 
   runtime.selectors.add(require.context('./selectors', true, /.js$/))
@@ -243,6 +252,9 @@ export function featureWasEnabled(options = {}) {
   if (runtime.argv.profile) {
     runtime.profiler.profileEnd('nodeRuntimeEnabled')
   }
+
+  runtime.setState({ nodeFeatureEnabled: true })
+  runtime.emit('nodeFeatureEnabled')
 }
 
 export function parseArgv(base = {}) {

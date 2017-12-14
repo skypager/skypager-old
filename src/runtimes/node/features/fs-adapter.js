@@ -27,7 +27,15 @@ export function getDirname() {
 }
 
 export function lazyCurrentPackage() {
-  return this.tryResult('pkg', () => this.fsx.readJsonSync(this.manifestPath))
+  if (!this.manifestPath) {
+    return {}
+  }
+
+  try {
+    return this.tryResult('pkg', () => this.fsx.readJsonSync(this.manifestPath))
+  } catch (error) {
+    return {}
+  }
 }
 
 export function lazyParentPackage() {

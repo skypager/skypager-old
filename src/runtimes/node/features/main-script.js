@@ -72,6 +72,8 @@ export async function loadMainModule(options = {}, context = {}) {
 export async function runMainScript(options = {}, context = {}) {
   if (!this.mainScriptExists) {
     this.runtime.debug('Could not find main script', { path: this.skypagerMainPath })
+    this.runtime.state.set('mainScriptLoaded', true)
+    this.runtime.emit('mainScriptDidLoad')
     return
   }
 

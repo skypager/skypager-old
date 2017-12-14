@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "2374f472aa40cb5647ff0aad7fc0b47c95dfd92b",
-    "abbreviatedSha": "2374f472aa",
+    "sha": "0c9228ca6ac5fecaed389166970abd1c9ac91060",
+    "abbreviatedSha": "0c9228ca6a",
     "branch": "feature/project-types",
-    "tag": "v39.2.6",
+    "tag": "v39.2.7",
     "root": "/Users/jonathan/Projects/skypager-dev/framework"
   },
   "packages": {
@@ -209,7 +209,7 @@
     },
     "skypager-helpers-command": {
       "success": false,
-      "version": "39.2.6",
+      "version": "39.2.7",
       "name": "skypager-helpers-command",
       "package": {
         "success": true,
@@ -237,7 +237,7 @@
     },
     "skypager-runtimes-node": {
       "success": false,
-      "version": "39.2.6",
+      "version": "39.2.7",
       "name": "skypager-runtimes-node",
       "package": {
         "success": true,
@@ -295,7 +295,7 @@
     },
     "skypager-runtimes-development": {
       "success": false,
-      "version": "39.2.6",
+      "version": "39.2.7",
       "name": "skypager-runtimes-development",
       "package": {
         "success": true,
@@ -341,7 +341,7 @@
       "success": false
     },
     "skypager-core": {
-      "version": "39.2.6",
+      "version": "39.2.7",
       "name": "skypager-core",
       "package": {
         "success": true,
@@ -427,7 +427,7 @@
       }
     },
     "skypager-runtimes-electron": {
-      "version": "39.2.6",
+      "version": "39.2.7",
       "name": "skypager-runtimes-electron",
       "package": {
         "success": true,
@@ -715,7 +715,7 @@
       "success": false
     },
     "skypager-cli": {
-      "version": "39.2.6",
+      "version": "39.2.7",
       "name": "skypager-cli",
       "package": {
         "success": true,
