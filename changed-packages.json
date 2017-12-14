@@ -1,11 +1,3 @@
 [
-  "skypager",
-  "skypager-cli",
-  "skypager-helpers-webpack",
-  "skypager-runtimes-development",
-  "skypager-runtimes-electron",
-  "skypager-runtimes-node",
-  "skypager-features-document-database",
-  "skypager-features-file-manager",
-  "skypager-servers-portfolio"
+  "skypager"
 ]
