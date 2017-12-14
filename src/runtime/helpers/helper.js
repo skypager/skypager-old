@@ -112,19 +112,15 @@ export class Helper {
    * Helper classes can specify attributes that individual helper modules are
    * expected to provide or export.
    */
-  static get providerTypes() {
-    return {}
-  }
+  static providerTypes = {}
 
   /**
    * Helper classes can specify options or parameters that can be passed in at the time
    * the helper instance is created.
    */
-  static get optionTypes() {
-    return {
-      id: 'string',
-      provider: 'object',
-    }
+  static optionTypes = {
+    id: 'string',
+    provider: 'object',
   }
 
   /**
@@ -132,13 +128,11 @@ export class Helper {
    * this will include a reference to the host project, as well as the registry the helper belongs to
    * and things such as the environment or process argv.
    */
-  static get contextTypes() {
-    return {
-      project: 'object',
-      reg: 'object',
-      host: 'object',
-      runtime: 'object',
-    }
+  static contextTypes = {
+    project: 'object',
+    reg: 'object',
+    host: 'object',
+    runtime: 'object',
   }
 
   /**

@@ -93,6 +93,12 @@ export function featureWasEnabled(options = {}) {
   runtime.feature('package-finder').enable()
   runtime.invoke('profiler.profileEnd', 'packageFinderEnabled')
 
+  runtime.lazy('autoDiscovery', () => {
+    const autoDiscovery = runtime.feature('auto-discovery')
+    autoDiscovery.enable()
+    return autoDiscovery
+  })
+
   runtime.invoke('profiler.profileStart', 'findCurrentPackage')
   runtime.packageFinder
     .findNearest()
