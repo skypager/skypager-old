@@ -1,6 +1,6 @@
 {
   "name": "skypager-project-types-semantic-react",
-  "version": "39.0.1",
+  "version": "39.2.1",
   "license": "MIT",
   "author": "Jon Soeder <jon@chicago.com>",
   "description": "a project type template for webapps based on semantic-ui-react",
