@@ -12,8 +12,8 @@ export async function validate() {
 }
 
 export async function prepare() {
-  if (!runtime.repl) {
-    runtime.use(require('skypager-helpers-repl'), 'INITIALIZING')
+  if (!this.runtime.repl) {
+    this.runtime.use(require('skypager-helpers-repl'), 'INITIALIZING')
   }
 }
 
