@@ -21,5 +21,8 @@
     "url": "https://github.com/skypager/skypager"
   },
   "homepage": "https://skypager.io",
-  "latestHash": "26e88f7b0d12f112943b"
+  "latestHash": "26e88f7b0d12f112943b",
+  "dependencies": {
+    "skypager-project-types-standard": "39.1.0"
+  }
 }
