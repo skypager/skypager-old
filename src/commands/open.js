@@ -6,7 +6,15 @@ export function program(p) {
   return p
     .command('open')
     .description('open a skypager file or project')
-    .option('--entry', 'which script to use as the electron main entry point')
+    .option('--entry <entryPoint>', 'which script to use as the electron main entry point')
+    .option('--available', 'List any available applications')
+    .option('--dev', 'Open the application in development mode (with HMR)')
+}
+
+export async function prepare() {
+  try {
+    await this.runtime.autoDiscovery.discoverApps()
+  } catch (e) {}
 }
 
 export async function validate() {
@@ -58,6 +66,12 @@ export async function run(options = {}) {
   }
 
   const resolve = resolveEntryPath.bind(this)
+
+  if (skypager.argv.available) {
+    this.print('Available applications:', 2, 1, 1)
+    this.print(skypager.autoDiscovery.discoveredApps.map(a => `- ${a}`), 4)
+    process.exit(0)
+  }
 
   const entryPath = skypager.chain
     .get('argv._', [])
