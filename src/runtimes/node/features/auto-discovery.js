@@ -6,6 +6,7 @@ export const featureMethods = [
   'discoverProjectTypes',
   'discoverHelpers',
   'discoverDocumentTypes',
+  'discoverApps',
   'discoverRuntimes',
   'registerProjectTypes',
   'registerDocumentTypes',
@@ -15,11 +16,18 @@ export const featureMethods = [
 
 export function observables() {
   return {
-    helpers: ['shallowMap', {}],
-    runtimes: ['shallowMap', {}],
-    projectTypes: ['shallowMap', {}],
+    apps: ['shallowMap', {}],
     documentTypes: ['shallowMap', {}],
     features: ['shallowMap', {}],
+    helpers: ['shallowMap', {}],
+    projectTypes: ['shallowMap', {}],
+    runtimes: ['shallowMap', {}],
+    discoveredApps: [
+      'computed',
+      function() {
+        return Object.keys(this.apps.toJSON())
+      },
+    ],
     discoveredHelpers: [
       'computed',
       function() {
@@ -62,11 +70,12 @@ export function find(...args) {
 }
 
 export async function discover(options = {}) {
-  await this.discoverRuntimes()
-  await this.discoverHelpers()
-  await this.discoverFeatures()
-  await this.discoverProjectTypes()
+  await this.discoverApps()
   await this.discoverDocumentTypes()
+  await this.discoverFeatures()
+  await this.discoverHelpers()
+  await this.discoverProjectTypes()
+  await this.discoverRuntimes()
 
   return this
 }
@@ -153,6 +162,18 @@ export async function discoverFeatures(options = {}) {
   })
 
   return this.features.toJSON()
+}
+
+export async function discoverApps(options = {}) {
+  const { prefix = 'skypager-apps-' } = options
+  const apps = await this.find(new RegExp(prefix), { parse: 'matches' })
+
+  apps.forEach(app => {
+    const id = app.name.replace(prefix, '')
+    this.apps.set(id, app)
+  })
+
+  return this.apps.toJSON()
 }
 
 export async function discoverRuntimes(options = {}) {

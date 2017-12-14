@@ -23,8 +23,7 @@ export default (async function compile(params = {}) {
     'semantic-ui-react.min.js',
     'skypager-web.min.js',
     'axios.min.js',
-    'react-router-dom.min.js',
-    'moment.min.js'
+    'react-router-dom.min.js'
   ]
 
   page.headTop = `

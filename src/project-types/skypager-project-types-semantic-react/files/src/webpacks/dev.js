@@ -51,7 +51,10 @@ export function rules() {
         )
       ],
       use: compact([
-        !this.runtime.isProduction && { loader: 'react-hot-loader/webpack' },
+        !this.runtime.isProduction &&
+          (this.runtime.argv.hot || this.options.hot) && {
+            loader: 'react-hot-loader/webpack'
+          },
         {
           loader: 'babel-loader',
           options: {
@@ -189,6 +192,7 @@ export function babelConfig() {
       packageFinder.attemptResolve('babel-plugin-transform-decorators-legacy'),
       packageFinder.attemptResolve('babel-plugin-transform-object-rest-spread'),
       !runtime.isProduction &&
+        (this.options.hot || runtime.argv.hot) &&
         packageFinder.attemptResolve('webpack-hot-loader/babel')
     ])
   }
