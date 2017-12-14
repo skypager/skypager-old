@@ -1,6 +1,6 @@
 {
   "name": "skypager",
-  "version": "39.2.6",
+  "version": "39.2.7",
   "description": "a javscript launch platform",
   "main": "index.js",
   "browser": "skypager.min.js",

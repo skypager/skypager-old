@@ -1,6 +1,6 @@
 {
   "name": "skypager-helpers-command",
-  "version": "39.2.6",
+  "version": "39.2.7",
   "description": "an awesome repl",
   "main": "index.js",
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",

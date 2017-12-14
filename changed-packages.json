@@ -1,3 +1,9 @@
 [
-  "skypager"
+  "skypager",
+  "skypager-cli",
+  "skypager-core",
+  "skypager-helpers-command",
+  "skypager-runtimes-development",
+  "skypager-runtimes-electron",
+  "skypager-runtimes-node"
 ]

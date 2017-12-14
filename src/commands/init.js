@@ -16,6 +16,7 @@ export async function validate() {
 export async function prepare() {
   const { runtime } = this
 
+  runtime.feature('auto-discovery').enable()
   await runtime.autoDiscovery.discoverProjectTypes({ register: true })
 
   return true
