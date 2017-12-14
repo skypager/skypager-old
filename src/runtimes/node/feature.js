@@ -126,10 +126,14 @@ export function featureWasEnabled(options = {}) {
   })
 
   runtime.lazy('fileManager', () => {
-    runtime.invoke('profiler.profileStart', 'fileManagerEnabled')
-    require('skypager-features-file-manager').attach(runtime)
-    runtime.invoke('profiler.profileEnd', 'fileManagerEnabled')
-    return runtime.feature('file-manager')
+    try {
+      runtime.invoke('profiler.profileStart', 'fileManagerEnabled')
+      require('skypager-features-file-manager').attach(runtime)
+      runtime.invoke('profiler.profileEnd', 'fileManagerEnabled')
+      return runtime.feature('file-manager')
+    } catch(e) {
+
+    }
   })
 
   runtime.selectors.add(require.context('./selectors', true, /.js$/))

@@ -4,8 +4,8 @@ const defaultBabelConfig = {
 }
 
 export default async function readFileAsts(chain, options = {}) {
-  const babelTransformer = require('skypager-document-types-babel')
-  const markdownTransformer = require('skypager-document-types-markdown')
+  const babelTransformer = __non_webpack_require__('skypager-document-types-babel')
+  const markdownTransformer = __non_webpack_require__('skypager-document-types-markdown')
   const { pathMatcher } = require('skypager-runtime/utils/path-matcher')
 
   const runtime = this

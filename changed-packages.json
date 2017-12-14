@@ -1,10 +1,11 @@
 [
   "skypager",
   "skypager-cli",
-  "skypager-core",
-  "skypager-helpers-project-type",
-  "skypager-helpers-project",
+  "skypager-helpers-webpack",
   "skypager-runtimes-development",
   "skypager-runtimes-electron",
-  "skypager-runtimes-node"
+  "skypager-runtimes-node",
+  "skypager-features-document-database",
+  "skypager-features-file-manager",
+  "skypager-servers-portfolio"
 ]
