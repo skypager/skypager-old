@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "83bcb2f1595654f556e6bb93d9b266e30ac4c069",
-    "abbreviatedSha": "83bcb2f159",
+    "sha": "28705ae559415141899a35b5620f2293738337a3",
+    "abbreviatedSha": "28705ae559",
     "branch": "feature/project-types",
-    "tag": "v39.2.8",
+    "tag": "v39.2.9",
     "root": "/Users/jonathan/Projects/skypager-dev/framework"
   },
   "packages": {
@@ -132,7 +132,7 @@
     },
     "skypager-helpers-project-type": {
       "success": false,
-      "version": "39.2.2",
+      "version": "39.2.9",
       "name": "skypager-helpers-project-type",
       "package": {
         "success": true,
@@ -237,7 +237,7 @@
     },
     "skypager-runtimes-node": {
       "success": false,
-      "version": "39.2.7",
+      "version": "39.2.9",
       "name": "skypager-runtimes-node",
       "package": {
         "success": true,
@@ -262,17 +262,40 @@
       "version": "39.0.1",
       "name": "skypager-runtime",
       "bundle": {
-        "warnings": 0,
-        "errors": 1
+        "success": true,
+        "assets": {
+          "skypager-runtime": "skypager-runtime.min.js"
+        }
       },
       "package": {
-        "warnings": 0,
-        "errors": 20
+        "success": true,
+        "assets": {
+          "index": "index.js",
+          "runtime": "runtime.js",
+          "feature": "feature.js",
+          "helper": "helper.js",
+          "registries": "registries.js",
+          "context-registry": "context-registry.js",
+          "utils": "utils.js",
+          "config-builder": "config-builder.js",
+          "utils/properties": "utils/properties.js",
+          "utils/router": "utils/router.js",
+          "utils/registry": "utils/registry.js",
+          "utils/emitter": "utils/emitter.js",
+          "utils/string": "utils/string.js",
+          "utils/path-to-regexp": "utils/path-to-regexp.js",
+          "utils/query": "utils/query.js",
+          "utils/path-matcher": "utils/path-matcher.js",
+          "utils/inflect": "utils/inflect.js",
+          "utils/object-hash": "utils/object-hash.js",
+          "utils/mware": "utils/mware.js",
+          "utils/entity": "utils/entity.js"
+        }
       }
     },
     "skypager-runtimes-development": {
       "success": false,
-      "version": "39.2.7",
+      "version": "39.2.9",
       "name": "skypager-runtimes-development",
       "package": {
         "success": true,
@@ -318,7 +341,7 @@
       "success": false
     },
     "skypager-core": {
-      "version": "39.2.7",
+      "version": "39.2.9",
       "name": "skypager-core",
       "package": {
         "success": true,
@@ -404,7 +427,7 @@
       }
     },
     "skypager-runtimes-electron": {
-      "version": "39.2.7",
+      "version": "39.2.9",
       "name": "skypager-runtimes-electron",
       "package": {
         "success": true,
@@ -509,7 +532,7 @@
       "success": false
     },
     "skypager-helpers-project": {
-      "version": "39.2.2",
+      "version": "39.2.9",
       "name": "skypager-helpers-project",
       "package": {
         "success": true,
@@ -692,7 +715,7 @@
       "success": false
     },
     "skypager-cli": {
-      "version": "39.2.7",
+      "version": "39.2.9",
       "name": "skypager-cli",
       "package": {
         "success": true,
@@ -775,16 +798,6 @@
     },
     "skypager-specs": {
       "package": {
-        "warnings": 0,
-        "errors": 1
-      }
-    },
-    "skypager-runtime": {
-      "package": {
-        "warnings": 0,
-        "errors": 20
-      },
-      "bundle": {
         "warnings": 0,
         "errors": 1
       }

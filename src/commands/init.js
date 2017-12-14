@@ -18,13 +18,6 @@ export async function prepare() {
 
   await runtime.whenStartedAsync()
 
-  console.log('Enabled Feature IDS', runtime.enabledFeatureIds)
-
-  runtime.feature('fs-adapter').enable()
-  runtime.feature('child-process-adapter').enable()
-  runtime.feature('package-finder').enable()
-  runtime.feature('auto-discovery').enable()
-
   await runtime.autoDiscovery.discoverProjectTypes({ register: true })
 
   return true

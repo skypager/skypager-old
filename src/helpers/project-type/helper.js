@@ -59,6 +59,11 @@ export class ProjectType extends Helper {
   async applyTemplateTree(options = {}) {
     const { runtime } = this
     const { entries, defaultsDeep, isFunction } = this.lodash
+
+    if (options.base) {
+      await runtime.fsx.mkdirpAsync(this.runtime.join(options.base))
+    }
+
     const missingFiles = await this.findMissingTemplateFiles(options)
 
     await Promise.all(
@@ -114,10 +119,11 @@ export class ProjectType extends Helper {
     const { runtime } = this
     const { omit, mapValues } = this.lodash
     const existingFileIds = []
+    const walkerOptions = options.base ? { baseFolder: options.base } : {}
 
     if (!options.overwrite) {
       const skywalker = runtime.skywalker
-      await skywalker.projectWalker().run()
+      await skywalker.projectWalker(walkerOptions).run()
       existingFileIds.push(...skywalker.fileIds)
     }
 
