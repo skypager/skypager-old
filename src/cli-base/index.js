@@ -34,7 +34,7 @@ export async function main(argv = {}) {
   }
 
   const base =
-    currentEnv === 'development'
+    currentEnv === 'development' && available.development
       ? __non_webpack_require__('skypager-runtimes-development')
       : __non_webpack_require__('skypager-runtimes-node')
 

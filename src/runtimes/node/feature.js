@@ -191,6 +191,10 @@ export function featureWasEnabled(options = {}) {
     runtime.invoke('profiler.profileEnd', 'serverHelperEnabled')
   })
 
+  lazyAttach('projectType', () => {
+    runtime.use(require('skypager-helpers-project-type'), 'INITIALIZING')
+  })
+
   const requestedFeatures = runtime.chain
     .plant(runtime.lodash.castArray(runtime.argv.use))
     .intersection(runtime.features.available)

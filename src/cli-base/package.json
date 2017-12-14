@@ -9,13 +9,12 @@
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.23.0",
     "lodash": "^4.17.4",
-    "minimist": "1.2.0"
+    "minimist": "1.2.0",
+    "skypager-runtimes-node": "39.0.1"
   },
   "bin": {
     "skypager-cli": "./skypager-cli",
     "sky": "./skypager-cli"
   },
-  "copy": [
-    "src/cli-base/skypager-cli"
-  ]
+  "copy": ["src/cli-base/skypager-cli"]
 }
