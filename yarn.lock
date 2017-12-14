@@ -206,6 +206,12 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
+aria-query@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/aria-query/-/aria-query-0.7.0.tgz#4af10a1e61573ddea0cf3b99b51c52c05b424d24"
+  dependencies:
+    ast-types-flow "0.0.7"
+
 arr-diff@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/arr-diff/-/arr-diff-2.0.0.tgz#8f3b827f955a8bd669697e4a4256ac3ceae356cf"
@@ -307,6 +313,10 @@ assertion-error@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/assertion-error/-/assertion-error-1.0.2.tgz#13ca515d86206da0bac66e834dd397d87581094c"
 
+ast-types-flow@0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/ast-types-flow/-/ast-types-flow-0.0.7.tgz#f70b735c6bca1a5c9c22d982c3e39e7feba3bdad"
+
 async-each@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/async-each/-/async-each-1.0.1.tgz#19d386a1d9edc6e7c1c85d388aedbcc56d33602d"
@@ -362,6 +372,12 @@ axios@^0.16.1:
   dependencies:
     follow-redirects "^1.2.3"
     is-buffer "^1.1.5"
+
+axobject-query@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/axobject-query/-/axobject-query-0.1.0.tgz#62f59dbc59c9f9242759ca349960e7a2fe3c36c0"
+  dependencies:
+    ast-types-flow "0.0.7"
 
 babel-code-frame@^6.11.0, babel-code-frame@^6.16.0, babel-code-frame@^6.26.0:
   version "6.26.0"
@@ -1323,7 +1339,7 @@ buffer@^4.3.0:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
-builtin-modules@^1.0.0:
+builtin-modules@^1.0.0, builtin-modules@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
 
@@ -1775,6 +1791,10 @@ constants-browserify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/constants-browserify/-/constants-browserify-1.0.0.tgz#c20b96d8c617748aaf1c16021760cd27fcb8cb75"
 
+contains-path@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/contains-path/-/contains-path-0.1.0.tgz#fe8cf184ff6670b6baef01a9d4861a5cbec4120a"
+
 content-disposition@0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/content-disposition/-/content-disposition-0.5.2.tgz#0cf68bb9ddf5f2be7961c3a85178cb85dba78cb4"
@@ -2153,6 +2173,10 @@ d@1:
   dependencies:
     es5-ext "^0.10.9"
 
+damerau-levenshtein@^1.0.0:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/damerau-levenshtein/-/damerau-levenshtein-1.0.4.tgz#03191c432cb6eea168bb77f3a55ffdccb8978514"
+
 dargs@^4.0.1:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/dargs/-/dargs-4.1.0.tgz#03a9dbb4b5c2f139bf14ae53f0b8a2a6a86f4e17"
@@ -2373,6 +2397,13 @@ docblock-parser@1.0.0:
   dependencies:
     lodash.assign "^3.2.0"
 
+doctrine@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-1.5.0.tgz#379dce730f6166f76cefa4e6707a159b02c5a6fa"
+  dependencies:
+    esutils "^2.0.2"
+    isarray "^1.0.0"
+
 doctrine@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-2.0.2.tgz#68f96ce8efc56cc42651f1faadb4f175273b0075"
@@ -2478,6 +2509,10 @@ elliptic@^6.0.0:
 "emoji-regex@>=6.0.0 <=6.1.1":
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.1.1.tgz#c6cd0ec1b0642e2a3c67a1137efc5e796da4f88e"
+
+emoji-regex@^6.1.0:
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.5.1.tgz#9baea929b155565c11ea41c6626eaa65cef992c2"
 
 emojis-list@^2.0.0:
   version "2.1.0"
@@ -2620,6 +2655,114 @@ escope@^3.6.0:
     es6-weak-map "^2.0.1"
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
+
+eslint-config-prettier-standard@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier-standard/-/eslint-config-prettier-standard-1.0.1.tgz#f8e9b5251298af21410cc071650f23da195fae27"
+
+eslint-config-prettier@^2.6.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-2.9.0.tgz#5ecd65174d486c22dff389fe036febf502d468a3"
+  dependencies:
+    get-stdin "^5.0.1"
+
+eslint-config-react-app@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-react-app/-/eslint-config-react-app-2.0.1.tgz#fd0503da01ae608f0c6ae8861de084975142230e"
+
+eslint-config-standard-jsx@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-standard-jsx/-/eslint-config-standard-jsx-4.0.2.tgz#009e53c4ddb1e9ee70b4650ffe63a7f39f8836e1"
+
+eslint-config-standard@^10.2.1:
+  version "10.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-10.2.1.tgz#c061e4d066f379dc17cd562c64e819b4dd454591"
+
+eslint-import-resolver-node@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/eslint-import-resolver-node/-/eslint-import-resolver-node-0.3.1.tgz#4422574cde66a9a7b099938ee4d508a199e0e3cc"
+  dependencies:
+    debug "^2.6.8"
+    resolve "^1.2.0"
+
+eslint-module-utils@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/eslint-module-utils/-/eslint-module-utils-2.1.1.tgz#abaec824177613b8a95b299639e1b6facf473449"
+  dependencies:
+    debug "^2.6.8"
+    pkg-dir "^1.0.0"
+
+eslint-plugin-class-property@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-class-property/-/eslint-plugin-class-property-1.0.6.tgz#c3bc3fc4207b283bf82e69e3dd1b6e2491a57623"
+  dependencies:
+    eslint "^3.19.0"
+
+eslint-plugin-flowtype@^2.36.0:
+  version "2.40.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.40.1.tgz#f78a8e6a4cc6da831dd541eb61e803ff0279b796"
+  dependencies:
+    lodash "^4.15.0"
+
+eslint-plugin-import@^2.7.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.8.0.tgz#fa1b6ef31fcb3c501c09859c1b86f1fc5b986894"
+  dependencies:
+    builtin-modules "^1.1.1"
+    contains-path "^0.1.0"
+    debug "^2.6.8"
+    doctrine "1.5.0"
+    eslint-import-resolver-node "^0.3.1"
+    eslint-module-utils "^2.1.1"
+    has "^1.0.1"
+    lodash.cond "^4.3.0"
+    minimatch "^3.0.3"
+    read-pkg-up "^2.0.0"
+
+eslint-plugin-jsx-a11y@^6.0.2:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-6.0.3.tgz#54583d1ae442483162e040e13cc31865465100e5"
+  dependencies:
+    aria-query "^0.7.0"
+    array-includes "^3.0.3"
+    ast-types-flow "0.0.7"
+    axobject-query "^0.1.0"
+    damerau-levenshtein "^1.0.0"
+    emoji-regex "^6.1.0"
+    jsx-ast-utils "^2.0.0"
+
+eslint-plugin-node@^5.1.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-node/-/eslint-plugin-node-5.2.1.tgz#80df3253c4d7901045ec87fa660a284e32bdca29"
+  dependencies:
+    ignore "^3.3.6"
+    minimatch "^3.0.4"
+    resolve "^1.3.3"
+    semver "5.3.0"
+
+eslint-plugin-prettier@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-2.3.1.tgz#e7a746c67e716f335274b88295a9ead9f544e44d"
+  dependencies:
+    fast-diff "^1.1.1"
+    jest-docblock "^21.0.0"
+
+eslint-plugin-promise@^3.5.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-3.6.0.tgz#54b7658c8f454813dc2a870aff8152ec4969ba75"
+
+eslint-plugin-react@^7.4.0:
+  version "7.5.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.5.1.tgz#52e56e8d80c810de158859ef07b880d2f56ee30b"
+  dependencies:
+    doctrine "^2.0.0"
+    has "^1.0.1"
+    jsx-ast-utils "^2.0.0"
+    prop-types "^15.6.0"
+
+eslint-plugin-standard@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-standard/-/eslint-plugin-standard-3.0.1.tgz#34d0c915b45edc6f010393c7eef3823b08565cf2"
 
 eslint@^3.19.0:
   version "3.19.0"
@@ -2895,6 +3038,10 @@ eyes@0.1.x:
 fast-deep-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-1.0.0.tgz#96256a3bc975595eb36d82e9929d060d893439ff"
+
+fast-diff@^1.1.1:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.1.2.tgz#4b62c42b8e03de3f848460b639079920695d0154"
 
 fast-json-stable-stringify@^2.0.0:
   version "2.0.0"
@@ -3202,6 +3349,10 @@ get-port@^3.2.0:
 get-stdin@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-4.0.1.tgz#b968c6b0a04384324902e8bf1a5df32579a450fe"
+
+get-stdin@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-5.0.1.tgz#122e161591e21ff4c52530305693f20e6393a398"
 
 get-stream@^3.0.0:
   version "3.0.0"
@@ -3684,7 +3835,7 @@ ieee754@^1.1.4:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
 
-ignore@^3.2.0:
+ignore@^3.2.0, ignore@^3.3.6:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
 
@@ -4139,6 +4290,10 @@ isstream@0.1.x, isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
+jest-docblock@^21.0.0:
+  version "21.2.0"
+  resolved "https://registry.yarnpkg.com/jest-docblock/-/jest-docblock-21.2.0.tgz#51529c3b30d5fd159da60c27ceedc195faf8d414"
+
 js-base64@^2.1.9:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.0.tgz#9e566fee624751a1d720c966cd6226d29d4025aa"
@@ -4248,6 +4403,12 @@ jsprim@^1.2.2:
     extsprintf "1.3.0"
     json-schema "0.2.3"
     verror "1.10.0"
+
+jsx-ast-utils@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/jsx-ast-utils/-/jsx-ast-utils-2.0.1.tgz#e801b1b39985e20fffc87b40e3748080e2dcac7f"
+  dependencies:
+    array-includes "^3.0.3"
 
 kebab-case@^1.0.0:
   version "1.0.0"
@@ -4472,6 +4633,10 @@ lodash.assign@^3.2.0:
 lodash.camelcase@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
+
+lodash.cond@^4.3.0:
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/lodash.cond/-/lodash.cond-4.5.2.tgz#f471a1da486be60f6ab955d17115523dd1d255d5"
 
 lodash.create@3.1.1:
   version "3.1.1"
@@ -4877,13 +5042,13 @@ minimist@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
 
+minimist@1.2.0, minimist@^1.1.3, minimist@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
+
 minimist@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.1.0.tgz#99df657a52574c21c9057497df742790b2b4c0de"
-
-minimist@^1.1.3, minimist@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
 
 minimist@~0.0.1:
   version "0.0.10"
@@ -5472,6 +5637,12 @@ pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
 
+pkg-dir@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-1.0.0.tgz#7a4b508a8d5bb2d629d447056ff4e9c9314cf3d4"
+  dependencies:
+    find-up "^1.0.0"
+
 pkg-dir@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-2.0.0.tgz#f6d5d1109e19d63edf428e0bd57e12777615334b"
@@ -5828,7 +5999,7 @@ prompt@^1.0.0:
     utile "0.3.x"
     winston "2.1.x"
 
-prop-types@^15.5.10, prop-types@^15.5.4:
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
   dependencies:
@@ -6497,7 +6668,7 @@ resolve-url@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/resolve-url/-/resolve-url-0.2.1.tgz#2c637fe77c893afd2a663fe21aa9080068e2052a"
 
-resolve@^1.1.6:
+resolve@^1.1.6, resolve@^1.2.0, resolve@^1.3.3:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.5.0.tgz#1f09acce796c9a762579f31b2c1cc4c3cddf9f36"
   dependencies:
@@ -6597,6 +6768,10 @@ selfsigned@^1.9.1:
 "semver@2 || 3 || 4 || 5", semver@^5.0.1, semver@^5.1.0, semver@^5.3.0, semver@^5.4.1:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.4.1.tgz#e059c09d8571f0540823733433505d3a2f00b18e"
+
+semver@5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
 
 send@0.16.1:
   version "0.16.1"
@@ -6741,25 +6916,30 @@ skeleton-loader@^1.1.3:
   dependencies:
     loader-utils "^1.1.0"
 
-skypager-cli-base@^37.5.0:
-  version "37.5.0"
-  resolved "https://registry.yarnpkg.com/skypager-cli-base/-/skypager-cli-base-37.5.0.tgz#9cab83dbebe0dc52cd14ce3e3e3cb67c8fb24010"
-
-skypager-core@^38.3.1:
-  version "38.3.1"
-  resolved "https://registry.yarnpkg.com/skypager-core/-/skypager-core-38.3.1.tgz#a89fe8e13277ba2c02c6cb21ca014d35eb2b0fdd"
+skypager-cli-base@^38.3.0:
+  version "38.3.0"
+  resolved "https://registry.yarnpkg.com/skypager-cli-base/-/skypager-cli-base-38.3.0.tgz#afced730f9f6da1ac1ce260e46c228e773118503"
   dependencies:
-    skypager-helpers-client "^38.3.1"
-    skypager-helpers-command "^38.3.1"
-    skypager-helpers-document "^38.3.1"
-    skypager-helpers-document-type "^38.3.1"
-    skypager-helpers-page "^38.3.1"
+    babel-polyfill "^6.26.0"
+    babel-runtime "^6.23.0"
+    lodash "^4.17.4"
+    minimist "1.2.0"
+
+skypager-core@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-core/-/skypager-core-38.4.0.tgz#b65d78c9771b06fe82aec756f88e179925428e6d"
+  dependencies:
+    skypager-helpers-client "^38.4.0"
+    skypager-helpers-command "^38.4.0"
+    skypager-helpers-document "^38.4.0"
+    skypager-helpers-document-type "^38.4.0"
+    skypager-helpers-page "^38.4.0"
     skypager-helpers-project "^37.5.0"
     skypager-helpers-project-type "^37.5.0"
-    skypager-helpers-repl "^38.3.1"
-    skypager-helpers-server "^38.3.1"
-    skypager-helpers-service "^38.3.1"
-    skypager-runtime "^38.3.1"
+    skypager-helpers-repl "^38.4.0"
+    skypager-helpers-server "^38.4.0"
+    skypager-helpers-service "^38.4.0"
+    skypager-runtime "^38.4.0"
 
 skypager-document-types-babel@^38.0.0:
   version "38.0.0"
@@ -6826,20 +7006,20 @@ skypager-document-types-markdown@^38.0.0:
     unist-util-visit "^1.1.0"
     vfile-reporter "^3.0.0"
 
-skypager-features-document-database@^38.3.1:
-  version "38.3.1"
-  resolved "https://registry.yarnpkg.com/skypager-features-document-database/-/skypager-features-document-database-38.3.1.tgz#0dc6c2b55d06bbdb8c05d0f2f4576e768faaa2f4"
+skypager-features-document-database@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-features-document-database/-/skypager-features-document-database-38.4.0.tgz#be7fbe24d66bc53df1b52d8852978fc0a80a45f9"
   dependencies:
     skypager-document-types-babel "^38.0.0"
     skypager-document-types-manifest "^37.5.0"
     skypager-document-types-markdown "^38.0.0"
-    skypager-features-file-manager "^38.3.0"
-    skypager-helpers-document "^38.3.1"
-    skypager-helpers-document-type "^38.3.1"
+    skypager-features-file-manager "^38.4.0"
+    skypager-helpers-document "^38.4.0"
+    skypager-helpers-document-type "^38.4.0"
 
-skypager-features-file-manager@^38.3.0:
-  version "38.3.0"
-  resolved "https://registry.yarnpkg.com/skypager-features-file-manager/-/skypager-features-file-manager-38.3.0.tgz#d1b70c86af0739159b72a88722b7f687f43fd43c"
+skypager-features-file-manager@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-features-file-manager/-/skypager-features-file-manager-38.4.0.tgz#1744831a51b06a737a3c4a0f7ef6c7338594b7af"
   dependencies:
     fs-extra-promise "^0.4.1"
     gaze "^1.1.2"
@@ -6847,37 +7027,37 @@ skypager-features-file-manager@^38.3.0:
     memory-fs "^0.4.1"
     skywalker "^0.3.2"
 
-skypager-helpers-client@^38.3.1:
-  version "38.3.1"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-client/-/skypager-helpers-client-38.3.1.tgz#048c8e4b5f54a2a2fb266cd75e2b28dd966ea065"
+skypager-helpers-client@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-client/-/skypager-helpers-client-38.4.0.tgz#51073153dda5bee815dd171a0852492e73500c63"
   dependencies:
     axios "^0.16.1"
-    skypager-runtime "^38.3.1"
+    skypager-runtime "^38.4.0"
 
-skypager-helpers-command@^38.3.1:
-  version "38.3.1"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-command/-/skypager-helpers-command-38.3.1.tgz#a49bf973963b0849c7cab0a362e91cfb8e6b31c9"
+skypager-helpers-command@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-command/-/skypager-helpers-command-38.4.0.tgz#97af0affb56f74d3ecab0d1240b0e2c85a54b028"
   dependencies:
     skypager-repl "^37.5.0"
-    skypager-runtime "^38.3.1"
+    skypager-runtime "^38.4.0"
 
-skypager-helpers-document-type@^38.3.1:
-  version "38.3.1"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-document-type/-/skypager-helpers-document-type-38.3.1.tgz#ee42e691bc4ccb608e1d58f5f2821038eba17b3a"
+skypager-helpers-document-type@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-document-type/-/skypager-helpers-document-type-38.4.0.tgz#61e91a0c825eef7a48fe8682eb6ce5a0dcbfcf04"
   dependencies:
-    skypager-runtime "^38.3.1"
+    skypager-runtime "^38.4.0"
 
-skypager-helpers-document@^38.3.1:
-  version "38.3.1"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-document/-/skypager-helpers-document-38.3.1.tgz#98e2663795908ae52aeff5b50b012245bf394a3e"
+skypager-helpers-document@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-document/-/skypager-helpers-document-38.4.0.tgz#c3b74bfbe71943d66cf49499912fa550d60c88c1"
   dependencies:
-    skypager-runtime "^38.3.1"
+    skypager-runtime "^38.4.0"
 
-skypager-helpers-page@^38.3.1:
-  version "38.3.1"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-page/-/skypager-helpers-page-38.3.1.tgz#f4bd39be7e77b63c6ee184bdde330e58a54b13ee"
+skypager-helpers-page@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-page/-/skypager-helpers-page-38.4.0.tgz#8717f0018c82080d41cc04d71bee353baab8a82d"
   dependencies:
-    skypager-runtime "^38.3.1"
+    skypager-runtime "^38.4.0"
 
 skypager-helpers-project-type@^37.5.0:
   version "37.5.0"
@@ -6889,31 +7069,31 @@ skypager-helpers-project@^37.5.0:
   dependencies:
     skypager-helpers-project-type "^37.5.0"
 
-skypager-helpers-repl@^38.3.1:
-  version "38.3.1"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-repl/-/skypager-helpers-repl-38.3.1.tgz#7c2e72b30285ba8fdf8bc00bff98dadf1abced76"
+skypager-helpers-repl@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-repl/-/skypager-helpers-repl-38.4.0.tgz#c8dd0aabae0c130dd6c9caf7d2b4eb7fc65944ce"
   dependencies:
     bluebird "^3.5.0"
     skypager-repl "^37.5.0"
-    skypager-runtime "^38.3.1"
+    skypager-runtime "^38.4.0"
 
-skypager-helpers-server@^38.3.1:
-  version "38.3.1"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-server/-/skypager-helpers-server-38.3.1.tgz#bec16a0374566a71cea2fb27f047850c4c61f1bf"
+skypager-helpers-server@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-server/-/skypager-helpers-server-38.4.0.tgz#a189d8dfec79362ccc4b2a053f8e1d7d4397c060"
   dependencies:
     express "^4.15.2"
-    skypager-runtime "^38.3.1"
+    skypager-runtime "^38.4.0"
 
-skypager-helpers-service@^38.3.1:
-  version "38.3.1"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-service/-/skypager-helpers-service-38.3.1.tgz#b033670819355c2760bff54b092fafc19ab87e28"
+skypager-helpers-service@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-service/-/skypager-helpers-service-38.4.0.tgz#7c0028eea1b2779351ef8ea2577ca09702d4d9de"
   dependencies:
     express "^4.15.2"
-    skypager-runtime "^38.3.1"
+    skypager-runtime "^38.4.0"
 
-skypager-helpers-webpack@^38.3.0:
-  version "38.3.0"
-  resolved "https://registry.yarnpkg.com/skypager-helpers-webpack/-/skypager-helpers-webpack-38.3.0.tgz#a300ae6536d4a79d8e9599d9188fd92018f22d63"
+skypager-helpers-webpack@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-helpers-webpack/-/skypager-helpers-webpack-38.4.0.tgz#098cd5c1d60bf92cb18c0a2b33a3883065eb8fea"
   dependencies:
     babel-loader "^7.0.0"
     babel-runtime "^6.23.0"
@@ -6937,7 +7117,8 @@ skypager-helpers-webpack@^38.3.0:
     skeleton-loader "^1.1.3"
     skypager-document-types-babel "^38.0.0"
     skypager-document-types-markdown "^38.0.0"
-    skypager-features-file-manager "^38.3.0"
+    skypager-features-file-manager "^38.4.0"
+    skypager-runtime "^38.4.0"
     style-loader "^0.18.0"
     url-loader "^0.5.8"
     val-loader "^1.0.2"
@@ -6964,9 +7145,9 @@ skypager-repl@^37.5.0:
     pretty-cli "0.0.14"
     prompt "^1.0.0"
 
-skypager-runtime@^38.3.1:
-  version "38.3.1"
-  resolved "https://registry.yarnpkg.com/skypager-runtime/-/skypager-runtime-38.3.1.tgz#d90978ccccfc2583c8f1358a6b12c51b082d3fa4"
+skypager-runtime@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-runtime/-/skypager-runtime-38.4.0.tgz#81cfdf8061f3f67b701318688c5bea7ed976d3a6"
   dependencies:
     babel-polyfill "^6.26.0"
     babel-runtime "^6.23.0"
@@ -6975,9 +7156,9 @@ skypager-runtime@^38.3.1:
     mobx "3.3.1"
     uuid "^3.0.1"
 
-skypager-runtimes-development@^38.3.1:
-  version "38.3.1"
-  resolved "https://registry.yarnpkg.com/skypager-runtimes-development/-/skypager-runtimes-development-38.3.1.tgz#032a993a910b2a90906e3889a62b09d7409b68a6"
+skypager-runtimes-development@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-runtimes-development/-/skypager-runtimes-development-38.4.0.tgz#d4e9d7b976265dd0989324ee132b3c1327ab4f14"
   dependencies:
     body-parser "^1.17.2"
     cors "^2.8.3"
@@ -6988,16 +7169,16 @@ skypager-runtimes-development@^38.3.1:
     skypager-document-types-babel "^38.0.0"
     skypager-document-types-manifest "^37.5.0"
     skypager-document-types-markdown "^38.0.0"
-    skypager-features-document-database "^38.3.1"
-    skypager-helpers-document "^38.3.1"
-    skypager-helpers-document-type "^38.3.1"
+    skypager-features-document-database "^38.4.0"
+    skypager-helpers-document "^38.4.0"
+    skypager-helpers-document-type "^38.4.0"
     skypager-helpers-project "^37.5.0"
-    skypager-helpers-webpack "^38.3.0"
-    skypager-runtimes-node "^38.3.1"
+    skypager-helpers-webpack "^38.4.0"
+    skypager-runtimes-node "^38.4.0"
 
-skypager-runtimes-node@^38.3.1:
-  version "38.3.1"
-  resolved "https://registry.yarnpkg.com/skypager-runtimes-node/-/skypager-runtimes-node-38.3.1.tgz#ecb959edab0b5e9c1e22733700e89e52b3aa1f3e"
+skypager-runtimes-node@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-runtimes-node/-/skypager-runtimes-node-38.4.0.tgz#f1f261a759d3f1454dc89eebff5925a0a15389cb"
   dependencies:
     bluebird "^3.5.0"
     child-process-promise "^2.2.1"
@@ -7008,24 +7189,24 @@ skypager-runtimes-node@^38.3.1:
     micromatch "^3.1.4"
     minimatch "^3.0.3"
     semver "^5.3.0"
-    skypager-features-file-manager "^38.3.0"
-    skypager-helpers-client "^38.3.1"
-    skypager-helpers-command "^38.3.1"
-    skypager-helpers-page "^38.3.1"
-    skypager-helpers-repl "^38.3.1"
-    skypager-helpers-server "^38.3.1"
+    skypager-features-file-manager "^38.4.0"
+    skypager-helpers-client "^38.4.0"
+    skypager-helpers-command "^38.4.0"
+    skypager-helpers-page "^38.4.0"
+    skypager-helpers-repl "^38.4.0"
+    skypager-helpers-server "^38.4.0"
     skypager-repl "^37.5.0"
-    skypager-runtime "^38.3.1"
+    skypager-runtime "^38.4.0"
     winston "^2.3.1"
 
-skypager-runtimes-web@^38.3.1:
-  version "38.3.1"
-  resolved "https://registry.yarnpkg.com/skypager-runtimes-web/-/skypager-runtimes-web-38.3.1.tgz#6091896de615e059fb10062a6a423eb93890240b"
+skypager-runtimes-web@^38.4.0:
+  version "38.4.0"
+  resolved "https://registry.yarnpkg.com/skypager-runtimes-web/-/skypager-runtimes-web-38.4.0.tgz#975249d3829ac40c078ad31eb10c0f70ac127dcf"
   dependencies:
     history "^4.6.1"
-    skypager-helpers-client "^38.3.1"
-    skypager-helpers-page "^38.3.1"
-    skypager-runtime "^38.3.1"
+    skypager-helpers-client "^38.4.0"
+    skypager-helpers-page "^38.4.0"
+    skypager-runtime "^38.4.0"
 
 skywalker@^0.3.2:
   version "0.3.2"

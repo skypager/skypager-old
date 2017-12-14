@@ -5,7 +5,10 @@ export const featureMethods = [
   'discoverFeatures',
   'discoverProjectTypes',
   'discoverHelpers',
+  'discoverDocumentTypes',
   'discoverRuntimes',
+  'registerProjectTypes',
+  'registerDocumentTypes',
   'getPackageFinder',
   'find',
 ]
@@ -15,6 +18,7 @@ export function observables() {
     helpers: ['shallowMap', {}],
     runtimes: ['shallowMap', {}],
     projectTypes: ['shallowMap', {}],
+    documentTypes: ['shallowMap', {}],
     features: ['shallowMap', {}],
     discoveredHelpers: [
       'computed',
@@ -32,6 +36,12 @@ export function observables() {
       'computed',
       function() {
         return Object.keys(this.projectTypes.toJSON())
+      },
+    ],
+    discoveredDocumentTypes: [
+      'computed',
+      function() {
+        return Object.keys(this.documentTypes.toJSON())
       },
     ],
     discoveredFeatures: [
@@ -56,8 +66,53 @@ export async function discover(options = {}) {
   await this.discoverHelpers()
   await this.discoverFeatures()
   await this.discoverProjectTypes()
+  await this.discoverDocumentTypes()
 
   return this
+}
+
+export async function registerDocumentTypes(options = {}) {
+  const { runtime, documentTypes } = this
+
+  if (!runtime.documentTypes) {
+    throw new Error(`The document types helper has not been loaded on this runtime`)
+  }
+
+  documentTypes.entries().forEach(([id, data]) => {
+    if (runtime.documentTypes.available.indexOf(id) === -1) {
+      runtime.documentTypes.register(id, () => __non_webpack_require__(data.file.dirname))
+    }
+  })
+
+  return this
+}
+
+export async function registerProjectTypes(options = {}) {
+  const { runtime, projectTypes } = this
+
+  if (!runtime.projectTypes) {
+    throw new Error(`The project types helper has not been loaded on this runtime`)
+  }
+
+  projectTypes.entries().forEach(([id, data]) => {
+    if (runtime.projectTypes.available.indexOf(id) === -1) {
+      runtime.projectTypes.register(id, () => __non_webpack_require__(data.file.dirname))
+    }
+  })
+
+  return this
+}
+
+export async function discoverDocumentTypes(options = {}) {
+  const { prefix = 'skypager-document-types-' } = options
+  const documentTypes = await this.find(new RegExp(prefix), { parse: 'matches' })
+
+  documentTypes.forEach(documentType => {
+    const id = documentType.name.replace(prefix, '')
+    this.documentTypes.set(id, documentType)
+  })
+
+  return this.documentTypes.toJSON()
 }
 
 export async function discoverProjectTypes(options = {}) {
@@ -68,6 +123,10 @@ export async function discoverProjectTypes(options = {}) {
     const id = projectType.name.replace(prefix, '')
     this.projectTypes.set(id, projectType)
   })
+
+  if (options.register !== false) {
+    await this.registerProjectTypes()
+  }
 
   return this.projectTypes.toJSON()
 }

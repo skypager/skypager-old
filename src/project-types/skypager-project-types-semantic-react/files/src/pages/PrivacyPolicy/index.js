@@ -1,5 +1,4 @@
-import { types, Container, Component } from 'globals'
-import SplitColumnLayout from 'components/SplitColumnLayout'
+import { types, Container, Header, Component } from 'globals'
 
 export class PrivacyPolicy extends Component {
   state = {}
@@ -22,14 +21,6 @@ export class PrivacyPolicy extends Component {
           content="Privacy Policy"
           subheader="We care about your data"
         />
-
-        <SplitColumnLayout
-          menuItems={[
-            { content: 'Menu Item One' },
-            { content: 'Menu Item Two' }
-          ]}>
-          <p>What up son</p>
-        </SplitColumnLayout>
       </Container>
     )
   }

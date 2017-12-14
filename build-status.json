@@ -1,7 +1,7 @@
 {
   "gitInfo": {
-    "sha": "d0172ce63d72a450ffcbe10121b2642a022080e2",
-    "abbreviatedSha": "d0172ce63d",
+    "sha": "03a189f2cae34e51f3eb6e5fd4d504d1fd650c4b",
+    "abbreviatedSha": "03a189f2ca",
     "branch": "feature/project-initializer",
     "tag": null,
     "root": "/Users/jonathan/Projects/skypager-dev/framework"
@@ -209,7 +209,7 @@
     },
     "skypager-helpers-command": {
       "success": false,
-      "version": "38.3.1",
+      "version": "38.4.0",
       "name": "skypager-helpers-command",
       "package": {
         "success": true,
@@ -237,7 +237,7 @@
     },
     "skypager-runtimes-node": {
       "success": false,
-      "version": "38.3.1",
+      "version": "38.4.0",
       "name": "skypager-runtimes-node",
       "package": {
         "success": true,
@@ -259,7 +259,7 @@
     },
     "skypager-runtime": {
       "success": false,
-      "version": "38.3.1",
+      "version": "38.4.0",
       "name": "skypager-runtime",
       "bundle": {
         "success": true,
@@ -295,7 +295,7 @@
     },
     "skypager-runtimes-development": {
       "success": false,
-      "version": "38.3.1",
+      "version": "38.4.0",
       "name": "skypager-runtimes-development",
       "package": {
         "success": true,
