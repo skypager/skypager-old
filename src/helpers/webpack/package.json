@@ -1,6 +1,6 @@
 {
   "name": "skypager-helpers-webpack",
-  "version": "38.4.0",
+  "version": "39.0.0",
   "description": "helpers for working with the webpack compiler and configuration system",
   "main": "index.js",
   "repository": "https://github.com/skypager/skypager",
@@ -30,7 +30,7 @@
     "skypager-document-types-babel": "^38.0.0",
     "skypager-document-types-markdown": "^38.0.0",
     "skypager-features-file-manager": "^38.4.0",
-    "skypager-runtime": "^38.4.0",
+    "skypager-runtime": "^39.0.0",
     "style-loader": "^0.18.0",
     "url-loader": "^0.5.8",
     "val-loader": "^1.0.2",
