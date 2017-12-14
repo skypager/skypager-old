@@ -1,6 +1,6 @@
 {
   "name": "skypager-helpers-project-type",
-  "version": "39.2.2",
+  "version": "39.2.9",
   "description": "skypager project type helper",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,6 @@
   "homepage": "https://skypager.io",
   "latestHash": "26e88f7b0d12f112943b",
   "dependencies": {
-    "skypager-project-types-standard": "39.2.0"
+    "skypager-project-types-standard": "39.2.9"
   }
 }
