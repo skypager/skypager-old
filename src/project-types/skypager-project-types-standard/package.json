@@ -1,0 +1,12 @@
+{
+  "name": "skypager-project-types-standard",
+  "version": "39.0.1",
+  "license": "MIT",
+  "author": "Jon Soeder <jon@chicago.com>",
+  "description": "a project type template for skypager projects",
+  "repository": "git@github.com:skypager/skypager.git",
+  "website": "https://skypager.io",
+  "scripts": {
+    "buildPackage": "sky webpack build package"
+  }
+}

@@ -1,25 +1,7 @@
 [
   "skypager",
   "skypager-cli",
-  "skypager-core",
-  "skypager-runtime",
-  "skypager-helpers-client",
-  "skypager-helpers-command",
-  "skypager-helpers-document-type",
-  "skypager-helpers-document",
-  "skypager-helpers-page",
-  "skypager-helpers-project-type",
-  "skypager-helpers-project",
-  "skypager-helpers-repl",
-  "skypager-helpers-server",
-  "skypager-helpers-service",
-  "skypager-helpers-webpack",
   "skypager-runtimes-development",
   "skypager-runtimes-electron",
-  "skypager-runtimes-node",
-  "skypager-runtimes-react",
-  "skypager-runtimes-universal",
-  "skypager-runtimes-web",
-  "skypager-project-types-semantic-react",
-  "skypager-features-document-database"
+  "skypager-runtimes-node"
 ]
