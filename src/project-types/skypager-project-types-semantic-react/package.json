@@ -1,28 +1,12 @@
 {
   "name": "skypager-project-types-semantic-react",
-  "version": "39.0.0",
-  "description": "a project for building webapps that use react, semantic-ui-react, react-router-dom",
-  "main": "index.js",
-  "scripts": {
-    "test": "exit 0",
-    "buildPackage": "sky webpack build package"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/skypager/skypager.git"
-  },
-  "keywords": [
-    "skypager",
-    "react",
-    "semantic-ui-react",
-    "react-router-dom",
-    "web",
-    "boilerplate"
-  ],
-  "author": "Jon Soeder <jon@chicago.com> (https://twitter.com/soederpop)",
+  "version": "39.0.1",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/skypager/skypager/issues"
-  },
-  "homepage": "https://github.com/skypager/skypager#readme"
+  "author": "Jon Soeder <jon@chicago.com>",
+  "description": "a project type template for webapps based on semantic-ui-react",
+  "repository": "git@github.com:skypager/skypager.git",
+  "website": "https://skypager.io",
+  "scripts": {
+    "buildPackage": "sky webpack build package"
+  }
 }

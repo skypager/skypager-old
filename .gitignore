@@ -20,3 +20,4 @@ build-changed-packages.sh
 publish-changed-packages.sh
 release.sh
 examples/
+changed-packages.json

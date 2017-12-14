@@ -1,6 +1,6 @@
 {
   "name": "skypager-cli",
-  "version": "39.0.0",
+  "version": "39.0.1",
   "description": "a lightweight cli for working inside of skypager portfolios",
   "main": "index.js",
   "repository": "https://github.com/skypager/skypager",
@@ -15,7 +15,5 @@
     "skypager-cli": "./skypager-cli",
     "sky": "./skypager-cli"
   },
-  "copy": [
-    "src/cli-base/skypager-cli"
-  ]
+  "copy": ["src/cli-base/skypager-cli"]
 }
