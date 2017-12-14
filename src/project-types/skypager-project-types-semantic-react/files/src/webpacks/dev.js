@@ -132,7 +132,6 @@ export function webpackPlugins() {
       'react-dom': 'global ReactDOM',
       'prop-types': 'global PropTypes',
       axios: 'global axios',
-      moment: 'global moment',
       'react-router-dom': 'global ReactRouterDOM'
     },
 
@@ -141,7 +140,6 @@ export function webpackPlugins() {
     'copy-webpack-plugin': [
       { from: res('skypager-runtimes-web/skypager-web.js') },
       { from: res('skypager-runtimes-web/skypager-web.min.js') },
-      { from: res('moment/min/moment.min.js') },
       { from: res('axios/dist/axios.js') },
       { from: res('axios/dist/axios.min.js') },
       { from: res('react/dist/react.js') },
