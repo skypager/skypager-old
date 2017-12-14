@@ -1,13 +1,13 @@
-const babelTransformer = require('skypager-document-types-babel')
-const markdownTransformer = require('skypager-document-types-markdown')
-const { pathMatcher } = require('skypager-runtime/utils/path-matcher')
-
 const defaultBabelConfig = {
   presets: ['stage-0', 'react'],
   plugins: ['transform-decorators-legacy', 'transform-object-rest-spread'],
 }
 
 export default async function readFileAsts(chain, options = {}) {
+  const babelTransformer = require('skypager-document-types-babel')
+  const markdownTransformer = require('skypager-document-types-markdown')
+  const { pathMatcher } = require('skypager-runtime/utils/path-matcher')
+
   const runtime = this
 
   const {
