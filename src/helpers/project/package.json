@@ -1,12 +1,12 @@
 {
   "name": "skypager-helpers-project",
-  "version": "39.0.1",
+  "version": "39.2.0",
   "description": "skypager project helper",
   "main": "index.js",
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
-    "skypager-helpers-project-type": "^39.0.1"
+    "skypager-helpers-project-type": "^39.2.0"
   },
   "repository": {
     "type": "github",
