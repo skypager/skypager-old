@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "0c9228ca6ac5fecaed389166970abd1c9ac91060",
-    "abbreviatedSha": "0c9228ca6a",
+    "sha": "83bcb2f1595654f556e6bb93d9b266e30ac4c069",
+    "abbreviatedSha": "83bcb2f159",
     "branch": "feature/project-types",
-    "tag": "v39.2.7",
+    "tag": "v39.2.8",
     "root": "/Users/jonathan/Projects/skypager-dev/framework"
   },
   "packages": {
@@ -262,35 +262,12 @@
       "version": "39.0.1",
       "name": "skypager-runtime",
       "bundle": {
-        "success": true,
-        "assets": {
-          "skypager-runtime": "skypager-runtime.min.js"
-        }
+        "warnings": 0,
+        "errors": 1
       },
       "package": {
-        "success": true,
-        "assets": {
-          "index": "index.js",
-          "runtime": "runtime.js",
-          "feature": "feature.js",
-          "helper": "helper.js",
-          "registries": "registries.js",
-          "context-registry": "context-registry.js",
-          "utils": "utils.js",
-          "config-builder": "config-builder.js",
-          "utils/properties": "utils/properties.js",
-          "utils/router": "utils/router.js",
-          "utils/registry": "utils/registry.js",
-          "utils/emitter": "utils/emitter.js",
-          "utils/string": "utils/string.js",
-          "utils/path-to-regexp": "utils/path-to-regexp.js",
-          "utils/query": "utils/query.js",
-          "utils/path-matcher": "utils/path-matcher.js",
-          "utils/inflect": "utils/inflect.js",
-          "utils/object-hash": "utils/object-hash.js",
-          "utils/mware": "utils/mware.js",
-          "utils/entity": "utils/entity.js"
-        }
+        "warnings": 0,
+        "errors": 20
       }
     },
     "skypager-runtimes-development": {
@@ -798,6 +775,16 @@
     },
     "skypager-specs": {
       "package": {
+        "warnings": 0,
+        "errors": 1
+      }
+    },
+    "skypager-runtime": {
+      "package": {
+        "warnings": 0,
+        "errors": 20
+      },
+      "bundle": {
         "warnings": 0,
         "errors": 1
       }

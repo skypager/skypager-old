@@ -1,6 +1,6 @@
 {
   "name": "skypager-runtimes-node",
-  "version": "39.2.7",
+  "version": "39.2.8",
   "description": "the skypager node runtime",
   "main": "index.js",
   "scripts": {
