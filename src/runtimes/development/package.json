@@ -14,11 +14,11 @@
     "skypager-document-types-babel": "^38.0.0",
     "skypager-document-types-manifest": "^37.5.0",
     "skypager-document-types-markdown": "^38.0.0",
-    "skypager-features-document-database": "^39.2.4",
-    "skypager-helpers-document": "^39.0.1",
-    "skypager-helpers-document-type": "^39.0.1",
+    "skypager-features-document-database": "^39.2.10",
+    "skypager-helpers-document": "^39.2.10",
+    "skypager-helpers-document-type": "^39.2.10",
     "skypager-helpers-project": "^39.2.10",
-    "skypager-helpers-webpack": "^39.2.4",
+    "skypager-helpers-webpack": "^39.2.10",
     "skypager-runtimes-node": "^39.2.10"
   }
 }

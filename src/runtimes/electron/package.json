@@ -12,7 +12,7 @@
     "opn": "^5.1.0",
     "skypager-runtimes-development": "^39.2.10",
     "skypager-runtimes-node": "^39.2.10",
-    "skypager-runtimes-react": "^39.0.1"
+    "skypager-runtimes-react": "^39.2.10"
   },
   "repository": {
     "type": "github",

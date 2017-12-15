@@ -75,7 +75,7 @@
     "skypager-document-types-babel": "^38.0.0",
     "skypager-runtimes-development": "^39.2.10",
     "skypager-runtimes-node": "^39.2.10",
-    "skypager-runtimes-web": "^39.0.1"
+    "skypager-runtimes-web": "^39.2.10"
   },
   "entryPoints": {
     "index": "./src/index.js"
