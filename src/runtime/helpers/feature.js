@@ -37,6 +37,25 @@ export class Feature extends Helper {
     this.applyInterface(this.featureMixin, this.featureMixinOptions)
   }
 
+  setInitialState(initialState = {}) {
+    const { defaultsDeep } = this.lodash
+
+    if (this.state && this.tryGet('initialState')) {
+      console.log('trying it')
+      Promise.resolve(this.attemptMethodAsync('initialState'))
+        .then(i => {
+          console.log('ok', i)
+          if (typeof i === 'object') {
+            this.state.merge(defaultsDeep({}, i, initialState))
+          }
+        })
+        .catch(error => {
+          console.error('Error setting initial state', this, error)
+          this.initialStateError = error
+        })
+    }
+  }
+
   get featureMixinOptions() {
     const opts = this.tryResult('featureMixinOptions') || this.tryResult('mixinOptions') || {}
     return defaults({}, opts, this.defaultMixinOptions)

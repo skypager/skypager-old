@@ -4,6 +4,13 @@ export const createGetter = 'networking'
 
 export const featureMethods = ['isPortOpen', 'findOpenPort']
 
+/*
+export const isObservable = true
+export const initialState = {
+  connected: true,
+}
+*/
+
 export async function findOpenPort(port) {
   const nextPort = await detectPort(typeof port === 'object' || !port ? 0 : port)
   return nextPort

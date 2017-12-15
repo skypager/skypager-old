@@ -5,6 +5,8 @@ async function discoverLocalWebpackModules() {
 
   const requireContext = skywalker.requireContext('src/webpacks/*', { glob: true })
 
+  console.log(requireContext.keys())
+
   skypager.hide('localWebpackModules', requireContext)
 }
 

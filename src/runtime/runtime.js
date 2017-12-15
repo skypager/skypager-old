@@ -929,6 +929,8 @@ export class Runtime {
 
       this.makeObservable(observables, helperInstance)
     }
+
+    helperInstance.setInitialState(helperClass.initialState || {})
   }
 
   static ContextRegistry = ContextRegistry
