@@ -565,9 +565,15 @@ export function start(...args) {
 
 export async function startAsync(options = {}) {
   if (this.has('git') && this.get('git.files')) {
-    return await startGitMode.call(this, options)
+    return await startGitMode.call(this, options).catch(error => {
+      this.fireHook(DID_FAIL, error)
+      this.status = FAILED
+      this.error = error
+      throw error
+    })
   } else {
     const error = new Error(`FileManager depends on git`)
+    this.error = error
     this.fireHook(DID_FAIL, error)
     this.status = FAILED
     // We can use something besides git; I have a normal walker / skywalker feature
@@ -595,6 +601,7 @@ export async function startGitMode(options = {}) {
     try {
       await this.git.run({ others: true, cached: true, ...options, clear: !!options.clear })
     } catch (error) {
+      this.error = error
       this.fireHook(DID_FAIL, error)
       this.status = FAILED
       return this

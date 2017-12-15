@@ -23,6 +23,7 @@ export const featureMethods = [
   'poll',
   'stopPolling',
   'getFiles',
+  'getStatusMap',
   'getFileIds',
   'getDirectories',
   'getDirectoryIds',
@@ -106,7 +107,7 @@ export function toJSON() {
 }
 
 export function getStatusMap() {
-  return this.runtime.filesStatusMap
+  return this.runtime.fileStatusMap
 }
 
 export function getFiles() {

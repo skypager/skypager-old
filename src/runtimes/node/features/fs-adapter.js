@@ -33,6 +33,7 @@ export const hostMethods = [
   'lazyManifestPath',
   'lazyParentManifestPath',
   'lazyParentPackage',
+  'lazyParentPackagePath',
   'file',
   'directory',
 ]
@@ -158,7 +159,18 @@ export function lazyManifestPath() {
 }
 
 export function lazyParentManifestPath() {
-  return this.tryResult('manifestPath', () => findUp.sync('package.json', { cwd: this.join('..') }))
+  return (
+    this.tryResult('manifestPath', () => findUp.sync('package.json', { cwd: this.join('..') })) ||
+    this.manifestPath
+  )
+}
+
+export function lazyParentPackagePath() {
+  if (this.parentManifestPath) {
+    return this.pathUtils.dirname(this.parentManifestPath)
+  } else {
+    return this.cwd
+  }
 }
 
 export function getDirname() {
