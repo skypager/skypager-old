@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-require("skypager-cli-base/skypager-cli")
+require('skypager-cli/skypager-cli')
 
-process.on("unhandledRejection", (reason, promise) => {
-  console.log("Unhandled Rejection", reason)
+process.on('unhandledRejection', (reason, promise) => {
+  console.log('Unhandled Rejection', reason)
 })

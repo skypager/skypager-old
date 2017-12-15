@@ -66,8 +66,9 @@
     "rimraf": "^2.6.2",
     "sass-loader": "^6.0.6",
     "sinon": "^4.0.0",
-    "skypager": "latest",
+    "skypager": "^39.2.10",
     "skypager-cli-base": "latest",
-    "uglifyjs-webpack-plugin": "^0.4.6"
+    "uglifyjs-webpack-plugin": "^0.4.6",
+    "skypager-cli": "^39.2.10"
   }
 }
