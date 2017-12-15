@@ -22,6 +22,12 @@ export const featureMethods = [
   'clearState',
   'poll',
   'stopPolling',
+  'getFiles',
+  'getFileIds',
+  'getDirectories',
+  'getDirectoryIds',
+  'getDirectoryObjects',
+  'getFileObjects',
 ]
 
 export const hostMethods = ['getGitInfo']
@@ -99,24 +105,24 @@ export function toJSON() {
   })
 }
 
-export function observables() {
-  return {
-    files: ['shallowMap', {}],
-    directories: ['map', {}],
-    statusMap: ['map', {}],
-    fileIds: [
-      'computed',
-      function() {
-        return this.files.keys()
-      },
-    ],
-    directoryIds: [
-      'computed',
-      function() {
-        return this.directories.keys()
-      },
-    ],
-  }
+export function getStatusMap() {
+  return this.runtime.filesStatusMap
+}
+
+export function getFiles() {
+  return this.runtime.files
+}
+
+export function getDirectories() {
+  return this.runtime.directories
+}
+
+export function getFileIds() {
+  return this.runtime.fileIds
+}
+
+export function getDirectoryIds() {
+  return this.runtime.directoryIds
 }
 
 export function exists(path) {

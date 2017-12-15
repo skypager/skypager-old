@@ -906,15 +906,15 @@ export class Runtime {
   }
 
   didCreateObservableHelper(helperInstance, helperClass) {
-    if (!helperInstance.has('state')) {
-      makeStateful(helperInstance)
-    }
-
     if (helperInstance.tryGet('observables')) {
       this.makeObservable(
         helperInstance.tryResult('observables', {}, helperInstance.options, helperInstance.context),
         helperInstance
       )
+    }
+
+    if (!helperInstance.has('state')) {
+      makeStateful(helperInstance)
     }
 
     if (helperClass.observables) {

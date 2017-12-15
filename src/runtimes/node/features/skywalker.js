@@ -4,27 +4,6 @@ import pathMatcher from 'runtime/utils/path-matcher'
 
 export const createGetter = 'skywalker'
 
-const statsKeys = [
-  'dev',
-  'mode',
-  'nlink',
-  'uid',
-  'gid',
-  'rdev',
-  'blksize',
-  'ino',
-  'size',
-  'blocks',
-  'atimeMs',
-  'mtimeMs',
-  'ctimeMs',
-  'birthtimeMs',
-  'atime',
-  'mtime',
-  'ctime',
-  'birthtime',
-]
-
 export const featureMethods = [
   'walk',
   'watcher',
@@ -39,85 +18,41 @@ export const featureMethods = [
   'requireDocumentContext',
   'file',
   'directory',
+  'getFiles',
+  'getFileIds',
+  'getDirectories',
+  'getDirectoryIds',
+  'getDirectoryObjects',
+  'getFileObjects',
 ]
 
-export const observables = () => ({
-  files: ['shallowMap', []],
-  directories: ['shallowMap', []],
+export function getStatusMap() {
+  return this.runtime.filesStatusMap
+}
 
-  directoryObjects: [
-    'computed',
-    function() {
-      return this.directories.values()
-    },
-  ],
+export function getFileObjects() {
+  return this.runtime.files.values()
+}
 
-  directoryIds: [
-    'computed',
-    function() {
-      return this.directories.keys()
-    },
-  ],
+export function getDirectoryObjects() {
+  return this.runtime.directories.values()
+}
 
-  fileObjects: [
-    'computed',
-    function() {
-      return this.files.values()
-    },
-  ],
+export function getFiles() {
+  return this.runtime.files
+}
 
-  fileIds: [
-    'computed',
-    function() {
-      return this.files.keys()
-    },
-  ],
+export function getDirectories() {
+  return this.runtime.directories
+}
 
-  addDirectory: [
-    'action',
-    function(fileInfo, baseFolder) {
-      const { directories, runtime } = this
-      const { pick } = runtime.lodash
-      const { parse, relative } = runtime.pathUtils
-      const toFileId = ({ path }) => relative(runtime.resolve(baseFolder || runtime.cwd), path)
+export function getFileIds() {
+  return this.runtime.fileIds
+}
 
-      directories.set(toFileId(fileInfo), {
-        ...parse(fileInfo.path),
-        ...pick(fileInfo, 'path', 'mime'),
-        isDirectory: true,
-        type: 'directory',
-        relative: toFileId(fileInfo),
-        stats: pick(fileInfo, statsKeys),
-      })
-
-      return this
-    },
-  ],
-
-  addFile: [
-    'action',
-    function(fileInfo, baseFolder) {
-      const { files, runtime } = this
-      const { pick } = runtime.lodash
-      const { parse, relative, dirname } = runtime.pathUtils
-      const toFileId = ({ path }) => relative(runtime.resolve(baseFolder || runtime.cwd), path)
-
-      files.set(toFileId(fileInfo), {
-        ...parse(fileInfo.path),
-        ...pick(fileInfo, 'path', 'mime'),
-        isDirectory: false,
-        type: 'file',
-        isIndex: !!fileInfo.name.match(/index/i),
-        extension: `.${fileInfo.extension}`,
-        relative: toFileId(fileInfo),
-        relativeDirname: dirname(toFileId(fileInfo)),
-        stats: pick(fileInfo, statsKeys),
-      })
-
-      return this
-    },
-  ],
-})
+export function getDirectoryIds() {
+  return this.runtime.directoryIds
+}
 
 export function create(options = {}) {
   if (typeof options === 'string') {
@@ -129,7 +64,7 @@ export function create(options = {}) {
 
 export function projectWalker(options = {}) {
   const { runtime } = this
-  const { addDirectory, addFile } = this
+  const { addDirectory, addFile } = this.runtime
 
   if (typeof options === 'string') {
     options = { baseFolder: options }

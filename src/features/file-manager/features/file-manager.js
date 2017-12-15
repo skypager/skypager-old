@@ -462,50 +462,50 @@ export function getGit() {
 }
 
 export function getFiles() {
-  return this.result('runtime.git.files', () => {
-    throw new Error(`the file manager depends on the fit feature`)
+  return this.result('runtime.files', () => {
+    throw new Error(`the file manager depends on the fs-adapter feature`)
   })
 }
 
 export function getDirectories() {
-  return this.result('runtime.git.directories', () => {
-    throw new Error(`the file manager depends on the fit feature`)
+  return this.result('runtime.directories', () => {
+    throw new Error(`the file manager depends on the fs-adapter feature`)
   })
 }
 
 export function getStatusMap() {
-  return this.result('runtime.git.statusMap', () => {
-    throw new Error(`the file manager depends on the fit feature`)
+  return this.result('runtime.fileStatusMap', () => {
+    throw new Error(`the file manager depends on the fs-adapter feature`)
   })
 }
 
 export function getFilePaths() {
-  return this.result('runtime.git.files.values', () => {
-    throw new Error(`the file manager depends on the fit feature`)
+  return this.result('runtime.fileObjects', () => {
+    throw new Error(`the file manager depends on the fs-adapter feature`)
   }).map(file => file.path)
 }
 
 export function getFileIds() {
-  return this.result('runtime.git.files.keys', () => {
-    throw new Error(`the file manager depends on the fit feature`)
+  return this.result('runtime.fileIds', () => {
+    throw new Error(`the file manager depends on the fs-adapter feature`)
   })
 }
 
 export function getDirectoryIds() {
-  return this.result('runtime.git.directories.keys', () => {
-    throw new Error(`the file manager depends on the fit feature`)
+  return this.result('runtime.directoryIds', () => {
+    throw new Error(`the file manager depends on the fs-adapter feature`)
   })
 }
 
 export function getDirectoryObjects(options = {}) {
-  return this.result('runtime.git.directories.values', () => {
-    throw new Error(`the file manager depends on the fit feature`)
+  return this.result('runtime.directoryObjects', () => {
+    throw new Error(`the file manager depends on the fs-adapter feature`)
   })
 }
 
 export function getFileObjects(options = {}) {
-  return this.result('runtime.git.files.values', () => {
-    throw new Error(`the file manager depends on the fit feature`)
+  return this.result('runtime.fileObjects', () => {
+    throw new Error(`the file manager depends on the fs-adapter feature`)
   })
 }
 

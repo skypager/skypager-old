@@ -1,6 +1,27 @@
 import fsx from 'fs-extra-promise'
 import findUp from 'find-up'
 
+const statsKeys = [
+  'dev',
+  'mode',
+  'nlink',
+  'uid',
+  'gid',
+  'rdev',
+  'blksize',
+  'ino',
+  'size',
+  'blocks',
+  'atimeMs',
+  'mtimeMs',
+  'ctimeMs',
+  'birthtimeMs',
+  'atime',
+  'mtime',
+  'ctime',
+  'birthtime',
+]
+
 export const hostMethods = [
   'lazyFsx',
   'lazyFs',
@@ -12,7 +33,125 @@ export const hostMethods = [
   'lazyManifestPath',
   'lazyParentManifestPath',
   'lazyParentPackage',
+  'file',
+  'directory',
 ]
+
+export function file(fileIdOrPath) {
+  return (
+    this.files.get(fileIdOrPath) ||
+    this.chain
+      .get('fileObjects', [])
+      .filter({ path: fileIdOrPath })
+      .first()
+      .value()
+  )
+}
+
+export function directory(fileIdOrPath) {
+  return (
+    this.directories.get(fileIdOrPath) ||
+    this.chain
+      .get('directoryObjects', [])
+      .filter({ path: fileIdOrPath })
+      .first()
+      .value()
+  )
+}
+export function featureWasEnabled() {
+  const { runtime } = this
+
+  try {
+    runtime.makeObservable(
+      {
+        files: ['shallowMap', {}],
+        directories: ['shallowMap', {}],
+        fileStatusMap: ['shallowMap', {}],
+
+        fileObjects: [
+          'computed',
+          function() {
+            return this.files.values()
+          },
+        ],
+
+        directoryObjects: [
+          'computed',
+          function() {
+            return this.directories.values()
+          },
+        ],
+
+        fileIds: [
+          'computed',
+          function() {
+            return this.files.keys()
+          },
+        ],
+
+        directoryIds: [
+          'computed',
+          function() {
+            return this.directories.keys()
+          },
+        ],
+
+        addDirectory: [
+          'action',
+          function(fileInfo, baseFolder) {
+            const runtime = this
+            const { directories } = this
+            const { pick } = runtime.lodash
+            const { parse, relative } = runtime.pathUtils
+            const toFileId = ({ path }) =>
+              relative(runtime.resolve(baseFolder || runtime.cwd), path)
+
+            directories.set(toFileId(fileInfo), {
+              ...parse(fileInfo.path),
+              ...pick(fileInfo, 'path', 'mime'),
+              isDirectory: true,
+              type: 'directory',
+              relative: toFileId(fileInfo),
+              stats: pick(fileInfo, statsKeys),
+            })
+
+            return this
+          },
+        ],
+
+        addFile: [
+          'action',
+          function(fileInfo, baseFolder) {
+            const runtime = this
+            const { files } = this
+            const { pick } = runtime.lodash
+            const { parse, relative, dirname } = runtime.pathUtils
+            const toFileId = ({ path }) =>
+              relative(runtime.resolve(baseFolder || runtime.cwd), path)
+
+            files.set(toFileId(fileInfo), {
+              ...parse(fileInfo.path),
+              ...pick(fileInfo, 'path', 'mime'),
+              isDirectory: false,
+              type: 'file',
+              isIndex: !!fileInfo.name.match(/index/i),
+              extension: `.${fileInfo.extension}`,
+              relative: toFileId(fileInfo),
+              relativeDirname: dirname(toFileId(fileInfo)),
+              stats: pick(fileInfo, statsKeys),
+            })
+
+            return this
+          },
+        ],
+      },
+      runtime
+    )
+  } catch (error) {
+    console.log('ERROR', error)
+    this.errorState = error
+  }
+}
 
 export function lazyManifestPath() {
   return this.tryResult('manifestPath', () => findUp.sync('package.json', { cwd: this.cwd }))
