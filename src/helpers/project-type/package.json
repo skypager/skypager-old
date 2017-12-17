@@ -23,6 +23,7 @@
   "homepage": "https://skypager.io",
   "latestHash": "26e88f7b0d12f112943b",
   "dependencies": {
-    "skypager-project-types-standard": "39.2.10"
+    "skypager-project-types-standard": "39.4.0",
+    "skypager-project-types-semantic-react": "39.4.0"
   }
 }

@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "a258c6dd2263690cb495b3a54db64175a3a75bdc",
-    "abbreviatedSha": "a258c6dd22",
+    "sha": "e615b953ccf03dd380d8f835c4a5848e07a2a0ba",
+    "abbreviatedSha": "e615b953cc",
     "branch": "develop",
-    "tag": "v39.4.0",
+    "tag": "v39.4.1",
     "root": "/Users/jonathan/Projects/skypager-dev/framework"
   },
   "packages": {
@@ -264,7 +264,7 @@
       "bundle": {
         "success": true,
         "assets": {
-          "skypager-runtime": "skypager-runtime.min.js"
+          "skypager-runtime": "skypager-runtime.js"
         }
       },
       "package": {
