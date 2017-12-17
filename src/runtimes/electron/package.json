@@ -11,7 +11,7 @@
     "node-uuid": "^1.4.8",
     "opn": "^5.1.0",
     "skypager-runtimes-development": "^39.4.1",
-    "skypager-runtimes-node": "^39.3.0",
+    "skypager-runtimes-node": "^39.4.1",
     "skypager-runtimes-react": "^39.3.0"
   },
   "repository": {
