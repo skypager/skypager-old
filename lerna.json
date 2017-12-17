@@ -1,6 +1,6 @@
 {
   "lerna": "2.0.0-beta.38",
-  "version": "39.4.0",
+  "version": "39.4.1",
   "packages": [
     ".",
     "src/*",
@@ -16,8 +16,7 @@
       "src/**",
       "apps/*",
       "specs",
-      "containers/*",
-      "project-types/*"
+      "containers/*"
     ]
   }
 }

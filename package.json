@@ -1,6 +1,6 @@
 {
   "name": "skypager",
-  "version": "39.4.0",
+  "version": "39.4.1",
   "description": "a javscript launch platform",
   "main": "index.js",
   "browser": "skypager.min.js",
@@ -73,7 +73,7 @@
     "skypager-cli": "^39.3.0",
     "skypager-core": "^39.3.0",
     "skypager-document-types-babel": "^38.0.0",
-    "skypager-runtimes-development": "^39.3.0",
+    "skypager-runtimes-development": "^39.4.0",
     "skypager-runtimes-node": "^39.3.0",
     "skypager-runtimes-web": "^39.3.0"
   },
