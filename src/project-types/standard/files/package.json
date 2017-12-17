@@ -44,7 +44,7 @@
     "mocha": "^4.0.0",
     "mocha-webpack": "^0.7.0",
     "prettier": "^1.7.4",
-    "skypager": "^39.2.10",
-    "skypager-cli": "^39.2.10"
+    "skypager": "^39.4.0",
+    "skypager-cli": "^39.4.0"
   }
 }
