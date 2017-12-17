@@ -1,6 +1,9 @@
 import webpack from 'webpack'
 import Promise from 'bluebird'
 import runtime, { Helper } from 'skypager-runtime'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
+
 const { mobx, lodash } = runtime
 const { action, computed, observable } = mobx
 const {
@@ -71,6 +74,10 @@ export class Webpack extends Helper {
 
       externalsMap: ['shallowMap', {}],
 
+      htmlPagesMap: ['shallowMap', {}],
+
+      copyFilesEntries: ['array', []],
+
       moduleAliasMap: ['shallowMap', {}],
 
       moduleLocationsMap: ['shallowMap', {}],
@@ -110,6 +117,8 @@ export class Webpack extends Helper {
       target: 'string',
       moduleAliases: 'object',
       moduleLocations: 'object',
+      html: 'object',
+      copy: 'array',
     }
   }
 
@@ -134,6 +143,8 @@ export class Webpack extends Helper {
     this.cfg('moduleFolders', this.moduleFolders)
     this.cfg('aliases', this.aliases)
     this.cfg('rules', this.rules)
+    this.cfg('htmlPages', this.htmlPages)
+    this.cfg('copyFiles', this.copyFiles)
 
     // TODO Add support for multiple configs; just need to
     // figure out clean defaults inheritance from provided args used in single config
@@ -187,6 +198,9 @@ export class Webpack extends Helper {
 
     //this.runtime.debug("discovering entry points")
     //await this.discoverEntryPoints()
+
+    await this.discoverHtmlPages().catch(c('htmlPages'))
+    await this.discoverCopyFiles().catch(c('copyFiles'))
 
     return this
   }
@@ -422,6 +436,24 @@ export class Webpack extends Helper {
     return this
   }
 
+  async discoverHtmlPages() {
+    const { defaultsDeep, toPairs } = this.lodash
+    const htmlPages = await this.attemptMethodAsync('htmlPages')
+
+    this.htmlPagesMap.merge(toPairs(defaultsDeep({}, this.htmlPages, htmlPages)))
+
+    return this
+  }
+
+  async discoverCopyFiles() {
+    const { castArray, compact } = this.lodash
+    const copyFiles = await this.attemptMethodAsync('copyFiles')
+
+    this.copyFilesEntries.push(...compact(castArray(copyFiles)))
+
+    return this
+  }
+
   async discoverDefinitions() {
     const definitions = await this.attemptMethodAsync('definitions')
     const hardCoded = this.tryResult('define', () =>
@@ -451,6 +483,22 @@ export class Webpack extends Helper {
 
     this.lodash.mapValues(providedModulesConfig, (v, k) => {
       this.provide(k, v)
+    })
+
+    return this
+  }
+
+  @action
+  copy(config) {
+    this.copyFilesConfig.push(config)
+    return this
+  }
+
+  @action
+  html(relativeOutputFilename, options = {}) {
+    this.htmlPagesMap.set(relativeOutputFilename, {
+      ...(this.htmlPagesMap.get(relativeOutputFilename) || {}),
+      ...options,
     })
 
     return this
@@ -587,6 +635,16 @@ export class Webpack extends Helper {
   @computed
   get rules() {
     return this.configOption('rules', [])
+  }
+
+  @computed
+  get htmlPages() {
+    return this.configOption('htmlPages', [])
+  }
+
+  @computed
+  get copyFiles() {
+    return this.configOption('copyFiles', [])
   }
 
   @computed
@@ -1373,6 +1431,24 @@ export class Webpack extends Helper {
 
     if (!isEmpty(this.providedModules)) {
       plugins.push(new ProvidePlugin(this.providedModules))
+    }
+
+    const htmlPagesConfig = this.runtime.convertToJS(this.htmlPagesMap.toJSON())
+    const copyFiles = this.runtime.convertToJS(this.copyFilesEntries.toJSON())
+
+    if (!isEmpty(htmlPagesConfig)) {
+      this.lodash.mapValues((config, filename) => {
+        plugins.push(
+          new HtmlWebpackPlugin({
+            ...config,
+            filename,
+          })
+        )
+      })
+    }
+
+    if (!isEmpty(copyFiles)) {
+      plugins.push(new CopyWebpackPlugin(copyFiles))
     }
 
     this.attemptMethod('injectPlugins', plugins, config)
