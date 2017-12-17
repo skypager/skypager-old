@@ -546,11 +546,18 @@ export class Webpack extends Helper {
 
     if (isEmpty(plugins)) {
       //this.runtime.debug('None found')
+      this.discoveredPlugins = false
       return this
     }
 
     if (isObject(plugins)) {
-      Object.keys(plugins).forEach(k => this.plugin(k, plugins[k]))
+      const pluginKeys = Object.keys(plugins)
+
+      this.discoveredPlugins = pluginKeys
+
+      pluginKeys.forEach(k => {
+        this.plugin(k, plugins[k])
+      })
     }
 
     return this
@@ -1434,21 +1441,39 @@ export class Webpack extends Helper {
     }
 
     const htmlPagesConfig = this.runtime.convertToJS(this.htmlPagesMap.toJSON())
+
     const copyFiles = this.runtime.convertToJS(this.copyFilesEntries.toJSON())
 
     if (!isEmpty(htmlPagesConfig)) {
-      this.lodash.mapValues((config, filename) => {
-        plugins.push(
-          new HtmlWebpackPlugin({
-            ...config,
-            filename,
-          })
-        )
+      this.lodash.mapValues(htmlPagesConfig, (config, filename) => {
+        if (plugins.find(p => p.autoInjectedHtmlFor === filename)) {
+          return
+        }
+
+        const plugin = new HtmlWebpackPlugin({
+          skypager: this.runtime,
+          runtime: this.runtime,
+          inject: true,
+          ...config,
+          filename,
+        })
+
+        plugin.autoInjectedHtmlFor = filename
+
+        plugins.push(plugin)
       })
     }
 
     if (!isEmpty(copyFiles)) {
-      plugins.push(new CopyWebpackPlugin(copyFiles))
+      const filesHash = this.runtime.hashObject(copyFiles)
+      if (plugins.find(p => p._filesHash === filesHash)) {
+        return
+      }
+
+      const autoInjected = new CopyWebpackPlugin(copyFiles)
+      autoInjected._filesHash = filesHash
+
+      plugins.push(autoInjected)
     }
 
     this.attemptMethod('injectPlugins', plugins, config)
