@@ -1,6 +1,6 @@
 {
   "name": "skypager-helpers-project-type",
-  "version": "39.4.1",
+  "version": "39.4.2",
   "description": "skypager project type helper",
   "main": "index.js",
   "scripts": {
