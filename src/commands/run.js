@@ -118,7 +118,7 @@ export async function run() {
     if (!process.stdin.isTTY) {
       code = await readStdin()
     } else {
-      code = argv._.slice(1).join(' ')
+      code = argv.code || argv._.slice(1).join(' ')
     }
 
     results = await scriptRunner
