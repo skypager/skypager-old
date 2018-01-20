@@ -1,6 +1,6 @@
 {
   "name": "skypager-helpers-webpack",
-  "version": "39.4.1",
+  "version": "39.4.2",
   "description": "helpers for working with the webpack compiler and configuration system",
   "main": "index.js",
   "repository": "https://github.com/skypager/skypager",

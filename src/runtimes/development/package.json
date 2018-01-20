@@ -18,7 +18,7 @@
     "skypager-helpers-document": "^39.3.0",
     "skypager-helpers-document-type": "^39.3.0",
     "skypager-helpers-project": "^39.4.2",
-    "skypager-helpers-webpack": "^39.4.1",
+    "skypager-helpers-webpack": "^39.4.2",
     "skypager-runtimes-node": "^39.4.2"
   }
 }
