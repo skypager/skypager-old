@@ -1429,6 +1429,11 @@ export class Webpack extends Helper {
         this.progress.stage = stage
         this.progress.details.length = 0
         this.progress.details.push(...args)
+
+        this.emit('progress', {
+          percentComplete: percentComplete * 100,
+          stage,
+        })
       })
     )
 
@@ -1521,7 +1526,11 @@ export class Webpack extends Helper {
       externalizeDependencies = (options.buildTarget || this.buildTarget) !== 'web',
       descriptionFiles = ['package.json'],
       moduleLocations = ['packages', 'node_modules'],
-      devtool = this.runtime.get('argv.devtool', 'cheap-module-eval-source-map'),
+      devtool = options.devTool ||
+        this.runtime.get(
+          'argv.devTool',
+          this.runtime.get('argv.devtool', 'cheap-module-eval-source-map')
+        ),
       loaderModuleLocations = [
         skypager.resolve(__dirname, 'node_modules'),
         skypager.resolve(__dirname, '..'),
