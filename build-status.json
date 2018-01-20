@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "255db84b3180dc6faadfd3283ae1b610c7273807",
-    "abbreviatedSha": "255db84b31",
-    "branch": "develop",
-    "tag": "v39.4.2",
+    "sha": "3cbc1ca60e8d0de33bfeb6b233fae2b6f0e59144",
+    "abbreviatedSha": "3cbc1ca60e",
+    "branch": "bugfix/run-command-fails-silently",
+    "tag": null,
     "root": "/Users/jonathan/Projects/skypager-dev/framework"
   },
   "packages": {

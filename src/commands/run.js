@@ -6,13 +6,24 @@ export function program(p) {
     .option('--npm', 'use an npm script')
     .option('--yarn', 'use yarn as your task runner instead of npm')
     .option('--watch', 'watch the script for changes and rerun')
+    .option('--fail-silently', 'whether or not to throw errors in the scripts')
+    .option(
+      '--exit',
+      'whether to automatically exit when the script is finished running. defaults to false, lets your script decide'
+    )
+    .option(
+      '--scripts-prefix',
+      'what is the folder name all scripts can be found in; defaults to scripts'
+    )
+    .option('--scripts-extension', 'defaults to .js')
 }
 
 export function shouldExit() {
   if (this.argv.watch) {
     return false
   }
-  return true
+
+  return this.runtime.argv.exit !== false
 }
 
 export async function validate() {
@@ -20,63 +31,146 @@ export async function validate() {
 }
 
 export function shouldClear() {
-  return !this.argv.noClear || this.argv.clear !== false
+  return !!this.argv.clear
 }
 
 export async function run() {
-  const { id = this.runtime.argv.scriptId, npm, yarn = false, watch = false } = this.runtime.argv
-  const script = id || this.runtime.argv._.slice(1)[0] || 'start'
-  const isPackageScript = !!this.runtime.get(['currentPackage', 'scripts', script])
+  const { runtime } = this
+  const { print, colors } = runtime.cli
+  const { argv, fileManager } = runtime
+  const { id = argv.scriptId, npm, yarn = false, watch = false } = argv
+  const script = id || argv._.slice(1)[0] || 'start'
+  const isPackageScript = !!runtime.get(['currentPackage', 'scripts', script])
+  const raiseErrors = !!argv.failSilently !== false
 
-  await this.runtime.fileManager.startAsync()
+  await fileManager.startAsync()
 
   let results
 
-  const scriptRunner = this.runtime.feature('script-runner')
+  const scriptRunner = runtime.feature('script-runner')
 
   const matchingFiles = await scriptRunner.findMatchingScripts({
     script: escape(script),
-    scriptsPrefix: this.runtime.get('argv.scriptsPrefix', 'scripts'),
-    scriptsExtension: this.runtime.get('argv.scriptsExtension', '.js'),
+    scriptsPrefix: runtime.get('argv.scriptsPrefix', 'scripts'),
+    scriptsExtension: runtime.get('argv.scriptsExtension', '.js'),
   })
 
   // it is a package script and they did specify
   if (!!isPackageScript && (npm || yarn)) {
-    this.print('Running a package script: ' + script)
-    this.print(this.runtime.currentPackage.get(['scripts', script]))
-    results = await scriptRunner.runPackageScript(script)
+    print('Running a package script: ' + script)
+    print(runtime.currentPackage.get(['scripts', script]))
+    results = await scriptRunner.runPackageScript(script).catch(error => {
+      print(colors.red(`Script Error:`))
+      print(error.message, 2, 1, 1)
+      print(error.stack, 4)
+      process.exit(1)
+    })
     // it is a package script and also a file, so were confused
   } else if (isPackageScript && (!npm && !yarn) && matchingFiles.length) {
-    this.print('We found both an npm package script and a file by the name of ' + script)
-    this.print('please specify the --npm or --yarn flag to run that.  We will run the script file')
-    this.print(matchingFiles[0])
-    results = await scriptRunner.runScriptAtPath(
-      this.runtime.fileManager.file(matchingFiles[0]).path
-    )
+    print('We found both an npm package script and a file by the name of ' + script)
+    print('please specify the --npm or --yarn flag to run that.  We will run the script file')
+    print(matchingFiles[0])
+    results = await scriptRunner
+      .runScriptAtPath({
+        script: runtime.fileManager.file(matchingFiles[0]).path,
+        raiseErrors,
+      })
+      .catch(error => {
+        print(colors.red(`Script Error:`))
+        print(error.message, 2, 1, 1)
+        print(error.stack, 4)
+        process.exit(1)
+      })
     // it is a package script and they didnt neeed to specify
   } else if (isPackageScript && (!npm && !yarn) && !matchingFiles.length) {
-    this.print('We found both an npm package script and a file by the name of ' + script)
-    results = await scriptRunner.runPackageScript(script)
+    print('We found both an npm package script and a file by the name of ' + script)
+    results = await scriptRunner.runPackageScript({ script, raiseErrors }).catch(error => {
+      print(colors.red(`Script Error:`))
+      print(error.message, 2, 1, 1)
+      print(error.stack, 4)
+
+      return error
+    })
     // we found a script by name
   } else if (matchingFiles.length === 1) {
-    results = await scriptRunner.runScriptAtPath(
-      this.runtime.fileManager.file(matchingFiles[0]).path
-    )
+    results = await scriptRunner
+      .runScriptAtPath({
+        script: runtime.fileManager.file(matchingFiles[0]).path,
+        raiseErrors,
+      })
+      .catch(error => {
+        return error
+      })
     // we found more than one script
   } else if (matchingFiles.length > 1) {
-    this.print('Found more than one matching script. Please be more specific')
+    print(colors.red('Found more than one matching script. Please be more specific'))
+    process.exit(1)
     // we found no scripts and it isn't a package script
   } else if (!matchingFiles.length && !isPackageScript) {
-    this.print('couldnt find any script. Running code: ' + this.runtime.argv._.slice(1).join(' '))
+    if (argv.debug) {
+      print(colors.yellow(`Could not find a script.`))
+      print(`Attempting to run code:`, 2, 1, 1)
+      print(argv._.slice(1).join(' '), 4)
+    }
+
+    let code
+
+    if (!process.stdin.isTTY) {
+      code = await readStdin()
+    } else {
+      code = argv._.slice(1).join(' ')
+    }
+
+    results = await scriptRunner
+      .runCode({ code, ...argv })
+      .then(results => {
+        if (results.error) {
+          return results.error
+        }
+      })
+      .catch(error => ({ error }))
   }
 
   if (watch && !isPackageScript && matchingFiles.length) {
-    this.print('watching files')
+    print('watching files')
   } else if (watch && isPackageScript) {
-    this.print('Watch mode only works when dealing with scripts')
+    print('Watch mode only works when dealing with scripts')
+  }
+
+  if (argv.debug) {
+    console.log('Script Runner Got Results')
+    console.log(results)
+  }
+
+  if (results && results.error && argv.failSilently !== false) {
+    print(colors.red('Script Error:'))
+    print(results.error.message, 2, 1, 1)
+    process.exit(results.exitCode || 1)
+  }
+
+  if (argv.exit) {
+    process.exit(results && results.error ? 1 : 0)
   }
 
   return results
 }
 
 export async function displayHelp() {}
+
+function readStdin() {
+  let data = ''
+
+  return new Promise((resolve, reject) => {
+    process.stdin.on('readable', () => {
+      const input = process.stdin.read()
+
+      if (input !== null) {
+        data = data + input.toString()
+      }
+    })
+
+    process.stdin.on('end', () => {
+      resolve(data)
+    })
+  })
+}

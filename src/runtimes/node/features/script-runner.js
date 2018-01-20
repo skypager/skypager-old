@@ -125,12 +125,43 @@ export async function runScriptAtPath(options = {}) {
   }
 
   const { runtime } = this
-  const { script } = options
+  const { argv } = runtime
+  const { isError } = runtime.lodash
+
+  // false by default just to test whether it breaks anything
+  const { raiseErrors = false, script } = options
 
   const scriptPath = runtime.resolve(script)
   const code = await runtime.fsx.readFileAsync(scriptPath).then(b => b.toString())
 
-  return await doRun.call(this, createRunner.call(this, { ...options, code, scriptPath }))
+  const results = await doRun.call(this, createRunner.call(this, { ...options, code, scriptPath }))
+  const { error } = results
+
+  if (argv.debug) {
+    console.log('Should raise errors', raiseErrors)
+    console.log('Got results')
+    if (typeof results === 'object') {
+      console.log(Object.keys(results))
+    }
+  }
+
+  if (argv.debug && error) {
+    console.log('Script Runner Error Got Results', error)
+  }
+
+  if (error && raiseErrors) {
+    if (isError(error)) {
+      throw error
+    } else if (error.message && error.stack) {
+      const e = new Error(error.message)
+      e.stack = error.stack
+      throw e
+    } else if (typeof error === 'string') {
+      throw new Error(error)
+    }
+  }
+
+  return results
 }
 
 export async function runPackageScript(options = {}) {
@@ -223,14 +254,15 @@ function createRunner(options = {}) {
 
 async function doRun(codeRunner) {
   const { runtime } = this
-  const results = await codeRunner.call(runtime, runtime.argv)
+  const results = await codeRunner.call(runtime, runtime.argv).catch(error => ({ error }))
 
   if (results.error) {
     results.error = {
       message: results.error.message,
-      stack: results.error.stack
+      stack: (results.error.stack || '')
         .split('\n')
-        .filter(line => line && !line.match(/regenerator|core-js|babel-runtime/i)),
+        .filter(line => line && !line.match(/regenerator|core-js|babel-runtime/i))
+        .join('\n'),
     }
   }
 
