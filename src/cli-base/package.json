@@ -1,6 +1,6 @@
 {
   "name": "skypager-cli",
-  "version": "39.5.0",
+  "version": "39.5.2",
   "description": "a lightweight cli for working inside of skypager portfolios",
   "main": "index.js",
   "repository": "https://github.com/skypager/skypager",
@@ -10,7 +10,7 @@
     "babel-runtime": "^6.23.0",
     "lodash": "^4.17.4",
     "minimist": "1.2.0",
-    "skypager-runtimes-node": "^39.5.0"
+    "skypager-runtimes-node": "^39.5.2"
   },
   "bin": {
     "skypager-cli": "./skypager-cli",
