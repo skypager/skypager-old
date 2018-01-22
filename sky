@@ -2,6 +2,12 @@
 
 require('skypager-cli/skypager-cli')
 
+const cli = require('skypager-repl/dist/cli').default
+const { colors, print, clear } = cli
+const { red } = colors
+
 process.on('unhandledRejection', (reason, promise) => {
-  console.log('Unhandled Rejection', reason)
+  clear()
+  print(red(`Unhandled Rejection`))
+  print(red(reason), 2, 2, 2)
 })

@@ -129,25 +129,13 @@ export async function runScriptAtPath(options = {}) {
   const { isError } = runtime.lodash
 
   // false by default just to test whether it breaks anything
-  const { raiseErrors = false, script } = options
+  const { raiseErrors = argv.failSilently !== false, script } = options
 
   const scriptPath = runtime.resolve(script)
   const code = await runtime.fsx.readFileAsync(scriptPath).then(b => b.toString())
 
   const results = await doRun.call(this, createRunner.call(this, { ...options, code, scriptPath }))
   const { error } = results
-
-  if (argv.debug) {
-    console.log('Should raise errors', raiseErrors)
-    console.log('Got results')
-    if (typeof results === 'object') {
-      console.log(Object.keys(results))
-    }
-  }
-
-  if (argv.debug && error) {
-    console.log('Script Runner Error Got Results', error)
-  }
 
   if (error && raiseErrors) {
     if (isError(error)) {

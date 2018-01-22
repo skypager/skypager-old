@@ -1,10 +1,10 @@
 {
   "gitInfo": {
-    "sha": "6ec77f415e4a3845615e174a06c214ee072ccdf1",
-    "abbreviatedSha": "6ec77f415e",
+    "sha": "916060174b8e3524d4c5d63ea2f2f120a777158c",
+    "abbreviatedSha": "916060174b",
     "branch": "develop",
-    "tag": "v39.5.0",
-    "root": "/Users/jonathan/Projects/skypager-dev/framework"
+    "tag": null,
+    "root": "/Users/jon/Projects/skypager-dev/framework"
   },
   "packages": {
     "skypager-document-types-manifest": {

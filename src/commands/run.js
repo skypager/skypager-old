@@ -38,10 +38,10 @@ export async function run() {
   const { runtime } = this
   const { print, colors } = runtime.cli
   const { argv, fileManager } = runtime
-  const { id = argv.scriptId, npm, yarn = false, watch = false } = argv
+  const { id = argv.scriptId, npm = false, yarn = false, watch = false } = argv
   const script = id || argv._.slice(1)[0] || 'start'
   const isPackageScript = !!runtime.get(['currentPackage', 'scripts', script])
-  const raiseErrors = !!argv.failSilently !== false
+  const raiseErrors = !argv.failSilently
 
   await fileManager.startAsync()
 
@@ -56,14 +56,11 @@ export async function run() {
   })
 
   // it is a package script and they did specify
-  if (!!isPackageScript && (npm || yarn)) {
+  if (isPackageScript && (npm || yarn)) {
     print('Running a package script: ' + script)
     print(runtime.currentPackage.get(['scripts', script]))
     results = await scriptRunner.runPackageScript(script).catch(error => {
-      print(colors.red(`Script Error:`))
-      print(error.message, 2, 1, 1)
-      print(error.stack, 4)
-      process.exit(1)
+      return { error, exitCode: 1 }
     })
     // it is a package script and also a file, so were confused
   } else if (isPackageScript && (!npm && !yarn) && matchingFiles.length) {
@@ -76,20 +73,12 @@ export async function run() {
         raiseErrors,
       })
       .catch(error => {
-        print(colors.red(`Script Error:`))
-        print(error.message, 2, 1, 1)
-        print(error.stack, 4)
-        process.exit(1)
+        return { error, exitCode: 1 }
       })
     // it is a package script and they didnt neeed to specify
   } else if (isPackageScript && (!npm && !yarn) && !matchingFiles.length) {
-    print('We found both an npm package script and a file by the name of ' + script)
     results = await scriptRunner.runPackageScript({ script, raiseErrors }).catch(error => {
-      print(colors.red(`Script Error:`))
-      print(error.message, 2, 1, 1)
-      print(error.stack, 4)
-
-      return error
+      return { error, exitCode: 1 }
     })
     // we found a script by name
   } else if (matchingFiles.length === 1) {
@@ -99,7 +88,7 @@ export async function run() {
         raiseErrors,
       })
       .catch(error => {
-        return error
+        return { error, exitCode: 1 }
       })
     // we found more than one script
   } else if (matchingFiles.length > 1) {
@@ -125,31 +114,32 @@ export async function run() {
       .runCode({ code, ...argv })
       .then(results => {
         if (results.error) {
-          return results.error
+          return results
         }
       })
       .catch(error => ({ error }))
   }
 
-  if (watch && !isPackageScript && matchingFiles.length) {
-    print('watching files')
-  } else if (watch && isPackageScript) {
-    print('Watch mode only works when dealing with scripts')
+  if (watch) {
+    print('Watch mode not implemented')
+
+    if (!isPackageScript && matchingFiles.length) {
+    } else if (isPackageScript) {
+    }
+
+    process.exit(0)
   }
 
-  if (argv.debug) {
-    console.log('Script Runner Got Results')
-    console.log(results)
-  }
-
-  if (results && results.error && argv.failSilently !== false) {
+  if (results && results.error && !argv.failSilently) {
     print(colors.red('Script Error:'))
-    print(results.error.message, 2, 1, 1)
+    print(results.error.message, 2, 1, 0)
+    print(colors.red('Stack Trace'), 2, 1, 0)
+    print(results.error.stack, 6)
     process.exit(results.exitCode || 1)
-  }
-
-  if (argv.exit) {
-    process.exit(results && results.error ? 1 : 0)
+  } else if (results && results.error && argv.failSilently) {
+    process.exit(results.exitCode || 1)
+  } else if (results && !results.error && argv.exit) {
+    process.exit(0)
   }
 
   return results
