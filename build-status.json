@@ -1,7 +1,7 @@
 {
   "gitInfo": {
-    "sha": "94034f4c9a06b3ed62d738200c76baffe1f5dabc",
-    "abbreviatedSha": "94034f4c9a",
+    "sha": "62cdda52f523bc39965c7cc59f1d1779a46dbf53",
+    "abbreviatedSha": "62cdda52f5",
     "branch": "feature/deployment-helper",
     "tag": null,
     "root": "/Users/jon/Projects/skypager-dev/framework"
@@ -764,6 +764,16 @@
         }
       },
       "success": false
+    },
+    "skypager-features-aws": {
+      "version": "39.5.2",
+      "name": "skypager-features-aws",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      }
     }
   },
   "failed": {

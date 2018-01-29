@@ -9,7 +9,11 @@ async function discoverLocalWebpackModules() {
 }
 
 discoverLocalWebpackModules().catch(error => {
-  runtime.setState({ discoverLocalWebpackModulesError: error })
+  skypager.setState({ discoverLocalWebpackModulesError: error })
 })
 
-skypager.use(require('skypager-helpers-deployment')).use(require('skypager-deployments-aws'))
+try {
+  skypager.use(skypager.packageFinder.attemptResolve('skypager-deployments-aws'))
+} catch (error) {
+  skypager.setState({ awsDeploymentsError: error })
+}
