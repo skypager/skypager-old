@@ -1,0 +1,7 @@
+{
+  "name": "skypager-features-github",
+  "version": "39.5.2",
+  "description": "use the github api in your skypager project",
+  "keywords": ["skypager", "github"],
+  "dependencies": {}
+}
