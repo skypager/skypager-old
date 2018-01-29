@@ -9,7 +9,7 @@ const mapContext = req =>
     {}
   )
 
-export class Service {
+export class Service extends Helper {
   static configFeatures() {
     return mapContext(require.context('./config/features', false, /\.js$/))
   }

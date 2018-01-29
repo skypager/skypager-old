@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "ansi-html-stream": "^0.0.3",
+    "aws-sdk": "^2.188.0",
     "babel-eslint": "^8.0.0",
     "babel-generator": "^6.26.0",
     "babel-template": "^6.26.0",
