@@ -4,6 +4,6 @@
   "description": "deploy your skypager project to AWS",
   "keywords": ["skypager", "AWS", "S3", "CloudFront", "deployments"],
   "dependencies": {
-    "aws-sdk": "^2.188.0"
+    "skypager-features-aws": "^39.5.2"
   }
 }

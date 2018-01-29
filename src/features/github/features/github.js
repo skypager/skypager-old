@@ -3,7 +3,11 @@ import Octokat from 'octokat'
 export const createGetter = 'github'
 
 export const DEFAULT_BRANCH_NAME = 'master'
-export const DEFAULT_ORG_NAME = 'dais-technology'
+export const DEFAULT_ORG_NAME =
+  process.env.GITHUB_ORG ||
+  process.env.GITHUB_ORGANIZATION ||
+  process.env.GITHUB_ORGANIZATION_NAME ||
+  process.env.GITHUB_USERNAME
 
 export const featureMethods = [
   'lazyOcto',
@@ -15,20 +19,18 @@ export const featureMethods = [
   'fetchCommits',
   'fetchReleases',
   'fetchCommitsByBranch',
-  'fetchEvents'
+  'fetchEvents',
 ]
 
 export function featureWasEnabled(options = {}) {
   options = {
     ...this.options,
-    ...options
+    ...options,
   }
 
   const { runtime } = this
 
-  const {
-    token = runtime.get('argv.githubToken', process.env.GITHUB_TOKEN)
-  } = options
+  const { token = runtime.get('argv.githubToken', process.env.GITHUB_TOKEN) } = options
 
   this.hide('githubToken', token)
 
@@ -44,7 +46,7 @@ export function lazyOcto() {
 /**
   Fetch info for a repository.
 
-  @param {String} options.owner - the owner of the repository. defaults to dais-technology
+  @param {String} options.owner - the owner of the repository. defaults to process.env.GITHUB_ORG
   @param {String} options.repo - the name of the repository
 */
 export async function fetchRepo(options = {}) {
@@ -59,7 +61,7 @@ export async function fetchRepo(options = {}) {
 /**
   Fetch all branch objects for a repository.
 
-  @param {String} options.owner - the owner of the repository. defaults to dais-technology
+  @param {String} options.owner - the owner of the repository. defaults to process.env.GITHUB_ORG
   @param {String} options.repo - the name of the repository
 */
 export async function fetchBranches(options = {}) {
@@ -72,20 +74,20 @@ export async function fetchBranches(options = {}) {
 /**
   Fetch all release objects for a repository.
 
-  @param {String} options.owner - the owner of the repository. defaults to dais-technology
+  @param {String} options.owner - the owner of the repository. defaults to process.env.GITHUB_ORG
   @param {String} options.repo - the name of the repository
 */
 export async function fetchReleases(options = {}) {
   const repo = await this.fetchRepo(options)
   const releases = await repo.releases.fetchAll()
 
-  return commits
+  return releases
 }
 
 /**
   Fetch all commits for a repository.
 
-  @param {String} options.owner - the owner of the repository. defaults to dais-technology
+  @param {String} options.owner - the owner of the repository. defaults to process.env.GITHUB_ORG
   @param {String} options.repo - the name of the repository
   @param {String} options.sha - the branch you would like to view commits against
   @param {String} options.branch - the branch you would like to view commits against
@@ -94,7 +96,7 @@ export async function fetchCommits(options = {}) {
   const { owner = DEFAULT_ORG_NAME, repo, branch, sha } = options
   const target = await this.fetchRepo({ owner, repo })
   const commits = await target.commits.fetchAll({
-    sha: branch || sha || DEFAULT_BRANCH_NAME
+    sha: branch || sha || DEFAULT_BRANCH_NAME,
   })
 
   return commits
@@ -108,10 +110,7 @@ export async function fetchCommitsByBranch(options = {}) {
   const branchNames = branches.map(b => b.name)
   const entries = await Promise.all(
     branchNames.map(branch =>
-      this.fetchCommits({ repo, owner, branch }).then(commits => [
-        branch,
-        commits
-      ])
+      this.fetchCommits({ repo, owner, branch }).then(commits => [branch, commits])
     )
   )
 
@@ -121,35 +120,33 @@ export async function fetchCommitsByBranch(options = {}) {
 /**
   Fetch all repositories for a given user or organization.
 
-  @param {String} options.owner - the owner of the repository. defaults to dais-technology
+  @param {String} options.owner - the owner of the repository. defaults to process.env.GITHUB_ORG
   @param {String|RegExp} options.filter - a pattern to match against the repository name
 */
 export async function fetchRepos(options = {}) {
   const { owner = DEFAULT_ORG_NAME } = options
   const repos = await this.octo.orgs(owner).repos.fetchAll()
 
-  return options.filter
-    ? repos.filter(repo => repo.name.match(options.filter))
-    : repos
+  return options.filter ? repos.filter(repo => repo.name.match(options.filter)) : repos
 }
 
 /**
   Fetch all pullRequest objects for a repository.
 
-  @param {String} options.owner - the owner of the repository. defaults to dais-technology
+  @param {String} options.owner - the owner of the repository. defaults to process.env.GITHUB_ORG
   @param {String} options.repo - the name of the repository
 */
 export async function fetchPullRequests(options = {}) {
   const { owner = DEFAULT_ORG_NAME, repo } = options
   const remote = await this.fetchRepo({ owner, repo })
 
-  return repo.pulls()
+  return re, pte.pulls()
 }
 
 /**
   Fetch all issue objects for a repository.
 
-  @param {String} options.owner - the owner of the repository. defaults to dais-technology
+  @param {String} options.owner - the owner of the repository. defaults to process.env.GITHUB_ORG
   @param {String} options.repo - the name of the repository
 */
 export async function fetchIssues(options = {}) {
@@ -162,7 +159,7 @@ export async function fetchIssues(options = {}) {
 /**
   Fetch all event objects for a repository.
 
-  @param {String} options.owner - the owner of the repository. defaults to dais-technology
+  @param {String} options.owner - the owner of the repository. defaults to process.env.GITHUB_ORG
   @param {String} options.repo - the name of the repository
   @param {String} options.type - the type of event to see.
 */
@@ -197,7 +194,7 @@ function mapEventType(input) {
     'pull-requests': 'PullRequestEvent',
     pull_requests: 'PullRequestEvent',
     issue: 'IssueEvent',
-    issues: 'IssueEvent'
+    issues: 'IssueEvent',
   }
 
   // if there's an alias, use it, otherwise send what was requested

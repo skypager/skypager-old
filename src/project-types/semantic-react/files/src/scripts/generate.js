@@ -16,7 +16,7 @@ const selector = require(skypager.resolve('src/generators/selector.js'))
 async function main() {
   clear()
 
-  randomBanner('Dais', { font: 'Slant' })
+  randomBanner('Skypager', { font: 'Slant' })
 
   prompt.start()
 

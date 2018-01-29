@@ -5,8 +5,11 @@ export function attach(runtime, options = {}) {
     throw new Error(`Must first enable the skypager deployments helper`)
   }
 
-  runtime.features.add(require.context('./features', true, /\.js$/))
-  runtime.feature('aws').enable()
+  if (!runtime.aws && runtime.features.available.indexOf('aws') !== -1) {
+    runtime.feature('aws').enable()
+  } else if (!runtime.aws && runtime.features.available.indexOf('aws') === -1) {
+    runtime.use(require('skypager-features-aws'))
+  }
 
   runtime.deployments.register('aws', () => require('./deployment'))
 }

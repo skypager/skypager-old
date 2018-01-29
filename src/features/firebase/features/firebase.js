@@ -31,12 +31,12 @@ export const featureMethods = [
   'getServerTimestamp',
   'onAuthStateChanged',
   'getLibrary',
-  'lazyClientLibrary'
+  'lazyClientLibrary',
 ]
 
 export const featureMixinOptions = {
   partial: [],
-  insertOptions: false
+  insertOptions: false,
 }
 
 export function featureWasEnabled(options = {}) {
@@ -45,9 +45,7 @@ export function featureWasEnabled(options = {}) {
 }
 
 export function getLibrary() {
-  return this.firebaseApp
-    ? this.firebaseApp
-    : this.runtime.get('firebase', global.firebase)
+  return this.firebaseApp ? this.firebaseApp : this.runtime.get('firebase', global.firebase)
 }
 
 export function onAuthStateChanged(fn) {
@@ -87,9 +85,7 @@ export function ref(path, options = {}, fn) {
 
   const refPath = isFunction(path) ? path.call(this, options) : path
 
-  let ref = this.database.ref(
-    options.raw ? refPath : this.createPath(refPath, options)
-  )
+  let ref = this.database.ref(options.raw ? refPath : this.createPath(refPath, options))
 
   if (isFunction(fn)) {
     ref = fn.call(this, ref)
@@ -102,15 +98,12 @@ export function createPath(path, options = {}) {
   const { runtime } = this
 
   const {
-    version = runtime.get(
-      'argv.dbVersion',
-      process.env.FUNCTIONS_DB_VERSION || 'v3'
-    ),
+    version = runtime.get('argv.dbVersion', process.env.FUNCTIONS_DB_VERSION || 'v3'),
     dbEnv = runtime.get(
       'argv.dbEnv',
       process.env.FUNCTIONS_DB_ENV ||
         (runtime.argv.productionDeployment ? 'production' : 'development')
-    )
+    ),
   } = options
 
   return `${version}/${dbEnv}/${path}`.replace(/\/\//g, '/')
@@ -147,14 +140,7 @@ export function lazyClientLibrary() {
     return window.firebase
   }
 
-  var config = {
-    apiKey: 'AIzaSyDkRHY5Bwm5oF20kfqa80VWx5tpTNVOq2k',
-    authDomain: 'dais-marketplace-prototype.firebaseapp.com',
-    databaseURL: 'https://dais-marketplace-prototype.firebaseio.com',
-    projectId: 'dais-marketplace-prototype',
-    storageBucket: 'dais-marketplace-prototype',
-    messagingSenderId: '914695368914'
-  }
+  var config = {}
 
   const firebase = require('firebase')
 

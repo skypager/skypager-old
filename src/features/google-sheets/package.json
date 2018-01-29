@@ -3,5 +3,7 @@
   "version": "39.5.2",
   "description": "use google sheets in your skypager project",
   "keywords": ["skypager", "google sheets", "google spreadsheets"],
-  "dependencies": {}
+  "dependencies": {
+    "google-spreadsheet": "^2.0.4"
+  }
 }
