@@ -4,24 +4,36 @@ export function attach(runtime, options = {}) {
   runtime.selectors.add(require.context('./selectors', true, /\.js$/))
   runtime.features.add(require.context('./features', false, /\.js$/))
 
-  const {
-    sourceRoot = runtime.existsSync(runtime.resolve('src')) ? 'src' : runtime.cwd,
-  } = runtime.lodash.defaults(
+  options = runtime.lodash.defaults(
     {},
+    options,
     runtime.argv,
-    runtime.currentPackage,
     runtime.currentPackage.skypager,
+    runtime.currentPackage,
     runtime.options,
     {
-      sourceRoot: process.env.SKYPAGER_SOURCE_ROOT || process.env.SOURCE_ROOT || 'src',
+      sourceRoot: process.env.SKYPAGER_SOURCE_ROOT || process.env.SOURCE_ROOT,
     }
   )
 
-  runtime.feature('file-manager').enable({
-    baseFolder: runtime.resolve(options.baseFolder || options.base || sourceRoot || runtime.cwd),
-    base: runtime.resolve(options.base || options.baseFolder || sourceRoot || runtime.cwd),
+  if (!options.sourceRoot || !options.sourceRoot.length) {
+    options.sourceRoot = runtime.existsSync(runtime.resolve('src')) ? 'src' : '.'
+  }
+
+  const { sourceRoot } = options
+
+  const baseFolder = runtime.resolve(
+    options.baseFolder || options.base || sourceRoot || runtime.cwd
+  )
+
+  const fileManagerOptions = {
     ...options,
-  })
+    sourceRoot,
+    baseFolder,
+    base: baseFolder,
+  }
+
+  runtime.feature('file-manager', fileManagerOptions).enable(fileManagerOptions)
 
   if (runtime.commands) {
     runtime.commands.register('fileManager', () => require('./commands/fileManager'))

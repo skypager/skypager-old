@@ -12,6 +12,7 @@ export const featureMethods = [
   'readIgnoreFiles',
   'projectWalker',
   'lazyIgnorePatterns',
+  'createIgnorePatternMatchers',
   'matchPaths',
   'selectMatches',
   'requireContext',
@@ -62,6 +63,10 @@ export function create(options = {}) {
   return this.projectWalker({ bare: true, ...options })
 }
 
+export function createIgnorePatternMatchers(options = {}) {
+  return this.readIgnoreFiles(options).map(p => micromatch.makeRe(p))
+}
+
 export function projectWalker(options = {}) {
   const { runtime } = this
   const { addDirectory, addFile } = this.runtime
@@ -70,11 +75,11 @@ export function projectWalker(options = {}) {
     options = { baseFolder: options }
   }
 
-  let { baseFolder = runtime.get('argv', runtime.cwd) } = { ...this.options, ...options }
+  let { baseFolder = runtime.get('argv.baseFolder', runtime.cwd) } = { ...this.options, ...options }
 
   baseFolder = runtime.resolve(baseFolder)
 
-  const { ignorePatterns = this.readIgnoreFiles(options).map(p => micromatch.makeRe(p)) } = options
+  const { ignorePatterns = this.ignorePatterns } = options
 
   let skywalker = createSkywalker(baseFolder)
 
@@ -83,23 +88,34 @@ export function projectWalker(options = {}) {
   }
 
   skywalker = skywalker
-    .ignoreDotFiles(true)
-    .directoryFilter(/node_modules|log|dist|build|tmp/, (next, done) => {
-      done(null, false)
-      return false
-    })
+    .ignoreDotFiles(options.ignoreDotFiles !== false)
+    .directoryFilter(
+      options.directoryFilter || /node_modules|tmp|\.git|dist|build|public/,
+      (next, done) => {
+        done(null, false)
+        return false
+      }
+    )
     .fileFilter(/.log$/, (next, done) => {
       done(null, false)
       return false
     })
 
-  ignorePatterns.filter(v => typeof v === 'string' && v.length).forEach(pattern => {
-    skywalker = skywalker
-      .directoryFilter(pattern, (n, d) => d(null, false))
-      .fileFilter(pattern, (n, d) => d(null, false))
-  })
+  if (options.includeMinified !== true) {
+    skywalker = skywalker.fileFilter(/\.min\.js$/i, (next, done) => {
+      done(null, false)
+      return false
+    })
+  }
 
-  const visit = node => {
+  options.ignorePatterns !== false &&
+    ignorePatterns.filter(v => typeof v === 'string' && v.length).forEach(pattern => {
+      skywalker = skywalker
+        .directoryFilter(pattern, (n, d) => d(null, false))
+        .fileFilter(pattern, (n, d) => d(null, false))
+    })
+
+  const defaultVisit = node => {
     const { _: info } = node
 
     if (info.isDirectory) {
@@ -111,14 +127,27 @@ export function projectWalker(options = {}) {
     }
   }
 
+  let visit
+  if (typeof options.visit === 'function') {
+    visit = options.visit
+  } else if (typeof options.visit === 'boolean') {
+    visit = options.visit ? defaultVisit : t => e
+  } else {
+    visit = defaultVisit
+  }
+
   skywalker.run = (err, tree) => {
     return new Promise((resolve, reject) =>
       skywalker.start((err, tree) => {
         err ? reject(err) : resolve(tree)
       })
     ).then(tree => {
-      visit(tree)
-      return { tree, files: this.files.keys(), directories: this.directories.keys() }
+      try {
+        visit(tree)
+        return { tree, files: this.files.keys(), directories: this.directories.keys() }
+      } catch (error) {
+        return { tree, files: this.files.keys(), directories: this.directories.keys() }
+      }
     })
   }
 
@@ -198,7 +227,7 @@ export function watcher(options = {}) {
   }
 }
 
-export function lazyIgnorePatterns() {
+export function lazyIgnorePatterns(options) {
   return this.readIgnoreFiles().map(pattern => micromatch.makeRe(pattern))
 }
 

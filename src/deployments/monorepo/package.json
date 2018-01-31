@@ -1,0 +1,9 @@
+{
+  "name": "skypager-deployments-monorepo",
+  "version": "39.5.2",
+  "description": "deploy your npm monorepo",
+  "keywords": ["skypager", "monorepo", "lerna"],
+  "dependencies": {
+    "skypager-features-lerna-adapter": "^37.5.0"
+  }
+}

@@ -58,4 +58,8 @@ export function featureWasEnabled() {
   lazyAttach('project', () => {
     runtime.use(require('skypager-helpers-project'))
   })
+
+  lazyAttach('deployment', () => {
+    runtime.use(require('skypager-helpers-deployment'))
+  })
 }

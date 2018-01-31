@@ -1,0 +1,9 @@
+{
+  "name": "skypager-deployments-aws",
+  "version": "39.5.2",
+  "description": "deploy your skypager project to AWS",
+  "keywords": ["skypager", "AWS", "S3", "CloudFront", "deployments"],
+  "dependencies": {
+    "skypager-features-aws": "^39.5.2"
+  }
+}
