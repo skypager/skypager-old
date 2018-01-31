@@ -1,18 +1,10 @@
-const wrapped = {}
-
 export const shortcut = 's3'
 
-export const featureMethods = [
-  'listObjects',
-  'listBuckets',
-  'getObject',
-  'showObject',
-  'putObject'
-]
+export const featureMethods = ['listObjects', 'listBuckets', 'getObject', 'showObject', 'putObject']
 
 export const featureMixinOptions = {
   partial: [],
-  injectOptions: false
+  injectOptions: false,
 }
 
 export function featureWasEnabled(options = {}) {
@@ -27,17 +19,15 @@ export function featureWasEnabled(options = {}) {
 }
 
 export async function showObject(key, options = {}) {
-  const { runtime } = this
   const { get } = this.lodash
   const { bucketName } = options
 
-  wrapped.getObject =
-    wrapped.getObject || runtime.aws.wrapCaller('getObject', 's3')
-
-  const response = await wrapped.getObject({
-    Key: key,
-    Bucket: bucketName
-  })
+  const response = await this.s3
+    .getObject({
+      Key: key,
+      Bucket: bucketName,
+    })
+    .promise()
 
   return response
   // return get(response, 'Contents', [])
@@ -46,9 +36,6 @@ export async function showObject(key, options = {}) {
 export async function listObjects(bucketName, options = {}) {
   const { runtime } = this
   const { omit, get } = this.lodash
-
-  wrapped.listObjects =
-    wrapped.listObjects || runtime.aws.wrapCaller('listObjects', 's3')
 
   if (options.limit) {
     options.MaxKeys = parseInt(options.limit, 10)
@@ -60,10 +47,12 @@ export async function listObjects(bucketName, options = {}) {
     options.Prefix = options.prefix
   }
 
-  const response = await wrapped.listObjects({
-    ...omit(options, 'raw', 'prefix', 'limit', 'debug'),
-    Bucket: bucketName
-  })
+  const response = await this.s3
+    .listObjects({
+      ...omit(options, 'raw', 'prefix', 'limit', 'debug'),
+      Bucket: bucketName,
+    })
+    .promise()
 
   return options.raw ? response : get(response, 'Contents', [])
 }
@@ -77,26 +66,21 @@ export async function putObject(options = {}) {
   const { path, bucketName = runtime.argv.bucket, key } = options
   const buffer = await (options.contents || runtime.fsx.readFileAsync(path))
 
-  const putObject =
-    wrapped.putObject || runtime.aws.wrapCaller('putObject', 's3')
-
-  const response = await putObject({
-    Body: buffer,
-    Key: key,
-    Bucket: bucketName
-  })
+  const response = await this.s3
+    .putObject({
+      Body: buffer,
+      Key: key,
+      Bucket: bucketName,
+    })
+    .promise()
 
   return response
 }
 
 export async function listBuckets(options = {}) {
-  const { runtime } = this
   const { get, omit } = this.lodash
 
-  wrapped.listBuckets =
-    wrapped.listBuckets || runtime.aws.wrapCaller('listBuckets', 's3')
-
-  const response = await wrapped.listBuckets(omit(options, 'raw'))
+  const response = await this.s3.listBuckets(omit(options, 'raw')).promise()
 
   return options.raw ? response : get(response, 'Buckets', [])
 }

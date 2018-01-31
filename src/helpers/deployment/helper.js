@@ -50,6 +50,7 @@ export class Deployment extends Helper {
       ...options,
     })
 
+    host.features.register('helpers/deployment', () => require('./feature'))
     host.feature('helpers/deployment').enable()
 
     return result

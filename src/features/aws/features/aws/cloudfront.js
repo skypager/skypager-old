@@ -16,13 +16,9 @@ export function featureWasEnabled(options = {}) {
 }
 
 export async function listDistributions(options = {}) {
-  const { runtime } = this
   const { get } = this.lodash
 
-  wrapped.listDistributions =
-    wrapped.listDistributions || runtime.aws.wrapCaller('listDistributions', 'cloudFront')
-
-  const response = await wrapped.listDistributions(options)
+  const response = await this.cf.listDistributions(options).promise()
 
   return get(response, 'DistributionList.Items', [])
 }
