@@ -17,7 +17,7 @@ export function attach(runtime, options = {}) {
   )
 
   if (!options.sourceRoot || !options.sourceRoot.length) {
-    options.sourceRoot = runtime.existsSync(runtime.resolve('src')) ? 'src' : '.'
+    options.sourceRoot = runtime.fsx.existsSync(runtime.resolve('src')) ? 'src' : '.'
   }
 
   const { sourceRoot } = options
