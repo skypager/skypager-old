@@ -1,8 +1,11 @@
 {
   "name": "skypager-features-firebase",
-  "version": "39.5.2",
+  "version": "39.6.0",
   "description": "use firebase services with your skypager project",
-  "keywords": ["skypager", "firebase"],
+  "keywords": [
+    "skypager",
+    "firebase"
+  ],
   "license": "MIT",
   "dependencies": {
     "firebase": "^4.9.0",

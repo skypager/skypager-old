@@ -1,8 +1,11 @@
 {
   "name": "skypager-features-aws",
-  "version": "39.5.2",
+  "version": "39.6.0",
   "description": "use AWS in your skypager project",
-  "keywords": ["skypager", "AWS"],
+  "keywords": [
+    "skypager",
+    "AWS"
+  ],
   "dependencies": {
     "aws-sdk": "^2.188.0"
   }
