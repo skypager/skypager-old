@@ -1,6 +1,6 @@
 {
   "name": "skypager-repl",
-  "version": "39.6.1",
+  "version": "39.6.2",
   "description": "an awesome repl",
   "main": "dist/index.js",
   "scripts": {
