@@ -1,6 +1,10 @@
 [
   "skypager",
   "skypager-cli",
+  "skypager-core",
+  "skypager-repl",
+  "skypager-helpers-command",
+  "skypager-helpers-repl",
   "skypager-helpers-webpack",
   "skypager-runtimes-development",
   "skypager-runtimes-electron",

@@ -1,7 +1,7 @@
 {
   "gitInfo": {
-    "sha": "7dc22c542dff4c037b0287f3eeec935787344e64",
-    "abbreviatedSha": "7dc22c542d",
+    "sha": "3a7d2f31d34c2019829916e5512d53e8892024e5",
+    "abbreviatedSha": "3a7d2f31d3",
     "branch": "develop",
     "tag": null,
     "root": "/Users/jon/Projects/skypager-dev/framework"
@@ -668,7 +668,7 @@
       }
     },
     "skypager-repl": {
-      "version": "37.5.0",
+      "version": "39.6.1",
       "name": "skypager-repl",
       "package": {
         "warnings": 0,
