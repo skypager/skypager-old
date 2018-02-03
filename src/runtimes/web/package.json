@@ -1,14 +1,14 @@
 {
   "name": "skypager-runtimes-web",
-  "version": "39.6.0",
+  "version": "39.6.1",
   "main": "index.js",
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
     "history": "^4.6.1",
-    "skypager-helpers-client": "^39.6.0",
-    "skypager-helpers-page": "^39.6.0",
-    "skypager-runtime": "^39.6.0"
+    "skypager-helpers-client": "^39.6.1",
+    "skypager-helpers-page": "^39.6.1",
+    "skypager-runtime": "^39.6.1"
   },
   "repository": {
     "type": "github",

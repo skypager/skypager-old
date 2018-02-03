@@ -1,10 +1,10 @@
 {
   "name": "skypager-document-types-skypage",
-  "version": "39.6.0",
+  "version": "39.6.1",
   "license": "MIT",
   "author": "Jon Soeder <jon@chicago.com>",
   "dependencies": {
-    "skypage": "^39.6.0"
+    "skypage": "^39.6.1"
   },
   "main": "index.js"
 }
