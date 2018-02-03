@@ -6,7 +6,7 @@
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
-    "skypager-repl": "^37.5.0",
+    "skypager-repl": "^39.6.1",
     "skypager-runtime": "^39.6.1"
   }
 }
