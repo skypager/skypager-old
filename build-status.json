@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "b9526df1ce395fb3e671bc828ed34df16a29321b",
-    "abbreviatedSha": "b9526df1ce",
+    "sha": "7dc22c542dff4c037b0287f3eeec935787344e64",
+    "abbreviatedSha": "7dc22c542d",
     "branch": "develop",
-    "tag": "v39.6.1",
+    "tag": null,
     "root": "/Users/jon/Projects/skypager-dev/framework"
   },
   "packages": {
@@ -423,7 +423,7 @@
       "success": false
     },
     "skypager-features-document-database": {
-      "version": "39.6.0",
+      "version": "39.6.1",
       "name": "skypager-features-document-database",
       "package": {
         "success": true,
@@ -627,7 +627,7 @@
       "success": false
     },
     "skypager-servers-portfolio": {
-      "version": "39.6.0",
+      "version": "39.6.1",
       "name": "skypager-servers-portfolio",
       "package": {
         "success": true,

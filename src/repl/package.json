@@ -1,6 +1,6 @@
 {
   "name": "skypager-repl",
-  "version": "37.5.0",
+  "version": "37.5.1",
   "description": "an awesome repl",
   "main": "dist/index.js",
   "scripts": {
@@ -45,6 +45,7 @@
     "editor": "^1.0.0",
     "figlet": "^1.1.2",
     "minimist": "^1.2.0",
+    "multispinner": "^0.2.1",
     "node-emoji": "^1.4.1",
     "pretty-cli": "0.0.14",
     "prompt": "^1.0.0"

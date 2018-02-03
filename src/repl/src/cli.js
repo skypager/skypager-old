@@ -10,6 +10,7 @@ import isArray from 'lodash/isArray'
 import isObject from 'lodash/isObject'
 import isString from 'lodash/isString'
 import Spinner from 'cli-spinner'
+import MultiSpinner from 'multispinner'
 
 export const defaultTemplate = {
   info: message => message,
@@ -185,6 +186,8 @@ cli.addCustomMethod('randomBanner', (value, options = {}) => {
 
   cli.print(banner, indent, 1, 1)
 })
+
+cli.addCustomMethod('multiSpinner', (spinners, options) => new MultiSpinner(spinners, options))
 
 cli.addCustomMethod('banner', (value, indent = 2, beforePadding = 1, afterPadding = 1) => {
   cli.print(
