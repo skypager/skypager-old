@@ -35,6 +35,25 @@ export class Client extends Helper {
     } else {
       this.lazy('client', () => this.createProviderClient(this.options, this.context))
     }
+
+    this.applyInterface(this.interface, {
+      insertOptions: false,
+      partial: [],
+      scope: this,
+      ...this.tryResult('interfaceOptions', {}),
+    })
+  }
+
+  get interface() {
+    return this.tryResult('interface', () => {
+      const methods = this.tryResult('methods', () => this.tryResult('interfaceMethods')) || []
+      return this.chain
+        .plant(methods)
+        .keyBy(val => val)
+        .mapValues(fnName => this.tryGet(fnName))
+        .pickBy(fn => typeof fn === 'function')
+        .value()
+    })
   }
 
   get baseUrl() {
@@ -43,6 +62,10 @@ export class Client extends Helper {
 
   get baseURL() {
     return this.baseUrl
+  }
+
+  get axios() {
+    return axios
   }
 
   createProviderClient(options = {}) {

@@ -11,19 +11,18 @@ const mapContext = req =>
   )
 
 export class Server extends Helper {
-  static isObservable = true
-
   static strictMode = false
 
+  static isObservable = true
   static isCacheable = true
 
   static observables = {
-    stats: ['map', {}],
+    stats: ['shallowMap', {}],
     listening: false,
   }
 
   get status() {
-    return this.runtime.convertToJS(this.stats)
+    return this.runtime.convertToJS(this.stats.toJSON())
   }
 
   initialize() {
