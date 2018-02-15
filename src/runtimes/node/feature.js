@@ -34,6 +34,8 @@ export function enabledHook(options = {}) {
   runtime.use(require('skypager-helpers-command'), 'INITIALIZING')
   runtime.invoke('profiler.profileEnd', 'helperCommandEnabled')
 
+  // TODO can this safely be moved to src/features/node in the portfolio?
+  // Reasoning is it is c
   runtime.features.add(require.context('./features', false, /\.js$/))
 
   runtime.invoke('profiler.profileStart', 'osAdaptersEnabled')
