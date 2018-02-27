@@ -11,6 +11,10 @@ const mapContext = req =>
   )
 
 export class Client extends Helper {
+  static isCacheable = true
+  static allowAnonymousProviders = true
+  static strictMode = false
+
   static configFeatures() {
     return mapContext(require.context('./config/features', false, /\.js$/))
   }
@@ -29,19 +33,27 @@ export class Client extends Helper {
   }
 
   initialize() {
-    if (this.tryGet('initialize')) {
-      const initializer = this.tryGet('initialize')
-      initializer.call(this, this.options, this.context)
-    } else {
-      this.lazy('client', () => this.createProviderClient(this.options, this.context))
+    try {
+      if (this.tryGet('initialize')) {
+        const initializer = this.tryGet('initialize')
+        initializer.call(this, this.options, this.context)
+      } else {
+        this.lazy('client', () => this.createProviderClient(this.options, this.context))
+      }
+    } catch (error) {
+      this.initializationError = error
     }
 
-    this.applyInterface(this.interface, {
-      insertOptions: false,
-      partial: [],
-      scope: this,
-      ...this.tryResult('interfaceOptions', {}),
-    })
+    try {
+      this.applyInterface(this.interface, {
+        insertOptions: false,
+        partial: [],
+        scope: this,
+        ...this.tryResult('interfaceOptions', {}),
+      })
+    } catch (error) {
+      this.interfaceError = error
+    }
   }
 
   get interface() {

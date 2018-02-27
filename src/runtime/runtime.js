@@ -160,6 +160,10 @@ export class Runtime {
     return new Runtime(options, context, fn)
   }
 
+  static attachEmitter(...args) {
+    return attachEmitter(...args)
+  }
+
   spawn(options = {}, context = {}, middlewareFn) {
     if (isFunction(options)) {
       middlewareFn = options
@@ -1652,7 +1656,7 @@ export async function startSequence(runtime, startMethod) {
   return this
 }
 
-export function makeStateful(obj) {
+export function makeStateful(obj = {}) {
   obj.stateVersion = 0
 
   extendObservable(obj, {
@@ -1663,12 +1667,17 @@ export function makeStateful(obj) {
   autorun((...args) => {
     const stateVersion = (obj.stateVersion = obj.stateVersion + 1)
     const { currentState } = obj
-    obj.emit('change', obj, currentState, stateVersion)
-    obj.fireHook('stateDidChange', currentState, stateVersion)
+    obj.emit && obj.emit('change', obj, currentState, stateVersion)
+    obj.fireHook && obj.fireHook('stateDidChange', currentState, stateVersion)
   })
 
   obj.state.observe((update = {}) => {
-    obj.fireHook(`${update.name}DidChangeState`, update)
+    obj.fireHook && obj.fireHook(`${update.name}DidChangeState`, update)
+
+    if (obj.emit) {
+      obj.emit('stateDidChange', update)
+      obj.emit(`${update.name}DidChangeState`, update)
+    }
   })
 
   //obj.getter('currentState', () => obj.state.toJSON())

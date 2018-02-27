@@ -47,7 +47,7 @@ export function mixinPropertyUtils(target, includeLodashMethods = true, includeC
   return enhanceObject(target, { includeLodashMethods, includeChain }, global.lodash)
 }
 
-export function enhanceObject(target, options, lodash = {}) {
+export function enhanceObject(target, options, lodash = global.lodash) {
   const propUtils = propertyUtils(target)
 
   mapValues(propUtils, (fn, name) => {
