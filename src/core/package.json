@@ -1,6 +1,6 @@
 {
   "name": "skypager-core",
-  "version": "39.7.0",
+  "version": "39.7.1",
   "description": "a javscript launch platform",
   "main": "index.js",
   "repository": {
@@ -10,17 +10,17 @@
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
-    "skypager-helpers-client": "^39.7.0",
-    "skypager-helpers-command": "^39.7.0",
-    "skypager-helpers-document": "^39.7.0",
-    "skypager-helpers-document-type": "^39.7.0",
-    "skypager-helpers-page": "^39.7.0",
+    "skypager-helpers-client": "^39.7.1",
+    "skypager-helpers-command": "^39.7.1",
+    "skypager-helpers-document": "^39.7.1",
+    "skypager-helpers-document-type": "^39.7.1",
+    "skypager-helpers-page": "^39.7.1",
     "skypager-helpers-project": "^39.6.1",
     "skypager-helpers-project-type": "^39.6.1",
-    "skypager-helpers-repl": "^39.7.0",
-    "skypager-helpers-server": "^39.7.0",
-    "skypager-helpers-service": "^39.7.0",
-    "skypager-runtime": "^39.7.0"
+    "skypager-helpers-repl": "^39.7.1",
+    "skypager-helpers-server": "^39.7.1",
+    "skypager-helpers-service": "^39.7.1",
+    "skypager-runtime": "^39.7.1"
   },
   "homepage": "https://skypager.io",
   "compilers": {
