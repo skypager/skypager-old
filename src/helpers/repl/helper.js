@@ -62,6 +62,8 @@ export class Repl extends Helper {
           replServer.on('exit', this.replDidExit.bind(this))
 
           this.attemptMethod('replWasCreated', replServer)
+
+          return replServer
         } catch (error) {}
       },
       true
@@ -144,7 +146,11 @@ export class Repl extends Helper {
   }
 
   updateContext(properties = {}) {
-    Object.keys(properties).forEach(k => this.updateContextVariable(k, properties[k]))
+    Object.keys(properties).forEach(k => {
+      try {
+        this.updateContextVariable(k, properties[k])
+      } catch (error) {}
+    })
     return this
   }
 

@@ -31,6 +31,28 @@ export class ProjectType extends Helper {
     })
   }
 
+  get projectInterface() {
+    return this.tryResult('projectInterface', {})
+  }
+
+  get projectInterfaceOptions() {
+    return (
+      this.tryResult('projectInterfaceOptions', () => this.tryResult('interfaceOptions')) || {
+        insertOptions: false,
+        partial: [],
+        hidden: false,
+      }
+    )
+  }
+
+  applyInterfaceToProject(
+    project,
+    projectInterface = this.projectInterface,
+    interfaceOptions = this.projectInterfaceOptions
+  ) {
+    const { applyInterface } = this.runtime.propUtils
+    return applyInterface(project, projectInterface, interfaceOptions)
+  }
   /**
     Apply the project type template, starting with the files tree.
   */
