@@ -1,6 +1,6 @@
 {
   "name": "skypager-helpers-repl",
-  "version": "39.7.1",
+  "version": "39.8.0",
   "description": "an awesome repl",
   "main": "index.js",
   "files": [
