@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "19180cb40ca042aea98e3d78c78bd7165372a7ea",
-    "abbreviatedSha": "19180cb40c",
+    "sha": "14a7d392018ffcc147a1869ee3f1acb394e3270a",
+    "abbreviatedSha": "14a7d39201",
     "branch": "develop",
-    "tag": "v39.8.0",
+    "tag": null,
     "root": "/Users/jon/Projects/skypager-dev/framework"
   },
   "packages": {
