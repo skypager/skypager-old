@@ -105,6 +105,8 @@ export const featureMethods = [
   'walkUpSync',
 
   'loadDocument',
+
+  'updateFileContent',
 ]
 
 export const hostMethods = ['requireContext']
@@ -422,6 +424,21 @@ export function getPackages() {
 
 export function getPackageManager() {
   return this.runtime.feature('package-manager')
+}
+
+export function updateFileContent(fileId, content) {
+  if (fileId && content) {
+    const file = this.file(fileId)
+
+    if (file) {
+      this.files.set(fileId, {
+        ...file,
+        content,
+      })
+    }
+  }
+
+  return this
 }
 
 export async function readContent(options = {}) {

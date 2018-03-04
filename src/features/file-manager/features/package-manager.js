@@ -1,63 +1,63 @@
-import Promise from "bluebird"
+import Promise from 'bluebird'
 
 export const featureMethods = [
-  "normalizePackage",
-  "getVersionMap",
-  "getLatestMap",
-  "getTarballUrls",
-  "loadManifests",
-  "getFinder",
-  "getFileManager",
-  "find",
-  "findBy",
-  "findByName",
-  "startAsync",
-  "getOutdated",
-  "createSnapshot",
-  "getDependenciesMap",
-  "findDependentsOf",
-  "selectPackageTree",
-  "getPackageIds",
-  "getPackageNames",
-  "getPackageData",
-  "getEntries",
-  "getByName",
-  "loadProject",
-  "registerProjects",
-  "pickAllBy",
-  "pickAll",
-  "selectModifiedPackages",
-  "getLifeCycleHooks",
-  "getStatuses",
-  "whenActivated",
-  "activationEventWasFired",
-  "findNodeModules",
-  "walkUp",
-  "walkUpSync"
+  'normalizePackage',
+  'getVersionMap',
+  'getLatestMap',
+  'getTarballUrls',
+  'loadManifests',
+  'getFinder',
+  'getFileManager',
+  'find',
+  'findBy',
+  'findByName',
+  'startAsync',
+  'getOutdated',
+  'createSnapshot',
+  'getDependenciesMap',
+  'findDependentsOf',
+  'selectPackageTree',
+  'getPackageIds',
+  'getPackageNames',
+  'getPackageData',
+  'getEntries',
+  'getByName',
+  'loadProject',
+  'registerProjects',
+  'pickAllBy',
+  'pickAll',
+  'selectModifiedPackages',
+  'getLifeCycleHooks',
+  'getStatuses',
+  'whenActivated',
+  'activationEventWasFired',
+  'findNodeModules',
+  'walkUp',
+  'walkUpSync',
 ]
 
-export const createGetter = "packageManager"
+export const createGetter = 'packageManager'
 
-export const CREATED = "CREATED"
-export const STARTING = "STARTING"
-export const FAILED = "FAILED"
-export const READY = "READY"
+export const CREATED = 'CREATED'
+export const STARTING = 'STARTING'
+export const FAILED = 'FAILED'
+export const READY = 'READY'
 
 export const STATUSES = {
   CREATED,
   READY,
   FAILED,
-  STARTING
+  STARTING,
 }
 
-export const DID_FAIL = "didFail"
-export const WAS_ACTIVATED = "wasActivated"
-export const WILL_START = "willStart"
+export const DID_FAIL = 'didFail'
+export const WAS_ACTIVATED = 'wasActivated'
+export const WILL_START = 'willStart'
 
 export const LIFECYCLE_HOOKS = {
   DID_FAIL,
   WAS_ACTIVATED,
-  WILL_START
+  WILL_START,
 }
 
 export const getStatuses = () => STATUSES
@@ -68,14 +68,14 @@ export function getFinder() {
 }
 
 export async function findNodeModules(options = {}) {
-  const testPaths = await this.walkUp({ filename: "node_modules" })
+  const testPaths = await this.walkUp({ filename: 'node_modules' })
 
   const packages = await this.finder.find(
     {
-      testPaths: testPaths.concat(testPaths.map(p => p.replace("node_modules", ""))),
-      moduleFolderName: options.folderName || "node_modules",
+      testPaths: testPaths.concat(testPaths.map(p => p.replace('node_modules', ''))),
+      moduleFolderName: options.folderName || 'node_modules',
       ...options,
-      parse: true
+      parse: true,
     },
     this.context
   )
@@ -144,7 +144,7 @@ export function getEntries() {
 
 export function getByName() {
   return this.chain
-    .invoke("manifests.values", [])
+    .invoke('manifests.values', [])
     .keyBy(v => v.name)
     .mapValues(v => this.runtime.convertToJS(v))
     .value()
@@ -159,7 +159,7 @@ export function featureWasEnabled() {
 }
 
 export async function selectPackageTree(options = {}) {
-  if (typeof options === "string") {
+  if (typeof options === 'string') {
     options = { name: options }
   }
 
@@ -169,24 +169,24 @@ export async function selectPackageTree(options = {}) {
 
   if (pkg && pkg._packageId) {
     return await this.runtime
-      .select("files/tree", {
-        rootNode: pkg._packageId.replace("/package.json", ""),
+      .select('files/tree', {
+        rootNode: pkg._packageId.replace('/package.json', ''),
         readContents: true,
         hashFiles: true,
-        ...options
+        ...options,
       })
       .then(tree => ({ name: pkg.name, manifest: pkg, tree }))
   } else {
     return await this.runtime
-      .select("files/tree", {
+      .select('files/tree', {
         readContents: true,
         hashFiles: true,
-        ...options
+        ...options,
       })
       .then(tree => ({
-        name: this.runtime.get("currentPackage.name", this.runtime.cwd.split("/").pop()),
+        name: this.runtime.get('currentPackage.name', this.runtime.cwd.split('/').pop()),
         manifest: this.runtime.currentPackage,
-        tree
+        tree,
       }))
   }
 }
@@ -214,7 +214,12 @@ export async function startAsync(options = {}) {
     this.status = STARTING
 
     try {
-      await this.fileManager.startAsync({ ...options, wait: true })
+      if (this.fileManager.status === 'CREATED') {
+        await this.fileManager.startAsync()
+      } else {
+        await this.fileManager.whenActivated()
+      }
+
       await this.loadManifests()
       if (options.remote) {
         await this.checkRemoteStatus()
@@ -224,6 +229,7 @@ export async function startAsync(options = {}) {
       return this
     } catch (error) {
       this.fireHook(DID_FAIL, error)
+      this.lastError = error
       this.status = FAILED
       return this
     }
@@ -245,10 +251,10 @@ export function getLatestMap() {
   const get = p.runtime.lodash.get
 
   return p.chain
-    .result("remotes.values", [])
+    .result('remotes.values', [])
     .keyBy(v => v.name)
     .mapValues((v, k) => {
-      return get(v, ["dist-tags", "latest"], v.version)
+      return get(v, ['dist-tags', 'latest'], v.version)
     })
     .pickBy(v => v && v.length)
     .value()
@@ -269,7 +275,7 @@ export async function loadProject(packageName, options = {}) {
 export function getTarballUrls() {
   const p = this
   return p.chain
-    .result("remotes.values", [])
+    .result('remotes.values', [])
     .keyBy(v => v.name)
     .mapValues(v => v.dist && v.dist.tarball)
     .compact()
@@ -278,7 +284,11 @@ export function getTarballUrls() {
 
 export function getVersionMap() {
   const p = this
-  return p.chain.result("manifests.values", []).keyBy(v => v.name).mapValues(v => v.version).value()
+  return p.chain
+    .result('manifests.values', [])
+    .keyBy(v => v.name)
+    .mapValues(v => v.version)
+    .value()
 }
 
 export function observables() {
@@ -287,58 +297,58 @@ export function observables() {
   return {
     status: CREATED,
 
-    manifests: ["shallowMap", {}],
+    manifests: ['shallowMap', {}],
 
-    nodeModules: ["shallowMap", {}],
+    nodeModules: ['shallowMap', {}],
 
-    remotes: ["shallowMap", []],
+    remotes: ['shallowMap', []],
 
     updateNodeModule: [
-      "action",
+      'action',
       function(pkg) {
         p.nodeModules.set(pkg.name, {
           ...(p.nodeModules.get(pkg.name) || {}),
-          [pkg.version]: pkg
+          [pkg.version]: pkg,
         })
 
         return this
-      }
+      },
     ],
 
     updateRemote: [
-      "action",
+      'action',
       function(name, data) {
         p.remotes.set(name, this.normalizePackage(data))
-      }
+      },
     ],
 
     manifestData: [
-      "computed",
+      'computed',
       function() {
         return this.chain
-          .result("manifests.toJSON", {})
+          .result('manifests.toJSON', {})
           .mapValues(v => this.runtime.convertToJS(v))
           .value()
-      }
+      },
     ],
 
     remoteData: [
-      "computed",
+      'computed',
       function() {
         return this.chain
-          .result("remotes.toJSON", {})
+          .result('remotes.toJSON', {})
           .mapValues(v => this.runtime.convertToJS(v))
           .value()
-      }
+      },
     ],
 
     checkRemoteStatus: [
-      "action",
+      'action',
       function() {
         const p = this
 
         return p.runtime
-          .select("package/repository-status")
+          .select('package/repository-status')
           .then(data => {
             Object.keys(data).forEach(pkg => p.updateRemote(pkg, data[pkg]))
             return data
@@ -346,8 +356,8 @@ export function observables() {
           .catch(error => {
             this.error = error
           })
-      }
-    ]
+      },
+    ],
   }
 }
 
@@ -386,7 +396,7 @@ export function getFileManager() {
 }
 
 export function pickAllBy(fn) {
-  fn = typeof fn === "function" ? fn : v => v
+  fn = typeof fn === 'function' ? fn : v => v
   return this.packageData.map(pkg => this.lodash.pickBy(pkg, fn))
 }
 
@@ -395,7 +405,7 @@ export function pickAll(...attributes) {
 }
 
 export async function selectModifiedPackages(options = {}) {
-  const packageIds = await this.runtime.select("package/changed", options)
+  const packageIds = await this.runtime.select('package/changed', options)
   return packageIds.map(id => this.manifests.get(id)).filter(f => f)
 }
 
@@ -412,7 +422,7 @@ export async function createSnapshot(options = {}) {
     gitInfo: this.runtime.gitInfo,
     cwd: this.runtime.cwd,
     versionMap: this.versionMap,
-    latestMap: this.latestMap
+    latestMap: this.latestMap,
   }
 }
 
@@ -424,12 +434,12 @@ export function getDependenciesMap() {
   const { at, defaults } = this.lodash
 
   return this.chain
-    .invoke("manifests.values")
-    .keyBy("name")
+    .invoke('manifests.values')
+    .keyBy('name')
     .mapValues(v =>
       defaults(
         {},
-        ...at(v, "dependencies", "devDependencies", "optionalDependencies", "peerDependencies")
+        ...at(v, 'dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies')
       )
     )
     .value()
@@ -444,7 +454,7 @@ export async function loadManifests(options = {}) {
 
   const results = await this.fileManager.readContent({
     ...options,
-    include: p => include.indexOf(p) >= 0
+    include: p => include.indexOf(p) >= 0,
   })
 
   this.failed = this.failed || []
@@ -452,8 +462,8 @@ export async function loadManifests(options = {}) {
   try {
     this.manifests.set(this.runtime.relative(this.runtime.manifestPath), {
       ...this.runtime.currentPackage,
-      _packageId: "package.json",
-      _file: this.fileManager.file("package.json")
+      _packageId: 'package.json',
+      _file: this.fileManager.file('package.json'),
     })
   } catch (error) {}
 
@@ -461,7 +471,7 @@ export async function loadManifests(options = {}) {
     const [id, content] = entry
 
     try {
-      const data = JSON.parse(content || "{}")
+      const data = JSON.parse(content || '{}')
       this.manifests.set(
         id,
         this.normalizePackage(
@@ -470,7 +480,7 @@ export async function loadManifests(options = {}) {
             data,
             {
               _packageId: id,
-              _file: this.fileManager.file(id)
+              _file: this.fileManager.file(id),
             },
             this.manifests.get(id)
           )
@@ -487,8 +497,8 @@ export async function loadManifests(options = {}) {
 export function walkUp(options = {}) {
   const testPaths = findModulePaths({
     cwd: this.runtime.cwd,
-    filename: "package.json",
-    ...options
+    filename: 'package.json',
+    ...options,
   })
 
   return options.sync
@@ -499,29 +509,29 @@ export function walkUp(options = {}) {
 export function walkUpSync(options = {}) {
   const testPaths = findModulePaths({
     cwd: this.runtime.cwd,
-    filename: "package.json",
-    ...options
+    filename: 'package.json',
+    ...options,
   })
 
   return this.runtime.fsx.existingSync(...testPaths)
 }
 
 function findModulePaths(options = {}) {
-  if (typeof options === "string") {
+  if (typeof options === 'string') {
     options = { cwd: options }
   }
 
   const cwd = options.cwd
-  const filename = options.filename || options.file || options.filename || "skypager.js"
+  const filename = options.filename || options.file || options.filename || 'skypager.js'
 
-  const parts = cwd.split("/").slice(1)
+  const parts = cwd.split('/').slice(1)
 
   parts[0] = `/${parts[0]}`
 
   const testPaths = []
 
   while (parts.length) {
-    testPaths.push([...parts, filename].join("/"))
+    testPaths.push([...parts, filename].join('/'))
     parts.pop()
   }
 
@@ -533,9 +543,9 @@ export function normalizePackage(manifest = {}) {
 
   return defaults(manifest, {
     keywords: [],
-    description: "",
-    author: "",
+    description: '',
+    author: '',
     contributors: [],
-    scripts: {}
+    scripts: {},
   })
 }
