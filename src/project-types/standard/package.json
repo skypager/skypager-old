@@ -7,7 +7,10 @@
   "repository": "git@github.com:skypager/skypager.git",
   "website": "https://skypager.io",
   "scripts": {
-    "buildPackage": "sky webpack build package"
+    "prebuild": "yarn export:tree",
+    "build": "../../../node_modules/.bin/sky webpack build package",
+    "buildPackage": "yarn build",
+    "export:tree": "../../../node_modules/.bin/sky run export-tree"
   },
   "files": ["index.js", "lib/", "tree.json"]
 }
