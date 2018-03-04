@@ -75,6 +75,14 @@ export class Project extends Helper {
     return this.tryGet('_file.path')
   }
 
+  async spawnRuntime(options = {}, context = {}) {
+    return this.runtime.spawn({ ...options, cwd: this.cwd }, context)
+  }
+
+  get cwd() {
+    return this.dirname
+  }
+
   get dirname() {
     return this.tryGet('_file.dir')
   }
