@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "d5221369c0219b566c79e2c09350b7235a71f3dc",
-    "abbreviatedSha": "d5221369c0",
+    "sha": "19180cb40ca042aea98e3d78c78bd7165372a7ea",
+    "abbreviatedSha": "19180cb40c",
     "branch": "develop",
-    "tag": "v39.7.1",
+    "tag": "v39.8.0",
     "root": "/Users/jon/Projects/skypager-dev/framework"
   },
   "packages": {
@@ -136,7 +136,7 @@
     },
     "skypager-helpers-project-type": {
       "success": false,
-      "version": "39.6.1",
+      "version": "39.8.0",
       "name": "skypager-helpers-project-type",
       "package": {
         "success": true,
@@ -202,7 +202,7 @@
     },
     "skypager-helpers-repl": {
       "success": true,
-      "version": "39.7.1",
+      "version": "39.8.0",
       "name": "skypager-helpers-repl",
       "package": {
         "success": true,
@@ -241,7 +241,7 @@
     },
     "skypager-runtimes-node": {
       "success": false,
-      "version": "39.7.1",
+      "version": "39.8.0",
       "name": "skypager-runtimes-node",
       "package": {
         "success": true,
@@ -299,7 +299,7 @@
     },
     "skypager-runtimes-development": {
       "success": false,
-      "version": "39.7.1",
+      "version": "39.8.0",
       "name": "skypager-runtimes-development",
       "package": {
         "success": true,
@@ -345,7 +345,7 @@
       "success": false
     },
     "skypager-core": {
-      "version": "39.7.1",
+      "version": "39.8.0",
       "name": "skypager-core",
       "package": {
         "success": true,
@@ -433,7 +433,7 @@
       }
     },
     "skypager-runtimes-electron": {
-      "version": "39.7.1",
+      "version": "39.8.0",
       "name": "skypager-runtimes-electron",
       "package": {
         "success": true,
@@ -538,7 +538,7 @@
       "success": false
     },
     "skypager-helpers-project": {
-      "version": "39.6.1",
+      "version": "39.8.0",
       "name": "skypager-helpers-project",
       "package": {
         "success": true,
@@ -718,7 +718,7 @@
       "success": false
     },
     "skypager-cli": {
-      "version": "39.7.1",
+      "version": "39.8.0",
       "name": "skypager-cli",
       "package": {
         "success": true,
@@ -740,8 +740,10 @@
       "version": "39.4.0",
       "name": "skypager-project-types-standard",
       "package": {
-        "warnings": 0,
-        "errors": 1
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
       },
       "success": false
     },
@@ -872,12 +874,6 @@
       }
     },
     "skypager-project-types-semantic-react": {
-      "package": {
-        "warnings": 0,
-        "errors": 1
-      }
-    },
-    "skypager-project-types-standard": {
       "package": {
         "warnings": 0,
         "errors": 1
