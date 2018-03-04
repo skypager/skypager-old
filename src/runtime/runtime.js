@@ -176,11 +176,7 @@ export class Runtime {
       context = {}
     }
 
-    return this.constructor.spawn(
-      { ...this.options, ...options },
-      { ...this.context, ...context },
-      middlewareFn
-    )
+    return this.constructor.spawn(options, context, middlewareFn)
   }
 
   static get runtimes() {
