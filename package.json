@@ -1,6 +1,6 @@
 {
   "name": "skypager",
-  "version": "39.8.0",
+  "version": "39.8.1",
   "description": "a javscript launch platform",
   "main": "index.js",
   "browser": "skypager.min.js",
@@ -69,6 +69,7 @@
     "react-dom": "^15.5.4",
     "react-hot-loader": "next",
     "remark-frontmatter": "^1.2.0",
+    "skypage": "39.6.1",
     "sinon": "^2.2.0",
     "sinon-chai": "^2.10.0"
   },

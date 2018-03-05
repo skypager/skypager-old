@@ -1,7 +1,7 @@
 {
   "gitInfo": {
-    "sha": "14a7d392018ffcc147a1869ee3f1acb394e3270a",
-    "abbreviatedSha": "14a7d39201",
+    "sha": "d29aa5b691a200255924b6ddc0e04a0f97c1724d",
+    "abbreviatedSha": "d29aa5b691",
     "branch": "develop",
     "tag": null,
     "root": "/Users/jon/Projects/skypager-dev/framework"
@@ -678,16 +678,20 @@
       "success": false
     },
     "skypage": {
-      "version": "38.4.0",
+      "version": "39.6.1",
       "name": "skypage",
       "package": {
-        "warnings": 0,
-        "errors": 2
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
       },
       "success": false,
       "bundle": {
-        "warnings": 0,
-        "errors": 2
+        "success": true,
+        "assets": {
+          "skypage": "skypage.min.js"
+        }
       }
     },
     "skypager-docs": {
@@ -877,16 +881,6 @@
       "package": {
         "warnings": 0,
         "errors": 1
-      }
-    },
-    "skypage": {
-      "package": {
-        "warnings": 0,
-        "errors": 2
-      },
-      "bundle": {
-        "warnings": 0,
-        "errors": 2
       }
     }
   }
