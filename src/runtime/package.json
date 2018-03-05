@@ -1,6 +1,6 @@
 {
   "name": "skypager-runtime",
-  "version": "39.7.1",
+  "version": "39.8.1",
   "description": "universal javascript application runtime",
   "main": "index.js",
   "compilers": {
