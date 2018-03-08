@@ -14,7 +14,52 @@ export const interfaceMethods = [
   'getFrontMatter',
   'getUtils',
   'getWrapper',
+  'getTitle',
+  'getSubheader',
+  'getHeadingNodes',
+  'getLeadingParagraphs',
+  'getLeadingParagraphNodes',
+  'getLastNode',
+  'nodeAt',
+  'sourceAt',
+  'nodeToString',
+  'visit',
+  'selectNodes',
 ]
+
+export function getTitle() {
+  return this.wrapper.title
+}
+export function getSubheader() {
+  return this.wrapper.subheader
+}
+export function getHeadingNodes() {
+  return this.wrapper.headingNodes
+}
+export function getLeadingParagraphs() {
+  return this.wrapper.leadingParagraphs
+}
+export function getLeadingParagraphNodes() {
+  return this.wrapper.leadingParagraphNodes
+}
+export function getLastNode() {
+  return this.wrapper.lastNode
+}
+export function nodeAt(...args) {
+  return this.wrapper.nodeAt(...args)
+}
+export function sourceAt(...args) {
+  return this.wrapper.sourceAt(...args)
+}
+export function nodeToString(...args) {
+  return this.wrapper.nodeToString(...args)
+}
+export function selectNodes(...args) {
+  return this.wrapper.selectNodes(...args)
+}
+export function visit(...args) {
+  return this.wrapper.visit(...args)
+}
 
 export function getAST() {
   return toAST.call(this, this.get('attributes.content', ''))

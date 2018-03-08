@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "e051792762f74ffc468f55e6ce424f7ba904118d",
-    "abbreviatedSha": "e051792762",
+    "sha": "78b845d84427f414e5e44142a9a3aee20bab7d46",
+    "abbreviatedSha": "78b845d844",
     "branch": "develop",
-    "tag": "v39.8.1",
+    "tag": null,
     "root": "/Users/jon/Projects/skypager-dev/framework"
   },
   "packages": {
@@ -678,7 +678,7 @@
       "success": false
     },
     "skypage": {
-      "version": "39.6.1",
+      "version": "39.8.1",
       "name": "skypage",
       "package": {
         "success": true,

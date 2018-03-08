@@ -1,6 +1,6 @@
 {
   "name": "skypage",
-  "version": "39.6.1",
+  "version": "39.8.1",
   "description": "reactive markdown documents",
   "main": "index.js",
   "browser": "skypage.js",
@@ -52,9 +52,7 @@
         "react-dom": "global ReactDOM"
       },
       "entryPoints": {
-        "skypage": [
-          "index.web.js"
-        ]
+        "skypage": ["index.web.js"]
       }
     },
     "bundle": {
@@ -67,9 +65,7 @@
         "react-dom": "global ReactDOM"
       },
       "entryPoints": {
-        "skypage": [
-          "index.web.js"
-        ]
+        "skypage": ["index.web.js"]
       }
     }
   }
