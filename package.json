@@ -79,12 +79,12 @@
     "babel-runtime": "^6.26.0",
     "lodash": "^4.17.4",
     "mobx": "3.3.1",
-    "skypager-cli": "^39.8.1",
-    "skypager-core": "^39.8.1",
+    "skypager-cli": "^39.8.2",
+    "skypager-core": "^39.8.2",
     "skypager-document-types-babel": "^38.0.0",
-    "skypager-runtimes-development": "^39.8.1",
-    "skypager-runtimes-node": "^39.8.1",
-    "skypager-runtimes-web": "^39.8.1"
+    "skypager-runtimes-development": "^39.8.2",
+    "skypager-runtimes-node": "^39.8.2",
+    "skypager-runtimes-web": "^39.8.2"
   },
   "entryPoints": {
     "index": "./src/index.js"

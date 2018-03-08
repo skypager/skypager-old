@@ -1,5 +1,4 @@
 import vm from 'isomorphic-vm'
-import { Module } from 'module'
 
 export const hostMethods = [
   'createCodeRunner',
@@ -23,8 +22,17 @@ export function createModule(code, options = {}, sandbox) {
   const id = options.id || filename
   const dirname = options.dirname || this.cwd || '/'
 
-  const newModule = new Module(id)
   const req = options.require || this.get('currentModule.require')
+
+  const newModule = {
+    id,
+    children: [],
+    parent: undefined,
+    require: req,
+    exports: {},
+    loaded: false,
+  }
+
   newModule.require = req
 
   const moduleLoader = () =>
@@ -34,6 +42,8 @@ export function createModule(code, options = {}, sandbox) {
     return moduleLoader
   } else {
     moduleLoader()
+    newModule.loaded = true
+    newModule.parent = this.get('currentModule') || {}
     return newModule
   }
 }
