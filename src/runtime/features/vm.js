@@ -1,4 +1,5 @@
 import vm from 'isomorphic-vm'
+import { Module } from 'module'
 
 export const hostMethods = [
   'createCodeRunner',
@@ -14,6 +15,27 @@ export function getVm() {
 
 export function createModule(code, options = {}, sandbox) {
   sandbox = sandbox || this.sandbox
+  const wrapped = `(function (exports, require, module, __filename, __dirname) {\n\n${code}\n\n});`
+  const script = this.createScript(wrapped)
+  const context = this.createContext(sandbox)
+
+  const filename = options.filename || this.resolve(this.hashObject({ code }) + '.js')
+  const id = options.id || filename
+  const dirname = options.dirname || this.cwd || '/'
+
+  const newModule = new Module(id)
+  const req = options.require || this.get('currentModule.require')
+  newModule.require = req
+
+  const moduleLoader = () =>
+    script.runInContext(context)(newModule.exports, newModule.require, newModule, filename, dirname)
+
+  if (options.lazy) {
+    return moduleLoader
+  } else {
+    moduleLoader()
+    return newModule
+  }
 }
 
 export function createContext(options = {}) {
