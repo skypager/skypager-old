@@ -107,6 +107,8 @@ export const featureMethods = [
   'loadDocument',
 
   'updateFileContent',
+
+  'updateFileHash',
 ]
 
 export const hostMethods = ['requireContext']
@@ -424,6 +426,21 @@ export function getPackages() {
 
 export function getPackageManager() {
   return this.runtime.feature('package-manager')
+}
+
+export function updateFileHash(fileId, hash) {
+  if (fileId && hash) {
+    const file = this.file(fileId)
+
+    if (file) {
+      this.files.set(fileId, {
+        ...file,
+        hash,
+      })
+    }
+  }
+
+  return this
 }
 
 export function updateFileContent(fileId, content) {
