@@ -10,7 +10,7 @@ export const featureMixinOptions = {
 export async function downloadAsync(sourceUrl, destinationPath) {
   const { runtime: skypager } = this
 
-  const dest = skypager.resolve('public', destinationPath)
+  const dest = skypager.resolve(destinationPath)
   await skypager.fsx.ensureDirAsync(skypager.pathUtils.dirname(dest))
 
   const req = new Promise((resolve, reject) => {
