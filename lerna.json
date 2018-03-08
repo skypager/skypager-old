@@ -1,6 +1,6 @@
 {
   "lerna": "2.0.0-beta.38",
-  "version": "39.8.1",
+  "version": "39.8.2",
   "packages": [
     ".",
     "src/*",
@@ -8,7 +8,8 @@
     "src/runtimes/*",
     "src/document-types/*",
     "src/features/*",
-    "src/servers/*"
+    "src/servers/*",
+    "src/skypage"
   ],
   "publish": {
     "ignore": [
