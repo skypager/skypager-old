@@ -19,11 +19,11 @@ export function program(p) {
 }
 
 export function shouldExit() {
-  if (this.argv.watch) {
+  if (this.runtime.argv.watch || this.runtime.argv.watch || this.runtime.argv.enableWatch) {
     return false
   }
 
-  return this.runtime.argv.exit !== false
+  return this.runtime.argv.exit !== false && !process.env.NO_EXIT
 }
 
 export async function validate() {
@@ -37,13 +37,14 @@ export function shouldClear() {
 export async function run() {
   const { runtime } = this
   const { print, colors } = runtime.cli
-  const { argv, fileManager } = runtime
+  const { mainScript, argv, fileManager } = runtime
   const { id = argv.scriptId, npm = false, yarn = false, watch = false } = argv
   const script = id || argv._.slice(1)[0] || 'start'
   const isPackageScript = !!runtime.get(['currentPackage', 'scripts', script])
   const raiseErrors = !argv.failSilently
 
   await fileManager.startAsync()
+  await mainScript.whenReady()
 
   let results
 
@@ -118,16 +119,6 @@ export async function run() {
         }
       })
       .catch(error => ({ error }))
-  }
-
-  if (watch) {
-    print('Watch mode not implemented')
-
-    if (!isPackageScript && matchingFiles.length) {
-    } else if (isPackageScript) {
-    }
-
-    process.exit(0)
   }
 
   if (results && results.error && !argv.failSilently) {
