@@ -449,10 +449,12 @@ export class Runtime {
     const { mapValues } = this.lodash
     const matches = this.runtimeInitializers
 
+    /*
     this.debug(`Applying runtime initializers`, {
       tags: this.helperTags,
       initializers: Object.keys(matches),
     })
+    */
 
     Helper.attachAll(this, this.helperOptions)
 

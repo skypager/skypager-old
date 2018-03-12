@@ -84,7 +84,7 @@ export class Feature extends Helper {
       runtime.isFeatureEnabled(this.name) &&
       runtime.get(`enabledFeatures.${this.name}.cacheKey`) === this.cacheKey
     ) {
-      this.runtime.debug(`Attempting to enable ${this.name} after it has already been enabled.`)
+      // this.runtime.debug(`Attempting to enable ${this.name} after it has already been enabled.`)
       return this
     }
 
@@ -178,10 +178,11 @@ export class Feature extends Helper {
   }
 
   get projectConfigKeys() {
+    const { uniq } = this.lodash
     const { camelCase, snakeCase } = this.runtime.stringUtils
     const cased = camelCase(snakeCase(this.name))
 
-    return [
+    return uniq([
       `runtime.argv.features.${this.name}`,
       `runtime.options.features.${this.name}`,
       `runtime.config.features.${this.name}`,
@@ -196,7 +197,7 @@ export class Feature extends Helper {
       `runtime.projectConfig.${cased}`,
       `runtime.options.${cased}`,
       `runtime.config.${cased}`,
-    ]
+    ])
   }
 }
 
