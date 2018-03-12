@@ -25,44 +25,82 @@ export const interfaceMethods = [
   'nodeToString',
   'visit',
   'selectNodes',
+  'getCodeBlocksLanguageIndex',
+  'getHeadingsByDepthIndex',
+  'createIndex',
+  'findPreviousHeading',
+  'findNodesAfter',
+  'findNodesBefore',
 ]
+
+export function findPreviousHeading(ofNode, options = {}) {
+  return (
+    this.chain
+      .invoke('findNodesBefore', ofNode)
+      .filter({ type: 'heading' })
+      .first()
+      .value() || this.titleHeadingNode
+  )
+}
+
+export function findNodesAfter(node) {
+  const { findAllAfter } = this.wrapper.utils
+  const nodesAfter = findAllAfter(this.ast, node)
+  return nodesAfter
+}
+
+export function findNodesBefore(node) {
+  const { findAllBefore } = this.wrapper.utils
+  const nodesBefore = findAllBefore(this.ast, node)
+  return nodesBefore
+}
 
 export function getTitle() {
   return this.wrapper.title
 }
+
 export function getSubheader() {
   return this.wrapper.subheader
 }
+
 export function getHeadingNodes() {
   return this.wrapper.headingNodes
 }
+
 export function getLeadingParagraphs() {
   return this.wrapper.leadingParagraphs
 }
+
 export function getLeadingParagraphNodes() {
   return this.wrapper.leadingParagraphNodes
 }
+
 export function getLastNode() {
   return this.wrapper.lastNode
 }
+
 export function nodeAt(...args) {
   return this.wrapper.nodeAt(...args)
 }
+
 export function sourceAt(...args) {
   return this.wrapper.sourceAt(...args)
 }
+
 export function nodeToString(...args) {
   return this.wrapper.nodeToString(...args)
 }
+
 export function selectNodes(...args) {
-  return this.wrapper.selectNodes(...args)
+  return this.wrapper.select(...args)
 }
+
 export function visit(...args) {
   return this.wrapper.visit(...args)
 }
 
 export function getAST() {
-  return toAST.call(this, this.get('attributes.content', ''))
+  return this.tryResult('ast', () => toAST.call(this, this.get('attributes.content', '')))
 }
 
 export function getWrapper() {
@@ -136,6 +174,18 @@ export function parseFrontmatter(content, options = {}) {
   } catch (error) {
     return { message: error.message, content, options }
   }
+}
+
+export function createIndex(onNodesOfType, byNodeProperty) {
+  return this.wrapper.utils.index(this.ast, onNodesOfType, byNodeProperty)
+}
+
+export function getCodeBlocksLanguageIndex() {
+  return this.createIndex('code', 'lang')
+}
+
+export function getHeadingsByDepthIndex() {
+  return this.createIndex('heading', 'depth')
 }
 
 export const compile = (content, options = {}) => {

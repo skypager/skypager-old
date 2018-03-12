@@ -1,7 +1,17 @@
-export function component(options = {}, { React, runtime, types }) {
+export function component(options = {}, dependencies = {}) {
+  const {
+    React = global.React,
+    runtime = global.runtime || global.skypager,
+    types = global.ReactPropTypes || global.types,
+  } = dependencies
+
   // this is because of the VFile relying on process.cwd()
   if (process && typeof process.cwd !== 'function') {
     process.cwd = () => runtime.cwd
+  }
+
+  if (global.process && typeof global.process.cwd !== 'function') {
+    global.process.cwd = () => runtime.cwd
   }
 
   return class Skypage extends React.Component {
