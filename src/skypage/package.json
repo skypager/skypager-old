@@ -1,6 +1,6 @@
 {
   "name": "skypage",
-  "version": "39.8.3",
+  "version": "39.8.4",
   "description": "reactive markdown documents",
   "main": "index.js",
   "browser": "skypage.js",
@@ -9,12 +9,11 @@
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
+    "skypager-helpers-document": "39.8.2",
     "js-yaml": "^3.10.0",
     "mdast-util-heading-range": "^2.1.0",
     "mdast-util-inject": "^1.1.0",
     "mdast-util-to-string": "^1.0.4",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
     "remark": "^8.0.0",
     "remark-frontmatter": "^1.1.0",
     "remark-html": "^6.0.1",
