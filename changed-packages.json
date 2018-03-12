@@ -3,12 +3,14 @@
   "skypager-cli",
   "skypager-core",
   "skypager-runtime",
+  "skypage",
   "skypager-helpers-client",
   "skypager-helpers-command",
   "skypager-helpers-deployment",
   "skypager-helpers-document-type",
   "skypager-helpers-document",
   "skypager-helpers-page",
+  "skypager-helpers-project",
   "skypager-helpers-repl",
   "skypager-helpers-server",
   "skypager-helpers-service",
@@ -19,5 +21,8 @@
   "skypager-runtimes-react",
   "skypager-runtimes-universal",
   "skypager-runtimes-web",
-  "skypager-features-document-database"
+  "skypager-features-document-database",
+  "skypager-features-file-manager",
+  "skypager-servers-portfolio",
+  "skypage"
 ]

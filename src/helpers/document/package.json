@@ -1,6 +1,6 @@
 {
   "name": "skypager-helpers-document",
-  "version": "39.8.2",
+  "version": "39.8.3",
   "description": "skypager document helper",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
-    "skypager-runtime": "^39.8.2"
+    "skypager-runtime": "^39.8.3"
   },
   "skypager": {
     "paths": {
