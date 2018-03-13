@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "84e166a22d7eaff23c1963c401ac93e9c9f4a72b",
-    "abbreviatedSha": "84e166a22d",
+    "sha": "8baca80765a0ea3ba55cfc1828eaf04f6dc40692",
+    "abbreviatedSha": "8baca80765",
     "branch": "develop",
-    "tag": "v39.8.3",
+    "tag": null,
     "root": "/Users/jon/Projects/skypager-dev/framework"
   },
   "packages": {
@@ -807,6 +807,17 @@
     "skypager-features-google-sheets": {
       "version": "39.6.0",
       "name": "skypager-features-google-sheets",
+      "package": {
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
+      },
+      "success": false
+    },
+    "skypager-features-local-tunnel": {
+      "version": "39.8.3",
+      "name": "skypager-features-local-tunnel",
       "package": {
         "success": true,
         "assets": {
