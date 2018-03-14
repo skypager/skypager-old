@@ -13,6 +13,7 @@
     "mdast-util-heading-range": "^2.1.0",
     "mdast-util-inject": "^1.1.0",
     "mdast-util-to-string": "^1.0.4",
+    "unist-util-find-all-between": "^1.0.0",
     "remark": "^8.0.0",
     "remark-frontmatter": "^1.1.0",
     "remark-html": "^6.0.1",

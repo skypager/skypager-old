@@ -12,6 +12,8 @@ discoverLocalWebpackModules().catch(error => {
   skypager.setState({ discoverLocalWebpackModulesError: error })
 })
 
+skypager.use(require('./packages/skypage'))
+
 try {
   skypager.use(skypager.packageFinder.attemptResolve('skypager-deployments-aws'))
 } catch (error) {

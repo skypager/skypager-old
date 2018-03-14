@@ -72,7 +72,8 @@
     "remark-frontmatter": "^1.2.0",
     "sinon": "^2.2.0",
     "sinon-chai": "^2.10.0",
-    "skypage": "39.6.1"
+    "skypage": "39.6.1",
+    "unist-util-find-all-between": "^1.0.1"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",

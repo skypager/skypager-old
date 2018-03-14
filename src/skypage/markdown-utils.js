@@ -13,12 +13,14 @@ import visit from 'unist-util-visit'
 import toString from 'mdast-util-to-string'
 import headingRange from 'mdast-util-heading-range'
 import inject from 'mdast-util-inject'
+import findAllBetween from 'unist-util-find-all-between'
 
 export {
   filter,
   findAfter,
   findAllAfter,
   findAllBefore,
+  findAllBetween,
   index,
   map,
   parents,
@@ -47,6 +49,7 @@ export class DocumentWrapper {
     findAfter,
     findAllAfter,
     findAllBefore,
+    findAllBetween,
     index,
     map,
     parents,

@@ -10850,6 +10850,12 @@ unist-util-find-all-before@^2.0.0, unist-util-find-all-before@^2.0.1:
   dependencies:
     unist-util-is "^2.0.0"
 
+unist-util-find-all-between@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/unist-util-find-all-between/-/unist-util-find-all-between-1.0.1.tgz#f91500561422c1f0f67482e9e15eca142cd1ed5a"
+  dependencies:
+    unist-util-is "^2.0.0"
+
 unist-util-generated@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/unist-util-generated/-/unist-util-generated-1.1.1.tgz#99f16c78959ac854dee7c615c291924c8bf4de7f"
