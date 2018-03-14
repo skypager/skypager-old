@@ -1,6 +1,6 @@
 {
   "name": "skypager-helpers-project",
-  "version": "39.8.3",
+  "version": "39.9.0",
   "description": "skypager project helper",
   "main": "index.js",
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",

@@ -1,13 +1,13 @@
 {
   "name": "skypager-helpers-deployment",
-  "version": "39.8.3",
+  "version": "39.9.0",
   "description": "skypager deployment helper",
   "main": "index.js",
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
   "license": "MIT",
   "dependencies": {
     "md5-file": "^3.2.3",
-    "skypager-runtime": "^39.8.3"
+    "skypager-runtime": "^39.9.0"
   },
   "repository": {
     "type": "github",

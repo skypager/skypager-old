@@ -1,11 +1,11 @@
 {
     "name": "skypager-features-local-tunnel",
     "description": "Share your localhost using ngrok",
-    "version": "39.8.3",
+    "version": "39.9.0",
     "license": "MIT",
     "author": "Jon Soeder <jon@chicago.com>",
     "main": "index.js",
     "dependencies": {
-       "ngrok": "latest"
+        "ngrok": "latest"
     }
 }
