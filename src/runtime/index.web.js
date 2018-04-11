@@ -6,4 +6,5 @@ if (typeof process === 'undefined') {
   global.process = { env: {} }
 }
 
-module.exports = require('./index')
+require('./bundle-dependencies')
+module.exports = global.skypager = require('./index')

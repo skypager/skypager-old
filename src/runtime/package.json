@@ -36,12 +36,7 @@
         "lodash": "global lodash"
       },
       "entryPoints": {
-        "skypager-runtime": [
-          "expose?mobx!mobx",
-          "babel-polyfill",
-          "expose?lodash!lodash/lodash.min.js",
-          "index.web.js"
-        ]
+        "skypager-runtime": ["index.web.js"]
       }
     },
     "bundle": {
@@ -54,15 +49,10 @@
         "compress": false,
         "comments": false,
         "beautify": false,
-        "mangle": true
+        "mangle": false
       },
       "entryPoints": {
-        "skypager-runtime": [
-          "expose?mobx!mobx/lib/mobx.umd.min.js",
-          "babel-polyfill",
-          "expose?lodash!lodash/lodash.min.js",
-          "index.web.js"
-        ]
+        "skypager-runtime": ["index.web.js"]
       }
     }
   },

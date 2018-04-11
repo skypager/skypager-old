@@ -503,9 +503,7 @@ export class Runtime {
   }
 
   get url() {
-    return this.isBrowser
-      ? lodash.get('window.location', urlUtils.parse(`http://${stringUtils.kebabCase(this.name)}/`))
-      : urlUtils.parse(`file://${argv.cwd}`)
+    return this.isBrowser ? window.location : urlUtils.parse(`file://${argv.cwd}`)
   }
 
   /**

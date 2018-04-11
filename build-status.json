@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "a913314492cfc47870c12a50fa1e99c6e66d4a8d",
-    "abbreviatedSha": "a913314492",
+    "sha": "8bdac509e0be5c905d32f66e8fc1d189fa509681",
+    "abbreviatedSha": "8bdac509e0",
     "branch": "develop",
-    "tag": null,
+    "tag": "v39.9.0",
     "root": "/Users/jon/Projects/skypager-dev/framework"
   },
   "packages": {
@@ -263,7 +263,7 @@
     },
     "skypager-runtime": {
       "success": false,
-      "version": "39.8.3",
+      "version": "39.9.0",
       "name": "skypager-runtime",
       "bundle": {
         "success": true,

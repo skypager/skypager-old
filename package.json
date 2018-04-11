@@ -80,7 +80,7 @@
     "babel-register": "^6.24.1",
     "babel-runtime": "^6.26.0",
     "lodash": "^4.17.4",
-    "mobx": "3.3.1",
+    "mobx": "3.6.1",
     "skypager-cli": "^39.9.0",
     "skypager-core": "^39.9.0",
     "skypager-document-types-babel": "^38.0.0",
