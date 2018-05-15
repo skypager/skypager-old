@@ -369,6 +369,8 @@ export function instanceMethods(options = {}, context = {}) {
           statsName: 'electronRenderer',
           ...compilers.electronRenderer,
           target: 'electron-renderer',
+          clean: false,
+          clear: false,
           ...opts,
           cfg(c) {
             return c.copy([
@@ -392,11 +394,13 @@ export function instanceMethods(options = {}, context = {}) {
         const electronMainCompiler = await this.buildStandardPackage.call(this, {
           ...project.argv,
           statsName: 'electronMain',
-          ...compilers.electronMain,
-          target: 'electron-main',
           entryPoints: {
             main: 'main.js',
           },
+          ...compilers.electronMain,
+          target: 'electron-main',
+          clean: false,
+          clear: false,
           cfg(c) {
             return c.copy([
               {
