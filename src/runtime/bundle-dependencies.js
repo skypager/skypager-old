@@ -32,5 +32,5 @@ define(String.prototype, 'padRight', ''.padEnd)
     ;[][key] && define(Array, key, Function.call.bind([][key]))
   })
 
-window.lodash = require('lodash/lodash.min.js')
+window.lodash = require('./lodash-dependencies')
 window.mobx = require('./mobx.umd.js')
