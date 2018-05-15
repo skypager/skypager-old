@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "8bdac509e0be5c905d32f66e8fc1d189fa509681",
-    "abbreviatedSha": "8bdac509e0",
+    "sha": "552483fc7449ff08dba9d9058776b209a3a6a92e",
+    "abbreviatedSha": "552483fc74",
     "branch": "develop",
-    "tag": "v39.9.0",
+    "tag": null,
     "root": "/Users/jon/Projects/skypager-dev/framework"
   },
   "packages": {
@@ -289,10 +289,10 @@
           "utils/string": "utils/string.js",
           "utils/path-to-regexp": "utils/path-to-regexp.js",
           "utils/query": "utils/query.js",
-          "utils/path-matcher": "utils/path-matcher.js",
-          "utils/inflect": "utils/inflect.js",
           "utils/object-hash": "utils/object-hash.js",
           "utils/mware": "utils/mware.js",
+          "utils/path-matcher": "utils/path-matcher.js",
+          "utils/inflect": "utils/inflect.js",
           "utils/entity": "utils/entity.js"
         }
       }
@@ -433,7 +433,7 @@
       }
     },
     "skypager-runtimes-electron": {
-      "version": "39.8.3",
+      "version": "39.9.0",
       "name": "skypager-runtimes-electron",
       "package": {
         "success": true,
@@ -451,13 +451,16 @@
       "electronRenderer": {
         "success": true,
         "assets": {
-          "renderer": "renderer.js"
+          "renderer": "renderer.js",
+          "renderer-features": "renderer-features.js"
         }
       },
       "electronMain": {
         "success": true,
         "assets": {
-          "main": "main.js"
+          "main": "main.js",
+          "main-features": "main-features.js",
+          "index": "index.js"
         }
       },
       "success": false
