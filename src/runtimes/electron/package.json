@@ -12,7 +12,7 @@
     "opn": "^5.1.0",
     "skypager-runtimes-development": "^39.9.0",
     "skypager-runtimes-node": "^39.9.0",
-    "skypager-runtimes-react": "^39.9.0"
+    "skypager-runtime": "^39.9.0"
   },
   "repository": {
     "type": "github",
@@ -23,13 +23,15 @@
       "target": "electron-main",
       "entryPoints": {
         "main": "main.js",
-        "index": "index.js"
+        "index": "index.js",
+        "main-features": "features/main-features.js"
       }
     },
     "electronRenderer": {
       "target": "electron-renderer",
       "entryPoints": {
-        "renderer": "renderer.js"
+        "renderer": "renderer.js",
+        "renderer-features": "features/renderer-features.js"
       }
     }
   },
