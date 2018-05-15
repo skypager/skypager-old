@@ -1175,9 +1175,11 @@ export class Runtime {
         stage = stage || INITIALIZING
       } else {
         try {
-          const mod = __non_webpack_require__(fn)
+          const mod = require('./dynamic-require')(fn)
           return this.use(mod, stage || INITIALIZING)
-        } catch (error) {}
+        } catch (error) {
+
+        }
       }
     }
 
