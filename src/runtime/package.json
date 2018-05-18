@@ -1,6 +1,6 @@
 {
   "name": "skypager-runtime",
-  "version": "39.9.0",
+  "version": "39.9.1",
   "description": "universal javascript application runtime",
   "main": "index.js",
   "compilers": {
@@ -36,7 +36,9 @@
         "lodash": "global lodash"
       },
       "entryPoints": {
-        "skypager-runtime": ["index.web.js"]
+        "skypager-runtime": [
+          "index.web.js"
+        ]
       }
     },
     "bundle": {
@@ -52,7 +54,9 @@
         "mangle": false
       },
       "entryPoints": {
-        "skypager-runtime": ["index.web.js"]
+        "skypager-runtime": [
+          "index.web.js"
+        ]
       }
     }
   },

@@ -1,6 +1,6 @@
 {
   "name": "skypage",
-  "version": "39.9.0",
+  "version": "39.9.1",
   "description": "reactive markdown documents",
   "main": "index.js",
   "browser": "skypage.js",
@@ -22,7 +22,7 @@
     "remark-slug": "^4.2.3",
     "remark-squeeze-paragraphs": "^3.0.1",
     "remark-stringify": "^4.0.0",
-    "skypager-helpers-document": "^39.9.0",
+    "skypager-helpers-document": "^39.9.1",
     "unist-util-filter": "^0.2.1",
     "unist-util-find-after": "^2.0.1",
     "unist-util-find-all-after": "^1.0.1",
