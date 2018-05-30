@@ -1,6 +1,6 @@
 {
   "name": "skypager-runtimes-electron",
-  "version": "39.9.1",
+  "version": "39.9.2",
   "main": "index.js",
   "browser": "skypager.js",
   "author": "Jon Soeder <jon@chicago.com> https://github.com/datapimp",
@@ -11,8 +11,8 @@
     "node-uuid": "^1.4.8",
     "opn": "^5.1.0",
     "skypager-runtime": "^39.9.1",
-    "skypager-runtimes-development": "^39.9.1",
-    "skypager-runtimes-node": "^39.9.1"
+    "skypager-runtimes-development": "^39.9.2",
+    "skypager-runtimes-node": "^39.9.2"
   },
   "repository": {
     "type": "github",

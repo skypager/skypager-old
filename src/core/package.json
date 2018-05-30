@@ -1,6 +1,6 @@
 {
   "name": "skypager-core",
-  "version": "39.9.1",
+  "version": "39.9.2",
   "description": "a javscript launch platform",
   "main": "index.js",
   "repository": {
@@ -15,8 +15,8 @@
     "skypager-helpers-document": "^39.9.1",
     "skypager-helpers-document-type": "^39.9.1",
     "skypager-helpers-page": "^39.9.1",
-    "skypager-helpers-project": "^39.9.0",
-    "skypager-helpers-project-type": "^39.8.0",
+    "skypager-helpers-project": "^39.9.2",
+    "skypager-helpers-project-type": "^39.9.2",
     "skypager-helpers-repl": "^39.9.1",
     "skypager-helpers-server": "^39.9.1",
     "skypager-helpers-service": "^39.9.1",

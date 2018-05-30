@@ -1,6 +1,6 @@
 {
   "name": "skypager-helpers-project-type",
-  "version": "39.8.0",
+  "version": "39.9.2",
   "description": "skypager project type helper",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   "homepage": "https://skypager.io",
   "latestHash": "26e88f7b0d12f112943b",
   "dependencies": {
-    "skypager-project-types-semantic-react": "39.4.0",
-    "skypager-project-types-standard": "39.4.0"
+    "skypager-project-types-semantic-react": "39.9.1",
+    "skypager-project-types-standard": "39.9.1"
   }
 }
