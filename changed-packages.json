@@ -10,7 +10,6 @@
   "skypager-helpers-document-type",
   "skypager-helpers-document",
   "skypager-helpers-page",
-  "skypager-helpers-project",
   "skypager-helpers-repl",
   "skypager-helpers-server",
   "skypager-helpers-service",
@@ -22,7 +21,5 @@
   "skypager-runtimes-universal",
   "skypager-runtimes-web",
   "skypager-features-document-database",
-  "skypager-features-file-manager",
-  "skypager-servers-portfolio",
   "skypage"
 ]
