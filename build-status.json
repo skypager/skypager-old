@@ -1,9 +1,9 @@
 {
   "gitInfo": {
-    "sha": "b4121e0549c4e362867905a7133ce348dacb41ee",
-    "abbreviatedSha": "b4121e0549",
+    "sha": "d4c579f1c2d581a65b01931f45ccd02f65917654",
+    "abbreviatedSha": "d4c579f1c2",
     "branch": "develop",
-    "tag": "v39.9.1",
+    "tag": null,
     "root": "/Users/jon/Projects/skypager-dev/framework"
   },
   "packages": {
@@ -734,8 +734,10 @@
       "version": "39.4.0",
       "name": "skypager-project-types-semantic-react",
       "package": {
-        "warnings": 0,
-        "errors": 1
+        "success": true,
+        "assets": {
+          "index": "index.js"
+        }
       },
       "success": false
     },
@@ -882,12 +884,6 @@
       }
     },
     "skypager-features-process-streamer": {
-      "package": {
-        "warnings": 0,
-        "errors": 1
-      }
-    },
-    "skypager-project-types-semantic-react": {
       "package": {
         "warnings": 0,
         "errors": 1
